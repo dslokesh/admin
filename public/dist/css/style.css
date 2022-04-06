@@ -1,0 +1,9 @@
+.red{color:#dc3545;}
+.pagination svg{height: 20px;}
+.pagination .flex.justify-between.flex-1.sm\:hidden {	display: none;}
+.pagination .flex.items-center.justify-between {width: 100%; padding: 10px;}
+.pagination .hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between div:first-child {float: left;}
+.pagination .hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between div { float: right;}
+#togglePassword {margin-left: -30px;cursor: pointer;}
+.form-control.pass {display: inline-block;}
+.generate-pass.button {float: right;}
