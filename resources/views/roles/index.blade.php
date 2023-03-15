@@ -45,6 +45,7 @@
                   </thead>
                   <tbody>
                   @foreach ($roles as $role)
+				  @if($role->name!='Super Admin')
                   <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $role->name}}</td>
@@ -52,45 +53,17 @@
                     <td>{{ $role->created_at ? date(config('app.date_format'),strtotime($role->created_at)) : null }}</td>
                     <td>{{ $role->updated_at ? date(config('app.date_format'),strtotime($role->updated_at)) : null }}</td>
                     <td>
-                    <a class="btn btn-primary btn-sm" href="{{ route('users.index') }}?role={{$role->id}}">
-                              <i class="fas fa-folder">
+                    <a class="btn btn-primary btn-sm" href="{{ route('permrole.index') }}">
+                              <i class="fas fa-eye">
                               </i>
-                              View Users
+                              View Permissions
                           </a>
-                      <!--a class="btn btn-info btn-sm" href="{{route('roles.edit',$role->id)}}">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Edit
-                          </a>
-                          <form id="delete-form-{{$role->id}}" method="post" action="{{route('roles.destroy',$role->id)}}" style="display:none;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                            </form>
-                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to delete this?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('delete-form-{{$role->id}}').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            "><i class="fas fa-trash"></i>Delete</a--></td>
+                     </td>
                   </tr>
+				  @endif
                   @endforeach
                   </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <!--th>Status</th-->
-                    <th>Created On</th>
-                    <th>Updated On</th>
-                    <th></th>
-                  </tr>
-                  </tfoot>
+                 
                 </table>
               </div>
               <!-- /.card-body -->
@@ -104,4 +77,21 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+@endsection
+@section('scripts')
+ 
+<script type="text/javascript">
+  $(document).ready(function(){
+
+	$('#example1').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+  </script> 
 @endsection

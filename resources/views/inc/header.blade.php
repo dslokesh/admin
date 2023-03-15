@@ -17,6 +17,7 @@
 				<div class="card m-0">
 					<div class="card-body text-center">
 						<div class="dropdown-divider my-2"></div>
+						<a href="{{ route('users.edit',Auth::user()->id) }}" class="btn btn-default d-block">Profile</a>
 						<a href="{{ route('change-password') }}" class="btn btn-default d-block">Change Password</a>
 						<div class="dropdown-divider my-2"></div>
 						<a href="{{route('logout')}}" class="btn btn-default d-block">Sign out</a>

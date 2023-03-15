@@ -11,5 +11,5 @@ class Role extends Model
     use HasFactory;
     use Uuids;
 
-    public $incrementing = false;
+   // public $incrementing = false;
 }

@@ -76,14 +76,7 @@
                   @endforeach
                   </tbody>
                   <tfoot>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Created On</th>
-                    <th>Updated On</th>
-                    <th></th>
-                  </tr>
+                
                   </tfoot>
                 </table>
               </div>
@@ -98,4 +91,22 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+@endsection
+
+@section('scripts')
+ 
+<script type="text/javascript">
+  $(document).ready(function(){
+
+	$('#example1').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+  </script> 
 @endsection

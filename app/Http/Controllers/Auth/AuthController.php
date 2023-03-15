@@ -11,9 +11,15 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Session;
 use App\Models\User;
+use App\Models\UserProductRelation;
+use App\Models\Company;
+use App\Models\Product;
+use App\Models\Certificate;
+use App\Models\TeamId;
 use Hash;
 use DB;
-  
+use Carbon\Carbon;
+
 class AuthController extends Controller
 {
     /**
@@ -25,6 +31,11 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }  
+	
+	public function thankyou()
+    {
+        return view('auth.thankyou');
+    } 
       
     /**
      * Write code on Method
@@ -50,7 +61,7 @@ class AuthController extends Controller
 
 
         $credentials = $request->only('email', 'password');
-        $credentials['role_id'] = '4e882d9e-ca6d-4cfe-bd65-73ad1de313c1';
+        $credentials['role_id'] = 4;
         if (Auth::attempt($credentials)) {
             return redirect()->route('login')->with('error', 'Oops! Please login from the app.');
         }else{
@@ -101,11 +112,157 @@ class AuthController extends Controller
      */
     public function dashboard()
     {
+        $ppePer = 0;
+        $userPer = 0;
+        $ppePerUnAssi = 0;
+        $expiringCPer = 0;
+        $expiredCPer = 0;
+        $validCPer = 0;
+
+        $currentDate = Carbon::now()->format('Y-m-d');
+       $expiringDate = Carbon::now()->addMonths(1)->format('Y-m-d');
+
         if(Auth::check()){
+            
+            if(Auth::user()->roles[0]->id == 3){
+				$userId = Auth::user()->id;
+                $comp = Company::where("owner",$userId)->pluck("id");
+                $totalUserRecords = User::select('count(*) as allcount')->count();
+                $queryuser = User::select('count(*) as allcount');
+                
+                $queryuser->where(function ($q) use($userId,$comp) {
+                    $q->whereIn('company_id', $comp)->orWhere("created_by",$userId);
+                });
+               
+            $totalActiveUserRecords = $queryuser->where("is_active",1)->count();
 
-            $totalUserRecords = User::select('count(*) as allcount')->count();
+                
+                if($totalActiveUserRecords> 0 && $totalUserRecords>0)
+                {
+                    $userPer =  round(($totalActiveUserRecords/$totalUserRecords)*100);
+                }
+                $totalPpes = Product::where('MyQuip_Owner', $userId)->count();
+                //dd($totalPpes);
+                $totalAssignedPpes = UserProductRelation::select('count(*) as allcount')->whereHas('product', function($query1) use($userId) {
+                    $query1->where('MyQuip_Owner', $userId);
+                    })->count();
 
-            return view('dashboard', compact('totalUserRecords'));
+                if($totalAssignedPpes> 0 && $totalPpes>0)
+                {
+                    $ppePer =  round(($totalAssignedPpes/$totalPpes)*100);
+                }
+                
+                $totalUnAssignedPpes = $totalPpes-$totalAssignedPpes;
+                if($totalUnAssignedPpes> 0 && $totalPpes>0)
+                {
+                    $ppePerUnAssi =  round(($totalUnAssignedPpes/$totalPpes)*100);
+                }
+				
+                
+                $totalCertificates = Certificate::where("certificate_type","User")->whereHas('user', function($query1) use($userId,$comp) {
+                    $query1->whereIn('company_id', $comp)->orWhere('created_by', $userId);
+                    })->orderBy('created_at',"DESC")->count();
+
+                $expiringCertificates = Certificate::where('expiry_date','>=', $currentDate)->where('expiry_date','<=', $expiringDate)->where("certificate_type","User")->whereHas('user', function($query1) use($userId,$comp) {
+                    $query1->whereIn('company_id', $comp)->orWhere('created_by', $userId);
+                    })->orderBy('created_at',"DESC")->count();
+
+                $expiredCertificates = Certificate::where('expiry_date','<', $currentDate)->where("certificate_type","User")->whereHas('user', function($query1) use($userId,$comp) {
+                    $query1->whereIn('company_id', $comp)->orWhere('created_by', $userId);
+                    })->orderBy('created_at',"DESC")->count();
+                   
+                $v = $expiringCertificates+$expiredCertificates;
+                
+                $validCertificates = $totalCertificates - $v;
+
+
+                if($validCertificates > 0 && $totalCertificates>0)
+                {
+                    $validCPer =  round(($validCertificates/$totalCertificates)*100);
+                }
+
+                if($expiringCertificates> 0 && $totalCertificates>0)
+                {
+                    $expiringCPer =  round(($expiringCertificates/$totalCertificates)*100);
+                }
+               
+                if($expiredCertificates> 0 && $totalCertificates>0)
+                {
+                    $expiredCPer =  round(($expiredCertificates/$totalCertificates)*100);
+                }
+               
+                $projects = TeamId::with(['company','area','user'])->withCount(['workers',])->where("owner",$userId)->orderBy('created_at',"DESC")->limit(5)->get();
+              //certificates code  
+                $totalLimit = 5;
+                $certificates_expd = [];
+                $certificates_expig = [];
+                $expiringCLimit = $totalLimit - $expiredCertificates;
+                
+            if ($expiredCertificates > 0) {
+                $certificates_expd = Certificate::where('expiry_date', '<', $currentDate)->where("certificate_type", "User")->whereHas('user', function ($query1) use ($userId, $comp) {
+                    $query1->whereIn('company_id', $comp)->orWhere('created_by', $userId);
+                })->orderBy('created_at', "DESC")->limit($expiredCertificates)->get();
+            }
+           elseif ($expiredCertificates < $totalLimit && $expiringCLimit > 0) {     
+            $certificates_expig = Certificate::where('expiry_date','>=', $currentDate)->where('expiry_date','<=', $expiringDate)->where("certificate_type","User")->whereHas('user', function($query1) use($userId,$comp) {
+                $query1->whereIn('company_id', $comp)->orWhere('created_by', $userId);
+                })->orderBy('created_at',"DESC")->limit($expiringCLimit)->get();
+
+            }
+                
+        $certificates = [];
+        foreach($certificates_expd as $certificates_expd1){
+            $certificates[] = $certificates_expd1;
+        }
+        foreach($certificates_expig as $certificates1){
+            $certificates[] = $certificates1;
+        }
+
+    //certificates code  end
+
+     //products code  
+        $productsAll = [];
+    
+      
+    
+        $product_expd = UserProductRelation::with("products","user")->where('assigned_by', $userId)->whereHas('products', function($query1) use($currentDate,$expiringDate) {
+            $query1->where('expiry_date', '<', $currentDate);
+        })->orderBy('created_at', "DESC")->limit($totalLimit)->get();
+
+    
+        foreach($product_expd as $product_expd1){
+            $productsAll[] = $product_expd1;
+        }
+
+        $expied_procount_count = count($productsAll);
+        $exping_procount_count_limit = $totalLimit - $expied_procount_count;
+
+       
+        if ($expied_procount_count < $totalLimit && $exping_procount_count_limit > 0) {  
+            $product_expig = UserProductRelation::with("products","user")->where('assigned_by', $userId)->whereHas('products', function($query1) use($currentDate,$expiringDate) {
+                $query1->where('expiry_date','>=', $currentDate)->where('expiry_date','<=', $expiringDate);
+            })->orderBy('created_at', "DESC")->limit($exping_procount_count_limit)->get();
+
+           
+        }
+
+        foreach($product_expig as $product_expig1){
+            $productsAll[] = $product_expig1;
+        }
+
+  
+
+//products code  end
+
+                return view('dashboard-manager', compact('totalActiveUserRecords','userPer','ppePer','totalAssignedPpes','ppePerUnAssi','totalUnAssignedPpes','expiringCertificates','expiredCertificates','validCertificates','validCPer','expiringCPer','expiredCPer','projects','certificates','productsAll'));
+            }
+            else
+            {
+                $totalUserRecords = User::select('count(*) as allcount')->count();
+
+                return view('dashboard', compact('totalUserRecords'));
+            }
+           
         }
   
         //return redirect("login")->withSuccess('Opps! You do not have access');
@@ -259,14 +416,14 @@ class AuthController extends Controller
         ]
     );
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::with('roles')->where('email', $request->email)->first();
         if ($user) {
            //$user['is_active'] = 0;
             $user['remember_token'] = '';
             $user['password'] = Hash::make($request->password);
             $user->save();
-            if($user['role_id'] == '4e882d9e-ca6d-4cfe-bd65-73ad1de313c1'){
-                return redirect()->route('login')->with('success', 'Success! password has been changed. Please login from the app.');
+            if($user->roles[0]->id == '3'){
+                return redirect()->route('thankyou')->with('success', 'Success! password has been changed. Please login from the app.');
             }else{
                 return redirect()->route('login')->with('success', 'Success! password has been changed.');
             }
@@ -275,6 +432,5 @@ class AuthController extends Controller
         return redirect()->route('forgot-password')->with('failed', 'Failed! something went wrong');
     }
 
-	
-	
+
 }

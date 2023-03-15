@@ -2,14 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ModulesController;
-use App\Http\Controllers\AreasController;
 use App\Http\Controllers\RolesController;
-use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\UserAreasController;
+
+use App\Http\Controllers\PermissionRoleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,8 +24,8 @@ use App\Http\Controllers\UserAreasController;
 });
 */
 
-
 Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::get('/thank-you', [AuthController::class, 'thankyou'])->name('thankyou');
 Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
 Route::get('registration', [AuthController::class, 'registration'])->name('register');
 Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post'); 
@@ -35,11 +33,13 @@ Route::get('resetpassword', [AuthController::class, 'showResetForm'])->name('res
 Route::post('password/email', [AuthController::class, 'resetPassword'])->name('password.email');
 Route::get('forgot-password/{token}', [AuthController::class, 'forgotPasswordValidate']);
 Route::put('reset-password', [AuthController::class, 'updatePassword'])->name('reset-password');
-
+Route::get('phpinfo', function () {
+    phpinfo(); 
+})->name('phpinfo');
     //Route::get('/', 'HomeController@index')->name('home.index');
     
-    Route::get('companies/getCompanies/', [CompanyController::class, "getCompanies"])->name('companies.getCompanies');
-    Route::get('users/getUsers/', [UsersController::class, "getUsers"])->name('users.getUsers');
+   
+    Route::get('users/getUsers', [UsersController::class, "getUsers"])->name('users.getUsers');
     Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::group(['middleware' => ['auth']], function() {
             /**
@@ -50,21 +50,16 @@ Route::put('reset-password', [AuthController::class, 'updatePassword'])->name('r
             Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard'); 
             Route::get('change-password', [AuthController::class, 'changepassword'])->name('change-password');
             Route::post('profile/save/{id?}', [AuthController::class, 'saveProfile'])->name('profile.save');
-
-            Route::resource('categories', CategoryController::class);
-            Route::resource('companies', CompanyController::class);
-            //Route::get('/companies/getCompanies/','CompanyController@getCompanies')->name('companies.getCompanies');
-            //Route::get('companies/getCompanies/', [CompanyController::class, "getCompanies"])->name('companies.getCompanies');
-
+           
             Route::resource('modules', ModulesController::class);
-            Route::resource('areas', AreasController::class);
             Route::resource('roles', RolesController::class);
-            Route::resource('products', ProductsController::class);
 
             //Route::post('register', [UsersController::class, 'register'])->name('register');
+          
             Route::resource('users', UsersController::class);
-            //Route::get('users/getUserAreas/{userid}', [UsersController::class, "getUserAreas"])->name('users.areas');
-            Route::resource('userareas', UserAreasController::class);
+           
+            Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
+            Route::post('permissions/save', [PermissionRoleController::class, 'postSave'])->name('permrole.save');
 
         });
     });

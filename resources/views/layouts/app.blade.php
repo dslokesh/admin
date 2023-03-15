@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 @include('inc.head')
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -39,6 +40,9 @@
 
 <!-- DataTables  & Plugins -->
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
 <script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
@@ -52,19 +56,17 @@
 <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+<script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
+
+<script src="{{asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <!-- AdminLTE for demo purposes -->
 <!--script src="{{asset('dist/js/demo.js')}}"></script-->
 
 <script>
   $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      'aoColumnDefs': [{
-        'bSortable': false,
-        'aTargets': [-1] /* 1st one, start by the right */
-    }]
-      //"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+   $('.select2').select2()
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -74,10 +76,28 @@
       "autoWidth": false,
       "responsive": true,
     });
+	
+	$('.dataTable').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": false,
+      "autoWidth": false,
+      "responsive": true,
+    });
+
+$('.datepicker').datepicker({
+        weekStart: 1,
+        daysOfWeekHighlighted: "6,0",
+        autoclose: true,
+        todayHighlight: true,
+		format: 'yyyy-mm-dd'
+    });
 
   });
 
 </script>
-
+@yield('scripts')
 </body>
 </html>

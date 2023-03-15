@@ -177,7 +177,8 @@ return [
         App\Providers\ValidationServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+		Spatie\Permission\PermissionServiceProvider::class,
+		jeremykenedy\LaravelRoles\RolesServiceProvider::class,
     ],
 
     /*
@@ -230,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
+		'SiteHelpers' => App\Helpers\SiteHelpers::class,
 
     ],
 

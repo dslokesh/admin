@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Mail\sendAPIRegisterToTechnicianMailable;
 use App\Mail\sendForgotPasswordToUserMailable;
+use App\Mail\RegisterToTechnicianAdminMailable;
 use App\Models\User;
 use App\Models\Company;
+use App\Models\TeamId;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -16,7 +18,8 @@ use Hash;
 use DB;
 use Image;
 use App\Http\Resources\Company as CompanyResource;
-   
+use jeremykenedy\LaravelRoles\Models\Role;
+
 class RegisterController extends BaseController
 {
     
@@ -28,9 +31,19 @@ class RegisterController extends BaseController
     public function companylist()
     {
         //$companies = Company::all(); 
-        $companies = Company::where(['status' => 1])->orderBy('name', 'ASC')->get(); 
+        //$companies = Company::select('name AS title', 'id')->where(['status' => 1])->orderBy('title', 'ASC')->get(); 
         //pr($companies); die;  
-        return $this->sendResponse(CompanyResource::collection($companies), 'Companies retrieved successfully.');
+        $companies=  DB::table('companies')
+           ->select('id','name AS title')
+           ->where(['status' => 1])->orderBy('title', 'ASC')->get();
+        return $this->sendResponse($companies, 'Companies retrieved successfully.');
+
+    }
+    public function teamIdList()
+    {
+        $teams = TeamId::select('team_id')->orderBy('team_id', 'ASC')->get(); 
+        
+        return $this->sendResponse($teams, 'Teams retrieved successfully.');
 
     }
     
@@ -45,20 +58,32 @@ class RegisterController extends BaseController
         $options['allow_img_size'] = 10;
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|sanitizeScripts',
-            'phone' => 'nullable|max:20|sanitizeScripts',
+            'lname' => 'nullable|max:255|sanitizeScripts',
+            //'phone' => 'nullable|max:20|sanitizeScripts',
             'job_title' => 'nullable|max:255|sanitizeScripts',
+            'company_id' => 'required',
             'delivery_address' => 'nullable|sanitizeScripts',
+            'delivery_address2' => 'nullable|sanitizeScripts',
+            'city' => 'nullable|sanitizeScripts',
+            'country' => 'nullable|sanitizeScripts',
             'postcode' => 'nullable|max:20|sanitizeScripts',
             'email' => 'required|max:255|sanitizeScripts|email|unique:users|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
-            'password' => 'required|max:255|sanitizeScripts|min:8|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
+            //'password' => 'required|max:255|sanitizeScripts|min:8|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
+           'password' => 'required|max:255|sanitizeScripts|min:8',
             'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),
             //'c_password' => 'required|same:password',
         ],
         [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
-            'phone.sanitize_scripts' => 'Invalid value entered for Mobile Number field.',
+            'company_id.sanitize_scripts' => 'Invalid value entered for Name field.',
+            'lname.sanitize_scripts' => 'Invalid value entered for Last Name field.',
+            'lname.required' => 'Last name required.',
+            'company_id.required' => 'Organisation Name required.',
+            'delivery_address2.sanitize_scripts' => 'Invalid value entered for delivery address 2.',
             'job_title.sanitize_scripts' => 'Invalid value entered for Job Title field.',
             'delivery_address.sanitize_scripts' => 'Invalid value entered for Delivery Address field.',
+            'city.sanitize_scripts' => 'Invalid value entered for city field.',
+            'country.sanitize_scripts' => 'Invalid value entered for country field.',
             'postcode.sanitize_scripts' => 'Invalid value entered for Postcode field.',
             'email.sanitize_scripts' => 'Invalid value entered for Email Address field.',
             'email.regex' => 'The email must be a valid email address.',
@@ -116,32 +141,70 @@ class RegisterController extends BaseController
 
 			$img->save(public_path('/uploads/users/thumb/'.$newName));
 		}
-
+        $team_id = '';
         $input['image'] = $newName;
         $input['password'] = bcrypt($input['password']);
-        $input['role_id'] = '4e882d9e-ca6d-4cfe-bd65-73ad1de313c1';
+        $input['role_id'] = '4';
         $input['is_active'] = 1;
-        /*$input['phone'] = $input['phone'];
-        $input['company_id'] = $input['company_id'];
         $input['job_title'] = $input['job_title'];
         $input['delivery_address'] = $input['delivery_address'];
-        $input['postcode'] = $input['postcode'];*/
+        $input['delivery_address2'] = $input['delivery_address2'];
+        $input['city'] = $input['city'];
+        $input['country'] = $input['country'];
+        $input['postcode'] = $input['postcode'];
+        
+        if (!empty($request->input('team_id'))) {
+            $team = TeamId::where('team_id', $request->input('team_id'))->first();
+            if (isset($team)) {
+                $team_id = $team->id;
+            }
+        }
+
+        $input['team_id'] = $team_id;
+
+        if($input['company_id']!=='')
+        {
+            $company = Company::where("name",$input['company_id'])->first();
+            if(isset($company))
+            {
+                $companyId = $company->id;
+            }
+            // else
+            // {
+            //     $company = new Company();
+            //     $company->name = $input['company_id'];
+            //     $company->save();
+            //     $companyId = $company->id;
+            // }
+
+            $input['company_id'] = $companyId;
+        }
 
         //pr($input); die;
-        $user = User::create($input);
+        $user = User::with('team')->create($input);
+        $user->attachRole(4);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
         $success['name'] =  $user->name;
-        $success['phone'] =  $user->name;
+        $success['lname'] =  $user->lname;
         $success['company'] =  $user->company->name;
+       if(isset($user->team)){  $success['team_id'] =  $user->team['team_id'];}else { $success['team_id'] =  '';};
         $success['job_title'] =  $user->job_title;
         $success['delivery_address'] =  $user->delivery_address;
+        $success['delivery_address2'] =  $user->delivery_address2;
+        $success['city'] =  $user->city;
+        $success['country'] =  $user->country;
         $success['postcode'] =  $user->postcode;
         $success['name'] =  $user->name;
         $success['image'] =  url('/uploads/users/'.$user->image);
         $success['email'] =  $user->email;
         
-        Mail::to($input['email'],'Registration Email')->send(new sendAPIRegisterToTechnicianMailable($input));  
-   
+        Mail::to($input['email'],'Registration Email')->send(new sendAPIRegisterToTechnicianMailable($input)); 
+
+        $admin = User::where("role_id",1)->first();
+        $tm = User::where("id",$user->company->owner)->first();
+        $emails = [$admin->email, $tm->email];
+        Mail::to($emails,'New Technician Registered')->send(new RegisterToTechnicianAdminMailable($success));
+
         return $this->sendResponse($success, 'User has been registered successfully.');
     }
    
@@ -177,7 +240,7 @@ class RegisterController extends BaseController
            return $this->sendError($errorMsg);        
         }
 
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_active' => 1])){ 
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_active' => 1, 'role_id' => 4])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->accessToken; 
             $success['name'] =  $user->name;
@@ -241,62 +304,81 @@ class RegisterController extends BaseController
 		}
     }
 
-    /**
-     * change password api
+    
+	
+	/**
+     * Login api
      *
      * @return \Illuminate\Http\Response
      */
-    public function changepassword(Request $request)
+    public function emailValidat(Request $request)
     {
-        //die('xvcx');
 
-        $input = $request->all();
-        $userid = Auth::guard('api')->user()->id;
-        $validator = Validator::make($input, [
-            'OldPassword' => 'required',
-            'password' => 'required|min:8|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
-            'confirmPassword' => 'required|same:password',
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|max:255|sanitizeScripts|email',
         ],
         [
-            'password.regex' => "Password contains At least one uppercase, At least one digit and At least it should have 8 characters long"
+            'email.sanitize_scripts' => 'Invalid value entered for Email Address field.',
+            'password.sanitize_scripts' => 'Invalid value entered for Password field.'
         ]);
-        //$validator = Validator::make($input, $rules);
-
-        if ($validator->fails()) {
-            //$arr = array("status" => 400, "message" => $validator->errors()->first(), "data" => array());
-            $errors = $validator->errors();
-            $errorMsg = '';
-            if($errors->first('OldPassword'))
-                $errorMsg = $errors->first('OldPassword'); 
-            elseif($errors->first('password'))
-                $errorMsg = $errors->first('password');  
-            elseif($errors->first('confirmPassword'))
-                $errorMsg = $errors->first('confirmPassword');           
- 
-            return $this->sendError($errorMsg);   
-        } else {
-            try {
-                if ((Hash::check(request('OldPassword'), Auth::user()->password)) == false) {
-                    return $this->sendError("The old password is incorrect.");  
-                } else if ((Hash::check(request('password'), Auth::user()->password)) == true) {
-                    return $this->sendError("Please enter a password which is not similar then current password.");  
-                } else {
-                    User::where('id', $userid)->update(['password' => Hash::make($input['password'])]);
-                    //$arr = array("status" => 200, "message" => "Password updated successfully.", "data" => array());
-                    $success['email'] =  Auth::user()->email;
-                    return $this->sendResponse($success, 'Password has been Updated Successfully, Please login again.');
-                }
-            } catch (\Exception $ex) {
-                if (isset($ex->errorInfo[2])) {
-                    $msg = $ex->errorInfo[2];
-                } else {
-                    $msg = $ex->getMessage();
-                }
-                return $this->sendError($msg); 
-            }
-           // return \Response::json($arr);
+   
+        if($validator->fails()){
+           $errors = $validator->errors();
+           $errorMsg = '';
+           if($errors->first('email'))
+               $errorMsg = $errors->first('email');           
+           return $this->sendError($errorMsg);        
         }
-       
+
+		$users = User::where('email', $request->email)->count();
+		if($users > 0)
+		{
+			$errorMsg = 'This email id is already registered.';
+			return $this->sendError($errorMsg);
+		}
+		else
+		{
+			$success = [];
+			 return $this->sendResponse($success, '');
+		}
+
+        
     }
 
+    public function teamidValidate(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'team_id' => 'required',
+            'company_id' => 'required',
+        ],
+        [
+        ]);
+   
+        if($validator->fails()){
+           $errors = $validator->errors();
+           $errorMsg = '';
+           if($errors->first('team_id'))
+               $errorMsg = $errors->first('team_id');   
+           if($errors->first('company_id'))
+               $errorMsg = $errors->first('company_id');        
+           return $this->sendError($errorMsg);        
+        }
+
+		$users = TeamId::where('team_id', $request->team_id)->where('company_id', $request->company_id)->count();
+		if($users== 0)
+		{
+			$errorMsg = 'Invalid team ID';
+			return $this->sendError($errorMsg);
+		}
+		else
+		{
+			$success = [];
+			 return $this->sendResponse($success, '');
+		}
+
+        
+    }
+
+    
 }

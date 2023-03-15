@@ -30,13 +30,7 @@
               <h3 class="card-title">Add User</h3>
             </div>
             <div class="card-body">
-              <div class="form-group">
-                <label for="inputName">Name: <span class="red">*</span></label>
-                <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control"  placeholder="Name" />
-                @if ($errors->has('name'))
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                @endif
-              </div>
+			
 			  <div class="form-group">
                 <label for="inputName">Role: <span class="red">*</span></label>
                 <select name="role_id" id="role_id" class="form-control">
@@ -47,6 +41,22 @@
                  </select>
                 @if ($errors->has('role_id'))
                     <span class="text-danger">{{ $errors->first('role_id') }}</span>
+                @endif
+              </div>
+			
+				
+              <div class="form-group">
+                <label for="inputName">First Name: <span class="red">*</span></label>
+                <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" class="form-control"  placeholder="First Name" />
+                @if ($errors->has('first_name'))
+                    <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                @endif
+              </div>
+			<div class="form-group">
+                <label for="inputName">Last Name: <span class="red">*</span></label>
+                <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" class="form-control"  placeholder="Last Name" />
+                @if ($errors->has('last_name'))
+                    <span class="text-danger">{{ $errors->first('last_name') }}</span>
                 @endif
               </div>
               <div class="form-group">
@@ -64,13 +74,7 @@
                     <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
               </div>
-			  <!--div class="form-group">
-                <label for="inputName">Confirm Password: <span class="red">*</span></label>
-                <input type="password" id="c_password" name="c_password" value="{{ old('c_password') }}" class="form-control"  placeholder="Confirm Password" />
-                @if ($errors->has('c_password'))
-                    <span class="text-danger">{{ $errors->first('c_password') }}</span>
-                @endif
-              </div-->
+			 
             </div>
             <!-- /.card-body -->
           </div>
@@ -86,8 +90,8 @@
     </form>
     </section>
     <!-- /.content -->
-
-
+@endsection
+@section('scripts')
  <!-- Script -->
  <script type="text/javascript">
     function randomPassword(length) {
@@ -113,11 +117,35 @@
   });
        
 
-   // $(document).ready(function(){
+    $(document).ready(function(){
+		var roelid = $('#role_id').val();
+	$('#company_dd').css("display","none");
+	if(roelid==4)
+	{
+		$('#company_dd').css("display","block");
+	}
+	
+     $('#role_id').on("change",function() {
+		
+    if($(this).val()=='4')
+	{
+		$('#company_dd').css("display","block")
+	}
+	else
+	{
+		$('#company_dd').css("display","none");
+	}
+	
+	});
 
-      //$('#password').val({{$hashed_random_password}})
-
-    //});
+    });
   </script>   
-
+  
+@if ($errors->has('company_name'))
+	 <script type="text/javascript">
+	 $(document).ready(function(){
+	$('#company_dd').css("display","block");
+    });
+  </script> 
+@endif
 @endsection
