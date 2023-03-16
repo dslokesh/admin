@@ -69,13 +69,7 @@
                     <span class="text-danger">{{ $errors->first('country') }}</span>
                 @endif
               </div>
-			    <div class="form-group">
-                <label for="inputName">City:</label>
-                <input type="text" id="city" name="city" value="{{ old('city') ?: $user->city }}" class="form-control"  placeholder="City" />
-                @if ($errors->has('city'))
-                    <span class="text-danger">{{ $errors->first('city') }}</span>
-                @endif
-              </div>
+			   
               <div class="form-group">
                 <label for="inputName">Profile Image:</label>
                 <input type="file" name="image" id="image" class="form-control" /> 

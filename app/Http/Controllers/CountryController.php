@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use jeremykenedy\LaravelRoles\Models\Role;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use DB;
-class RolesController extends Controller
+class CountryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('created_at', 'DESC')->get();
+        $records = Country::orderBy('created_at', 'DESC')->get();
 		
-        return view('roles.index', compact('roles'));
+        return view('countries.index', compact('records'));
 
     }
 
@@ -28,7 +28,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        return view('countries.create');
     }
 
     /**
@@ -40,18 +40,17 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|max:255|unique:roles,name|sanitizeScripts'
+            'name'=>'required|max:255|unique:countries,name|sanitizeScripts'
         ], [
 			'name.sanitize_scripts' => 'Invalid value entered for Name field.',
 		]);
 		
 		
-        $role = new Role();
-        $role->name = $request->input('name');
-		$role->slug = $this->slugify($request->input('name'));		
-        //pr($role); die;
-        $role->save();
-        return redirect('roles')->with('success','Role Created Successfully.');
+        $record = new Country();
+        $record->name = $request->input('name');
+		 $record->status = $request->input('status');
+        $record->save();
+        return redirect('countries')->with('success','Country Created Successfully.');
     }
 
     /**
@@ -68,53 +67,49 @@ class RolesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        return view('roles.edit')->with('role',$role);
+        $record = Country::find($id);
+        return view('countries.edit')->with('record',$record);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required|max:255|sanitizeScripts|unique:roles,name,' .$id,
+            'name'=>'required|max:255|sanitizeScripts|unique:countries,name,' .$id,
             'status'=>'required'
         ], [
 			'name.sanitize_scripts' => 'Invalid value entered for Name field.',
 		]);
 
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-		$role->slug = $this->slugify($request->input('name'));	
-        $role->status = $request->input('status');
-        $role->save();
-        return redirect('roles')->with('success','Role Updated.');
+        $record = Country::find($id);
+        $record->name = $request->input('name');
+        $record->status = $request->input('status');
+        $record->save();
+        return redirect('countries')->with('success','Country Updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
-        $role->delete();
-        return redirect('roles')->with('success', 'Role Deleted.');
+        $record = Country::find($id);
+        $record->delete();
+        return redirect('countries')->with('success', 'Country Deleted.');
     }
 	
-	public function slugify($string){
-        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
-    }
 }

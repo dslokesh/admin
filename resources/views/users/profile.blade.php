@@ -58,42 +58,8 @@
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
               </div>
-              <div class="form-group">
-                <label for="inputName">Date Of Birth:</label>
-                <input type="date" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') ?: $user->date_of_birth }}" class="form-control"  placeholder="Date Of Birth" />
-              </div>
-              <div class="form-group">
-                <label for="inputName">Position:</label>
-                <input type="text" id="position" name="position" value="{{ old('position') ?: $user->position }}" class="form-control"  placeholder="Position" />
-                @if ($errors->has('position'))
-                    <span class="text-danger">{{ $errors->first('position') }}</span>
-                @endif
-              </div>
-			  @if($user->roles[0]->name == "Technician") 
-              <div class="form-group">
-                <label for="inputName">Company:</label>
-                  <select name="company_id" id="company_id" class="form-control">
-                      <option value = "">-Select Company-</option>
-                      @foreach($companies as $company)
-                        <option value="{{ $company->id }}" @if(($company->id == old('company_id')) OR ($company->id == $user->company_id)) selected="selected" @endif >{{ $company->name }}</option>
-                      @endforeach
-                  </select>
-                </div>
-				@endif
-              <div class="form-group">
-                <label for="inputName">Job Title:</label>
-                <input type="text" id="job_title" name="job_title" value="{{ old('job_title') ?: $user->job_title }}" class="form-control"  placeholder="Job Title" />
-                @if ($errors->has('job_title'))
-                    <span class="text-danger">{{ $errors->first('job_title') }}</span>
-                @endif
-              </div>
-              <div class="form-group">
-                <label for="inputName">Delivery Address:</label>
-                <textarea name="delivery_address" id="delivery_address" class="form-control"placeholder="Delivery Address" >{{ old('delivery_address') ?: $user->delivery_address }}</textarea>
-                @if ($errors->has('delivery_address'))
-                    <span class="text-danger">{{ $errors->first('delivery_address') }}</span>
-                @endif
-              </div>
+          
+            
               <div class="form-group">
                 <label for="inputName">Postcode:</label>
                 <input type="text" id="postcode" name="postcode" value="{{ old('postcode') ?: $user->postcode }}" class="form-control"  placeholder="Postcode" />
@@ -115,16 +81,7 @@
               </div>
               @endif
 
-              @if($user->roles[0]->name == "Technician")  
-              <div class="form-group">
-                <label for="inputName">Newsletter Subscription:</label>
-                <input type="checkbox" id="is_newsletter" name="is_newsletter" class="icheck-primary d-inline" @if((old('is_newsletter') == 'on') OR ($user->is_newsletter == 1)) checked @endif  />
-              </div>
-              <div class="form-group">
-                <label for="inputName">Notification Enabled:</label>
-                <input type="checkbox" id="is_notification" name="is_notification" class="icheck-primary d-inline" @if((old('is_notification') == 'on') OR ($user->is_notification == 1)) checked @endif  />
-              </div>
-              @endif
+             
               <div class="form-group">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="is_active" id="is_active" class="form-control">

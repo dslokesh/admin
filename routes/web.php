@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\AjexController;
 use App\Http\Controllers\ModulesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\PermissionRoleController;
-
+use App\Http\Controllers\StateController;
+use App\Http\Controllers\CityController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +35,7 @@ Route::get('resetpassword', [AuthController::class, 'showResetForm'])->name('res
 Route::post('password/email', [AuthController::class, 'resetPassword'])->name('password.email');
 Route::get('forgot-password/{token}', [AuthController::class, 'forgotPasswordValidate']);
 Route::put('reset-password', [AuthController::class, 'updatePassword'])->name('reset-password');
+
 Route::get('phpinfo', function () {
     phpinfo(); 
 })->name('phpinfo');
@@ -40,6 +43,8 @@ Route::get('phpinfo', function () {
     
    
     Route::get('users/getUsers', [UsersController::class, "getUsers"])->name('users.getUsers');
+	Route::post('state-list', [AjexController::class, "getStateByCountrySelect"])->name('state.list');
+	Route::post('city-list', [AjexController::class, "getCityByStateSelect"])->name('city.list');
     Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::group(['middleware' => ['auth']], function() {
             /**
@@ -53,7 +58,9 @@ Route::get('phpinfo', function () {
            
             Route::resource('modules', ModulesController::class);
             Route::resource('roles', RolesController::class);
-
+			Route::resource('countries', CountryController::class);
+			Route::resource('states', StateController::class);
+			Route::resource('cities', CityController::class);
             //Route::post('register', [UsersController::class, 'register'])->name('register');
           
             Route::resource('users', UsersController::class);

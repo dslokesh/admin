@@ -284,7 +284,7 @@ class UsersController extends Controller
         //pr($user);
 		if(Auth::user()->id == $id)
 		{
-			return view('users.profile', compact('roles','user','companies'));
+			return view('users.profile', compact('roles','user'));
 		}
 		else
 		{

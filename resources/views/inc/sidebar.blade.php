@@ -6,10 +6,10 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 
 <aside class="main-sidebar sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{route('dashboard')}}" class="brand-link">
+    <!--<a href="{{route('dashboard')}}" class="brand-link">
       <img src="../../dist/img/MyQuip_logo.png" alt="MyQuip Logo" class="brand-image elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-bold">MyQuip</span>
-    </a>
+      <span class="brand-text font-weight-bold">Admin</span>
+    </a>-->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         @if(isset(auth()->user()->image) && !empty(auth()->user()->image))
@@ -43,9 +43,88 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </p>
             </a>
           </li>
-		   
-             
+		    @php
+          $class=''; $active='';
+          if($controller == 'CountryController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp          
+         @role('1|2')
+              <li class="nav-item">
+                <a href="{{ route('countries.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-flag"></i>
+                  <p>Country</p>
+                </a>
+              </li>
+			  @php
+          $class=''; $active='';
+          if($controller == 'StateController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('states.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-flag"></i>
+                  <p>State</p>
+                </a>
+              </li>
+			  @php
+          $class=''; $active='';
+          if($controller == 'CityController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('cities.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-city"></i>
+                  <p>City</p>
+                </a>
+              </li>
+			   @endrole    
+              @php
+          $class=''; $active='';
+          if($controller == 'UsersController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp          
+         @role('1|2')
+              <li class="nav-item">
+                <a href="{{ route('users.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-user"></i>
+                  <p>Sub Admins</p>
+                </a>
+              </li>
+			  
+			  
+			   @endrole
 		@role(1)
+		@php
+		 
+          $class=''; $active='';
+          if($controller == 'RoleController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp          
+         
+              <li class="nav-item">
+                <a href="{{ route('roles.index') }}" class="nav-link {{$active}}">
+                  <i class="nav-icon fas fa-list"></i>
+                  <p>Roles</p>
+                </a>
+              </li>
           @php
 		 
           $class=''; $active='';
@@ -64,37 +143,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               
 		@endrole 
 		
-          @php
-          $class=''; $active='';
-          if($controller == 'UsersController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp          
-         @role('1|2')
-              <li class="nav-item">
-                <a href="{{ route('users.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-user"></i>
-                  <p>Sub Admins</p>
-                </a>
-              </li>
-			   @php
-          $class=''; $active='';
-         
-		  if($action=='technician'){
-			$class = 'menu-open';
-			$active = 'active';
-			}
-		   if($action=='territoryManagers'){
-			$class = 'menu-open';
-			$active = 'active';
-			}
-		  
-          @endphp       
-			  
-			   @endrole   
+        
 			  
             
 		

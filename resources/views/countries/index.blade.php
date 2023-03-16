@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Roles</h1>
+            <h1>Countries</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Roles</li>
+              <li class="breadcrumb-item active">Countries</li>
             </ol>
           </div>
         </div>
@@ -28,9 +28,9 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Roles</h3>
+                <h3 class="card-title">Countries</h3>
 				<div class="card-tools">
-				 <a href="{{ route('roles.create') }}" class="btn btn-sm btn-info">
+				 <a href="{{ route('countries.create') }}" class="btn btn-sm btn-info">
                       <i class="fas fa-plus"></i>
                       Create
                   </a> 
@@ -43,30 +43,44 @@
                   <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <!--th>Status</th-->
+                    <th>Status</th>
                     <th>Created On</th>
                     <th>Updated On</th>
                     <th></th>
                   </tr>
                   </thead>
                   <tbody>
-                  @foreach ($roles as $role)
-				  @if($role->id > 1)
+                  @foreach ($records as $record)
+				  
                   <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $role->name}}</td>
-                    <!--td>{{ $role->status ? 'Active' : 'Inactive' }}</td-->
-                    <td>{{ $role->created_at ? date(config('app.date_format'),strtotime($role->created_at)) : null }}</td>
-                    <td>{{ $role->updated_at ? date(config('app.date_format'),strtotime($role->updated_at)) : null }}</td>
-                    <td>
-                    <a class="btn btn-primary btn-sm" href="{{ route('permrole.index') }}">
-                              <i class="fas fa-eye">
+                    <td>{{ $record->name}}</td>
+                     <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
+                    <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
+                    <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
+                     <td><a class="btn btn-info btn-sm" href="{{route('countries.edit',$record->id)}}">
+                              <i class="fas fa-pencil-alt">
                               </i>
-                              View Permissions
+                              
                           </a>
-                     </td>
+                          <form id="delete-form-{{$record->id}}" method="post" action="{{route('countries.destroy',$record->id)}}" style="display:none;">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                            </form>
+                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to delete this?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('delete-form-{{$record->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            "><i class="fas fa-trash"></i></a></td>
                   </tr>
-				  @endif
+				 
                   @endforeach
                   </tbody>
                  
