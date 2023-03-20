@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2023 at 01:23 PM
+-- Generation Time: Mar 16, 2023 at 12:04 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -34,6 +34,51 @@ UPDATE category_products cp INNER join products p On p.product_id_sf = cp.sf_id 
 END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cities`
+--
+
+CREATE TABLE `cities` (
+  `id` bigint(20) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cities`
+--
+
+INSERT INTO `cities` (`id`, `country_id`, `state_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 'Jaipur', 1, '2023-03-16 05:04:53', '2023-03-16 05:04:53'),
+(2, 2, 2, 'Dholpur', 1, '2023-03-16 05:11:01', '2023-03-16 05:20:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `countries`
+--
+
+CREATE TABLE `countries` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `countries`
+--
+
+INSERT INTO `countries` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'India', 1, '2023-03-16 03:44:00', '2023-03-16 03:44:00');
 
 -- --------------------------------------------------------
 
@@ -104,11 +149,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (35, '2022_03_11_055839_make_drop_manage_newsletter_subscribers_on_roles_table', 31),
 (36, '2022_03_11_060201_add_is_newsletter_to_users_table', 32),
 (37, '2016_06_01_000001_create_oauth_auth_codes_table', 33),
-(44, '2016_01_15_105324_create_roles_table', 34),
-(45, '2016_01_15_114412_create_role_user_table', 35),
 (46, '2016_01_26_115212_create_permissions_table', 35),
 (47, '2016_01_26_115523_create_permission_role_table', 35),
-(48, '2016_02_09_132439_create_permission_user_table', 36);
+(48, '2016_02_09_132439_create_permission_user_table', 36),
+(49, '2016_01_15_105324_create_roles_table', 37),
+(50, '2016_01_15_114412_create_role_user_table', 37);
 
 -- --------------------------------------------------------
 
@@ -359,39 +404,15 @@ CREATE TABLE `permission_role` (
 --
 
 INSERT INTO `permission_role` (`id`, `permission_id`, `role_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 5, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(2, 6, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(3, 7, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(4, 8, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(5, 9, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(6, 10, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(7, 11, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(8, 12, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(9, 13, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(10, 14, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(11, 15, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(12, 16, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(13, 17, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(14, 18, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(15, 19, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(16, 20, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(17, 21, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(18, 22, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(19, 23, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(20, 24, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(21, 25, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(22, 26, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(23, 27, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(24, 28, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(25, 29, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(26, 30, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(27, 31, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(28, 32, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(29, 33, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(30, 34, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(31, 35, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(32, 36, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL),
-(33, 37, 2, '2023-03-15 06:40:11', '2023-03-15 06:40:11', NULL);
+(1, 5, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL),
+(2, 6, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL),
+(3, 7, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL),
+(4, 8, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL),
+(5, 9, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL),
+(6, 10, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL),
+(7, 11, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL),
+(8, 12, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL),
+(9, 13, 2, '2023-03-16 01:17:33', '2023-03-16 01:17:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -430,8 +451,8 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `slug`, `description`, `level`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Admin', 'admin', 'Admin Role', 5, '2022-07-14 00:47:57', '2022-07-14 00:47:57', NULL),
-(2, 'Super Admin', 'super-admin', 'super-admin', 1, '2022-07-14 00:47:57', '2022-07-14 00:47:57', NULL);
+(1, 'Admin', 'admin', NULL, 1, '2023-03-16 01:11:37', '2023-03-16 01:11:37', NULL),
+(2, 'Super Admin', 'super-admin', NULL, 1, '2023-03-16 01:12:10', '2023-03-16 01:12:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -453,10 +474,9 @@ CREATE TABLE `role_user` (
 --
 
 INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', '2022-07-14 03:04:16', '2022-07-14 03:04:16', NULL),
-(6, 2, '4057f617-7d0d-46de-ad78-6beb1779abcb', '2022-07-14 06:24:14', '2022-07-14 06:24:14', NULL),
-(7, 2, '4994b365-7a82-41cd-9eda-2edb909585cc', '2022-07-14 06:34:37', '2022-07-14 06:34:37', NULL),
-(10, 2, '082f5ecc-f335-4fc4-8d0f-d4e7234045c0', '2023-03-15 06:39:24', '2023-03-15 06:39:24', NULL);
+(1, 1, '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', NULL, NULL, NULL),
+(2, 2, '082f5ecc-f335-4fc4-8d0f-d4e7234045c0', NULL, NULL, NULL),
+(3, 2, '4057f617-7d0d-46de-ad78-6beb1779abcb', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -477,6 +497,29 @@ CREATE TABLE `settings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `states`
+--
+
+CREATE TABLE `states` (
+  `id` bigint(20) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `states`
+--
+
+INSERT INTO `states` (`id`, `country_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(2, 2, 'Rajasthan', 1, '2023-03-16 03:56:00', '2023-03-16 03:56:00'),
+(3, 2, 'UP', 1, '2023-03-16 04:00:46', '2023-03-16 05:19:39');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -490,8 +533,9 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` int(11) DEFAULT NULL,
+  `state` int(11) DEFAULT NULL,
+  `country` int(11) DEFAULT NULL,
   `postcode` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_active` tinyint(4) NOT NULL DEFAULT 0,
@@ -506,14 +550,26 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `lname`, `image`, `company_id`, `email`, `email_verified_at`, `password`, `phone`, `city`, `country`, `postcode`, `remember_token`, `is_active`, `role_id`, `created_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('082f5ecc-f335-4fc4-8d0f-d4e7234045c0', 'Test', 'Test', NULL, NULL, 'test@gmail.com', NULL, '$2y$10$HL8SvPqdC1e20BkMlEyJKuaXaGKYB13a58UyRBkE/gJQgFVA/LdJS', NULL, NULL, NULL, NULL, NULL, 1, '2', '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', '2023-03-15 06:39:24', '2023-03-15 06:39:24', NULL),
-('4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', 'Master', 'Admin', '070020946819131661238020.jpg', NULL, 'admin@gmail.com', NULL, '$2y$10$ttAF/VtApGocXam978OK7uJO1Qunby2Hk1XpjtmsN8x0NgEJhD8XS', NULL, NULL, NULL, NULL, 'lT8lOmfLrlEezt9hljMfI78A8QVCfe10nw1nEkhoXpu2Dv0g1fg14UJAMqhz', 1, '1', NULL, '2022-03-04 01:59:31', '2022-08-23 01:30:21', NULL),
-('4057f617-7d0d-46de-ad78-6beb1779abcb', 'Sub', 'Admin', NULL, NULL, 'subadmin@gmail.com', NULL, '$2y$10$ttAF/VtApGocXam978OK7uJO1Qunby2Hk1XpjtmsN8x0NgEJhD8XS', NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, '2022-07-14 06:24:14', '2022-07-14 06:24:14', NULL);
+INSERT INTO `users` (`id`, `name`, `lname`, `image`, `company_id`, `email`, `email_verified_at`, `password`, `phone`, `city`, `state`, `country`, `postcode`, `remember_token`, `is_active`, `role_id`, `created_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('082f5ecc-f335-4fc4-8d0f-d4e7234045c0', 'Test', 'Test', NULL, NULL, 'test@gmail.com', NULL, '$2y$10$HL8SvPqdC1e20BkMlEyJKuaXaGKYB13a58UyRBkE/gJQgFVA/LdJS', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', '2023-03-15 06:39:24', '2023-03-15 06:39:24', NULL),
+('4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', 'Master', 'Admin', '0556583835821101678946218.jpg', NULL, 'admin@gmail.com', NULL, '$2y$10$ttAF/VtApGocXam978OK7uJO1Qunby2Hk1XpjtmsN8x0NgEJhD8XS', NULL, NULL, NULL, NULL, NULL, 'lT8lOmfLrlEezt9hljMfI78A8QVCfe10nw1nEkhoXpu2Dv0g1fg14UJAMqhz', 1, '1', NULL, '2022-03-04 01:59:31', '2023-03-16 00:26:58', NULL),
+('4057f617-7d0d-46de-ad78-6beb1779abcb', 'Sub', 'Admin', NULL, NULL, 'subadmin@gmail.com', NULL, '$2y$10$ttAF/VtApGocXam978OK7uJO1Qunby2Hk1XpjtmsN8x0NgEJhD8XS', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, '2022-07-14 06:24:14', '2022-07-14 06:24:14', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cities`
+--
+ALTER TABLE `cities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `countries`
+--
+ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -608,13 +664,18 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `role_user`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `role_user_role_id_foreign` (`role_id`),
   ADD KEY `user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `settings`
 --
 ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `states`
+--
+ALTER TABLE `states`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -629,6 +690,18 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `cities`
+--
+ALTER TABLE `cities`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `countries`
+--
+ALTER TABLE `countries`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -638,7 +711,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `oauth_personal_access_clients`
@@ -656,7 +729,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `permission_role`
 --
 ALTER TABLE `permission_role`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `permission_user`
@@ -668,13 +741,19 @@ ALTER TABLE `permission_user`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `states`
+--
+ALTER TABLE `states`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -699,12 +778,6 @@ ALTER TABLE `permission_user`
 ALTER TABLE `role_user`
   ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_company_id_foreign` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
