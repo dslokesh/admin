@@ -89,6 +89,66 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>City</p>
                 </a>
               </li>
+			  @php
+          $class=''; $active='';
+          if($controller == 'HotelCategoryController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('hotelcategories.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-star"></i>
+                  <p>Hotel Category</p>
+                </a>
+              </li>
+			  @php
+          $class=''; $active='';
+          if($controller == 'HotelController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('hotels.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-hotel"></i>
+                  <p>Hotels</p>
+                </a>
+              </li>
+			  
+			  
+			   @php
+          $class=''; $active='';
+          if($controller == 'AirlinesController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('airlines.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-plane"></i>
+                  <p>Airlines</p>
+                </a>
+              </li>
+			  
+			   @php
+          $class=''; $active='';
+          if($controller == 'CustomersController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('customers.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-user"></i>
+                  <p>Cutomers</p>
+                </a>
+              </li>
+			  
 			   @endrole    
               @php
           $class=''; $active='';
@@ -126,7 +186,6 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 </a>
               </li>
           @php
-		 
           $class=''; $active='';
           if($controller == 'PermissionRoleController' and in_array($action,array('index','create','edit'))){
             $class = 'menu-open';
@@ -137,7 +196,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               <li class="nav-item">
                 <a href="{{ route('permrole.index') }}" class="nav-link {{$active}}">
                   <i class="nav-icon fas fa-list"></i>
-                  <p>Roles & Permissions</p>
+                  <p>Permissions</p>
                 </a>
               </li>
               

@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>City Edit</h1>
+            <h1>Airline Edit</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('cities.index') }}">Cities</a></li>
-              <li class="breadcrumb-item active">City Edit</li>
+              <li class="breadcrumb-item"><a href="{{ route('airlines.index') }}">Airlines</a></li>
+              <li class="breadcrumb-item active">Airline Edit</li>
             </ol>
           </div>
         </div>
@@ -21,49 +21,43 @@
 
     <!-- Main content -->
     <section class="content">
-    <form action="{{ route('cities.update', $record->id) }}" method="post" class="form">
+    <form action="{{ route('airlines.update', $record->id) }}" method="post" class="form" enctype="multipart/form-data">
     <input type="hidden" name="_method" value="put">
     {{ csrf_field() }}
     <div class="row">
         <div class="col-md-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Edit City</h3>
+              <h3 class="card-title">Edit Airline</h3>
             </div>
-            <div class="card-body">
-			<div class="form-group">
-			  <label for="inputName">Country: <span class="red">*</span></label>
-                <select name="country_id" id="country_id" class="form-control">
-				<option value="">--select--</option>
-				@foreach($countries as $country)
-                    <option value="{{$country->id}}" @if($record->country_id == $country->id) {{'selected="selected"'}} @endif>{{$country->name}}</option>
-				@endforeach
-                 </select>
-				 @if ($errors->has('country_id'))
-                    <span class="text-danger">{{ $errors->first('country_id') }}</span>
-                @endif
-              </div>
-			  <div class="form-group">
-			  <label for="inputName">State: <span class="red">*</span></label>
-                <select name="state_id" id="state_id" class="form-control">
-				<option value="">--select--</option>
-				@foreach($states as $state)
-                    <option value="{{$state->id}}" @if($record->state_id == $state->id) {{'selected="selected"'}} @endif>{{$state->name}}</option>
-				@endforeach
-                 </select>
-				 @if ($errors->has('state_id'))
-                    <span class="text-danger">{{ $errors->first('state_id') }}</span>
-                @endif
-              </div>
-			  
-              <div class="form-group">
+            <div class="card-body row">
+              <div class="form-group col-md-6">
                 <label for="inputName">Name: <span class="red">*</span></label>
                 <input type="text" id="name" name="name" value="{{ old('name') ?: $record->name }}" class="form-control"  placeholder="Name" />
                 @if ($errors->has('name'))
                     <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
               </div>
-              <div class="form-group">
+			  <div class="form-group col-md-6">
+                <label for="inputName">Code: <span class="red">*</span></label>
+                <input type="text" id="code" name="code" value="{{ old('code') ?: $record->code }}" class="form-control"  placeholder="Name" />
+                @if ($errors->has('code'))
+                    <span class="text-danger">{{ $errors->first('code') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-4">
+                <label for="inputName">Logo: <span class="red">*</span></label>
+                <input type="file" id="logo" name="logo"  class="form-control"   />
+                @if ($errors->has('logo'))
+                    <span class="text-danger">{{ $errors->first('logo') }}</span>
+                @endif
+              </div>
+			   @if($record->logo)
+              <div class="form-group col-md-2">
+                <img src="{{ url('/uploads/airlines/thumb/'.$record->logo) }}" width="50"  alt="airlines-logo" />
+              </div>
+              @endif
+              <div class="form-group col-md-6">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">
                     <option value="1" @if($record->status ==1) {{'selected="selected"'}} @endif>Active</option>
@@ -78,7 +72,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <a href="{{ route('cities.index') }}" class="btn btn-secondary">Cancel</a>
+          <a href="{{ route('airlines.index') }}" class="btn btn-secondary">Cancel</a>
           <button type="submit" class="btn btn-success float-right">Update</button>
         </div>
       </div>
@@ -86,5 +80,3 @@
     </section>
     <!-- /.content -->
 @endsection
-
- @include('inc.citystatecountryjs')

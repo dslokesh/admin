@@ -20,6 +20,24 @@
                 }
             });
         });
+		
+		$("#state_id").on("change", function () {
+            var state_id = $(this).val();
+			$("#city_id").prop("disabled",true)
+            $.ajax({
+                type: "POST",
+                url: '{{ route("city.list") }}',
+                data: {'state_id': state_id, '_token': '{{ csrf_token() }}'},
+                success: function (data) {
+					 $('#city_id').html('<option value="">--select--</option>');
+					$.each(data, function (key, value) {
+                            $("#city_id").append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                        });
+					$("#city_id").prop("disabled",false)
+                }
+            });
+        });
 	});
 	</script>        
 @endsection
