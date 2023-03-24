@@ -13,10 +13,10 @@ jobs:
     - name: Get latest code
       uses: actions/checkout@v2
     
-    - name: 📂 Sync files
+    - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.2.0
       with:
-        server: 103.24.202.253
+        server: 68.183.90.149
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         server-dir: /public_html/
