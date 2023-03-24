@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2023 at 12:04 PM
+-- Generation Time: Mar 24, 2023 at 02:52 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -34,6 +34,29 @@ UPDATE category_products cp INNER join products p On p.product_id_sf = cp.sf_id 
 END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `airlines`
+--
+
+CREATE TABLE `airlines` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `code` varchar(20) DEFAULT NULL,
+  `logo` varchar(100) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `airlines`
+--
+
+INSERT INTO `airlines` (`id`, `name`, `code`, `logo`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'Test', '12', '0711004970531401679555460.JPEG', 1, '2023-03-23 01:41:00', '2023-03-23 01:41:00');
 
 -- --------------------------------------------------------
 
@@ -83,6 +106,35 @@ INSERT INTO `countries` (`id`, `name`, `status`, `created_at`, `updated_at`) VAL
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customers`
+--
+
+CREATE TABLE `customers` (
+  `id` bigint(20) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `code` varchar(10) DEFAULT NULL,
+  `zip_code` varchar(10) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `country_id`, `state_id`, `city_id`, `name`, `mobile`, `email`, `address`, `code`, `zip_code`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 1, 'Customer 1', '9785550346', 'lokesh@mailinator.com', 'Jhalana', '12', '302010', 1, '2023-03-23 03:03:16', '2023-03-23 03:11:43');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -95,6 +147,57 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hotelcategories`
+--
+
+CREATE TABLE `hotelcategories` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hotelcategories`
+--
+
+INSERT INTO `hotelcategories` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, '1 Star', 1, '2023-03-23 00:09:25', '2023-03-23 00:23:24'),
+(2, '2 Star', 1, '2023-03-23 00:09:44', '2023-03-23 00:09:44'),
+(3, '3 Star', 1, '2023-03-23 00:09:53', '2023-03-23 00:09:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hotels`
+--
+
+CREATE TABLE `hotels` (
+  `id` bigint(20) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `hotel_category_id` int(11) DEFAULT NULL,
+  `zip_code` varchar(10) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hotels`
+--
+
+INSERT INTO `hotels` (`id`, `country_id`, `state_id`, `city_id`, `name`, `mobile`, `address`, `hotel_category_id`, `zip_code`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 2, 'Test 1 Hotel', '9785550346', 'Jhalana', 1, '302010', 1, '2023-03-22 08:13:57', '2023-03-22 08:21:25');
 
 -- --------------------------------------------------------
 
@@ -560,6 +663,12 @@ INSERT INTO `users` (`id`, `name`, `lname`, `image`, `company_id`, `email`, `ema
 --
 
 --
+-- Indexes for table `airlines`
+--
+ALTER TABLE `airlines`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `cities`
 --
 ALTER TABLE `cities`
@@ -572,11 +681,29 @@ ALTER TABLE `countries`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `hotelcategories`
+--
+ALTER TABLE `hotelcategories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hotels`
+--
+ALTER TABLE `hotels`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -690,6 +817,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `airlines`
+--
+ALTER TABLE `airlines`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
@@ -702,10 +835,28 @@ ALTER TABLE `countries`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `hotelcategories`
+--
+ALTER TABLE `hotelcategories`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `hotels`
+--
+ALTER TABLE `hotels`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -778,6 +929,12 @@ ALTER TABLE `permission_user`
 ALTER TABLE `role_user`
   ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_company_id_foreign` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
