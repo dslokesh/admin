@@ -30,15 +30,15 @@
             <div class="card-header">
               <h3 class="card-title">Edit User</h3>
             </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label for="inputName">First Name: <span class="red">*</span></label>
+            <div class="card-body row">
+              <div class="form-group col-md-6">
+                <label for="inputName ">First Name: <span class="red">*</span></label>
                 <input type="text" id="first_name" name="first_name" value="{{ old('first_name') ?: $user->name }}" class="form-control"  placeholder="First Name" />
                 @if ($errors->has('first_name'))
                     <span class="text-danger">{{ $errors->first('first_name') }}</span>
                 @endif
               </div>
-			   <div class="form-group">
+			   <div class="form-group col-md-6">
                 <label for="inputName">Last Name: <span class="red">*</span></label>
                 <input type="text" id="last_name" name="last_name" value="{{ old('last_name') ?: $user->lname }}" class="form-control"  placeholder="Last Name" />
                 @if ($errors->has('last_name'))
@@ -46,7 +46,7 @@
                 @endif
               </div>
             
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="inputName">Email Address: <span class="red">*</span></label>
                 <input type="text" id="email" name="email" value="{{ old('email') ?: $user->email }}" class="form-control"  placeholder="Email Address" />
                 @if ($errors->has('email'))
@@ -54,23 +54,50 @@
                 @endif
               </div>
 			  
-            
-              <div class="form-group">
+            <div class="form-group col-md-6">
+			  <label for="inputName">Country: <span class="red">*</span></label>
+                <select name="country_id" id="country_id" class="form-control">
+				<option value="">--select--</option>
+				@foreach($countries as $country)
+                    <option value="{{$country->id}}" @if($user->country_id == $country->id) {{'selected="selected"'}} @endif>{{$country->name}}</option>
+				@endforeach
+                 </select>
+				 @if ($errors->has('country_id'))
+                    <span class="text-danger">{{ $errors->first('country_id') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-6">
+			  <label for="inputName">State: <span class="red">*</span></label>
+                <select name="state_id" id="state_id" class="form-control">
+				<option value="">--select--</option>
+				@foreach($states as $state)
+                    <option value="{{$state->id}}" @if($user->state_id == $state->id) {{'selected="selected"'}} @endif>{{$state->name}}</option>
+				@endforeach
+                 </select>
+				 @if ($errors->has('state_id'))
+                    <span class="text-danger">{{ $errors->first('state_id') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-6">
+                <label for="inputName">City: <span class="red">*</span></label>
+                <select name="city_id" id="city_id" class="form-control">
+				<option value="">--select--</option>
+        	@foreach($cities as $city)
+                    <option value="{{$city->id}}" @if($user->city_id == $city->id) {{'selected="selected"'}} @endif>{{$city->name}}</option>
+				@endforeach
+				</select>
+              </div>
+			  
+              <div class="form-group col-md-6">
                 <label for="inputName">Postcode:</label>
                 <input type="text" id="postcode" name="postcode" value="{{ old('postcode') ?: $user->postcode }}" class="form-control"  placeholder="Postcode" />
                 @if ($errors->has('postcode'))
                     <span class="text-danger">{{ $errors->first('postcode') }}</span>
                 @endif
               </div>
-                <div class="form-group">
-                <label for="inputName">Country:</label>
-                <input type="text" id="country" name="country" value="{{ old('country') ?: $user->country }}" class="form-control"  placeholder="Country" />
-                @if ($errors->has('country'))
-                    <span class="text-danger">{{ $errors->first('country') }}</span>
-                @endif
-              </div>
+              
 			   
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="inputName">Profile Image:</label>
                 <input type="file" name="image" id="image" class="form-control" /> 
                 @if ($errors->has('image'))
@@ -78,12 +105,12 @@
                 @endif
               </div>
               @if($user->image)
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <img src="{{ url('/uploads/users/thumb/'.$user->image) }}"  alt="profile-image" />
               </div>
               @endif
 
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="is_active" id="is_active" class="form-control">
                     <option value="1" @if($user->is_active ==1) {{'selected="selected"'}} @endif>Active</option>
@@ -106,3 +133,5 @@
     </section>
     <!-- /.content -->
 @endsection
+
+ @include('inc.citystatecountryjs')

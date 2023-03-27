@@ -148,7 +148,20 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Cutomers</p>
                 </a>
               </li>
-			  
+			
+			 @php
+          $class=''; $active='';
+          if($controller == 'SuppliersController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('suppliers.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-user"></i>
+                  <p>Suppliers</p>
+                </a>
+              </li>
 			   @endrole    
               @php
           $class=''; $active='';
@@ -166,7 +179,21 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Sub Admins</p>
                 </a>
               </li>
-			  
+			   @php
+          $class=''; $active='';
+          if($controller == 'AgentsController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			   <!--<li class="nav-item">
+                <a href="{{ route('agents.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-user"></i>
+                  <p>Agents</p>
+                </a>
+              </li>-->
 			  
 			   @endrole
 		@role(1)

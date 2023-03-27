@@ -8,12 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Emadadly\LaravelUuid\Uuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 
 class User extends Authenticatable
 {   
     use HasApiTokens, HasFactory, Notifiable,HasRoleAndPermission;
-	 use HasRoleAndPermission;
+	use HasRoleAndPermission;
+	use SoftDeletes;
     use Uuids;
     protected $guarded = ['id'];
 	protected $keyType = 'string';
@@ -25,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','lname', 'phone', 'city', 'country', 'postcode', 'image', 'email', 'password', 'role_id', 'is_active',];
+        'name','lname', 'phone', 'city_id', 'country_id', 'state_id', 'postcode', 'image', 'email', 'password', 'role_id', 'is_active','code','mobile','company_name','department','address'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -52,7 +54,20 @@ class User extends Authenticatable
 	return $this->name . ' ' . $this->lname;
 	}
 
-   
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
     
 	
 	

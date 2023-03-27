@@ -10,7 +10,9 @@ use App\Models\User;
 use App\Helpers\SiteHelpers;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
-
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Image;
 use DB;
@@ -279,16 +281,18 @@ class UsersController extends Controller
         
         $roles = Role::where('id', '!=' , '1')->orderBy('name', 'ASC')->get();
         $user = User::find($id);
-        //$user->attachRole(2);
+        $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
+        $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
+        $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
        
         //pr($user);
 		if(Auth::user()->id == $id)
 		{
-			return view('users.profile', compact('roles','user'));
+			return view('users.profile', compact('roles','user','countries','states','cities'));
 		}
 		else
 		{
-			return view('users.edit', compact('roles','user'));
+			return view('users.edit', compact('roles','user','countries','states','cities'));
 		}
         
     }
@@ -308,8 +312,9 @@ class UsersController extends Controller
             $request->validate([
                 'first_name' => 'required|max:255|sanitizeScripts|alpha',
                 'last_name' => 'required|max:255|sanitizeScripts|alpha',
-                'country' => 'nullable|max:20|sanitizeScripts',
-                'city' => 'nullable|max:20|sanitizeScripts',
+				'city_id' => 'required',
+				'state_id' => 'required',
+				'country_id' => 'required',
                 'postcode' => 'nullable|max:20|sanitizeScripts',
                 'email'=>'required|max:255|sanitizeScripts|email|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix|unique:users,email,' .$id,
                 'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),     
@@ -367,8 +372,9 @@ class UsersController extends Controller
         
         $user->name = $request->input('first_name');
         $user->lname = $request->input('last_name');
-        $user->city = $request->input('city');
-        $user->country = $request->input('country');
+        $user->country_id = $request->input('country_id');
+        $user->state_id = $request->input('state_id');
+        $user->city_id = $request->input('city_id');
         $user->postcode = $request->input('postcode');
         $user->email = $request->input('email');
         $user->is_active = $request->input('is_active');
