@@ -43,13 +43,20 @@
                 <label for="inputName">Email:</label>
                 {{ $user->email }}
               </div>
-              <div class="form-group col-lg-6 mb-3">
-                <label for="inputName">City:</label>
-                {{$user->city}}
-              </div>
+             
               <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Country:</label>
-                {{$user->country}}
+                {{($user->country)?$user->country->name:''}}
+              </div>
+			   <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">State:</label>
+                
+				 {{($user->state)?$user->state->name:''}}
+              </div>
+			   <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">City:</label>
+                
+				 {{($user->city)?$user->city->name:''}}
               </div>
               <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Postcode:</label>

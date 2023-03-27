@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2023 at 02:52 PM
+-- Generation Time: Mar 27, 2023 at 12:06 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -21,19 +21,32 @@ SET time_zone = "+00:00";
 -- Database: `adminsite`
 --
 
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ImageSync` ()   BEGIN 
-UPDATE product_images cp INNER join products p On p.product_id_sf = cp.sf_id SET cp.product_id = p.id WHERE cp.product_id IS NULL;
-END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `syncProductToCategory` ()   BEGIN 
-UPDATE category_products cp INNER join products p On p.product_id_sf = cp.sf_id SET cp.product_id = p.id WHERE cp.product_id IS NULL;
-END$$
+-- --------------------------------------------------------
 
-DELIMITER ;
+--
+-- Table structure for table `agents`
+--
+
+CREATE TABLE `agents` (
+  `id` bigint(20) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `logo` varchar(100) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `department` varchar(100) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `code` varchar(10) DEFAULT NULL,
+  `zip_code` varchar(10) DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -554,8 +567,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `slug`, `description`, `level`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Admin', 'admin', NULL, 1, '2023-03-16 01:11:37', '2023-03-16 01:11:37', NULL),
-(2, 'Super Admin', 'super-admin', NULL, 1, '2023-03-16 01:12:10', '2023-03-16 01:12:10', NULL);
+(1, 'Admin', 'admin', NULL, 1, '2023-03-27 01:51:51', '2023-03-27 01:51:51', NULL),
+(2, 'Super Admin', 'super_admin', NULL, 1, '2023-03-27 01:52:01', '2023-03-27 01:52:01', NULL),
+(3, 'Agent', 'agent', NULL, 1, '2023-03-27 01:52:09', '2023-03-27 01:52:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -579,7 +593,9 @@ CREATE TABLE `role_user` (
 INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', NULL, NULL, NULL),
 (2, 2, '082f5ecc-f335-4fc4-8d0f-d4e7234045c0', NULL, NULL, NULL),
-(3, 2, '4057f617-7d0d-46de-ad78-6beb1779abcb', NULL, NULL, NULL);
+(3, 2, '4057f617-7d0d-46de-ad78-6beb1779abcb', NULL, NULL, NULL),
+(15, 3, '61b9588a-0df0-4904-802a-bdf7fe7d6c2d', '2023-03-27 03:51:59', '2023-03-27 03:51:59', NULL),
+(16, 3, '593dda45-92c1-4d42-a872-7157478e46a3', '2023-03-27 04:09:20', '2023-03-27 04:09:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -623,6 +639,39 @@ INSERT INTO `states` (`id`, `country_id`, `name`, `status`, `created_at`, `updat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `suppliers`
+--
+
+CREATE TABLE `suppliers` (
+  `id` bigint(20) NOT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `logo` varchar(100) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `department` varchar(100) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `code` varchar(10) DEFAULT NULL,
+  `zip_code` varchar(10) DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `country_id`, `state_id`, `city_id`, `name`, `logo`, `mobile`, `phone_number`, `email`, `department`, `address`, `code`, `zip_code`, `company_name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 1, 'Test Supplier1', '070335275057861679900615.JPEG', '9785550346', '9694754693', 'lokesh@mailinator.com', 'PHP', 'Jhalana', 'SP_01', '302004', 'Dotsquares', 1, '2023-03-27 01:13:39', '2023-03-27 01:33:35');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -631,15 +680,19 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lname` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city` int(11) DEFAULT NULL,
-  `state` int(11) DEFAULT NULL,
-  `country` int(11) DEFAULT NULL,
+  `mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `code` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `country_id` int(11) DEFAULT NULL,
   `postcode` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `department` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_active` tinyint(4) NOT NULL DEFAULT 0,
   `role_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -653,14 +706,22 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `lname`, `image`, `company_id`, `email`, `email_verified_at`, `password`, `phone`, `city`, `state`, `country`, `postcode`, `remember_token`, `is_active`, `role_id`, `created_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('082f5ecc-f335-4fc4-8d0f-d4e7234045c0', 'Test', 'Test', NULL, NULL, 'test@gmail.com', NULL, '$2y$10$HL8SvPqdC1e20BkMlEyJKuaXaGKYB13a58UyRBkE/gJQgFVA/LdJS', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', '2023-03-15 06:39:24', '2023-03-15 06:39:24', NULL),
-('4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', 'Master', 'Admin', '0556583835821101678946218.jpg', NULL, 'admin@gmail.com', NULL, '$2y$10$ttAF/VtApGocXam978OK7uJO1Qunby2Hk1XpjtmsN8x0NgEJhD8XS', NULL, NULL, NULL, NULL, NULL, 'lT8lOmfLrlEezt9hljMfI78A8QVCfe10nw1nEkhoXpu2Dv0g1fg14UJAMqhz', 1, '1', NULL, '2022-03-04 01:59:31', '2023-03-16 00:26:58', NULL),
-('4057f617-7d0d-46de-ad78-6beb1779abcb', 'Sub', 'Admin', NULL, NULL, 'subadmin@gmail.com', NULL, '$2y$10$ttAF/VtApGocXam978OK7uJO1Qunby2Hk1XpjtmsN8x0NgEJhD8XS', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, '2022-07-14 06:24:14', '2022-07-14 06:24:14', NULL);
+INSERT INTO `users` (`id`, `name`, `lname`, `image`, `email`, `email_verified_at`, `password`, `phone`, `mobile`, `address`, `city_id`, `code`, `state_id`, `country_id`, `postcode`, `department`, `company_name`, `remember_token`, `is_active`, `role_id`, `created_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('082f5ecc-f335-4fc4-8d0f-d4e7234045c0', 'Test', 'Test', '0949137702518991679910553.jpg', 'test@gmail.com', NULL, '$2y$10$HL8SvPqdC1e20BkMlEyJKuaXaGKYB13a58UyRBkE/gJQgFVA/LdJS', NULL, NULL, NULL, 1, '', 2, 2, '123456', NULL, NULL, NULL, 1, '2', '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', '2023-03-15 06:39:24', '2023-03-27 04:19:13', NULL),
+('4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', 'Master', 'Admin', '0556583835821101678946218.jpg', 'admin@gmail.com', NULL, '$2y$10$ttAF/VtApGocXam978OK7uJO1Qunby2Hk1XpjtmsN8x0NgEJhD8XS', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, 'lT8lOmfLrlEezt9hljMfI78A8QVCfe10nw1nEkhoXpu2Dv0g1fg14UJAMqhz', 1, '1', NULL, '2022-03-04 01:59:31', '2023-03-16 00:26:58', NULL),
+('4057f617-7d0d-46de-ad78-6beb1779abcb', 'Sub', 'Admin', NULL, 'subadmin@gmail.com', NULL, '$2y$10$ttAF/VtApGocXam978OK7uJO1Qunby2Hk1XpjtmsN8x0NgEJhD8XS', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2', NULL, '2022-07-14 06:24:14', '2022-07-14 06:24:14', NULL),
+('593dda45-92c1-4d42-a872-7157478e46a3', 'sdsdsd', 'sdsd', '0939199134002141679909959.png', 'admdadadadin@gmail.com', NULL, '$2y$10$nhsUMQ6OJnpI3O9e3zxsZ.YHp7j18SnWebgyGWcGRQQnYVZBYY7FW', '9694754693', '9785550346', 'Jhalana', 1, '12sd', 2, 2, '123456', 'PHP', 'Dotsquares', NULL, 1, '3', '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', '2023-03-27 04:09:20', '2023-03-27 04:09:29', '2023-03-27 04:09:29'),
+('61b9588a-0df0-4904-802a-bdf7fe7d6c2d', 'Lokesh', 'Sharma', '09383717720771821679909917.JPEG', 'asasas@gmail.com', NULL, '$2y$10$9OOImEbcpLVz2Zh.857ODOpfDQlUZnZH97MBqlKJ7e2hHOxMkFImG', '9694754693', '9785550346', 'Jhalana', 1, '12', 2, 2, '123456', 'PHP', 'Dotsquares', NULL, 1, '3', '4009e52c-e44f-4a4f-aca3-dbce6a3cb9c1', '2023-03-27 03:51:59', '2023-03-27 04:08:37', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `agents`
+--
+ALTER TABLE `agents`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `airlines`
@@ -790,8 +851,7 @@ ALTER TABLE `roles`
 -- Indexes for table `role_user`
 --
 ALTER TABLE `role_user`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id_foreign` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `settings`
@@ -806,6 +866,12 @@ ALTER TABLE `states`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -815,6 +881,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `agents`
+--
+ALTER TABLE `agents`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `airlines`
@@ -898,13 +970,19 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -929,12 +1007,6 @@ ALTER TABLE `permission_user`
 ALTER TABLE `role_user`
   ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_company_id_foreign` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

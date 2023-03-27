@@ -47,7 +47,6 @@
                     <th>Name</th>
                     <th>Email Address</th>
                     <th>Role</th>
-					<th>Organisation</th>
                     <th>Status</th>
                     <th>Created On</th>
                     <!--th>Updated On</th-->
@@ -60,7 +59,7 @@
                     
                     <th><input type="text" name="user_email" value="{{request('user_email')}}" class="form-control"  placeholder="Email" /></th>
 					<th></th>
-                    <th></th>
+                   
                     <th><select name="status" id="status" class="form-control">
                     <option value="" @if(request('status') =='') {{'selected="selected"'}} @endif>Select</option>
                     <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Active</option>
@@ -79,7 +78,6 @@
                     <td>{{ $record->full_name}}</td>
 					<td>{{ $record->email}}</td>
 					<td>{{ $record->roles[0]->name}}</td>
-					<td>{{ ($record->company)?$record->company->name:''}}</td>
                     <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
 					<td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>

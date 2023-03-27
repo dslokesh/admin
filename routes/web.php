@@ -14,6 +14,8 @@ use App\Http\Controllers\HotelCategoryController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\AirlinesController;
 use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\AgentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +72,8 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('hotels', HotelController::class);
         Route::resource('airlines', AirlinesController::class);
         Route::resource('customers', CustomersController::class);
+        Route::resource('suppliers', SuppliersController::class);
+        Route::resource('agents', AgentsController::class);
         //Route::post('register', [UsersController::class, 'register'])->name('register');
 
         Route::resource('users', UsersController::class);
