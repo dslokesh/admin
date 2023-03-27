@@ -17,6 +17,7 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\AgentsController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
