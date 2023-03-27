@@ -21,19 +21,6 @@ SET time_zone = "+00:00";
 -- Database: `adminsite`
 --
 
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ImageSync` ()   BEGIN 
-UPDATE product_images cp INNER join products p On p.product_id_sf = cp.sf_id SET cp.product_id = p.id WHERE cp.product_id IS NULL;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `syncProductToCategory` ()   BEGIN 
-UPDATE category_products cp INNER join products p On p.product_id_sf = cp.sf_id SET cp.product_id = p.id WHERE cp.product_id IS NULL;
-END$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
