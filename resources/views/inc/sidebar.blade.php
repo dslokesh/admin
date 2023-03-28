@@ -188,12 +188,12 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 		 
 		  
           @endphp     
-			   <!--<li class="nav-item">
+			 <li class="nav-item">
                 <a href="{{ route('agents.index') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-user"></i>
                   <p>Agents</p>
                 </a>
-              </li>-->
+              </li>
 			  
 			   @endrole
 		@role(1)
