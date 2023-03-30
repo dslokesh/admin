@@ -100,22 +100,7 @@
                               </i>
                               
                           </a>
-                          <form id="delete-form-{{$record->id}}" method="post" action="{{route('cities.destroy',$record->id)}}" style="display:none;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                            </form>
-                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to delete this?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('delete-form-{{$record->id}}').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            "><i class="fas fa-trash"></i></a></td>
+                         </td>
                   </tr>
 				 
                   @endforeach
