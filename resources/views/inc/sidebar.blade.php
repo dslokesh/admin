@@ -56,7 +56,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               <li class="nav-item">
                 <a href="{{ route('countries.index') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-flag"></i>
-                  <p>Country</p>
+                  <p>Countries</p>
                 </a>
               </li>
 			  @php
@@ -71,7 +71,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			  <li class="nav-item">
                 <a href="{{ route('states.index') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-flag"></i>
-                  <p>State</p>
+                  <p>States</p>
                 </a>
               </li>
 			  @php
@@ -86,7 +86,22 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			  <li class="nav-item">
                 <a href="{{ route('cities.index') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-city"></i>
-                  <p>City</p>
+                  <p>Cities</p>
+                </a>
+              </li>
+			   @php
+          $class=''; $active='';
+          if($controller == 'ZonesController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('zones.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-chart-area"></i>
+                  <p>Zones</p>
                 </a>
               </li>
 			  @php

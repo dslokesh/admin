@@ -99,6 +99,15 @@ class HotelController extends Controller
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
+		$record->brand_name = $request->input('brand_name');
+		$record->formerly_name = $request->input('formerly_name');
+		$record->translates_name = $request->input('translates_name');
+		$record->address2 = $request->input('address2');
+		$record->longitude = $request->input('longitude');
+		$record->latitude = $request->input('latitude');
+		$record->overview = $request->input('overview');
+		$record->continent_name = $request->input('continent_name');
+		$record->accommodation_type = $request->input('accommodation_type');
         $record->status = $request->input('status');
         $record->save();
         return redirect('hotels')->with('success', 'Hotel Created Successfully.');
@@ -110,9 +119,9 @@ class HotelController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Hotel $hotel)
     {
-        //
+       return view('hotels.view', compact('hotel'));
     }
 
     /**
@@ -164,6 +173,15 @@ class HotelController extends Controller
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
+		$record->brand_name = $request->input('brand_name');
+		$record->formerly_name = $request->input('formerly_name');
+		$record->translates_name = $request->input('translates_name');
+		$record->address2 = $request->input('address2');
+		$record->longitude = $request->input('longitude');
+		$record->latitude = $request->input('latitude');
+		$record->overview = $request->input('overview');
+		$record->continent_name = $request->input('continent_name');
+		$record->accommodation_type = $request->input('accommodation_type');
         $record->status = $request->input('status');
         $record->save();
         return redirect('hotels')->with('success', 'Hotel Updated.');

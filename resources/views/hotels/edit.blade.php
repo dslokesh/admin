@@ -38,6 +38,27 @@
                     <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
               </div>
+			  <div class="form-group col-md-6">
+                <label for="inputName">Brand Name:</label>
+                <input type="text" id="brand_name" name="brand_name" value="{{ old('brand_name') ?: $record->brand_name }}" class="form-control"  placeholder="Brand Name" />
+                @if ($errors->has('brand_name'))
+                    <span class="text-danger">{{ $errors->first('brand_name') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Formerly Name:</label>
+                <input type="text" id="formerly_name" name="formerly_name" value="{{ old('formerly_name') ?: $record->formerly_name }}" class="form-control"  placeholder="Formerly Name" />
+                @if ($errors->has('formerly_name'))
+                    <span class="text-danger">{{ $errors->first('formerly_name') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-6">
+                <label for="inputName">Translates Name:</label>
+                <input type="text" id="translates_name" name="translates_name" value="{{ old('translates_name') ?: $record->translates_name }}" class="form-control"  placeholder="Translates Name" />
+                @if ($errors->has('translates_name'))
+                    <span class="text-danger">{{ $errors->first('translates_name') }}</span>
+                @endif
+              </div>
                <div class="form-group col-md-6">
                 <label for="inputName">Mobile: <span class="red">*</span></label>
                 <input type="text" id="mobile" name="mobile" value="{{ old('mobile') ?: $record->mobile }}" class="form-control"  placeholder="Mobile" />
@@ -46,10 +67,17 @@
                 @endif
               </div>
                 <div class="form-group col-md-6">
-                <label for="inputName">Address: <span class="red">*</span></label>
-                <input type="text" id="address" name="address" value="{{ old('address') ?: $record->address }}" class="form-control"  placeholder="Address" />
+                <label for="inputName">Address Line 1: <span class="red">*</span></label>
+                <input type="text" id="address" name="address" value="{{ old('address') ?: $record->address }}" class="form-control"  placeholder="Address Line 1" />
                 @if ($errors->has('address'))
                     <span class="text-danger">{{ $errors->first('address') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Address Line 2:</label>
+                <input type="text" id="address2" name="address2" value="{{ old('address2') ?: $record->address2 }}" class="form-control"  placeholder="Address Line 2" />
+                @if ($errors->has('address2'))
+                    <span class="text-danger">{{ $errors->first('address2') }}</span>
                 @endif
               </div>
                <div class="form-group col-md-6">
@@ -106,7 +134,41 @@
                     <span class="text-danger">{{ $errors->first('zip_code') }}</span>
                 @endif
               </div>
-             
+              <div class="form-group col-md-6">
+                <label for="inputName">Longitude:</label>
+                <input type="text" id="longitude" name="longitude" value="{{ old('longitude') ?: $record->longitude }}" class="form-control"  placeholder="Longitude" />
+                @if ($errors->has('longitude'))
+                    <span class="text-danger">{{ $errors->first('longitude') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Latitude:</label>
+                <input type="text" id="latitude" name="latitude" value="{{ old('latitude') ?: $record->latitude }}" class="form-control"  placeholder="Latitude" />
+                @if ($errors->has('latitude'))
+                    <span class="text-danger">{{ $errors->first('latitude') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Overview:</label>
+                <input type="text" id="overview" name="overview" value="{{ old('overview') ?: $record->overview }}" class="form-control" placeholder="Overview"  />
+                @if ($errors->has('overview'))
+                    <span class="text-danger">{{ $errors->first('overview') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Continent Name:</label>
+                <input type="text" id="continent_name" name="continent_name" value="{{ old('continent_name') ?: $record->continent_name }}" class="form-control" placeholder="Continent Name"  />
+                @if ($errors->has('continent_name'))
+                    <span class="text-danger">{{ $errors->first('continent_name') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Accommodation Type:</label>
+                <input type="text" id="accommodation_type" name="accommodation_type" value="{{ old('accommodation_type') ?: $record->accommodation_type }}" class="form-control"  placeholder="Accommodation Type" />
+                @if ($errors->has('accommodation_type'))
+                    <span class="text-danger">{{ $errors->first('accommodation_type') }}</span>
+                @endif
+              </div>
               <div class="form-group col-md-6">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">

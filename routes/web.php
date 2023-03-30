@@ -16,7 +16,7 @@ use App\Http\Controllers\AirlinesController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\AgentsController;
-
+use App\Http\Controllers\ZonesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +75,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('customers', CustomersController::class);
         Route::resource('suppliers', SuppliersController::class);
         Route::resource('agents', AgentsController::class);
+        Route::resource('zones', ZonesController::class);
         //Route::post('register', [UsersController::class, 'register'])->name('register');
 
         Route::resource('users', UsersController::class);
