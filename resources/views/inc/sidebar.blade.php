@@ -121,7 +121,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			  @php
           $class=''; $active='';
-          if($controller == 'HotelController' and in_array($action,array('index','create','edit'))){
+          if($controller == 'HotelController' and in_array($action,array('index','create','edit','show'))){
             $class = 'menu-open';
             $active = 'active';
           }
@@ -138,7 +138,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			  
 			   @php
           $class=''; $active='';
-          if($controller == 'AirlinesController' and in_array($action,array('index','create','edit'))){
+          if($controller == 'AirlinesController' and in_array($action,array('index','create','edit','show'))){
             $class = 'menu-open';
             $active = 'active';
           }
@@ -149,7 +149,32 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Airlines</p>
                 </a>
               </li>
-			  
+			   @php
+          $class=''; $active='';
+          if($controller == 'TransfersController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('transfers.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-exchange-alt"></i>
+                  <p>Transfers</p>
+                </a>
+              </li>
+			   @php
+          $class=''; $active='';
+          if($controller == 'ActivitiesController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('activities.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-tasks"></i>
+                  <p>Activities</p>
+                </a>
+              </li>
 			   @php
           $class=''; $active='';
           if($controller == 'CustomersController' and in_array($action,array('index','create','edit'))){
@@ -166,7 +191,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			
 			 @php
           $class=''; $active='';
-          if($controller == 'SuppliersController' and in_array($action,array('index','create','edit'))){
+          if($controller == 'SuppliersController' and in_array($action,array('index','create','edit','show'))){
             $class = 'menu-open';
             $active = 'active';
           }
@@ -180,7 +205,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			   @endrole    
               @php
           $class=''; $active='';
-          if($controller == 'UsersController' and in_array($action,array('index','create','edit'))){
+          if($controller == 'UsersController' and in_array($action,array('index','create','edit','show'))){
             $class = 'menu-open';
             $active = 'active';
           }
@@ -196,7 +221,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			   @php
           $class=''; $active='';
-          if($controller == 'AgentsController' and in_array($action,array('index','create','edit'))){
+          if($controller == 'AgentsController' and in_array($action,array('index','create','edit','show'))){
             $class = 'menu-open';
             $active = 'active';
           }

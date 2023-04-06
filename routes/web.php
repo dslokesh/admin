@@ -17,6 +17,8 @@ use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\AgentsController;
 use App\Http\Controllers\ZonesController;
+use App\Http\Controllers\TransfersController;
+use App\Http\Controllers\ActivitiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +78,8 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('suppliers', SuppliersController::class);
         Route::resource('agents', AgentsController::class);
         Route::resource('zones', ZonesController::class);
+        Route::resource('activities', ActivitiesController::class);
+        Route::resource('transfers', TransfersController::class);
         //Route::post('register', [UsersController::class, 'register'])->name('register');
 
         Route::resource('users', UsersController::class);

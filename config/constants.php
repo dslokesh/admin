@@ -19,6 +19,12 @@ return [
 	'CONTACT_EMAIL_SUBJECT' => 'Contact us enquiry from MyQuip',
 	'CONTACT_EMAIL_SUBJECT_USER' => 'Thank You',
 	'ADMIN_MAIL' => 'myquip_admin@yopmail.com',
+	'typeActivities' => [
+	1 => 'Ticket Only',
+	2 => 'Ticket Only with Time Slot',
+	3 => 'Ticket  with Transfer',
+	4 => 'Ticket  with Transfer with Time Slot',
+	],
 	//'RECAPTCHA_SITE_KEY' => '6LdeR9UUAAAAADpy3OzNUr6P04htVf3UtZtVFMEZ',
 	//'RECAPTCHA_SECRET_KEY' => '6LdeR9UUAAAAAL7zjTU6NhSfCVGqj6k1Rmji1cvv',
 	//'formErrorMsg' => 'There are some error in form submission, please find error in below form.',

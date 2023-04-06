@@ -346,17 +346,11 @@ class UsersController extends Controller
 			$fileNameArr = explode('.', $fileName);
 			$fileNameExt = end($fileNameArr);
 			$newName = date('His').rand() . time() . '.' . $fileNameExt;
-			
 			$file->move($destinationPath, $newName);
-			
-			//$user_config = json_decode($options['user'],true);
-			
 			$img = Image::make(public_path('/uploads/users/'.$newName));
-						
             $img->resize(250, 250, function($constraint) {
 				$constraint->aspectRatio();
 			});
-			
 			$img->save(public_path('/uploads/users/thumb/'.$newName));
 
             //** Below code for unlink old image **//
