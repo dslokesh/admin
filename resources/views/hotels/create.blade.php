@@ -124,6 +124,25 @@
                 @endif
               </div>
 			   <div class="form-group col-md-6">
+			  <label for="inputName">Zone: <span class="red">*</span></label>
+                <select name="zone_id" id="zone_id" class="form-control">
+				<option value="">--select--</option>
+				@foreach($zones as $zone)
+                    <option value="{{$zone->id}}" @if(old('zone_id') == $zone->id) {{'selected="selected"'}} @endif>{{$zone->name}}</option>
+				@endforeach
+                 </select>
+				 @if ($errors->has('zone_id'))
+                    <span class="text-danger">{{ $errors->first('zone_id') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-6">
+                <label for="inputName">Location: <span class="red">*</span></label>
+                <input type="text" id="location" name="location"  value="{{ old('location')}}" class="form-control"   />
+                @if ($errors->has('location'))
+                    <span class="text-danger">{{ $errors->first('location') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
                 <label for="inputName">Longitude:</label>
                 <input type="text" id="longitude" name="longitude" value="{{ old('longitude') }}" class="form-control"  placeholder="Longitude" />
                 @if ($errors->has('longitude'))

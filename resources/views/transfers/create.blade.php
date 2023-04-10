@@ -84,19 +84,25 @@
  <!-- Script -->
 	<script type="text/javascript">
 	$(document).ready(function(){
-
-	$("#number_of_row").on("change", function () {
-            var number_of_row = $(this).val();
-			$("#data_row").html('');
-			
-            for(i=1; i<=number_of_row; i++)
-			{
-				var htmlRow ='<div class="form-group col-md-1"><label for="inputName">Price '+i+': <span class="red">*</span></label><input type="text" name="price[]"  required="required" class="form-control"   /> </div>';
-				$("#data_row").append(htmlRow);
-			}				
-                
-        });
-		
+		$("#number_of_row").on("change", updateDivs);
 	});
+	function updateDivs() {
+		  var numSelect = $("#number_of_row");
+		  var num = parseInt(numSelect.val());
+		  var container = $("#data_row");
+		  var divs = container.find("div");
+		  var divCount = divs.length;
+
+		  if (num > divCount) {
+			for (var i = divCount + 1; i <= num; i++) {
+			 var htmlRow ='<div class="form-group col-md-1"><label for="inputName">Price '+i+': <span class="red">*</span></label><input type="text" name="price[]"  required="required" class="form-control"   /> </div>';
+			  container.append(htmlRow);
+			}
+		  } else if (num < divCount) {
+			for (var i = divCount; i > num; i--) {
+			  divs.eq(i - 1).remove();
+			}
+		  }
+		}
 	</script>        
 @endsection

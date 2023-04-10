@@ -82,6 +82,14 @@
                 <label for="inputName">Zip Code:</label>
                 {{$hotel->zip_code}}
               </div>
+			   <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Zone:</label>
+               {{($hotel->zone)?$hotel->zone->name:''}}
+              </div>
+			   <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Location:</label>
+                {{$hotel->location}}
+              </div>
 			  <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Longitude:</label>
                 {{$hotel->longitude}}

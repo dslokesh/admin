@@ -7,6 +7,7 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\HotelCategory;
 use App\Models\Hotel;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use DB;
 
@@ -60,9 +61,10 @@ class HotelController extends Controller
     public function create()
     {
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
+		$zones = Zone::where('status', 1)->orderBy('name', 'ASC')->get();
         $hotelcategories = HotelCategory::where('status', 1)->orderBy('name', 'ASC')->get();
 
-        return view('hotels.create', compact('countries', 'hotelcategories'));
+        return view('hotels.create', compact('countries', 'hotelcategories','zones'));
     }
 
     /**
@@ -81,7 +83,9 @@ class HotelController extends Controller
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-            'zip_code' => 'required'
+            'zip_code' => 'required',
+			'zone_id' => 'required',
+			'location' => 'required'
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
             'country_id.required' => 'The country field is required.',
@@ -99,6 +103,8 @@ class HotelController extends Controller
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
+		$record->zone_id = $request->input('zone_id');
+		$record->location = $request->input('location');
 		$record->brand_name = $request->input('brand_name');
 		$record->formerly_name = $request->input('formerly_name');
 		$record->translates_name = $request->input('translates_name');
@@ -134,10 +140,11 @@ class HotelController extends Controller
     {
         $record = Hotel::find($id);
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
+		$zones = Zone::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
         $hotelcategories = HotelCategory::where('status', 1)->orderBy('name', 'ASC')->get();
-        return view('hotels.edit')->with(['record' => $record, 'countries' => $countries, 'states' => $states, 'cities' => $cities, 'hotelcategories' => $hotelcategories]);
+        return view('hotels.edit')->with(['record' => $record, 'countries' => $countries, 'states' => $states, 'cities' => $cities, 'hotelcategories' => $hotelcategories,'zones'=>$zones]);
     }
 
     /**
@@ -157,7 +164,9 @@ class HotelController extends Controller
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
-            'zip_code' => 'required'
+            'zip_code' => 'required',
+			'zone_id' => 'required',
+            'location' => 'required'
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
             'country_id.required' => 'The country field is required.',
@@ -173,6 +182,8 @@ class HotelController extends Controller
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
+		$record->zone_id = $request->input('zone_id');
+		$record->location = $request->input('location');
 		$record->brand_name = $request->input('brand_name');
 		$record->formerly_name = $request->input('formerly_name');
 		$record->translates_name = $request->input('translates_name');

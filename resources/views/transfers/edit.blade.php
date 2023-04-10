@@ -55,7 +55,7 @@
 			  
 			    <div  class="row">
 				@foreach($record->transferdata as $data)
-			  <div class="form-group col-md-1"><label for="inputName">Price {{$data->qty}}: <span class="red">*</span></label><br><input type="text" name="price[]" value="{{$data->price}}"  required="required" class="form-control" style="width: 70px;float: left; margin-right:5px;"   /> <a href="javascript:;" id="removeRow"   class="btn btn-danger remCF"><i class="fas fa-minus"></i></a> </div>
+			  <div class="form-group col-md-1"><label for="inputName">Price {{$data->qty}}: <span class="red">*</span></label><br><input type="text" name="price[]" value="{{$data->price}}"  required="required" class="form-control" style="width: 60px;float: left; margin-right:5px;"   /> </div>
 			   @endforeach
 			   </div>
 			   <div id="data_row" class="row">
@@ -87,7 +87,7 @@
 	$("#addMore").on("click", function () {
 		var counter = $('#counterPrice').val();
 		counter++;
-	var htmlRow ='<div class="form-group col-md-1"><label for="inputName">Price '+counter+': <span class="red">*</span></label><br><input type="text" name="price[]" style="width: 70px;float: left; margin-right:5px;"  required="required" class="form-control"   /> <a href="javascript:;" id="removeRow"   class="btn btn-danger remCF"><i class="fas fa-minus"></i></a>';
+	var htmlRow ='<div class="form-group col-md-1"><label for="inputName">Price '+counter+': <span class="red">*</span></label><br><input type="text" name="price[]" style="width: 60px;float: left; margin-right:5px;"  required="required" class="form-control"   /> <a href="javascript:;" id="removeRow"   class="btn btn-danger remCF"><i class="fas fa-minus"></i></a>';
 				$("#data_row").append(htmlRow);
             $('#counterPrice').val(counter);    
         });

@@ -27,4 +27,9 @@ class Hotel extends Model
     {
         return $this->belongsTo(HotelCategory::class, 'hotel_category_id', 'id');
     }
+	
+	 public function zone()
+    {
+        return $this->belongsTo(Zone::class);
+    }
 }
