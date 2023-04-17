@@ -43,361 +43,77 @@
         <!-- small box -->
 			<div class="small-box bg-success">
 				<div class="inner">
-				<h3>72</h3>
+				<h3>{{$totalUserRecords}}</h3>
 
-				<p>Amounts of PPE assets</p>
+				<p>Users</p>
 				</div>
 				
-				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
 		<div class="col-lg-3 col-6">
         <!-- small box -->
 			<div class="small-box bg-warning">
 				<div class="inner">
-				<h3>32</h3>
+				<h3>{{$totalAgentRecords}}</h3>
 
-				<p>Amounts of Expiring PPE</p>
+				<p>Agents</p>
 				</div>
 				
-				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-			</div>
-        </div>
-		<div class="col-lg-3 col-6">
-        <!-- small box -->
-			<div class="small-box bg-danger">
-				<div class="inner">
-				<h3>20</h3>
-
-				<p>Amounts of Expired PPE</p>
-				</div>
-				
-				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('agents.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
 		<div class="col-lg-3 col-6">
         <!-- small box -->
 			<div class="small-box bg-success">
 				<div class="inner">
-				<h3>50</h3>
+				<h3>{{$totalSupplierRecords}}</h3>
 
-				<p>Order Awaiting Assignment</p>
+				<p>Suppliers</p>
 				</div>
 				
-				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-			</div>
-        </div>
-		<div class="col-lg-3 col-6">
-        <!-- small box -->
-			<div class="small-box bg-success">
-				<div class="inner">
-				<h3>100</h3>
-
-				<p>Amounts of Technicians</p>
-				</div>
-				
-				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('suppliers.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
 		<div class="col-lg-3 col-6">
         <!-- small box -->
 			<div class="small-box bg-warning">
 				<div class="inner">
-				<h3>23</h3>
+				<h3>{{$totalCustomerRecords}}</h3>
 
-				<p>Amounts of Expiring Certificate</p>
+				<p>Customers</p>
 				</div>
 				
-				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('customers.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
 		<div class="col-lg-3 col-6">
         <!-- small box -->
-			<div class="small-box bg-danger">
+			<div class="small-box bg-success">
 				<div class="inner">
-				<h3>10</h3>
+				<h3>{{$totalActivityRecords}}</h3>
 
-				<p>Amounts of Expired Certificate</p>
+				<p>Activities</p>
 				</div>
 				
-				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('activities.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
 		<div class="col-lg-3 col-6">
         <!-- small box -->
-			<div class="small-box bg-info">
+			<div class="small-box bg-warning">
 				<div class="inner">
-				<h3>$35000</h3>
+				<h3>{{$totalHotelRecords}}</h3>
 
-				<p>Remaining PO Value</p>
+				<p>Hotels</p>
 				</div>
 				
-				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+				<a href="{{ route('hotels.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
-      <!-- ./col -->
-      <div class="col-lg-8 col-6"> 
-        <!-- small box -->
-        <div class="small-box">       
-            <h4>Expiring Product Assets</h4>
-     
-          <div class="pt-3" id="chart"> </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-6"> 
-        <!-- small box -->
-        <div class="small-box">         
-            <h4>Remaining PO Value</h4>       
-          <div class="pt-3" id="chart2"> </div>
-        </div>
-      </div>
-      <!-- ./col --> 
+		
+		
       
-      <!-- ./col -->
-      
-      <div class="col-lg-12 col-6">
-		  <div class="smart-box">
-        <div class="inner">
-          <h4>Amount of PPE Assets</h4>
-        </div>
-        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-          <div class="row">
-            <div class="col-sm-12 col-md-6"></div>
-            <div class="col-sm-12 col-md-6"></div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <table class="table  table-hover dataTable dtr-inline" aria-describedby="example2_info">
-                <thead class="thead-light">
-                  <tr>
-                    <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Id</th>
-					 <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Product</th>
-                    
-                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product Type</th>
-					 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Serial Number</th>
-					  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Assigned User</th>
-					   <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Assigned To Team ID</th>
-					   <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Service Date</th>
-					   
-					   <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Warranty Status</th>
-					   <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Project</th>
-					   <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="odd">
-                    <td>0001</td>
-                    <td>sMRT AU10</td>
-                    <td>PLB</td>
-					<td>E481403</td>
-                    <td>#01</td>
-                    <td>#100</td>
-					<td>19/05/22</td>
-                    <td><span style="color:green; font-weight:bold">Valid</span></td>
-                    <td>Hornsea One</td>
-					<td>UK</td>
-                  </tr>
-				  
-				   <tr class="odd">
-                    <td>0002</td>
-                    <td>sMRT AU12</td>
-                    <td>PLB</td>
-					<td>E481406</td>
-                    <td>#01</td>
-                    <td>#101</td>
-					<td>19/05/22</td>
-                    <td><span style="color:#ffc107; font-weight:bold">Expiring</span></td>
-                    <td>Hornsea One</td>
-					<td>UK</td>
-                  </tr>
-				   <tr class="even">
-                    <td>0003</td>
-                    <td>sMRT AU11</td>
-                    <td>PLB</td>
-					<td>E481402</td>
-                    <td>#02</td>
-                    <td>#100</td>
-					<td>19/05/22</td>
-                    <td><span style="color:red ;font-weight:bold">Expired</span></td>
-                    <td>Hornsea One</td>
-					<td>UK</td>
-                  </tr>
-				   <tr class="odd">
-                    <td>0004</td>
-                    <td>sMRT AU10</td>
-                    <td>PLB</td>
-					<td>E481404</td>
-                    <td>#04</td>
-                    <td>#103</td>
-					<td>19/05/22</td>
-                    <td><span style="color:green; font-weight:bold">Valid</span></td>
-                    <td>Hornsea One</td>
-					<td>UK</td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-		</div>
-      </div>
-      <div class="col-lg-6 col-6">
-		  	  <div class="smart-box">
-        <div class="inner">
-          <h4>All Locations/Sites/Wind Farms</h4>
-        </div>
-        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-          <div class="row">
-            <div class="col-sm-12 col-md-6"></div>
-            <div class="col-sm-12 col-md-6"></div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <table  class="table table-hover dataTable dtr-inline" aria-describedby="example2_info">
-                <thead class="thead-light">
-                  <tr>
-                    <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Location</th>
-                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Member</th>
-                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">On Site</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="odd">
-                    <td>Jaipur</td>
-                    <td>Deepak</td>
-                    <td>2</td>
-                  </tr>
-                  <tr class="even">
-                    <td>Jaipur</td>
-                    <td>Deepak</td>
-                    <td>6</td>
-                  </tr>
-                  <tr class="odd">
-                    <td>Jaipur</td>
-                    <td>Deepak</td>
-                    <td>5</td>
-                  </tr>
-                  <tr class="even">
-                    <td>Jaipur</td>
-                    <td>Deepak</td>
-                    <td>5</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-		</div>
-      <div class="col-lg-6 col-6">
-		<div class="smart-box">
-        <div class="inner">
-          <h4>Technician Inventory</h4>
-        </div>        
-          <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-              <div class="col-sm-12 col-md-6"></div>
-              <div class="col-sm-12 col-md-6"></div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
-                <table  class="table table-hover dataTable dtr-inline" aria-describedby="example2_info">
-                  <thead class="thead-light">
-                    <tr>
-                      <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Name</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Inventory</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Location</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="odd">
-                      <td>Deepak</td>
-                      <td>2</td>
-                      <td>Jaipur</td>
-                    </tr>
-                    <tr class="even">
-                      <td>Deepak</td>
-                      <td>2</td>
-                      <td>Jaipur</td>
-                    </tr>
-                    <tr class="odd">
-                      <td>Deepak</td>
-                      <td>2</td>
-                      <td>Jaipur</td>
-                    </tr>
-                    <tr class="even">
-                      <td>Deepak</td>
-                      <td>2</td>
-                      <td>Jaipur</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        
-      </div>
-		</div>
-      <div class="col-lg-12 col-6">
-		  	  <div class="smart-box">
-        <div class="inner">
-          <h4>New Orders And Stats</h4>
-        </div>
-        
-          <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-              <div class="col-sm-12 col-md-6"></div>
-              <div class="col-sm-12 col-md-6"></div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12">
-                <table  class="table  table-hover dataTable dtr-inline" aria-describedby="example2_info">
-                  <thead class="thead-light">
-                    <tr>
-                      <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Date</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Id</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Value</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Status</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="odd">
-                      <td class="dtr-control sorting_1" tabindex="0">Jen 25th 2022</td>
-                      <td>#123456</td>
-                      <td>$95</td>
-                      <td>Available</td>
-                      <td>Description</td>
-                    </tr>
-                    <tr class="even">
-                      <td class="dtr-control sorting_1" tabindex="0">Jen 26th 2022</td>
-                      <td>#123456</td>
-                      <td>$100</td>
-                      <td>Available</td>
-                      <td>Description</td>
-                    </tr>
-                    <tr class="odd">
-                      <td class="dtr-control sorting_1" tabindex="0">Jen 25th 2022</td>
-                      <td>#123456</td>
-                      <td>$95</td>
-                      <td>Available</td>
-                      <td>Description</td>
-                    </tr>
-                    <tr class="even">
-                      <td class="dtr-control sorting_1" tabindex="0">Jen 26th 2022</td>
-                      <td>#123456</td>
-                      <td>$100</td>
-                      <td>Available</td>
-                      <td>Description</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <!-- /.row --> 
   </div>

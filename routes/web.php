@@ -19,6 +19,7 @@ use App\Http\Controllers\AgentsController;
 use App\Http\Controllers\ZonesController;
 use App\Http\Controllers\TransfersController;
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,10 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('agents', AgentsController::class);
         Route::resource('zones', ZonesController::class);
         Route::resource('activities', ActivitiesController::class);
+        Route::get('activity-prices-create/{id?}', [ActivitiesController::class, 'createPriceForm'])->name('activity.prices.create');
+        Route::get('activity-prices-edit/{id?}', [ActivitiesController::class, 'editPriceForm'])->name('activity.prices.edit');
+        Route::post('activity-prices-save', [ActivitiesController::class, 'activityPriceSave'])->name('activity.prices.save');
+        Route::get('activity-prices-add-new-row', [ActivitiesController::class, 'newRowAddmore'])->name('activity.prices.new.row');
         Route::resource('transfers', TransfersController::class);
         //Route::post('register', [UsersController::class, 'register'])->name('register');
 
@@ -89,6 +94,13 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
     });
 });
 
+// THIS ROUTE FOR TEXT EDITOR
+Route::get('media/image/browse', [MediaController::class, 'browseImage'])->name('media.image.browse');
+Route::post('media/uploadImage', [MediaController::class, 'uploadImage'])->name('media.upload');
+Route::post('file/upload', [MediaController::class, 'uploadFile'])->name('file.upload');
+
+// THIS ROUTE FOR DELETE IMAGE FROM FILEINPUT FILES TABLE
+Route::get('fileinput/image-delete/{id}', [MediaController::class, 'imageDelete'])->name('fileinput.imagedelete');
 
 /* Function for print array in formated form */
 if (!function_exists('pr')) {

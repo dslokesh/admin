@@ -9,6 +9,13 @@ class Activity extends Model
     protected $table = "activities";
 
    
-
+	public function images()
+    {
+        return $this->hasMany('App\Models\Files', 'model_id', 'id')->where("model", "Activity");
+    }
    
+	public function prices()
+    {
+        return $this->hasMany('App\Models\ActivityPrices', 'activity_id', 'id');
+    }
 }

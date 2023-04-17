@@ -3,6 +3,12 @@
 <head>
 @include('inc.head')
  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+
+ <link href="{{asset('bootstrap-fileinput/css/fileinput.min.css')}}" rel="stylesheet">
+   <link href="{{asset('bootstrap-fileinput/themes/explorer-fa/theme.min.css')}}" rel="stylesheet">
+   <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" rel="stylesheet" type="text/css" />
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -57,10 +63,12 @@
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
-
+<script src="{{asset('bootstrap-fileinput/js/plugins/piexif.js')}}"></script>
+  <script src="{{asset('bootstrap-fileinput/js/fileinput.js')}}"></script>
 <script src="{{asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 <!-- AdminLTE for demo purposes -->
 <!--script src="{{asset('dist/js/demo.js')}}"></script-->
 
@@ -94,7 +102,9 @@ $('.datepicker').datepicker({
         todayHighlight: true,
 		format: 'yyyy-mm-dd'
     });
-
+$('.timepicker').datetimepicker({
+            format: 'hh:mm a'
+        });
   });
 
 </script>

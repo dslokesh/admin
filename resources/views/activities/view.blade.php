@@ -31,10 +31,8 @@
 			
 			<div class="card-body">
 			
-			
 			<header class="profile-header">
-          <div class="profile-image"> @if(!empty($activity->image))<img src="{{asset('uploads/activities/thumb/'.$activity->image)}}"  />@endif </div>
-			
+         
 				<div class="profile-content">
 					<div class="row">
               
@@ -44,7 +42,6 @@
                 {{ $activity->code }}
               </div>
 			
-			 
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Type of Activity:</label>
                 {{ $typeActivities[$activity->type_activity]}}
