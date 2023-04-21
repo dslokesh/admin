@@ -203,8 +203,17 @@
 					
 				
               </div>
+			  <!--form-group-->
+              <div class="form-group col-md-12">
+                  <label for="featured_image">Featured Image <span class="red">*</span></label>
+                  <input type="file" class="form-control" name="featured_image" accept="image/x-png,image/gif,image/jpeg">
+                  @if ($errors->has('featured_image'))
+                      <span class="text-danger">{{ $errors->first('featured_image') }}</span>
+                  @endif
+                </div>
+			
 			   <div class="form-group col-md-12">
-                  <label for="featured_image">Images <span class="red">*</span></label>
+                  <label for="featured_image">Images</label>
                   <div class="control-group">
                     <div class="file-loading">
                         <input id="image" type="file" name="image[]" data-min-file-count="0" multiple>

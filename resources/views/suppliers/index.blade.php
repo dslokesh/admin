@@ -97,6 +97,10 @@
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
                      <td>
+					  <a class="btn btn-info btn-sm" style="display:none" href="{{route('suppliers.markup.activity',$record->id)}}">
+                              Markup
+                              
+                          </a>
 					  <a class="btn btn-info btn-sm" href="{{route('suppliers.show',$record->id)}}">
                               <i class="fas fa-eye">
                               </i>

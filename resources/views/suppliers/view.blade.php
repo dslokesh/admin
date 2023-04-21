@@ -83,6 +83,8 @@
                 <label for="inputName">Postcode:</label>
                 {{$supplier->postcode}}
               </div>
+			  
+			 
              
               <div class="form-group col-lg-6 mb-3">
 			        <label for="inputName">Status:</label>
@@ -94,7 +96,63 @@
           
 			
 				</header>
-		
+		<div class="row" style="display:none">
+				<div class="form-group col-lg-12 mb-3">
+					<table id="example1" class="table table-bordered table-striped">
+                  <thead>
+				  <tr>
+                    <th colspan="2" ><h3>Markup</h3></th>
+                  </tr>
+                  <tr>
+                    <th>Activity Name</th>
+					<th>Price</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+				   
+                  @foreach ($markups as $activityName => $record)
+                  <tr>
+					
+                    <td>{{ $activityName }}</td>
+					<td>
+						<table class="table table-bordered table-striped">
+						<tr>
+							<th>Variant Code</th>
+							<th>Ticket Only</th>
+							<th>SIC Transfer</th>
+							<th>PVT Transfer</th>
+						</tr>
+						@foreach($record as $variant_code => $variant)
+						@php
+						$ticket_only = (isset($variant['ticket_only']))?$variant['ticket_only']:'';
+						$sic_transfer = (isset($variant['sic_transfer']))?$variant['sic_transfer']:'';
+						$pvt_transfer = (isset($variant['pvt_transfer']))?$variant['pvt_transfer']:'';
+						
+						@endphp
+						<tr>
+						<td>{{ $variant_code }}</td>
+						<td>
+						{{$ticket_only}}
+						</td>
+						<td>
+						{{$sic_transfer}}
+						</td>
+						<td>
+						{{$pvt_transfer}}
+						</td>
+						</tr>
+						@endforeach
+						</table>
+					</td>
+                  </tr>
+				 
+                  @endforeach
+
+                  </tbody>
+                 
+                </table>
+				</div>
+			</div>
 			
           <!-- /.card-body --> 
         </div>

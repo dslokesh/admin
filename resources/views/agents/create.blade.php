@@ -141,6 +141,29 @@
                     <span class="text-danger">{{ $errors->first('postcode') }}</span>
                 @endif
               </div>
+			  
+			  <div class="form-group col-md-6">
+                <label for="inputName">Ticket Only%:</label>
+                <input type="text" id="ticket_only" name="ticket_only"  value="{{ old('ticket_only')}}" class="form-control"   />
+                @if ($errors->has('ticket_only'))
+                    <span class="text-danger">{{ $errors->first('ticket_only') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">SIC Transfer%:</label>
+                <input type="text" id="sic_transfer" name="sic_transfer"  value="{{ old('sic_transfer') }}" class="form-control"   />
+                @if ($errors->has('sic_transfer'))
+                    <span class="text-danger">{{ $errors->first('sic_transfer') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">PVT Transfer%:</label>
+                <input type="text" id="pvt_transfer" name="pvt_transfer"  value="{{ old('pvt_transfer')}}" class="form-control"   />
+                @if ($errors->has('pvt_transfer'))
+                    <span class="text-danger">{{ $errors->first('pvt_transfer') }}</span>
+                @endif
+              </div>
+			  
 			   <div class="form-group col-md-6">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">
@@ -156,7 +179,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 pb-3">
           <a href="{{ route('agents.index') }}" class="btn btn-secondary">Cancel</a>
           <button type="submit" class="btn btn-success float-right">Create</button>
         </div>

@@ -6,7 +6,10 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use App\Models\Supplier;
+use App\Models\Activity;
+use App\Models\ActivityPrices;
 use App\Models\SupplierDetails;
+use App\Models\SupplierPriceMarkup;
 use Illuminate\Http\Request;
 use DB;
 use Image;
@@ -118,6 +121,7 @@ class SuppliersController extends Controller
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
         $record->status = $request->input('status');
+		
         $record->save();
         return redirect('suppliers')->with('success', 'Supplier Created Successfully.');
     }
@@ -130,7 +134,33 @@ class SuppliersController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        return view('suppliers.view', compact('supplier'));
+		$activity_ids = explode(",",$supplier->activity_id);
+		
+		$variants = [];
+		$markups = [];
+		foreach($activity_ids as $aid)
+		{
+			$activity = Activity::find($aid);
+			$variants[$aid] = ActivityPrices::select('variant_code')->distinct()->where('activity_id',  $aid)->get()->toArray();
+			
+			foreach($variants[$aid] as $variant)
+			{
+				$m = SupplierPriceMarkup::where('supplier_id',  $supplier->id)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
+				
+				if(!empty($m))
+				{
+					$markups[$activity->title][$variant['variant_code']] = [
+						'ticket_only'=>$m->ticket_only,
+						'sic_transfer'=>$m->sic_transfer,
+						'pvt_transfer'=>$m->pvt_transfer,
+					];
+				}
+			}
+			
+		}
+		
+		
+        return view('suppliers.view', compact('supplier','markups'));
     }
 
     /**
@@ -214,6 +244,7 @@ class SuppliersController extends Controller
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
         $record->status = $request->input('status');
+		
         $record->save();
         return redirect('suppliers')->with('success', 'Supplier Updated.');
     }
@@ -229,5 +260,122 @@ class SuppliersController extends Controller
         $record = Supplier::find($id);
         $record->delete();
         return redirect('suppliers')->with('success', 'Supplier Deleted.');
+    }
+	
+	public function priceMarkupActivityList($id)
+    {
+		$supplierId = $id;
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $records = Activity::where('status', 1)->where('is_price', 1)->orderBy('title', 'ASC')->paginate($perPage);
+		$supplier = Supplier::find($supplierId);
+		$activity_ids = explode(",",$supplier->activity_id);
+        return view('suppliers.priceActivities', compact('records','supplierId','activity_ids'));
+    }
+	
+	public function priceMarkupActivitySave(Request $request)
+    {
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $input = $request->all();
+        $supplier = Supplier::find($request->input('supplier_id'));
+		
+		$activity_id = $request->input('activity_id');
+		$data = [];
+		if(!empty($activity_id))
+		{
+			foreach($activity_id as $k => $av)
+			{
+				$data[] = $av;
+			}
+			
+			$jsonData = implode(",",$data);
+			
+			$supplier->activity_id = $jsonData;
+			$supplier->save();
+			return redirect()->route('suppliers.markup.price',[$request->input('supplier_id')])->with('success', 'Activity Saved.');
+		}
+		else
+		{
+			return redirect()->back()->with('error', 'Please select at least one activity.');
+		}
+        
+		
+        
+        
+    }
+	
+	public function markupPriceList($id)
+    {
+		$supplierId = $id;
+		$supplier = Supplier::find($supplierId);
+		$activity_ids = explode(",",$supplier->activity_id);
+		$activities = Activity::whereIn('id', $activity_ids)->where(['status'=> 1,'is_price'=> 1])->get();
+		$variants = [];
+		$markups = [];
+		foreach($activity_ids as $aid)
+		{
+			$variants[$aid] = ActivityPrices::select('variant_code')->distinct()->where('activity_id',  $aid)->get()->toArray();
+			
+			foreach($variants[$aid] as $variant)
+			{
+				$m = SupplierPriceMarkup::where('supplier_id',  $supplierId)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
+				
+				if(!empty($m))
+				{
+					$markups[$variant['variant_code']] = [
+						'ticket_only'=>$m->ticket_only,
+						'sic_transfer'=>$m->sic_transfer,
+						'pvt_transfer'=>$m->pvt_transfer,
+					];
+				}
+			}
+			
+		}
+		
+		
+		
+		/* print_r($markups);
+		exit; */
+        return view('suppliers.supplierPriceMarkup', compact('supplierId','activities','variants','markups'));
+    }
+	
+	public function markupPriceSave(Request $request)
+    {
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $input = $request->all();
+        $record = new SupplierPriceMarkup();
+		$supplier_id = $request->input('supplier_id');
+		$ticket_only = $request->input('ticket_only');
+		$sic_transfer = $request->input('sic_transfer');
+		$pvt_transfer = $request->input('pvt_transfer');
+		$data = [];
+		if(!empty($ticket_only))
+		{
+			foreach($ticket_only as $activity_id => $acv)
+			{
+				foreach($acv as $variant_code => $ac)
+				{
+				$data[] = [
+				'supplier_id' => $supplier_id,
+				'activity_id' => $activity_id,
+				'variant_code' => $variant_code,
+				'ticket_only' => $ac,
+				'sic_transfer' => $sic_transfer[$activity_id][$variant_code],
+				'pvt_transfer' => $pvt_transfer[$activity_id][$variant_code],
+				];
+				}
+			}
+		}
+        
+		if(count($data) > 0)
+		{
+			SupplierPriceMarkup::where("supplier_id",$supplier_id)->delete();
+			SupplierPriceMarkup::insert($data);
+			 return redirect('suppliers')->with('success', 'Markup saved successfully.');
+		}
+		else
+		{
+			 return redirect()->back()->with('error', 'Something went wrong.');
+		}
+		
     }
 }

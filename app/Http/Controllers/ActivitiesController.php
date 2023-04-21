@@ -35,6 +35,13 @@ class ActivitiesController extends Controller
             if ($data['status'] == 2)
                 $query->where('status', 0);
         }
+		
+		if (isset($data['is_price']) && !empty($data['is_price'])) {
+            if ($data['is_price'] == 1)
+                $query->where('is_price', 1);
+            if ($data['is_price'] == 2)
+                $query->where('is_price', 0);
+        }
 
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		//dd($records);
@@ -69,10 +76,12 @@ class ActivitiesController extends Controller
 			'description' => 'required',
 			'type_activity' => 'required',
 			'code' => 'required',
+			'featured_image' => 'required|image|max:' . ($options['allow_img_size'] * 1024),
 			'image.*' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
         ], [
             'title.sanitize_scripts' => 'Invalid value entered for title field.',
 			'image.*.max' => 'The image must not be greater than '. $options['allow_img_size'] .' MB.',
+			'featured_image.max' => 'The featured image must not be greater than '.$options['allow_img_size'].' MB.',
 			'image.*.image' => 'The image must be an image.',
         ]);
 
@@ -113,6 +122,11 @@ class ActivitiesController extends Controller
 			$zoneArrayJson = json_encode($zoneArray);
 			$record->zones = $zoneArrayJson;
 		}
+		
+		if($request->hasfile('featured_image')){
+            $image = $request->file('featured_image');
+			$record->image = $this->uploadImages($image);
+        }
 		
 		$record->sic_TFRS = $sic_TFRS;
         $record->title = $request->input('title');
@@ -167,8 +181,28 @@ class ActivitiesController extends Controller
     public function show(Activity $activity)
     {
 		$typeActivities = config("constants.typeActivities"); 
+		$activity = $activity::with('transfer')->where('id',$activity->id)->first();
+		$zoneArray = [];
+		if($activity->sic_TFRS == 1)
+		{
+			$zoneArrayJson = json_decode($activity->zones);
+			
+			foreach($zoneArrayJson as $k => $z)
+			{
+				$zone = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
+				
+				$zoneArray[] = [
+				'zone' => $zone->name,
+				'zoneValue' => $z->zoneValue,
+				];
+			}
+			
+			
+		}
 		
-         return view('activities.view')->with(['activity' => $activity,'typeActivities'=>$typeActivities]);
+		$priceData = ActivityPrices::where('activity_id',$activity->id)->get();
+		
+         return view('activities.view')->with(['activity' => $activity,'typeActivities'=>$typeActivities,'zoneArray'=>$zoneArray,'priceData'=>$priceData]);
     }
 
     /**
@@ -229,13 +263,19 @@ class ActivitiesController extends Controller
 			'description' => 'required',
 			'type_activity' => 'required',
 			'code' => 'required',
+			'featured_image' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
 			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),
         ], [
+		'featured_image.max' => 'The featured image must not be greater than '.$options['allow_img_size'].' MB.',
             'title.sanitize_scripts' => 'Invalid value entered for title field.',
         ]);
 
         $record = Activity::find($id);
-		
+		//check featured_image
+        if($request->hasfile('featured_image')){
+            $image = $request->file('featured_image');
+			$record->image = $this->uploadImages($image);
+        }
 		$allday = ($request->input('AllDay'))?$request->input('AllDay'):'';
 		$weekdays = ($request->input('day'))?$request->input('day'):[];
 		
@@ -353,11 +393,14 @@ class ActivitiesController extends Controller
 		
 		//print_r($request->all());
 		//exit;
+		$act = Activity::find($request->input('activity_id'));
 		
 		$variant_name = $request->input('variant_name');
+		$variant_code = $request->input('variant_code');
 		$slot_duration = $request->input('slot_duration');
 		$activity_duration = $request->input('activity_duration');
 		$end_time = $request->input('end_time');
+		$start_time = $request->input('start_time');
 		$rate_valid_from = $request->input('rate_valid_from');
 		$rate_valid_to = $request->input('rate_valid_to');
 		$adult_rate_without_vat = $request->input('adult_rate_without_vat');
@@ -385,8 +428,10 @@ class ActivitiesController extends Controller
 			$data[] = [
 					'activity_id' => $request->input('activity_id'),
                     'variant_name' => $v,
+					'variant_code' => $variant_code[$k],
                     'slot_duration' => $slot_duration[$k],
 					'activity_duration' => $activity_duration[$k],
+					'start_time' => $start_time[$k],
 					'end_time' => $end_time[$k],
 					'rate_valid_from' => $rate_valid_from[$k],
 					'rate_valid_to' => $rate_valid_to[$k],
@@ -417,7 +462,15 @@ class ActivitiesController extends Controller
 		{
 			ActivityPrices::where("activity_id",$request->input('activity_id'))->delete();
 			ActivityPrices::insert($data);
+			$act->is_price = 1;
+			$act->save();
 		}
+		else
+		{
+			$act->is_price = 0;
+			$act->save();
+		}
+		
 		
         return redirect('activities')->with('success', 'Activity Created Successfully.');
     }

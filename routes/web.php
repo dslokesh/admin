@@ -77,7 +77,15 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('airlines', AirlinesController::class);
         Route::resource('customers', CustomersController::class);
         Route::resource('suppliers', SuppliersController::class);
+        Route::get('suppliers-markup-activity/{id?}', [SuppliersController::class, 'priceMarkupActivityList'])->name('suppliers.markup.activity');
+        Route::post('suppliers-markup-activity-save', [SuppliersController::class, 'priceMarkupActivitySave'])->name('suppliers.markup.activity.save');
+        Route::get('suppliers-markup-price/{id?}', [SuppliersController::class, 'markupPriceList'])->name('suppliers.markup.price');
+        Route::post('suppliers-markup-price-save', [SuppliersController::class, 'markupPriceSave'])->name('suppliers.markup.price.save');
         Route::resource('agents', AgentsController::class);
+        Route::get('agents-markup-activity/{id?}', [AgentsController::class, 'priceMarkupActivityList'])->name('agents.markup.activity');
+        Route::post('agents-markup-activity-save', [AgentsController::class, 'priceMarkupActivitySave'])->name('agents.markup.activity.save');
+        Route::get('agents-markup-price/{id?}', [AgentsController::class, 'markupPriceList'])->name('agents.markup.price');
+        Route::post('agents-markup-price-save', [AgentsController::class, 'markupPriceSave'])->name('agents.markup.price.save');
         Route::resource('zones', ZonesController::class);
         Route::resource('activities', ActivitiesController::class);
         Route::get('activity-prices-create/{id?}', [ActivitiesController::class, 'createPriceForm'])->name('activity.prices.create');

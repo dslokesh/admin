@@ -47,9 +47,16 @@
 			@endif
                 <div class="form-group col-md-3">
                 <label for="inputName">Variant Name: <span class="red">*</span></label>
-                <input type="text" id="variant_name{{$k}}" name="variant_name[]" value="{{ old('title')?:$pdata->variant_name }}" class="form-control"  placeholder="Variant Name" required />
+                <input type="text" id="variant_name{{$k}}" name="variant_name[]" value="{{ old('variant_name')?:$pdata->variant_name }}" class="form-control"  placeholder="Variant Name" required />
                 @if ($errors->has('variant_name'))
                     <span class="text-danger">{{ $errors->first('variant_name') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-3">
+                <label for="inputName">Variant Code: <span class="red">*</span></label>
+                <input type="text" id="variant_code{{$k}}"  name="variant_code[]"  class="form-control onlynumbr_text"  placeholder="Variant Code" value="{{ old('variant_code')?:$pdata->variant_code }}" required />
+                @if ($errors->has('variant_code'))
+                    <span class="text-danger">{{ $errors->first('variant_code') }}</span>
                 @endif
               </div>
 			  <div class="form-group col-md-3">
@@ -103,29 +110,29 @@
                   <thead>
                   <tr>
                     <th>Pax Type</th>
-					<th>Rate (Without VAT)</th>
 					<th>Rate Including VAT</th>
+					<th>Rate (Without VAT)</th>
                     <th>Max No Allowed</th>
                     <th>Min No Allowed</th>
                   </tr>
 				   <tr>
                     <td>Adult</td>
-					<td><input type="text" id="adult_rate_without_vat{{$k}}"  name="adult_rate_without_vat[]"  class="form-control onlynumbr vatCal"  data-withvatinputid="adult_rate_with_vat{{$k}}" value="{{ $pdata->adult_rate_without_vat }}" /></td>
-					<td><input type="text" id="adult_rate_with_vat{{$k}}" readonly name="adult_rate_with_vat[]"  class="form-control onlynumbr" value="{{ $pdata->adult_rate_with_vat }}"  /></td>
+					<td><input type="text" id="adult_rate_with_vat{{$k}}"  name="adult_rate_with_vat[]"  class="form-control onlynumbr vatCal" value="{{ $pdata->adult_rate_with_vat }}"  data-withvatinputid="adult_rate_without_vat{{$k}}" /></td>
+					<td><input type="text" id="adult_rate_without_vat{{$k}}"  name="adult_rate_without_vat[]"  class="form-control onlynumbr" readonly value="{{ $pdata->adult_rate_without_vat }}" /></td>
                     <td><input type="text" id="adult_max_no_allowed{{$k}}" name="adult_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->adult_max_no_allowed }}" /></td>
                     <td><input type="text" id="adult_min_no_allowed{{$k}}"  name="adult_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->adult_min_no_allowed }}" /></td>
                   </tr>
 				  <tr>
                     <td>Child</td>
-					<td><input type="text" id="chield_rate_without_vat{{$k}}"  name="chield_rate_without_vat[]"  class="form-control onlynumbr vatCal" data-withvatinputid="chield_rate_with_vat{{$k}}"  value="{{ $pdata->chield_rate_without_vat }}" /></td>
-					<td><input type="text" id="chield_rate_with_vat{{$k}}" readonly name="chield_rate_with_vat[]"  class="form-control onlynumbr" value="{{ $pdata->chield_rate_with_vat }}"  /></td>
+					<td><input type="text" id="chield_rate_with_vat{{$k}}"  name="chield_rate_with_vat[]"  class="form-control onlynumbr vatCal" value="{{ $pdata->chield_rate_with_vat }}"  data-withvatinputid="chield_rate_without_vat{{$k}}" /></td>
+					<td><input type="text" id="chield_rate_without_vat{{$k}}"  name="chield_rate_without_vat[]"  class="form-control onlynumbr" readonly  value="{{ $pdata->chield_rate_without_vat }}" /></td>
                     <td><input type="text" id="chield_max_no_allowed{{$k}}"  name="chield_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->chield_max_no_allowed }}" /></td>
                     <td><input type="text" id="chield_min_no_allowed{{$k}}" name="chield_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->chield_min_no_allowed }}" /></td>
                   </tr>
 				   <tr>
                     <td>Infant</td>
-					<td><input type="text" id="infant_rate_without_vat{{$k}}"  name="infant_rate_without_vat[]"  class="form-control onlynumbr vatCal" data-withvatinputid="infant_rate_with_vat{{$k}}" value="{{ $pdata->infant_rate_without_vat }}" /></td>
-					<td><input type="text" id="infant_rate_with_vat{{$k}}" readonly name="infant_rate_with_vat[]"  class="form-control onlynumbr"  value="{{ $pdata->infant_rate_with_vat }}" /></td>
+					<td><input type="text" id="infant_rate_with_vat{{$k}}"  name="infant_rate_with_vat[]"  class="form-control onlynumbr vatCal"  value="{{ $pdata->infant_rate_with_vat }}"  data-withvatinputid="infant_rate_without_vat{{$k}}" /></td>
+					<td><input type="text" id="infant_rate_without_vat{{$k}}"  name="infant_rate_without_vat[]"  class="form-control onlynumbr" readonly value="{{ $pdata->infant_rate_without_vat }}" /></td>
                     <td><input type="text" id="infant_max_no_allowed{{$k}}"  name="infant_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->infant_max_no_allowed }}" /></td>
                     <td><input type="text" id="infant_min_no_allowed{{$k}}"  name="infant_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->infant_min_no_allowed }}" /></td>
                   </tr>
@@ -182,7 +189,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 mb-3">
           <a href="{{ route('activities.index') }}" class="btn btn-secondary">Cancel</a>
           <button type="submit" class="btn btn-success float-right">Save</button>
         </div>
@@ -243,12 +250,22 @@ $(document).on('keypress', '.onlynumbr', function(evt) {
 
 });
 
+$(document).on('keypress', '.onlynumbr_text', function(evt) {
+	var regex = new RegExp("^[a-zA-Z0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+       event.preventDefault();
+       return false;
+    }
+
+});
+
 $(document).on('change', '.vatCal', function(evt) {
 	let vat = parseFloat("{{$activity->vat}}")/100;
 	let inputvale = parseFloat($(this).val());
 	
 	let taxvalu = vat*inputvale;
-	let taxAmount = inputvale+taxvalu;
+	let taxAmount = inputvale - taxvalu;
 	let withVatInputId = $(this).data('withvatinputid');
 	//alert(withVatInputId);
 	$("body #"+withVatInputId).val(taxAmount.toFixed(2));

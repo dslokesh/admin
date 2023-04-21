@@ -192,7 +192,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 mb-3">
           <a href="{{ route('hotels.index') }}" class="btn btn-secondary">Cancel</a>
           <button type="submit" class="btn btn-success float-right">Create</button>
         </div>

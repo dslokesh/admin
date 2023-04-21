@@ -126,6 +126,7 @@
                     <span class="text-danger">{{ $errors->first('zip_code') }}</span>
                 @endif
               </div>
+			  
 			   <div class="form-group col-md-6">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">
@@ -141,7 +142,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 pb-3">
           <a href="{{ route('suppliers.index') }}" class="btn btn-secondary">Cancel</a>
           <button type="submit" class="btn btn-success float-right">Create</button>
         </div>

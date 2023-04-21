@@ -18,4 +18,12 @@ class Activity extends Model
     {
         return $this->hasMany('App\Models\ActivityPrices', 'activity_id', 'id');
     }
+	
+	
+	public function transfer()
+    {
+        return $this->belongsTo('App\Models\Transfer', 'transfer_plan', 'id');
+    }
+	
+	
 }

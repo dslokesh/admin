@@ -217,7 +217,19 @@
 				
               </div>
 			  
-			   
+			   <div class="form-group col-md-9">
+                  <label for="featured_image">Featured Image <span class="red">*</span></label>
+                  <input type="file" class="form-control" name="featured_image" accept="image/x-png,image/gif,image/jpeg">
+                  @if ($errors->has('featured_image'))
+                      <span class="text-danger">{{ $errors->first('featured_image') }}</span>
+                  @endif
+                
+              </div>
+			  @if(!empty($record->image))
+                <div class="col-md-2">
+                  <img src="{{asset('uploads/activities/thumb/'.$record->image)}}" style="width:100px; height:100px;margin-top:-6px" class="cimage" />
+                </div>
+				@endif
 			  
 			  <div class="form-group col-md-12">
                   <label for="featured_image">Images</label>

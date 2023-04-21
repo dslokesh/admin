@@ -47,11 +47,10 @@
                     <th>Email</th>
                     <th>Company Name</th>
                     <th>City</th>
-                    <th>Zip Code</th>
                     <th>Status</th>
                     <th>Created On</th>
                     <th>Updated On</th>
-                    <th></th>
+					<th></th>
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('agents.index')}}" >
@@ -67,7 +66,7 @@
                     <option value="{{$city->id}}" @if(request('city_id') == $city->id) {{'selected="selected"'}} @endif>{{$city->name}}</option>
 				@endforeach
                  </select></th>
-                 <th></th>
+                
 					 <th><select name="status" id="status" class="form-control">
                     <option value="" @if(request('status') =='') {{'selected="selected"'}} @endif>Select</option>
                     <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Active</option>
@@ -75,7 +74,7 @@
                  </select></th>
 					<th></th>
                     <th></th>
-                   
+                  
                     <th><button class="btn btn-info btn-sm" type="submit">Filter</button>
                     <a class="btn btn-default btn-sm" href="{{route('agents.index')}}">Clear</a></th>
                     
@@ -92,11 +91,15 @@
 					<td>{{ $record->email}}</td>
                     <td>{{ $record->company_name}}</td>
                     <td>{{ ($record->city)?$record->city->name:''}}</td>
-                    <td>{{ $record->zip_code}}</td>
                      <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
+					 
                      <td>
+					  <a class="btn btn-info btn-sm"  href="{{route('agents.markup.activity',$record->id)}}">
+                              Markup
+                              
+                          </a>
 					  <a class="btn btn-info btn-sm" href="{{route('agents.show',$record->id)}}">
                               <i class="fas fa-eye">
                               </i>
