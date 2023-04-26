@@ -116,7 +116,7 @@
                      <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
-                     <td><a class="btn btn-info btn-sm" href="{{route('customers.edit',$record->id)}}">
+                      <td><a class="btn btn-info btn-sm" href="{{route('customers.edit',$record->id)}}">
                               <i class="fas fa-pencil-alt">
                               </i>
                               

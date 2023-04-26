@@ -96,7 +96,7 @@
           
 			
 				</header>
-		<div class="row" style="display:none">
+		<div class="row">
 				<div class="form-group col-lg-12 mb-3">
 					<table id="example1" class="table table-bordered table-striped">
                   <thead>
