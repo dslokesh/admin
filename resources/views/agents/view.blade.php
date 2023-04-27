@@ -37,7 +37,10 @@
 			
 				<div class="profile-content">
 					<div class="row">
-              
+               <div class="col-lg-6 mb-3">
+                <label for="inputName">Company Name:</label>
+                {{ $agent->company_name }}
+              </div>
 			 
 			      <div class="col-lg-6 mb-3">
                 <label for="inputName">Email:</label>
@@ -51,10 +54,7 @@
                 <label for="inputName">Mobile:</label>
                 {{ $agent->mobile }}
               </div>
-			  <div class="col-lg-6 mb-3">
-                <label for="inputName">Company Name:</label>
-                {{ $agent->company_name }}
-              </div>
+			 
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Department:</label>
                 {{ $agent->department }}
@@ -82,6 +82,10 @@
               <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Postcode:</label>
                 {{$agent->postcode}}
+              </div>
+			   <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Vat:</label>
+                {{$agent->vat}}
               </div>
              <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Ticket Only:</label>
@@ -111,6 +115,40 @@
 				</header>
 		
 			<div class="row">
+			 <div class="form-group col-md-12 mt-3">
+				@if(!empty($agentAdditionalUsers))
+                <table id="myTable" class="table table-bordered ">
+					  <thead>
+					   <tr>
+                    <th colspan="5" ><h3>Additional Contact</h3></th>
+                  </tr>
+						<tr>
+						  <th>Name</th>
+						  <th>Department</th>
+						  <th>Mobile</th>
+						  <th>Phone</th>
+						  <th>Email</th>
+						</tr>
+					  </thead>
+					  <tbody>
+					  
+					
+						 @foreach($agentAdditionalUsers as $k => $agentAdditionalUser)
+							<tr>
+						  <td>{{$agentAdditionalUser->name}}</td>
+						  <td>{{$agentAdditionalUser->department}}</td>
+						  <td>{{$agentAdditionalUser->mobile}}</td>
+						  <td>{{$agentAdditionalUser->phone}}</td>
+						  <td>{{$agentAdditionalUser->email}}</td>
+						</tr>
+						@endforeach
+					
+					  </tbody>
+					</table>
+				@endif
+					
+              </div>
+			  
 				<div class="form-group col-lg-12 mb-3">
 				
 					 <table id="example1" class="table table-bordered table-striped">

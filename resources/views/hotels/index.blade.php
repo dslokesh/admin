@@ -165,4 +165,6 @@
     <!-- /.content -->
 @endsection
 
+@section('scripts')
  @include('inc.citystatecountryjs')
+@endsection

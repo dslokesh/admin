@@ -54,11 +54,11 @@
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('agents.index')}}" >
-					 <th></th>
+					<th><input type="text" name="code" value="{{request('code')}}" class="form-control"  placeholder="Code" /></th>
                     <th><input type="text" name="name" value="{{request('name')}}" class="form-control"  placeholder="Name" /></th>
-                    <th></th>
+                   <th><input type="text" name="mobile" value="{{request('mobile')}}" class="form-control"  placeholder="Mobile" /></th>
                    <th><input type="text" name="email" value="{{request('email')}}" class="form-control"  placeholder="Email" /></th>
-                    <th></th>
+                   <th><input type="text" name="cname" value="{{request('cname')}}" class="form-control"  placeholder="Company Name" /></th>
                   
                  <th><select name="city_id" id="city_id" class="form-control">
 				<option value="">--select--</option>
@@ -147,4 +147,6 @@
     <!-- /.content -->
 @endsection
 
+@section('scripts')
  @include('inc.citystatecountryjs')
+@endsection

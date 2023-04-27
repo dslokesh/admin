@@ -30,6 +30,13 @@
               <h3 class="card-title">Add Agent</h3>
             </div>
             <div class="card-body row">
+			 <div class="form-group col-md-6">
+                <label for="inputName">Company Name:</label>
+                <input type="text" id="company_name	" name="company_name" value="{{ old('company_name')}}" class="form-control"  placeholder="Company Name" />
+                @if ($errors->has('company_name'))
+                    <span class="text-danger">{{ $errors->first('company_name') }}</span>
+                @endif
+              </div>
                 <div class="form-group col-md-6">
                 <label for="inputName">First Name: <span class="red">*</span></label>
                 <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" class="form-control"  placeholder="First Name" />
@@ -44,13 +51,7 @@
                     <span class="text-danger">{{ $errors->first('last_name') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-6">
-                <label for="inputName">Code: <span class="red">*</span></label>
-                <input type="text" id="code" name="code" value="{{ old('code') }}" class="form-control"  placeholder="Name" />
-                @if ($errors->has('code'))
-                    <span class="text-danger">{{ $errors->first('code') }}</span>
-                @endif
-              </div>
+			  
                 <div class="form-group col-md-6">
                 <label for="inputName">Mobile: <span class="red">*</span></label>
                 <input type="text" id="mobile" name="mobile" value="{{ old('mobile') }}" class="form-control"  placeholder="Mobile" />
@@ -81,13 +82,7 @@
                 @endif
 				
               </div>
-			  <div class="form-group col-md-6">
-                <label for="inputName">Company Name:</label>
-                <input type="text" id="company_name	" name="company_name" value="{{ old('company_name')}}" class="form-control"  placeholder="Company Name" />
-                @if ($errors->has('company_name'))
-                    <span class="text-danger">{{ $errors->first('company_name') }}</span>
-                @endif
-              </div>
+			 
 			   <div class="form-group col-md-6">
                 <label for="inputName">Department:</label>
                 <input type="text" id="department" name="department" value="{{ old('department') }}" class="form-control"  placeholder="Department" />
@@ -141,7 +136,13 @@
                     <span class="text-danger">{{ $errors->first('postcode') }}</span>
                 @endif
               </div>
-			  
+			   <div class="form-group col-md-6">
+                <label for="inputName">Vat:</label>
+                <input type="text" id="vat" name="vat" value="{{ old('vat') }}" class="form-control"   />
+                @if ($errors->has('vat'))
+                    <span class="text-danger">{{ $errors->first('vat') }}</span>
+                @endif
+              </div>
 			  <div class="form-group col-md-6">
                 <label for="inputName">Ticket Only%:</label>
                 <input type="text" id="ticket_only" name="ticket_only"  value="{{ old('ticket_only')}}" class="form-control"   />
@@ -171,6 +172,33 @@
 					          <option value="0" @if(old('status') ==0) {{'selected="selected"'}} @endif >Inactive</option>
                  </select>
               </div>
+			   <div class="form-group col-md-12">
+                <label for="inputName">Additional Contact:</label>
+				<a id="addRowBtn" class="btn btn-success btn-sm">Add Row</a>
+                <table id="myTable" class="table table-bordered ">
+					  <thead>
+						<tr>
+						  <th>Name</th>
+						  <th>Department</th>
+						  <th>Mobile</th>
+						  <th>Phone</th>
+						  <th>Email</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <td><input type="text" class="form-control" name="a_name[]"></td>
+						  <td><input type="text" class="form-control" name="a_department[]"></td>
+						  <td><input type="text" class="form-control" name="a_mobile[]"></td>
+						  <td><input type="text" class="form-control" name="a_phone[]"></td>
+						  <td><input type="text" class="form-control" name="a_email[]"></td>
+						  <td></td>
+						</tr>
+					  </tbody>
+					</table>
+
+					
+              </div>
             </div>
 			
             <!-- /.card-body -->
@@ -187,37 +215,47 @@
     </form>
     </section>
     <!-- /.content -->
-@endsection
-@section('scripts')
  <!-- Script -->
- <script type="text/javascript">
-    function randomPassword(length) {
-        var chars = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
-        var pass = "";
-        for (var x = 0; x < length; x++) {
-            var i = Math.floor(Math.random() * chars.length);
-            pass += chars.charAt(i);
-        }
-       // myform.row_password.value = pass;
-        $('#password').val(pass);
-    }
-
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
   
-    togglePassword.addEventListener('click', function (e) {
-      // toggle the type attribute
-      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-      password.setAttribute('type', type);
-      // toggle the eye slash icon
-      this.classList.toggle('fa-eye-slash');
+@endsection
+ 
+@section('scripts')
+ @include('inc.citystatecountryjs')
+ <script>
+ $(document).ready(function() {
+  // add row with input fields when "Add Row" button is clicked
+  $("#addRowBtn").click(function() {
+    // create new row
+    var newRow = $("<tr>");
+    
+    // add cells to the row
+    var nameCell = $("<td>").html('<input type="text" required class="form-control" name="a_name[]">');
+    var departmentCell = $("<td>").html('<input type="text" class="form-control" name="a_department[]">');
+    var mobileCell = $("<td>").html('<input type="text" class="form-control" name="a_mobile[]">');
+	 var phoneCell = $("<td>").html('<input type="text" class="form-control" name="a_phone[]">');
+	 var emailCell = $("<td>").html('<input type="text" class="form-control" name="a_email[]">');
+    var actionsCell = $("<td>").html('<a class="removeRowBtn btn btn-danger btn-sm" >-</a>');
+    
+    // add cells to the row
+    newRow.append(nameCell);
+    newRow.append(departmentCell);
+    newRow.append(mobileCell);
+    newRow.append(phoneCell);
+	newRow.append(emailCell);
+	newRow.append(actionsCell);
+    
+    // add row to the table body
+    $("#myTable tbody").append(newRow);
   });
-       
-
-   
-  </script>   
   
-@include('inc.citystatecountryjs')
+  // remove row when "Remove" button is clicked
+  $(document).on("click", ".removeRowBtn", function() {
+    $(this).closest("tr").remove();
+  });
+});
+</script>
+
+@endsection
 
  
  

@@ -10,6 +10,7 @@ use App\Models\Activity;
 use App\Models\AgentPriceMarkup;
 use App\Models\ActivityPrices;
 use App\Models\AgentDetails;
+use App\Models\AgentAdditionalUser;
 use Illuminate\Http\Request;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
@@ -36,15 +37,27 @@ class AgentsController extends Controller
        if (isset($data['email']) && !empty($data['email'])) {
             $query->where('email', 'like', '%' . $data['email'] . '%');
         }
+		if (isset($data['cname']) && !empty($data['cname'])) {
+            $query->where('company_name', 'like', '%' . $data['cname'] . '%');
+        }
        
-        if (isset($data['city_id']) && !empty($data['city_id'])) {
+        if (isset($data['code']) && !empty($data['code'])) {
+            $query->where('code', $data['code']);
+        }
+		
+		 if (isset($data['mobile']) && !empty($data['mobile'])) {
+            $query->where('mobile', $data['mobile']);
+        }
+		
+		if (isset($data['city_id']) && !empty($data['city_id'])) {
             $query->where('city_id', $data['city_id']);
         }
+		
         if (isset($data['status']) && !empty($data['status'])) {
             if ($data['status'] == 1)
-                $query->where('status', 1);
+                $query->where('is_active', 1);
             if ($data['status'] == 2)
-                $query->where('status', 0);
+                $query->where('is_active', 0);
         }
 
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
@@ -76,6 +89,7 @@ class AgentsController extends Controller
      */
     public function store(Request $request)
     {
+		
 		$options['allow_img_size'] = 10;
         $request->validate([
            'first_name' => 'required|max:255|sanitizeScripts|alpha',
@@ -83,13 +97,13 @@ class AgentsController extends Controller
             'mobile' => 'required',
             'address' => 'required',
 			'email' => 'required|max:255|sanitizeScripts|email|unique:users|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
-			'password' => 'required|min:8|max:255|sanitizeScripts|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
+			'password' => 'required|min:8|max:255|sanitizeScripts',
 			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),  
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
             'postcode' => 'required',
-			'code' => 'required'
+			
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
             'country_id.required' => 'The country field is required.',
@@ -98,6 +112,7 @@ class AgentsController extends Controller
 
 
 		$input = $request->all();
+		
         $record = new User();
 		
 		$destinationPath = public_path('/uploads/users/');
@@ -127,7 +142,7 @@ class AgentsController extends Controller
 		
         $record->name = $request->input('first_name');
         $record->lname = $request->input('last_name');
-		$record->code = $request->input('code');
+		
         $record->mobile = $request->input('mobile');
 		$record->email = $request->input('email');
 		$record->company_name = $request->input('company_name');
@@ -145,8 +160,49 @@ class AgentsController extends Controller
 		$record->ticket_only = $request->input('ticket_only');
 		$record->sic_transfer = $request->input('sic_transfer');
 		$record->pvt_transfer = $request->input('pvt_transfer');
+		$record->vat = $request->input('vat');
         $record->save();
         $record->attachRole('3');
+		$code = 'A00'.$record->id;
+		$recordUser = User::find($record->id);
+		$recordUser->code = $code;
+		$recordUser->save();
+		
+		
+		$userCount = User::where("role_id",3)->count();
+		$codeNumber  = $userCount + 1;
+		$code = 'A00'.$codeNumber;
+		$recordUser = User::find($record->id);
+		$recordUser->code = $code;
+		$recordUser->save();
+		
+		$additionalContactInsert = [];
+		$additionalContact = $request->input('a_name');
+		$department = $request->input('a_department');
+		$mobile = $request->input('a_mobile');
+		$phone = $request->input('a_phone');
+		$email = $request->input('a_email');
+		if(!empty($additionalContact) > 0)
+		{
+			foreach($additionalContact as $k => $data)
+			{
+				if(!empty($data))
+				{
+				$additionalContactInsert[$k]=[
+				'user_id' => $record->id,
+				'name' => $data,
+				'department' => $department[$k],
+				'mobile' => $mobile[$k],
+				'phone' => $phone[$k],
+				'email' => $email[$k],
+				];
+				}
+			}
+			
+			if(!empty($additionalContactInsert)){
+				AgentAdditionalUser::insert($additionalContactInsert);
+			}
+		}
 		
         return redirect('agents')->with('success', 'Agent Created Successfully.');
     }
@@ -183,7 +239,10 @@ class AgentsController extends Controller
 			}
 			
 		}
-        return view('agents.view', compact('agent','markups'));
+		
+		$agentAdditionalUsers = AgentAdditionalUser::where('user_id', $agent->id)->get();
+		
+        return view('agents.view', compact('agent','markups','agentAdditionalUsers'));
     }
 
     /**
@@ -198,7 +257,8 @@ class AgentsController extends Controller
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
-        return view('agents.edit')->with(['record' => $record, 'countries' => $countries, 'states' => $states, 'cities' => $cities]);
+		$agentAdditionalUsers = AgentAdditionalUser::where('user_id', $record->id)->get();
+        return view('agents.edit')->with(['record' => $record, 'countries' => $countries, 'states' => $states, 'cities' => $cities,'agentAdditionalUsers' => $agentAdditionalUsers]);
     }
 
     /**
@@ -221,7 +281,7 @@ class AgentsController extends Controller
             'state_id' => 'required',
             'country_id' => 'required',
             'postcode' => 'required',
-			'code' => 'required',
+			
 			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024), 
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
@@ -269,7 +329,7 @@ class AgentsController extends Controller
 		
 		$record->name = $request->input('first_name');
         $record->lname = $request->input('last_name');
-		$record->code = $request->input('code');
+		
         $record->mobile = $request->input('mobile');
 		$record->email = $request->input('email');
 		$record->company_name = $request->input('company_name');
@@ -284,7 +344,38 @@ class AgentsController extends Controller
 		$record->ticket_only = $request->input('ticket_only');
 		$record->sic_transfer = $request->input('sic_transfer');
 		$record->pvt_transfer = $request->input('pvt_transfer');
+		$record->vat = $request->input('vat');
         $record->save();
+		
+		$additionalContactInsert = [];
+		$additionalContact = $request->input('a_name');
+		$department = $request->input('a_department');
+		$mobile = $request->input('a_mobile');
+		$phone = $request->input('a_phone');
+		$email = $request->input('a_email');
+		if(!empty($additionalContact) > 0)
+		{
+			AgentAdditionalUser::where('user_id', $record->id)->delete();
+			foreach($additionalContact as $k => $data)
+			{
+				if(!empty($data))
+				{
+				$additionalContactInsert[$k]=[
+				'user_id' => $record->id,
+				'name' => $data,
+				'department' => $department[$k],
+				'mobile' => $mobile[$k],
+				'phone' => $phone[$k],
+				'email' => $email[$k],
+				];
+				}
+			}
+			
+			if(!empty($additionalContactInsert)){
+				AgentAdditionalUser::insert($additionalContactInsert);
+			}
+		}
+		
         return redirect('agents')->with('success', 'Agent Updated.');
     }
 

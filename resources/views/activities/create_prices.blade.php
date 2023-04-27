@@ -106,21 +106,21 @@
                   </tr>
 				   <tr>
                     <td>Adult</td>
-					<td><input type="text" id="adult_rate_with_vat1"  name="adult_rate_with_vat[]"  class="form-control onlynumbr vatCal"  data-withvatinputid="adult_rate_without_vat1"   /></td>
+					<td><input type="text" id="adult_rate_with_vat1"  name="adult_rate_with_vat[]"  class="form-control onlynumbrf vatCal"  data-withvatinputid="adult_rate_without_vat1"   /></td>
 					<td><input type="text" id="adult_rate_without_vat1"  name="adult_rate_without_vat[]"  class="form-control onlynumbr "  readonly /></td>
                     <td><input type="text" id="adult_max_no_allowed1" name="adult_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
                     <td><input type="text" id="adult_min_no_allowed1"  name="adult_min_no_allowed[]"  class="form-control onlynumbr" /></td>
                   </tr>
 				  <tr>
                     <td>Child</td>
-					<td><input type="text" id="chield_rate_with_vat1"  name="chield_rate_with_vat[]"  class="form-control onlynumbr vatCal" data-withvatinputid="chield_rate_without_vat1"  /></td>
+					<td><input type="text" id="chield_rate_with_vat1"  name="chield_rate_with_vat[]"  class="form-control onlynumbrf vatCal" data-withvatinputid="chield_rate_without_vat1"  /></td>
 					<td><input type="text" id="chield_rate_without_vat1"  name="chield_rate_without_vat[]"  class="form-control onlynumbr "  readonly  /></td>
                     <td><input type="text" id="chield_max_no_allowed1"  name="chield_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
                     <td><input type="text" id="chield_min_no_allowed1" name="chield_min_no_allowed[]"  class="form-control onlynumbr" /></td>
                   </tr>
 				   <tr>
                     <td>Infant</td>
-					<td><input type="text" id="infant_rate_with_vat1"  name="infant_rate_with_vat[]"  class="form-control onlynumbr vatCal" data-withvatinputid="infant_rate_without_vat1"  /></td>
+					<td><input type="text" id="infant_rate_with_vat1"  name="infant_rate_with_vat[]"  class="form-control onlynumbrf vatCal" data-withvatinputid="infant_rate_without_vat1"  /></td>
 					<td><input type="text" id="infant_rate_without_vat1"  name="infant_rate_without_vat[]"  class="form-control onlynumbr "  readonly /></td>
                     <td><input type="text" id="infant_max_no_allowed1"  name="infant_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
                     <td><input type="text" id="infant_min_no_allowed1"  name="infant_min_no_allowed[]"  class="form-control onlynumbr" /></td>
@@ -230,7 +230,15 @@ $("body").on('click','.remove-btn',function(){
 
 $(document).on('keypress', '.onlynumbr', function(evt) {
 	var charCode = (evt.which) ? evt.which : evt.keyCode
-  if (charCode > 31 && (charCode < 48 || charCode > 57))
+  if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
+  return true;
+
+});
+
+$(document).on('keypress', '.onlynumbrf', function(evt) {
+	var charCode = (evt.which) ? evt.which : evt.keyCode
+  if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
     return false;
   return true;
 

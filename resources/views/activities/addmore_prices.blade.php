@@ -77,22 +77,22 @@
                     <td>Adult</td>
 					<td><input type="text" id="adult_rate_with_vat{{$rowCount}}" name="adult_rate_with_vat[]"  class="form-control onlynumbr vatCal" data-withvatinputid="adult_rate_without_vat{{$rowCount}}"  /></td>
 					<td><input type="text" id="adult_rate_without_vat{{$rowCount}}" name="adult_rate_without_vat[]"  class="form-control onlynumbr"  readonly /></td>
-                    <td><input type="number" id="adult_max_no_allowed{{$rowCount}}" name="adult_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
-                    <td><input type="number" id="adult_min_no_allowed{{$rowCount}}" name="adult_min_no_allowed[]"  class="form-control onlynumbr" /></td>
+                    <td><input type="number" id="adult_max_no_allowed{{$rowCount}}" name="adult_max_no_allowed[]" value="0" class="form-control onlynumbr"  /></td>
+                    <td><input type="number" id="adult_min_no_allowed{{$rowCount}}" name="adult_min_no_allowed[]" value="0" class="form-control onlynumbr" /></td>
                   </tr>
 				  <tr>
                     <td>Child</td>
 					<td><input type="text" id="chield_rate_with_vat{{$rowCount}}" name="chield_rate_with_vat[]"  class="form-control onlynumbr vatCal" data-withvatinputid="chield_rate_without_vat{{$rowCount}}"   /></td>
 					<td><input type="text" id="chield_rate_without_vat{{$rowCount}}" name="chield_rate_without_vat[]"  class="form-control onlynumbr" readonly /></td>
-                    <td><input type="number" id="chield_max_no_allowed{{$rowCount}}" name="chield_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
-                    <td><input type="number" id="chield_min_no_allowed{{$rowCount}}" name="chield_min_no_allowed[]"  class="form-control onlynumbr" /></td>
+                    <td><input type="number" id="chield_max_no_allowed{{$rowCount}}" name="chield_max_no_allowed[]" value="0" class="form-control onlynumbr"  /></td>
+                    <td><input type="number" id="chield_min_no_allowed{{$rowCount}}" name="chield_min_no_allowed[]" value="0" class="form-control onlynumbr" /></td>
                   </tr>
 				   <tr>
                     <td>Infant</td>
 					<td><input type="text"   id="infant_rate_with_vat{{$rowCount}}" name="infant_rate_with_vat[]"  class="form-control onlynumbr vatCal"  data-withvatinputid="infant_rate_without_vat{{$rowCount}}"  /></td>
 					<td><input type="text" id="infant_rate_without_vat{{$rowCount}}" name="infant_rate_without_vat[]"  class="form-control onlynumbr"  readonly /></td>
-                    <td><input type="number" id="infant_max_no_allowed{{$rowCount}}" name="infant_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
-                    <td><input type="number" id="infant_min_no_allowed{{$rowCount}}" name="infant_min_no_allowed[]"  class="form-control onlynumbr" /></td>
+                    <td><input type="number" id="infant_max_no_allowed{{$rowCount}}" name="infant_max_no_allowed[]" value="0" class="form-control onlynumbr"  /></td>
+                    <td><input type="number" id="infant_min_no_allowed{{$rowCount}}" name="infant_min_no_allowed[]" value="0" class="form-control onlynumbr" /></td>
                   </tr>
 				  </table>
               </div>
