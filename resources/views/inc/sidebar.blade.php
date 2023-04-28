@@ -104,6 +104,21 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Zones</p>
                 </a>
               </li>
+			   @php
+          $class=''; $active='';
+          if($controller == 'VehiclesController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('vehicles.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-chart-area"></i>
+                  <p>Vehicles</p>
+                </a>
+              </li>
 			  @php
           $class=''; $active='';
           if($controller == 'HotelCategoryController' and in_array($action,array('index','create','edit'))){

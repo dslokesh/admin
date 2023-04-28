@@ -20,6 +20,7 @@ use App\Http\Controllers\ZonesController;
 use App\Http\Controllers\TransfersController;
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\VehiclesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('agents-markup-price/{id?}', [AgentsController::class, 'markupPriceList'])->name('agents.markup.price');
         Route::post('agents-markup-price-save', [AgentsController::class, 'markupPriceSave'])->name('agents.markup.price.save');
         Route::resource('zones', ZonesController::class);
+        Route::resource('vehicles', VehiclesController::class);
         Route::resource('activities', ActivitiesController::class);
         Route::get('activity-prices-create/{id?}', [ActivitiesController::class, 'createPriceForm'])->name('activity.prices.create');
         Route::get('activity-prices-edit/{id?}', [ActivitiesController::class, 'editPriceForm'])->name('activity.prices.edit');
