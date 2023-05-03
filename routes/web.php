@@ -21,7 +21,7 @@ use App\Http\Controllers\TransfersController;
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\VehiclesController;
-
+use App\Http\Controllers\VouchersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -95,6 +95,9 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::post('activity-prices-save', [ActivitiesController::class, 'activityPriceSave'])->name('activity.prices.save');
         Route::get('activity-prices-add-new-row', [ActivitiesController::class, 'newRowAddmore'])->name('activity.prices.new.row');
         Route::resource('transfers', TransfersController::class);
+        Route::resource('vouchers', VouchersController::class);
+        Route::get('auto-agent', [VouchersController::class, 'autocompleteAgent'])->name('auto.agent');
+        Route::get('auto-customer', [VouchersController::class, 'autocompleteCustomer'])->name('auto.customer');
         //Route::post('register', [UsersController::class, 'register'])->name('register');
 
         Route::resource('users', UsersController::class);

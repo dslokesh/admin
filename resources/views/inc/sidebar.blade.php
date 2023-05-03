@@ -192,6 +192,19 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			   @php
           $class=''; $active='';
+          if($controller == 'VouchersController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('vouchers.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-gift"></i>
+                  <p>Vouchers</p>
+                </a>
+              </li>
+			   @php
+          $class=''; $active='';
           if($controller == 'CustomersController' and in_array($action,array('index','create','edit'))){
             $class = 'menu-open';
             $active = 'active';
