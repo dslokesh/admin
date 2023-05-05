@@ -54,13 +54,13 @@ class VouchersController extends Controller
             'agent_id'=>'required',
 			'customer_id'=>'required',
 			'country_id'=>'required',
-			'airlines_id' => 'required_if:is_flight,==,1',
+			'arrival_airlines_id' => 'required_if:is_flight,==,1',
 			'arrival_date' => 'required_if:is_flight,==,1',
-			'depature_date' => 'required_if:is_flight,==,1',
         ], [
-			'airlines_id.required_if' => 'The airlines id field is required.',
+			'arrival_airlines_id.required_if' => 'The airlines id field is required.',
 			'arrival_date.required_if' => 'The arrival date field is required .',
 			'depature_date.required_if' => 'The depature date field is required .',
+			'depature_airlines_id.required_if' => 'The depature airlines field is required .',
 		]);
 		
 		
@@ -73,23 +73,34 @@ class VouchersController extends Controller
 		$record->country_id = $request->input('country_id');
 		$record->is_hotel = $request->input('is_hotel');
 		$record->is_flight = $request->input('is_flight');
-		$record->airlines_id = $request->input('airlines_id');
+		$record->arrival_airlines_id = $request->input('arrival_airlines_id');
 		$record->arrival_date = $arrival_date;
+		$record->arrival_airport = $request->input('arrival_airport');
+		$record->arrival_terminal = $request->input('arrival_terminal');
+		$record->depature_airlines_id = $request->input('depature_airlines_id');
 		$record->depature_date = $depature_date;
+		$record->depature_airport = $request->input('depature_airport');
+		$record->depature_terminal = $request->input('depature_terminal');
 		$record->status = $request->input('status');
         $record->save();
-        return redirect('vouchers')->with('success','Voucher Created Successfully.');
+		
+		if ($request->has('save_and_hotel')) {
+        return redirect()->route('activity.prices.create',$record->id)->with('success', 'Voucher Created Successfully.');
+		} else {
+        return redirect('vouchers.show')->with('success', 'Voucher Created Successfully.');
+		}
+		
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Voucher  $voucher
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Voucher $voucher)
     {
-        //
+        return view('vouchers.view', compact('voucher'));
     }
 
     /**
@@ -115,20 +126,36 @@ class VouchersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+         $request->validate([
             'agent_id'=>'required',
 			'customer_id'=>'required',
-			'country_id'=>'required'
+			'country_id'=>'required',
+			'arrival_airlines_id' => 'required_if:is_flight,==,1',
+			'arrival_date' => 'required_if:is_flight,==,1',
         ], [
-			'agent_id.sanitize_scripts' => 'Invalid value entered for Name field.',
+			'arrival_airlines_id.required_if' => 'The airlines id field is required.',
+			'arrival_date.required_if' => 'The arrival date field is required .',
+			'depature_date.required_if' => 'The depature date field is required .',
+			'depature_airlines_id.required_if' => 'The depature airlines field is required .',
 		]);
 
+		$arrival_date = $request->input('arrival_date'); // get the value of the date input
+		$depature_date = $request->input('depature_date'); // get the value of the date input
+		
         $record = Voucher::find($id);
         $record->agent_id = $request->input('agent_id_select');
 		$record->customer_id = $request->input('customer_id_select');
 		$record->country_id = $request->input('country_id');
 		$record->is_hotel = $request->input('is_hotel');
 		$record->is_flight = $request->input('is_flight');
+		$record->arrival_airlines_id = $request->input('arrival_airlines_id');
+		$record->arrival_date = $arrival_date;
+		$record->arrival_airport = $request->input('arrival_airport');
+		$record->arrival_terminal = $request->input('arrival_terminal');
+		$record->depature_airlines_id = $request->input('depature_airlines_id');
+		$record->depature_date = $depature_date;
+		$record->depature_airport = $request->input('depature_airport');
+		$record->depature_terminal = $request->input('depature_terminal');
 		$record->status = $request->input('status');
         $record->save();
         return redirect('vouchers')->with('success','Voucher Updated.');
@@ -149,14 +176,18 @@ class VouchersController extends Controller
 	
 	public function autocompleteAgent(Request $request)
     {
-        $users = User::select("name", "lname", "id")
-					->where('role_id', 3)
+		$search  = $request->get('search');
+        $users = User::where('role_id', 3)
 					->where('is_active', 1)
-                    ->where('name', 'LIKE', '%'. $request->get('search'). '%')
-                    ->get();
+					->where(function ($query) use($search) {
+						$query->where('name', 'LIKE', '%'. $search. '%')
+						->orWhere('code', 'LIKE', '%'. $search. '%')
+						->orWhere('mobile', 'LIKE', '%'. $search. '%');
+					})->get();
 		$response = array();
       foreach($users as $user){
-         $response[] = array("value"=>$user->id,"label"=>$user->_full_name);
+		   $agentDetails = '<b>Code:</b> '.$user->code.' <b>Email:</b>'.$user->email.' <b> Mobile No:</b>'.$user->mobile.' <b>Address:</b>'.$user->address. " ".$user->postcode;
+         $response[] = array("value"=>$user->id,"label"=>$user->_full_name.'('.$user->code.')',"agentDetails"=>$agentDetails);
       }
 	  
         return response()->json($response);
@@ -164,13 +195,17 @@ class VouchersController extends Controller
 	
 	public function autocompleteCustomer(Request $request)
     {
+		$search  = $request->get('search');
         $customers = Customer::where('status', 1)
-                    ->where('name', 'LIKE', '%'. $request->get('search'). '%')
-                    ->get();
+					->where(function ($query) use($search) {
+						$query->where('name', 'LIKE', '%'. $search. '%')
+						->orWhere('code', 'LIKE', '%'. $search. '%')
+						->orWhere('mobile', 'LIKE', '%'. $search. '%');
+					})->get();
 		$response = array();
       foreach($customers as $customer){
 		  $cusDetails = '<b>Email:</b>'.$customer->email.' <b>Mobile No:</b>'.$customer->mobile.' <b>Address:</b>'.$customer->address. " ".$customer->zip_code;
-         $response[] = array("value"=>$customer->id,"label"=>$customer->name,'cusDetails'=>$cusDetails);
+         $response[] = array("value"=>$customer->id,"label"=>$customer->name.'('.$customer->mobile.')','cusDetails'=>$cusDetails);
       }
         return response()->json($response);
     }

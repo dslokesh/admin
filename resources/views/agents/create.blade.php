@@ -254,7 +254,33 @@
   });
 });
 </script>
+<script type="text/javascript">
+    function randomPassword(length) {
+        var chars = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
+        var pass = "";
+        for (var x = 0; x < length; x++) {
+            var i = Math.floor(Math.random() * chars.length);
+            pass += chars.charAt(i);
+        }
+       // myform.row_password.value = pass;
+        $('#password').val(pass);
+    }
+	
+	$(document).ready(function(){
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+  
+    togglePassword.addEventListener('click', function (e) {
+      // toggle the type attribute
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      // toggle the eye slash icon
+      this.classList.toggle('fa-eye-slash');
+  });
+   });    
 
+   
+  </script> 
 @endsection
 
  

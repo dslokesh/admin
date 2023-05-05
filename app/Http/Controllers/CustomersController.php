@@ -98,7 +98,18 @@ class CustomersController extends Controller
         $record->city_id = $request->input('city_id');
         $record->status = $request->input('status');
         $record->save();
-        return redirect('customers')->with('success', 'Customer Created Successfully.');
+		if($request->ajax()){
+            return response()->json([
+            'success' => true,
+            'message' => 'Customer Created Successfully.'
+        ]);
+        }
+		else
+		{
+		 return redirect('customers')->with('success', 'Customer Created Successfully.');
+
+		}
+			
     }
 
     /**

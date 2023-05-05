@@ -23,5 +23,15 @@ class Voucher extends Model
     {
         return $this->belongsTo(Customer::class,'customer_id','id');
     }
+	
+	public function arrivalairline()
+    {
+        return $this->belongsTo(Airline::class,'arrival_airlines_id','id');
+    }
+	
+	public function depatureairline()
+    {
+        return $this->belongsTo(Airline::class,'depature_airlines_id','id');
+    }
    
 }
