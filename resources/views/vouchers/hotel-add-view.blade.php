@@ -113,10 +113,6 @@
                 {{$hotel->accommodation_type}}
               </div>
              
-              <div class="form-group col-lg-4 mb-3">
-			        <label for="inputName">Status:</label>
-					{!! SiteHelpers::statusColor($hotel->status) !!}
-              </div>
             
           </div>	
 		  
