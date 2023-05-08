@@ -21,7 +21,7 @@
 
     <!-- Main content -->
     <section class="content">
-    <form action="{{ route('hotels.store') }}" method="post" class="form">
+    <form action="{{ route('hotels.store') }}" method="post" class="form" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="row">
         <div class="col-md-12">
@@ -78,6 +78,14 @@
                 @if ($errors->has('address2'))
                     <span class="text-danger">{{ $errors->first('address2') }}</span>
                 @endif
+              </div>
+			    <div class="form-group col-md-6">
+                <label for="inputName">Image:</label>
+                <input type="file" id="image" name="image"  class="form-control"  />
+                @if ($errors->has('image'))
+                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                @endif
+				
               </div>
                <div class="form-group col-md-6">
                 <label for="inputName">Hotel Category: <span class="red">*</span></label>

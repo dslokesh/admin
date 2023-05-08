@@ -49,6 +49,7 @@
                     <th>Status</th>
                     <th>Created On</th>
                     <th>Updated On</th>
+					<th>Hotels</th>
                     <th></th>
                   </tr>
 				  
@@ -65,6 +66,15 @@
                      <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
+					 <td>
+					 @if($record->is_hotel == 1)
+					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.hotels',$record->id)}}">
+                              <i class="fas fa-plus">
+                              </i>
+                              Add
+                          </a>
+						  @endif
+						  </td>
                      <td>
 					 <a class="btn btn-info btn-sm" href="{{route('vouchers.show',$record->id)}}">
                               <i class="fas fa-eye">

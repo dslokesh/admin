@@ -167,7 +167,7 @@
         <div class="col-12">
           <a href="{{ route('vouchers.index') }}" class="btn btn-secondary">Cancel</a>
           <button type="submit" name="save_and_hotel" class="btn btn-success float-right  ml-3">Save & Add Hotel</button>
-		   <button type="submit" name="save_and_view" class="btn btn-primary float-right">Save & View</button>
+		   <button type="submit" name="save_and_view" class="btn btn-primary float-right">Save</button>
         </div>
       </div>
     </form>

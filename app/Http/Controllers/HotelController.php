@@ -10,6 +10,7 @@ use App\Models\Hotel;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use DB;
+use Image;
 
 class HotelController extends Controller
 {
@@ -95,6 +96,31 @@ class HotelController extends Controller
 
 
         $record = new Hotel();
+		$destinationPath = public_path('/uploads/hotels/');
+		if ($request->hasFile('image')) {
+
+           
+			$fileName = $input['image']->getClientOriginalName();
+			$file = request()->file('image');
+			$fileNameArr = explode('.', $fileName);
+			$fileNameExt = end($fileNameArr);
+			$newName = date('His').rand() . time() . '.' . $fileNameExt;
+			
+			$file->move($destinationPath, $newName);
+			
+			//$user_config = json_decode($options['user'],true);
+			
+			$img = Image::make(public_path('/uploads/hotels/'.$newName));
+						
+            $img->resize(250, 250, function($constraint) {
+				$constraint->aspectRatio();
+			});
+			
+			$img->save(public_path('/uploads/hotels/thumb/'.$newName));
+
+            $record->image = $newName;
+		}
+		
         $record->name = $request->input('name');
         $record->mobile = $request->input('mobile');
         $record->address = $request->input('address');
@@ -174,6 +200,40 @@ class HotelController extends Controller
         ]);
 
         $record = Hotel::find($id);
+		 /** Below code for save image **/
+		$destinationPath = public_path('/uploads/hotels/');
+		//$newName = '';
+        //pr($request->all()); die;
+        $input = $request->all();
+		if ($request->hasFile('image')) {
+
+           
+			$fileName = $input['image']->getClientOriginalName();
+			$file = request()->file('image');
+			$fileNameArr = explode('.', $fileName);
+			$fileNameExt = end($fileNameArr);
+			$newName = date('His').rand() . time() . '.' . $fileNameExt;
+			
+			$file->move($destinationPath, $newName);
+			
+			$img = Image::make(public_path('/uploads/hotels/'.$newName));
+						
+            $img->resize(250, 250, function($constraint) {
+				$constraint->aspectRatio();
+			});
+			
+			$img->save(public_path('/uploads/hotels/thumb/'.$newName));
+
+            //** Below code for unlink old image **//
+			$oldImage = public_path('/uploads/hotels/'.$record->image);
+			$oldImageThumb = public_path('/uploads/hotels/thumb/'.$record->image);
+			if(!empty($record->image) && @getimagesize($oldImage) && file_exists($oldImage)) {
+				unlink($oldImage);
+				unlink($oldImageThumb);
+			}
+            $record->image = $newName;
+		}
+		
         $record->name = $request->input('name');
         $record->mobile = $request->input('mobile');
         $record->address = $request->input('address');

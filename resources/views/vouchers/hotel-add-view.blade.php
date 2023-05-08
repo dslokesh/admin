@@ -10,7 +10,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('hotels.index') }}">Hotels</a></li>
+			 <li class="breadcrumb-item"><a href="{{ route('vouchers.index') }}">Vouchers</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('voucher.add.hotels') }}">Hotels</a></li>
               <li class="breadcrumb-item active">Hotel Details</li>
             </ol>
           </div>
@@ -118,6 +119,7 @@
               </div>
             
           </div>	
+		  
 				</div>
           
 			
@@ -129,6 +131,14 @@
 		
            
           </div>
+		  <div class="row">
+        <div class="col-12">
+          <a href="{{ route('vouchers.index') }}" class="btn btn-secondary">Back To Vouchers</a>
+		  <a href="{{route('voucher.add.hotels',$vid)}}" class="btn btn-primary float-right">Add More Hotel</a>
+		   <a href="{{route('vouchers.show',$vid)}}" class="btn btn-success float-right mr-2">View Vouchers</a>
+         
+        </div>
+      </div>
           <!-- /.card -->
         </div>
       </div>

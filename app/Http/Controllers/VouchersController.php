@@ -8,7 +8,12 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\Country;
 use App\Models\VoucherAirline;
+use App\Models\HotelCategory;
+use App\Models\State;
+use App\Models\City;
+use App\Models\Zone;
 use App\Models\VoucherHotel;
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 use DB;
 
@@ -85,9 +90,15 @@ class VouchersController extends Controller
         $record->save();
 		
 		if ($request->has('save_and_hotel')) {
-        return redirect()->route('activity.prices.create',$record->id)->with('success', 'Voucher Created Successfully.');
+			if($record->is_hotel == 1){
+			return redirect()->route('voucher.add.hotels',$record->id)->with('success', 'Voucher Created Successfully.');
+			}
+			else
+			{
+				return redirect('vouchers.index')->with('error', 'If select hotel yes than you can add hotel.');
+			}
 		} else {
-        return redirect('vouchers.show')->with('success', 'Voucher Created Successfully.');
+        return redirect('vouchers.index')->with('success', 'Voucher Created Successfully.');
 		}
 		
     }
@@ -208,6 +219,57 @@ class VouchersController extends Controller
          $response[] = array("value"=>$customer->id,"label"=>$customer->name.'('.$customer->mobile.')','cusDetails'=>$cusDetails);
       }
         return response()->json($response);
+    }
+	
+	/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function addHotelsList(Request $request,$vid)
+    {
+        $data = $request->all();
+		
+        $perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $query = Hotel::with(['country', 'state', 'city', 'hotelcategory']);
+        if (isset($data['name']) && !empty($data['name'])) {
+            $query->where('name', 'like', '%' . $data['name'] . '%');
+        }
+        if (isset($data['country_id']) && !empty($data['country_id'])) {
+            $query->where('country_id', $data['country_id']);
+        }
+        if (isset($data['state_id']) && !empty($data['state_id'])) {
+            $query->where('state_id', $data['state_id']);
+        }
+        if (isset($data['city_id']) && !empty($data['city_id'])) {
+            $query->where('city_id', $data['city_id']);
+        }
+       
+        $query->where('status', 1);
+          
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+
+        $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
+        $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
+        $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
+        $hotelcategories = HotelCategory::where('status', 1)->orderBy('name', 'ASC')->get();
+
+        return view('vouchers.hotels', compact('records', 'countries', 'states', 'cities', 'hotelcategories','vid'));
+    }
+	
+	
+	/**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Role  $role
+     * @return \Illuminate\Http\Response
+     */
+    public function addHotelsView($hid,$vid)
+    {
+		$query = Hotel::with(['country', 'state', 'city', 'hotelcategory']);
+		$query->where('id', $hid);
+		$hotel = $query->where('status', 1)->first();
+       return view('vouchers.hotel-add-view', compact('hotel','hid','vid'));
     }
 	
 }

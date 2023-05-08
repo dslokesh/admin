@@ -21,8 +21,8 @@
 
     <!-- Main content -->
     <section class="content">
-    <form action="{{ route('hotels.update', $record->id) }}" method="post" class="form">
-    <input type="hidden" name="_method" value="put">
+    <form action="{{ route('hotels.update', $record->id) }}" method="post" class="form" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="put" >
     {{ csrf_field() }}
     <div class="row">
         <div class="col-md-12">
@@ -80,6 +80,22 @@
                     <span class="text-danger">{{ $errors->first('address2') }}</span>
                 @endif
               </div>
+			   @if($record->image)
+			  <div class="form-group col-md-4">
+			@else
+				<div class="form-group col-md-6">
+				@endif
+                <label for="inputName">Image:</label>
+                <input type="file" id="image" name="image"  class="form-control"   />
+                @if ($errors->has('image'))
+                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                @endif
+              </div>
+			   @if($record->image)
+              <div class="form-group col-md-2">
+                <img src="{{ url('/uploads/hotels/thumb/'.$record->image) }}" width="50"  alt="hotels-logo" style="margin-top: 32px;" />
+              </div>
+              @endif
                <div class="form-group col-md-6">
                 
                 <label for="inputName">Hotel Category: <span class="red">*</span></label>
