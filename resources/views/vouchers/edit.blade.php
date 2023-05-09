@@ -76,18 +76,33 @@
 					  <option value="0" @if($record->is_hotel ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">Flight: <span class="red">*</span></label>
-                <select name="is_flight" id="is_flight" class="form-control">
-                    <option value="1" @if($record->is_flight ==1) {{'selected="selected"'}} @endif>Yes</option>
-					<option value="0" @if($record->is_flight ==0) {{'selected="selected"'}} @endif >No</option>
-                 </select>
+			  <div class="form-group col-md-3">
+                <label for="inputName">Travel Date From: <span class="red">*</span></label>
+               <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date') ?: $record->travel_from_date }}" class="form-control datepicker"  placeholder="Travel Date From" />
+				  @if ($errors->has('travel_from_date'))
+                    <span class="text-danger">{{ $errors->first('travel_from_date') }}</span>
+                @endif
               </div>
+			   <div class="form-group col-md-3">
+                <label for="inputName">Travel Date To: <span class="red">*</span></label>
+               <input type="text" id="travel_to_date" name="travel_to_date" value="{{ old('travel_to_date') ?: $record->travel_to_date }}" class="form-control datepicker"  placeholder="Travel Date To" />
+				  @if ($errors->has('travel_to_date'))
+                    <span class="text-danger">{{ $errors->first('travel_to_date') }}</span>
+                @endif
+              </div>
+			  
 			     <div class="form-group col-md-6">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">
                     <option value="1" @if($record->status ==1) {{'selected="selected"'}} @endif>Active</option>
 					          <option value="0" @if($record->status ==0) {{'selected="selected"'}} @endif >Inactive</option>
+                 </select>
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Flight: <span class="red">*</span></label>
+                <select name="is_flight" id="is_flight" class="form-control">
+                    <option value="1" @if($record->is_flight ==1) {{'selected="selected"'}} @endif>Yes</option>
+					<option value="0" @if($record->is_flight ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
 			  <div class="form-group col-md-3 flight_is_div">

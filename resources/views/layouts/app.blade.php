@@ -9,7 +9,8 @@
    <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" rel="stylesheet" type="text/css" />
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
-
+<link href="{{asset('dist/css/owl.carousel.min.css')}}" rel="stylesheet">
+	<link href="{{asset('dist/css/owl.theme.default.min.css')}}" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -74,7 +75,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 <!-- AdminLTE for demo purposes -->
 <!--script src="{{asset('dist/js/demo.js')}}"></script-->
-
+<script src="{{ asset('dist/js/owl.carousel.min.js') }}"></script>
 <script>
   $(function () {
    $('.select2').select2()
@@ -110,7 +111,18 @@ $('.timepicker').datetimepicker({
         });
   });
   
+  // The slider being synced must be initialized first
+  $('#flexslider').flexslider({
+    animation: "slide",
+    controlNav: false,
+    animationLoop: false,
+    slideshow: false,
+    itemWidth: 150,
+    itemMargin: 0,
+
   
+  
+});
 
 </script>
 @yield('scripts')

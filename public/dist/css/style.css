@@ -107,3 +107,28 @@ header.profile-header {
 
 .bg-row{border:1px solid #ced4da;padding:2px }
 
+.slider-outer {
+    max-width: 500px;
+}
+
+.slider-outer .owl-theme .owl-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    height: 0;
+    margin: 0;
+	    display: flex;
+    justify-content: space-between;
+}
+
+.slider-outer .owl-carousel .owl-nav button.owl-next, .slider-outer .owl-carousel .owl-nav button.owl-prev {
+    font-size: 40px;
+    color: #fff;
+    line-height: 25px;
+    margin: 0 10px;
+    background-color: #2ba0a6;
+    margin-top: -35px;
+    padding: 0px 8px !important;
+}

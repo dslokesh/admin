@@ -50,11 +50,19 @@
                 {{($voucher->country)?$voucher->country->name:''}}
               </div>
             
-             
+              <div class="col-lg-3 mb-3">
+                <label for="inputName">Travel Date From:</label>
+				{{ $voucher->travel_from_date ? date(config('app.date_format'),strtotime($voucher->travel_from_date)) : null }}
+              </div>
+			   <div class="col-lg-3 mb-3">
+                <label for="inputName">Travel Date To:</label>
+				{{ $voucher->travel_to_date ? date(config('app.date_format'),strtotime($voucher->travel_to_date)) : null }}
+              </div>
               <div class="form-group col-lg-6 mb-3">
 			        <label for="inputName">Status:</label>
 					{!! SiteHelpers::statusColor($voucher->status) !!}
               </div>
+			  @if($voucher->is_flight == 1)
 			  <div class="col-lg-3 mb-3">
                 <label for="inputName">Arrival Airline:</label>
                 {{ ($voucher->arrivalairline)?$voucher->arrivalairline->name:'' }}
@@ -91,7 +99,7 @@
                 <label for="inputName">Depature Terminal:</label>
                 {{ $voucher->depature_terminal }}
               </div>
-			  
+			  @endif
               
             
           </div>

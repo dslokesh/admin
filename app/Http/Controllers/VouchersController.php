@@ -86,6 +86,8 @@ class VouchersController extends Controller
 		$record->depature_date = $depature_date;
 		$record->depature_airport = $request->input('depature_airport');
 		$record->depature_terminal = $request->input('depature_terminal');
+		$record->travel_from_date = $request->input('travel_from_date');
+		$record->travel_to_date = $request->input('travel_to_date');
 		$record->status = $request->input('status');
         $record->save();
 		
@@ -167,6 +169,8 @@ class VouchersController extends Controller
 		$record->depature_date = $depature_date;
 		$record->depature_airport = $request->input('depature_airport');
 		$record->depature_terminal = $request->input('depature_terminal');
+		$record->travel_from_date = $request->input('travel_from_date');
+		$record->travel_to_date = $request->input('travel_to_date');
 		$record->status = $request->input('status');
         $record->save();
         return redirect('vouchers')->with('success','Voucher Updated.');

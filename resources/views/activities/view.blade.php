@@ -21,21 +21,43 @@
 
     <!-- Main content -->
     <section class="content">
-    <div class="row">
+    
         <div class="col-md-12">
+		<div class="card card-primary card-outline card-tabs">
+		<div class="card card-primary card-outline card-tabs">
+			<div class="card-header p-0 pt-1 border-bottom-0">
+			<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+			<li class="nav-item">
+			<a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Activity</a>
+			</li>
+			@if($activity->sic_TFRS)
+			<li class="nav-item">
+			<a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false">Transfer Plan</a>
+			</li>
+			@endif
+			<li class="nav-item">
+			<a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Images</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Activity Prices</a>
+			</li>
 		
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">{{ $activity->title }}</h3>
-            </div>
-			
-			<div class="card-body">
-			
-			<header class="profile-header">
+			</ul>
+			</div>
+		 </div>
+       
+	   
+	   <div class="card-body">
+		<div class="tab-content" id="custom-tabs-three-tabContent">
+			<div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+				<header class="profile-header">
          
 				<div class="profile-content">
+				
 					<div class="row">
-              
+              <div class="col-lg-12 mb-3">
+				<h4>Activity Details</h4>
+				 </div>
 			     
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Code:</label>
@@ -99,27 +121,7 @@
                 <label for="inputName">SIC TFRS:</label>
                {!! SiteHelpers::statusColorYesNo($activity->sic_TFRS) !!}
               </div>
-			  @if($activity->sic_TFRS)
-			  <div class="col-lg-6 mb-3">
-                <label for="inputName">Transfer Plan:</label>
-               <table id="myTable" class="table">
-					  <tr>
-						<th>Zone</th>
-						<th>Value</th>
-						
-					  </tr>
-					  @if(!empty($zoneArray))
-						  @foreach($zoneArray as $k => $z)
-					  <tr>
-						<td>{{$z['zone']}} </td>
-						<td>{{$z['zoneValue']}}</td>
-					  </tr>
-					  @endforeach
-					@endif
-					
-					</table>
-              </div>
-			  @endif
+			 
               <div class="form-group col-lg-12 mb-3">
                 <label for="inputName">Description:</label>
                 {!!$activity->description!!}
@@ -144,36 +146,79 @@
 					{!! SiteHelpers::statusColor($activity->status) !!}
               </div>
 			  
-			  <div class="form-group col-lg-12 mb-3">
-                <label for="inputName">Featured Image:</label>
-                 @if(!empty($activity->image))
-               
-                  <img src="{{asset('uploads/activities/thumb/'.$activity->image)}}" style="width:100px; height:100px;margin-top:-6px" class="cimage" />
-                
-				@endif
-              </div>
-			  
-			@if($activity->images->count() > 0)
-            <div class="form-group col-lg-12">
-              <label for="featured_image" class="col-lg-2 control-label">Images</label>
-              @foreach($activity->images as $image)
-              
-                <img src="{{asset('uploads/activities/thumb/'.$image->filename)}}" style="width:100px; height:100px;" class="img-responsive">
-              
-              @endforeach
-            </div>
-            @endif 
+			 
             
           </div>	
 				</div>
           
 			
 				</header>
-		 <div class="card-body">
-		<div class="form-group col-md-12 mt-3">
-			<h3>Activity Prices</h3>
 			</div>
-			@php
+			@if($activity->sic_TFRS)
+			<div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
+			 <div class="col-lg-12 mb-3">
+				<h4>Transfer Plan</h4>
+				 </div>
+			  <div class="col-lg-6 mb-3">
+               <table id="myTable" class="table">
+					  <tr>
+						<th>Zone</th>
+						<th>Value</th>
+						
+					  </tr>
+					  @if(!empty($zoneArray))
+						  @foreach($zoneArray as $k => $z)
+					  <tr>
+						<td>{{$z['zone']}} </td>
+						<td>{{$z['zoneValue']}}</td>
+					  </tr>
+					  @endforeach
+					@endif
+					
+					</table>
+              </div>
+			 
+			</div>
+			 @endif
+			<div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+			 <div class="row">
+			 <div class="col-md-6 mb-3">
+				<h4>Featured Image</h4>
+				 </div>
+				 <div class="col-md-6 mb-3">
+				<h4>Images</h4>
+				 </div>
+				  <div class="form-group col-md-6">
+                 @if(!empty($activity->image))
+               
+                  <img src="{{asset('uploads/activities/thumb/'.$activity->image)}}"  class="cimage" />
+                
+				@endif
+              </div>
+			  
+				 <div class="slider-outer col-md-6">
+				 <div class="owl-theme owl-carousel">
+                       @if($activity->images->count() > 0)
+                           
+                                
+                                @foreach($activity->images as $image)
+                                <div clss="item">
+                              <img src="{{asset('uploads/activities/thumb/'.$image->filename)}}"  class="img-responsive">
+                                </div>
+                                @endforeach
+                           
+                            @endif 
+                            </div>
+				 </div>
+			 </div>
+			  
+			
+			</div>
+			<div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+			 <div class="col-lg-12 mb-3">
+				<h4>Activity Prices</h4>
+				 </div>
+				@php
 			$rowCount = 1;
 			@endphp
 			
@@ -300,15 +345,11 @@
 			  
 			 @endforeach
 			 @endif
-            </div>
-			
-          <!-- /.card-body --> 
-        </div>
-		
-           
-          </div>
-          <!-- /.card -->
-        </div>
+			</div>
+
+		</div>
+</div>
+
       </div>
   
     </section>
@@ -318,6 +359,22 @@
 
 
 @section('scripts')
+<script type="text/javascript">
+$(window).on('load', function(){
+ var owl = $('.owl-carousel');
+owl.owlCarousel({
+    loop:true,
+    nav:true,
+	dots:false,
+    margin:10,
+	items:1
+  
+});
+
+  
+  
+});
 
 
+</script>
 @endsection
