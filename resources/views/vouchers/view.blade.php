@@ -176,7 +176,7 @@
 				   </thead>
 				   <tbody>
 				   <tr>
-				   <td width="10%"><div class="profile-image" style="border-radius:0px;height:100px;"> @if(!empty($vh->hotel->image))<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}"  />@endif </div></td>
+				   <td width="10%"> @if(!empty($vh->hotel->image))<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}" width="100px" />@endif </td>
 				   <td>{{$vh->hotel->name}}</td>
 				   <td>{{$vh->check_in_date}}</td>
 				   <td>{{$vh->check_out_date}}</td>
