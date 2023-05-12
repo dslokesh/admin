@@ -388,6 +388,7 @@ class ActivitiesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+	 
     public function activityPriceSave(Request $request)
     {
 		

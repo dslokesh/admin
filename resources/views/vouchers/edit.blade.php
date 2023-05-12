@@ -76,6 +76,13 @@
 					  <option value="0" @if($record->is_hotel ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
+			    <div class="form-group col-md-6">
+                <label for="inputName">Activity: <span class="red">*</span></label>
+                <select name="is_activity" id="is_activity" class="form-control">
+                    <option value="1" @if($record->is_activity ==1) {{'selected="selected"'}} @endif>Yes</option>
+					  <option value="0" @if($record->is_activity ==0) {{'selected="selected"'}} @endif >No</option>
+                 </select>
+              </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Travel Date From: <span class="red">*</span></label>
                <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date') ?: $record->travel_from_date }}" class="form-control datepicker"  placeholder="Travel Date From" />

@@ -100,6 +100,9 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('auto-customer', [VouchersController::class, 'autocompleteCustomer'])->name('auto.customer');
         Route::get('add-hotels-vouchers/{vid?}', [VouchersController::class, 'addHotelsList'])->name('voucher.add.hotels');
         Route::get('hotel-view-vouchers/{hid?}/{vid?}', [VouchersController::class, 'addHotelsView'])->name('voucher.hotel.view');
+        Route::get('voucher-hotel-new-row', [VouchersController::class, 'newRowAddmore'])->name('voucher.hotel.new.row');
+        Route::post('voucher-hotel-save', [VouchersController::class, 'hotelSaveInVoucher'])->name('voucher.hotel.save');
+        Route::delete('voucher-hotel-delete/{id}', [VouchersController::class, 'destroyHotelFromVoucher'])->name('voucher.hotel.delete');
         //Route::post('register', [UsersController::class, 'register'])->name('register');
 
         Route::resource('users', UsersController::class);

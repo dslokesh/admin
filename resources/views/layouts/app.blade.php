@@ -111,18 +111,7 @@ $('.timepicker').datetimepicker({
         });
   });
   
-  // The slider being synced must be initialized first
-  $('#flexslider').flexslider({
-    animation: "slide",
-    controlNav: false,
-    animationLoop: false,
-    slideshow: false,
-    itemWidth: 150,
-    itemMargin: 0,
-
-  
-  
-});
+ 
 
 </script>
 @yield('scripts')

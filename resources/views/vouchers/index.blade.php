@@ -46,6 +46,7 @@
 					<th>Country</th>
 					<th>Hotel</th>
 					<th>Flight</th>
+					<th>Activity</th>
                     <th>Status</th>
                     <th>Created On</th>
                     <th>Updated On</th>
@@ -63,6 +64,7 @@
 					<td>{{ $record->country->name}}</td>
 					 <td>{!! SiteHelpers::statusColorYesNo($record->is_hotel) !!}</td>
 					  <td>{!! SiteHelpers::statusColorYesNo($record->is_flight) !!}</td>
+					   <td>{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
                      <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>

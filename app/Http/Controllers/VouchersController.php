@@ -78,6 +78,7 @@ class VouchersController extends Controller
 		$record->country_id = $request->input('country_id');
 		$record->is_hotel = $request->input('is_hotel');
 		$record->is_flight = $request->input('is_flight');
+		$record->is_activity = $request->input('is_activity');
 		$record->arrival_airlines_id = $request->input('arrival_airlines_id');
 		$record->arrival_date = $arrival_date;
 		$record->arrival_airport = $request->input('arrival_airport');
@@ -113,7 +114,8 @@ class VouchersController extends Controller
      */
     public function show(Voucher $voucher)
     {
-        return view('vouchers.view', compact('voucher'));
+		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
+        return view('vouchers.view', compact('voucher','voucherHotel'));
     }
 
     /**
@@ -161,6 +163,7 @@ class VouchersController extends Controller
 		$record->country_id = $request->input('country_id');
 		$record->is_hotel = $request->input('is_hotel');
 		$record->is_flight = $request->input('is_flight');
+		$record->is_activity = $request->input('is_activity');
 		$record->arrival_airlines_id = $request->input('arrival_airlines_id');
 		$record->arrival_date = $arrival_date;
 		$record->arrival_airport = $request->input('arrival_airport');
@@ -274,6 +277,132 @@ class VouchersController extends Controller
 		$query->where('id', $hid);
 		$hotel = $query->where('status', 1)->first();
        return view('vouchers.hotel-add-view', compact('hotel','hid','vid'));
+    }
+	
+	public function newRowAddmore(Request $request)
+    {
+		$hotel_id = $request->input('hotel_id');
+		$v_id = $request->input('v_id');
+		$rowCount = $request->input('rowCount');
+		
+		$view = view("vouchers.addmore_markup_hotel",['rowCount'=>$rowCount,'hotel_id'=>$hotel_id,'v_id'=>$v_id])->render();
+         return response()->json(['success' => 1, 'html' => $view]);
+    }
+	
+	 /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	 
+	public function hotelSaveInVoucher(Request $request)
+    {
+		
+		//print_r($request->all());
+		//exit;
+		
+		$voucher_id = $request->input('v_id');
+		$hotel_id = $request->input('hotel_id');
+		$check_in_date = $request->input('check_in_date');
+		$check_out_date = $request->input('check_out_date');
+	
+		$room_type = $request->input('room_type');
+		$nom_of_room = $request->input('nom_of_room');
+		
+		$nop_s = $request->input('nop_s');
+		$nop_d = $request->input('nop_d');
+		$nop_eb = $request->input('nop_eb');
+		$nop_cwb = $request->input('nop_cwb');
+		$nop_cnb = $request->input('nop_cnb');
+		
+		$nr_s = $request->input('nr_s');
+		$nr_d = $request->input('nr_d');
+		$nr_eb = $request->input('nr_eb');
+		$nr_cwb = $request->input('nr_cwb');
+		$nr_cnb = $request->input('nr_cnb');
+		
+		$ppa_s = $request->input('ppa_s');
+		$ppa_d = $request->input('ppa_d');
+		$ppa_eb = $request->input('ppa_eb');
+		$ppa_cwb = $request->input('ppa_cwb');
+		$ppa_cnb = $request->input('ppa_cnb');
+		
+		$markup_p_s = $request->input('markup_p_s');
+		$markup_p_d = $request->input('markup_p_d');
+		$markup_p_eb = $request->input('markup_p_eb');
+		$markup_p_cwb = $request->input('markup_p_cwb');
+		$markup_p_cnb = $request->input('markup_p_cnb');
+		
+		$markup_v_s = $request->input('markup_v_s');
+		$markup_v_d = $request->input('markup_v_d');
+		$markup_v_eb = $request->input('markup_v_eb');
+		$markup_v_cwb = $request->input('markup_v_cwb');
+		$markup_v_cnb = $request->input('markup_v_cnb');
+		
+		$data = [];
+		foreach($room_type as $k => $v)
+		{
+			
+			$data[] = [
+					'room_type' => $v,
+                    'nom_of_room' => $nom_of_room[$k],
+					'nop_s' => $nop_s[$k],
+                    'nop_d' => $nop_d[$k],
+					'nop_eb' => $nop_eb[$k],
+					'nop_cwb' => $nop_cwb[$k],
+					'nop_cnb' => $nop_cnb[$k],
+					'nr_s' => $nr_s[$k],
+					'nr_d' => $nr_d[$k],
+					'nr_eb' => $nr_eb[$k],
+					'nr_cwb' => $nr_cwb[$k],
+					'nr_cnb' => $nr_cnb[$k],
+					'ppa_s' => $ppa_s[$k],
+					'ppa_d' => $ppa_d[$k],
+					'ppa_eb' => $ppa_eb[$k],
+					'ppa_cwb' => $ppa_cwb[$k],
+					'ppa_cnb' => $ppa_cnb[$k],
+					'markup_p_s' => $markup_p_s[$k],
+					'markup_p_d' => $markup_p_d[$k],
+					'markup_p_eb' => $markup_p_eb[$k],
+					'markup_p_cwb' => $markup_p_cwb[$k],
+					'markup_p_cnb' => $markup_p_cnb[$k],
+					'markup_v_s' => $markup_v_s[$k],
+					'markup_v_d' => $markup_v_d[$k],
+					'markup_v_eb' => $markup_v_eb[$k],
+					'markup_v_cwb' => $markup_v_cwb[$k],
+					'markup_v_cnb' => $markup_v_cnb[$k],
+					
+                ];
+		}
+		
+		$dataInsert = [
+			'voucher_id' => $voucher_id,
+			'hotel_id' => $hotel_id,
+			'check_in_date' => $check_in_date,
+			'check_out_date' => $check_out_date,
+			'hotel_other_details' => json_encode($data),
+		];
+		
+		if(count($dataInsert) > 0)
+		{
+			VoucherHotel::insert($dataInsert);
+		}
+		
+		if ($request->has('save_and_continue')) {
+         return redirect()->route('voucher.add.hotels',$voucher_id)->with('success', 'Hotel added Successfully.');
+		} else {
+        return redirect('vouchers')->with('success', 'Hotel Added Successfully.');
+		}
+		
+      
+    }
+	
+	public function destroyHotelFromVoucher($id)
+    {
+        $record = VoucherHotel::find($id);
+        $record->delete();
+        return redirect()->back()->with('success', 'Hotel Deleted Successfully.');
     }
 	
 }
