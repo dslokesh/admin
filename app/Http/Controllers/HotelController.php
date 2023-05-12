@@ -94,7 +94,7 @@ class HotelController extends Controller
         ]);
 
 
-
+		$input = $request->all();
         $record = new Hotel();
 		$destinationPath = public_path('/uploads/hotels/');
 		if ($request->hasFile('image')) {
