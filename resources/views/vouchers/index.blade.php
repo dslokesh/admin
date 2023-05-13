@@ -59,9 +59,9 @@
                   @foreach ($records as $record)
 				  
                   <tr>
-                    <td>{{ $record->agent->full_name}}</td>
-					<td>{{ $record->customer->name}}</td>
-					<td>{{ $record->country->name}}</td>
+                    <td>{{ ($record->agent)?$record->agent->full_name:''}}</td>
+					<td>{{ ($record->customer)?$record->customer->name:''}}</td>
+					<td>{{ ($record->countr)?$record->country->name:''}}</td>
 					 <td>{!! SiteHelpers::statusColorYesNo($record->is_hotel) !!}</td>
 					  <td>{!! SiteHelpers::statusColorYesNo($record->is_flight) !!}</td>
 					   <td>{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>

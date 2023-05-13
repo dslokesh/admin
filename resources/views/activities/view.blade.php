@@ -277,6 +277,8 @@
 					<th>Rate (Without VAT)</th>
                     <th>Max No Allowed</th>
                     <th>Min No Allowed</th>
+					<th>Start Age</th>
+                    <th>End Age</th>
                   </tr>
 				   <tr>
                     <td>Adult</td>
@@ -284,6 +286,8 @@
 					<td>{{ $pdata->adult_rate_without_vat }}</td>
                     <td>{{ $pdata->adult_max_no_allowed }}</td>
                     <td>{{ $pdata->adult_min_no_allowed }}</td>
+					<td>{{ $pdata->adult_start_age }}</td>
+                    <td>{{ $pdata->adult_end_age }}</td>
                   </tr>
 				  <tr>
                     <td>Child</td>
@@ -291,6 +295,8 @@
 					<td>{{ $pdata->chield_rate_without_vat }}</td>
                     <td>{{ $pdata->chield_max_no_allowed }}</td>
                     <td>{{ $pdata->chield_min_no_allowed }}</td>
+					<td>{{ $pdata->chield_start_age }}</td>
+                    <td>{{ $pdata->chield_end_age }}</td>
                   </tr>
 				   <tr>
                     <td>Infant</td>
@@ -298,6 +304,8 @@
 					<td>{{ $pdata->infant_rate_without_vat }}</td>
                     <td>{{ $pdata->infant_max_no_allowed }}</td>
                     <td>{{ $pdata->infant_min_no_allowed }}</td>
+					<td>{{ $pdata->infant_start_age }}</td>
+                    <td>{{ $pdata->infant_end_age }}</td>
                   </tr>
 				  </table>
               </div>

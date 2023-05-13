@@ -114,6 +114,8 @@
 					<th>Rate (Without VAT)</th>
                     <th>Max No Allowed</th>
                     <th>Min No Allowed</th>
+					<th>Start Age</th>
+                    <th>End Age</th>
                   </tr>
 				   <tr>
                     <td>Adult</td>
@@ -121,6 +123,8 @@
 					<td><input type="text" id="adult_rate_without_vat{{$k}}"  name="adult_rate_without_vat[]"  class="form-control onlynumbr" readonly value="{{ $pdata->adult_rate_without_vat }}" /></td>
                     <td><input type="text" id="adult_max_no_allowed{{$k}}" name="adult_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->adult_max_no_allowed }}" /></td>
                     <td><input type="text" id="adult_min_no_allowed{{$k}}"  name="adult_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->adult_min_no_allowed }}" /></td>
+					<td><input type="text" id="adult_start_age{{$k}}" name="adult_start_age[]" value="{{ $pdata->adult_start_age }}" class="form-control onlynumbrf" /></td>
+					  <td><input type="text" id="adult_end_age{{$k}}" name="adult_end_age[]" value="{{ $pdata->adult_end_age }}" class="form-control onlynumbrf" /></td>
                   </tr>
 				  <tr>
                     <td>Child</td>
@@ -128,6 +132,8 @@
 					<td><input type="text" id="chield_rate_without_vat{{$k}}"  name="chield_rate_without_vat[]"  class="form-control onlynumbr" readonly  value="{{ $pdata->chield_rate_without_vat }}" /></td>
                     <td><input type="text" id="chield_max_no_allowed{{$k}}"  name="chield_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->chield_max_no_allowed }}" /></td>
                     <td><input type="text" id="chield_min_no_allowed{{$k}}" name="chield_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->chield_min_no_allowed }}" /></td>
+					 <td><input type="text" id="chield_start_age{{$k}}" name="chield_start_age[]" value="{{ $pdata->chield_start_age }}" class="form-control onlynumbrf" /></td>
+					  <td><input type="text" id="chield_end_age{{$k}}" name="chield_end_age[]" value="{{ $pdata->chield_start_age }}" class="form-control onlynumbrf" /></td>
                   </tr>
 				   <tr>
                     <td>Infant</td>
@@ -135,6 +141,8 @@
 					<td><input type="text" id="infant_rate_without_vat{{$k}}"  name="infant_rate_without_vat[]"  class="form-control onlynumbr" readonly value="{{ $pdata->infant_rate_without_vat }}" /></td>
                     <td><input type="text" id="infant_max_no_allowed{{$k}}"  name="infant_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->infant_max_no_allowed }}" /></td>
                     <td><input type="text" id="infant_min_no_allowed{{$k}}"  name="infant_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->infant_min_no_allowed }}" /></td>
+					 <td><input type="text" id="infant_start_age{{$k}}" name="infant_start_age[]" value="{{ $pdata->infant_start_age }}" class="form-control onlynumbrf"  /></td>
+                    <td><input type="text" id="infant_end_age{{$k}}" name="infant_end_age[]" value="{{ $pdata->infant_end_age }}" class="form-control onlynumbrf" /></td>
                   </tr>
 				  </table>
               </div>

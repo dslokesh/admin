@@ -56,14 +56,19 @@
 				</div>
                <div class="col-lg-6 mb-3">
                 <label for="inputName">Agent Name:</label>
+				@if(isset($voucher->agent))
                {{ $voucher->agent->full_name }} </br>
 			   <b>Code:</b>{{$voucher->agent->code}} <b> Email:</b>{{$voucher->agent->email}} <b>Mobile No:</b>{{$voucher->agent->mobile}} <b>Address:</b>{{$voucher->agent->address. " ".$voucher->agent->postcode;}}
+			   
+			   @endif
               </div>
 			 
 			      <div class="col-lg-6 mb-3">
                 <label for="inputName">Customer Name:</label>
+				@if(isset($voucher->customer))
                 {{ $voucher->customer->name }} </br>
 				<b>Email:</b>{{$voucher->customer->email}} <b>Mobile No:</b>{{$voucher->customer->mobile}} <b>Address:</b>{{$voucher->customer->address. " ".$voucher->customer->zip_code;}}
+				@endif
               </div>
 			  <div class="form-group col-lg-3 mb-3">
                 <label for="inputName">Country:</label>

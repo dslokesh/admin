@@ -408,14 +408,20 @@ class ActivitiesController extends Controller
 		$adult_rate_with_vat = $request->input('adult_rate_with_vat');
 		$adult_max_no_allowed = $request->input('adult_max_no_allowed');
 		$adult_min_no_allowed = $request->input('adult_min_no_allowed');
+		$adult_start_age = $request->input('adult_start_age');
+		$adult_end_age = $request->input('adult_end_age');
 		$chield_rate_without_vat = $request->input('chield_rate_without_vat');
 		$chield_rate_with_vat = $request->input('chield_rate_with_vat');
 		$chield_max_no_allowed = $request->input('chield_max_no_allowed');
 		$chield_min_no_allowed = $request->input('chield_min_no_allowed');
+		$chield_start_age = $request->input('chield_start_age');
+		$chield_end_age = $request->input('chield_end_age');
 		$infant_rate_without_vat = $request->input('infant_rate_without_vat');
 		$infant_rate_with_vat = $request->input('infant_rate_with_vat');
 		$infant_max_no_allowed = $request->input('infant_max_no_allowed');
 		$infant_min_no_allowed = $request->input('infant_min_no_allowed');
+		$infant_start_age = $request->input('infant_start_age');
+		$infant_end_age = $request->input('infant_end_age');
 		
 		$booking_window_valueto = $request->input('booking_window_valueto');
 		$cancellation_value_to = $request->input('cancellation_value_to');
@@ -440,15 +446,21 @@ class ActivitiesController extends Controller
 					'adult_rate_with_vat' => $adult_rate_with_vat[$k],
 					'adult_max_no_allowed' => $adult_max_no_allowed[$k],
 					'adult_min_no_allowed' => $adult_min_no_allowed[$k],
+					'adult_start_age' => $adult_start_age[$k],
+					'adult_end_age' => $adult_end_age[$k],
 					'chield_rate_without_vat' => $chield_rate_without_vat[$k],
 					'chield_rate_with_vat' => $chield_rate_with_vat[$k],
 					'chield_max_no_allowed' => $chield_max_no_allowed[$k],
 					'chield_min_no_allowed' => $chield_min_no_allowed[$k],
+					'chield_start_age' => $chield_start_age[$k],
+					'chield_end_age' => $chield_end_age[$k],
 					
 					'infant_rate_without_vat' => $infant_rate_without_vat[$k],
 					'infant_rate_with_vat' => $infant_rate_with_vat[$k],
 					'infant_max_no_allowed' => $infant_max_no_allowed[$k],
 					'infant_min_no_allowed' => $infant_min_no_allowed[$k],
+					'infant_start_age' => $infant_start_age[$k],
+					'infant_end_age' => $infant_end_age[$k],
 					
 					'booking_window_valueto' => $booking_window_valueto[$k],
 					'cancellation_value_to' => $cancellation_value_to[$k],

@@ -103,6 +103,8 @@
 					<th>Rate (Without VAT)</th>
                     <th>Max No Allowed</th>
                     <th>Min No Allowed</th>
+					<th>Start Age</th>
+                    <th>End Age</th>
                   </tr>
 				   <tr>
                     <td>Adult</td>
@@ -110,6 +112,8 @@
 					<td><input type="text" id="adult_rate_without_vat1"  name="adult_rate_without_vat[]"  class="form-control onlynumbr "  readonly /></td>
                     <td><input type="text" id="adult_max_no_allowed1" name="adult_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
                     <td><input type="text" id="adult_min_no_allowed1"  name="adult_min_no_allowed[]"  class="form-control onlynumbr" /></td>
+					 <td><input type="number" id="adult_start_age1" name="adult_start_age[]" value="0" class="form-control onlynumbr" /></td>
+					  <td><input type="number" id="adult_end_age1" name="adult_end_age[]" value="0" class="form-control onlynumbr" /></td>
                   </tr>
 				  <tr>
                     <td>Child</td>
@@ -117,6 +121,8 @@
 					<td><input type="text" id="chield_rate_without_vat1"  name="chield_rate_without_vat[]"  class="form-control onlynumbr "  readonly  /></td>
                     <td><input type="text" id="chield_max_no_allowed1"  name="chield_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
                     <td><input type="text" id="chield_min_no_allowed1" name="chield_min_no_allowed[]"  class="form-control onlynumbr" /></td>
+					 <td><input type="number" id="chield_start_age1" name="chield_start_age[]" value="0" class="form-control onlynumbr" /></td>
+					  <td><input type="number" id="chield_end_age1" name="chield_end_age[]" value="0" class="form-control onlynumbr" /></td>
                   </tr>
 				   <tr>
                     <td>Infant</td>
@@ -124,6 +130,8 @@
 					<td><input type="text" id="infant_rate_without_vat1"  name="infant_rate_without_vat[]"  class="form-control onlynumbr "  readonly /></td>
                     <td><input type="text" id="infant_max_no_allowed1"  name="infant_max_no_allowed[]"  class="form-control onlynumbr"  /></td>
                     <td><input type="text" id="infant_min_no_allowed1"  name="infant_min_no_allowed[]"  class="form-control onlynumbr" /></td>
+					 <td><input type="number" id="infant_start_age1" name="infant_start_age[]" value="0" class="form-control onlynumbr"  /></td>
+                    <td><input type="number" id="infant_end_age1" name="infant_end_age[]" value="0" class="form-control onlynumbr" /></td>
                   </tr>
 				  </table>
               </div>
