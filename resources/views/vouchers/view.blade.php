@@ -54,8 +54,9 @@
 					<div class="col-lg-12">
 				<h5>Voucher Details</h5>
 				</div>
+				
                <div class="col-lg-6 mb-3">
-                <label for="inputName">Agent Name:</label>
+                <label for="inputName">Agency Name:</label>
 				@if(isset($voucher->agent))
                {{ $voucher->agent->full_name }} </br>
 			   <b>Code:</b>{{$voucher->agent->code}} <b> Email:</b>{{$voucher->agent->email}} <b>Mobile No:</b>{{$voucher->agent->mobile}} <b>Address:</b>{{$voucher->agent->address. " ".$voucher->agent->postcode;}}
@@ -70,19 +71,27 @@
 				<b>Email:</b>{{$voucher->customer->email}} <b>Mobile No:</b>{{$voucher->customer->mobile}} <b>Address:</b>{{$voucher->customer->address. " ".$voucher->customer->zip_code;}}
 				@endif
               </div>
-			  <div class="form-group col-lg-3 mb-3">
+			   <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Voucher Code:</label>
+                {{ $voucher->code }}
+              </div>
+			  <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Country:</label>
                 {{($voucher->country)?$voucher->country->name:''}}
               </div>
-              <div class="form-group col-lg-3 mb-3">
+              <div class="form-group col-lg-6 mb-3">
 			        <label for="inputName">Status:</label>
 					{!! SiteHelpers::statusColor($voucher->status) !!}
               </div>
-              <div class="col-lg-3 mb-3">
+              <div class="col-lg-2 mb-3">
                 <label for="inputName">Travel Date From:</label>
 				{{ $voucher->travel_from_date ? date(config('app.date_format'),strtotime($voucher->travel_from_date)) : null }}
               </div>
-			   <div class="col-lg-3 mb-3">
+			  <div class="col-lg-2 mb-3">
+                <label for="inputName">Number Of Night:</label>
+				{{ $voucher->nof_night  }}
+              </div>
+			   <div class="col-lg-2 mb-3">
                 <label for="inputName">Travel Date To:</label>
 				{{ $voucher->travel_to_date ? date(config('app.date_format'),strtotime($voucher->travel_to_date)) : null }}
               </div>

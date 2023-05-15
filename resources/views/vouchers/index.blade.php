@@ -41,6 +41,7 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+				   <th>Code</th>
                     <th>Agent Name</th>
 					<th>Customer Name</th>
 					<th>Country</th>
@@ -59,6 +60,7 @@
                   @foreach ($records as $record)
 				  
                   <tr>
+				  <td>{{ ($record->code)}}</td>
                     <td>{{ ($record->agent)?$record->agent->full_name:''}}</td>
 					<td>{{ ($record->customer)?$record->customer->name:''}}</td>
 					<td>{{ ($record->countr)?$record->country->name:''}}</td>

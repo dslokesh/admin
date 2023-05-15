@@ -32,8 +32,8 @@
             </div>
             <div class="card-body row">
               <div class="form-group col-md-6">
-                <label for="inputName">Agent Name: <span class="red">*</span></label>
-                <input type="text" id="agent_id" name="agent_id" value="{{ old('agent_id') ?: $record->agent->full_name }}" class="form-control"  placeholder="Agent Name" />
+                <label for="inputName">Agency Name: <span class="red">*</span></label>
+                <input type="text" id="agent_id" name="agent_id" value="{{ old('agent_id') ?: $record->agent->full_name }}" class="form-control"  placeholder="Agency Name" />
                 @if ($errors->has('agent_id'))
                     <span class="text-danger">{{ $errors->first('agent_id') }}</span>
                 @endif
@@ -83,16 +83,28 @@
 					  <option value="0" @if($record->is_activity ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			  <div class="form-group col-md-3">
+			  <div class="form-group col-md-2">
                 <label for="inputName">Travel Date From: <span class="red">*</span></label>
                <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date') ?: $record->travel_from_date }}" class="form-control datepicker"  placeholder="Travel Date From" />
 				  @if ($errors->has('travel_from_date'))
                     <span class="text-danger">{{ $errors->first('travel_from_date') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-3">
+			   <div class="form-group col-md-2">
+                <label for="inputName">Number Of Night: <span class="red">*</span></label>
+               <select name="nof_night" id="nof_night" class="form-control">
+			   <option value="">--select--</option>
+					@for($i =1; $i<30; $i++)
+					  <option value="{{$i}}" @if($record->nof_night == $i) {{'selected="selected"'}} @endif >{{$i}}</option>
+					@endfor
+                 </select>
+				  @if ($errors->has('nof_night'))
+                    <span class="text-danger">{{ $errors->first('nof_night') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-2">
                 <label for="inputName">Travel Date To: <span class="red">*</span></label>
-               <input type="text" id="travel_to_date" name="travel_to_date" value="{{ old('travel_to_date') ?: $record->travel_to_date }}" class="form-control datepicker"  placeholder="Travel Date To" />
+               <input type="text" id="travel_to_date" name="travel_to_date" value="{{ old('travel_to_date') ?: $record->travel_to_date }}" class="form-control "  placeholder="Travel Date To" readonly />
 				  @if ($errors->has('travel_to_date'))
                     <span class="text-danger">{{ $errors->first('travel_to_date') }}</span>
                 @endif
@@ -419,6 +431,20 @@
         }
       }
     });
+  });
+  
+  $('#travel_from_date, #nof_night').on('change', function() {
+    var fromDate = new Date($('#travel_from_date').val());
+    var numberOfNights = parseInt($('#nof_night').val());
+
+    if (!isNaN(fromDate) && !isNaN(numberOfNights)) {
+      var toDate = new Date(fromDate);
+      toDate.setDate(fromDate.getDate() + numberOfNights);
+		
+      var formattedDate = toDate.toISOString().split('T')[0];
+	 
+      $('#travel_to_date').val(formattedDate);
+    }
   });
 });
 </script>

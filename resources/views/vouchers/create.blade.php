@@ -31,8 +31,8 @@
             </div>
             <div class="card-body row">
               <div class="form-group col-md-6">
-                <label for="inputName">Agent Name: <span class="red">*</span></label>
-                <input type="text" id="agent_id" name="agent_id" value="{{ old('agent_id') }}" class="form-control"  placeholder="Agent Name" />
+                <label for="inputName">Agency Name: <span class="red">*</span></label>
+                <input type="text" id="agent_id" name="agent_id" value="{{ old('agent_id') }}" class="form-control"  placeholder="Agency Name" />
                 @if ($errors->has('agent_id'))
                     <span class="text-danger">{{ $errors->first('agent_id') }}</span>
                 @endif
@@ -43,25 +43,30 @@
 			   
 			  <div class="form-group col-md-6">
                 <label for="inputName">Customer Name: <span class="red">*</span> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Create New</button></label>
-                <input type="text" id="customer_id" name="customer_id" value="{{ old('customer_id') }}" class="form-control"  placeholder="Customer  Name" />
+                <input type="text" id="customer_id" name="customer_id" value="{{ old('customer_id') ?: $customerTBA->name }}" class="form-control"  placeholder="Customer  Name" />
                 @if ($errors->has('customer_id'))
                     <span class="text-danger">{{ $errors->first('customer_id') }}</span>
                 @endif
 				
-				<input type="hidden" id="customer_id_select" name="customer_id_select"  />
+				<input type="hidden" id="customer_id_select" value="{{ old('customer_id') ?: $customerTBA->id }}" name="customer_id_select"  />
 				
               </div>
 			  <div class="form-group col-md-6" id="agent_details">
 			   </div>
-			   <div class="form-group col-md-6" id="cus_details">
-			   
+			  <div class="form-group col-md-6" id="cus_details">
+			   <b>Email:</b>{{$customerTBA->email}} <b>Mobile No:</b>{{$customerTBA->mobile}} <b>Address:</b>{{$customerTBA->address. " ".$customerTBA->zip_code;}}
 			   </div>
 			    <div class="form-group col-md-6">
                 <label for="inputName">Country: <span class="red">*</span></label>
                 <select name="country_id" id="country_id" class="form-control">
 				<option value="">--select--</option>
 				@foreach($countries as $country)
-                    <option value="{{$country->id}}" @if(old('country_id') == $country->id) {{'selected="selected"'}} @endif>{{$country->name}}</option>
+				@if(!empty(old('country_id')) && old('country_id') == $country->id)
+                    <option value="{{$country->id}}"  selected="selected"  >{{$country->name}}</option>
+				@endif
+				@if(empty(old('country_id')))
+					<option value="{{$country->id}}" @if($country->id == 3) {{'selected="selected"'}} @endif  >{{$country->name}}</option>
+					@endif
 				@endforeach
                  </select>
 				 @if ($errors->has('country_id'))
@@ -82,16 +87,28 @@
 					  <option value="0" @if(old('is_hotel') ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			  <div class="form-group col-md-3">
+			  <div class="form-group col-md-2">
                 <label for="inputName">Travel Date From: <span class="red">*</span></label>
                <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date') }}" class="form-control datepicker"  placeholder="Travel Date From" />
 				  @if ($errors->has('travel_from_date'))
                     <span class="text-danger">{{ $errors->first('travel_from_date') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-3">
+			  <div class="form-group col-md-2">
+                <label for="inputName">Number Of Night: <span class="red">*</span></label>
+               <select name="nof_night" id="nof_night" class="form-control">
+			   <option value="">--select--</option>
+					@for($i =1; $i<30; $i++)
+					  <option value="{{$i}}" @if(old('nof_night') == $i) {{'selected="selected"'}} @endif >{{$i}}</option>
+					@endfor
+                 </select>
+				  @if ($errors->has('nof_night'))
+                    <span class="text-danger">{{ $errors->first('nof_night') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-2">
                 <label for="inputName">Travel Date To: <span class="red">*</span></label>
-               <input type="text" id="travel_to_date" name="travel_to_date" value="{{ old('travel_to_date') }}" class="form-control datepicker"  placeholder="Travel Date To" />
+               <input type="text" id="travel_to_date" name="travel_to_date" value="{{ old('travel_to_date') }}" class="form-control" readonly placeholder="Travel Date To" />
 				  @if ($errors->has('travel_to_date'))
                     <span class="text-danger">{{ $errors->first('travel_to_date') }}</span>
                 @endif
@@ -422,7 +439,25 @@
       }
     });
   });
+  
+  $('#travel_from_date, #nof_night').on('change', function() {
+    var fromDate = new Date($('#travel_from_date').val());
+    var numberOfNights = parseInt($('#nof_night').val());
+
+    if (!isNaN(fromDate) && !isNaN(numberOfNights)) {
+      var toDate = new Date(fromDate);
+      toDate.setDate(fromDate.getDate() + numberOfNights);
+		
+      var formattedDate = toDate.toISOString().split('T')[0];
+	 
+      $('#travel_to_date').val(formattedDate);
+    }
+  });
+  
 });
+
+
+
 </script>
 
 

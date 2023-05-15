@@ -121,6 +121,7 @@
                               </i>
                               
                           </a>
+						  @if($record->id > 1 )
                           <form id="delete-form-{{$record->id}}" method="post" action="{{route('customers.destroy',$record->id)}}" style="display:none;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
@@ -136,7 +137,9 @@
                                     event.preventDefault();
                                 }
                             
-                            "><i class="fas fa-trash"></i></a></td>
+                            "><i class="fas fa-trash"></i></a>
+							@endif
+							</td>
                   </tr>
 				 
                   @endforeach

@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Hotel : {{ $hotel->name }}</h1>
+            <h1>Voucher Code :{{$voucher->code}} , Hotel : {{ $hotel->name }} </h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -27,7 +27,7 @@
 		
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">{{ $hotel->name }}</h3>
+              <h3 class="card-title">Voucher Code :{{$voucher->code}} ,Hotel : {{ $hotel->name }} </h3>
             </div>
 			
 			<div class="card-body">
@@ -129,12 +129,12 @@
 				</div>
 				 <div class="col-lg-6 mb-3">
                 <label for="inputName">Check In Date: <span class="red">*</span></label>
-               <input type="text" id="check_in_date" name="check_in_date"  class="form-control datepicker"  placeholder="Check In Date" />
+               <input type="text" id="check_in_date" name="check_in_date"  class="form-control datepicker" value="{{$voucher->travel_from_date}}"  placeholder="Check In Date" />
 			
               </div>
 			   <div class="col-lg-6 mb-3">
                 <label for="inputName">Check Out Date: <span class="red">*</span></label>
-               <input type="text" id="check_out_date" name="check_out_date"  class="form-control datepicker"  placeholder="Check Out Date" />
+               <input type="text" id="check_out_date" name="check_out_date"  class="form-control datepicker" value="{{$voucher->travel_to_date}}"  placeholder="Check Out Date" />
 				
               </div>
 				 <div class="col-lg-12">

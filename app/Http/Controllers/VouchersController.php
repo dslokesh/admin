@@ -44,7 +44,13 @@ class VouchersController extends Controller
     {
 		$countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$airlines = Airline::where('status', 1)->orderBy('name', 'ASC')->get();
-        return view('vouchers.create', compact('countries','airlines'));
+		if(old('customer_id_select')){
+		$customerTBA = Customer::where('id', old('customer_id_select'))->where('status', 1)->first();
+		}else{
+		$customerTBA = Customer::where('id', 1)->where('status', 1)->first();	
+		}
+			
+        return view('vouchers.create', compact('countries','airlines','customerTBA'));
     }
 
     /**
@@ -59,6 +65,8 @@ class VouchersController extends Controller
             'agent_id'=>'required',
 			'customer_id'=>'required',
 			'country_id'=>'required',
+			'travel_from_date'=>'required',
+			'nof_night'=>'required',
 			'arrival_airlines_id' => 'required_if:is_flight,==,1',
 			'arrival_date' => 'required_if:is_flight,==,1',
         ], [
@@ -66,6 +74,8 @@ class VouchersController extends Controller
 			'arrival_date.required_if' => 'The arrival date field is required .',
 			'depature_date.required_if' => 'The depature date field is required .',
 			'depature_airlines_id.required_if' => 'The depature airlines field is required .',
+			'travel_from_date.required' => 'The travel date from field is required .',
+			'nof_night.required' => 'The number of night field is required .',
 		]);
 		
 		
@@ -89,8 +99,13 @@ class VouchersController extends Controller
 		$record->depature_terminal = $request->input('depature_terminal');
 		$record->travel_from_date = $request->input('travel_from_date');
 		$record->travel_to_date = $request->input('travel_to_date');
+		$record->nof_night = $request->input('nof_night');
 		$record->status = $request->input('status');
         $record->save();
+		$code = 'V-'.date("Y")."-00".$record->id;
+		$recordUser = Voucher::find($record->id);
+		$recordUser->code = $code;
+		$recordUser->save();
 		
 		if ($request->has('save_and_hotel')) {
 			if($record->is_hotel == 1){
@@ -98,10 +113,10 @@ class VouchersController extends Controller
 			}
 			else
 			{
-				return redirect('vouchers.index')->with('error', 'If select hotel yes than you can add hotel.');
+				return redirect()->route('vouchers.index')->with('error', 'If select hotel yes than you can add hotel.');
 			}
 		} else {
-        return redirect('vouchers.index')->with('success', 'Voucher Created Successfully.');
+        return redirect()->route('vouchers.index')->with('success', 'Voucher Created Successfully.');
 		}
 		
     }
@@ -141,10 +156,12 @@ class VouchersController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $request->validate([
+        $request->validate([
             'agent_id'=>'required',
 			'customer_id'=>'required',
 			'country_id'=>'required',
+			'travel_from_date'=>'required',
+			'nof_night'=>'required',
 			'arrival_airlines_id' => 'required_if:is_flight,==,1',
 			'arrival_date' => 'required_if:is_flight,==,1',
         ], [
@@ -152,6 +169,8 @@ class VouchersController extends Controller
 			'arrival_date.required_if' => 'The arrival date field is required .',
 			'depature_date.required_if' => 'The depature date field is required .',
 			'depature_airlines_id.required_if' => 'The depature airlines field is required .',
+			'travel_from_date.required' => 'The travel date from field is required .',
+			'nof_night.required' => 'The number of night field is required .',
 		]);
 
 		$arrival_date = $request->input('arrival_date'); // get the value of the date input
@@ -174,6 +193,7 @@ class VouchersController extends Controller
 		$record->depature_terminal = $request->input('depature_terminal');
 		$record->travel_from_date = $request->input('travel_from_date');
 		$record->travel_to_date = $request->input('travel_to_date');
+		$record->nof_night = $request->input('nof_night');
 		$record->status = $request->input('status');
         $record->save();
         return redirect('vouchers')->with('success','Voucher Updated.');
@@ -260,8 +280,9 @@ class VouchersController extends Controller
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
         $hotelcategories = HotelCategory::where('status', 1)->orderBy('name', 'ASC')->get();
-
-        return view('vouchers.hotels', compact('records', 'countries', 'states', 'cities', 'hotelcategories','vid'));
+		$voucher = Voucher::find($vid);
+		
+        return view('vouchers.hotels', compact('records', 'countries', 'states', 'cities', 'hotelcategories','vid','voucher'));
     }
 	
 	
@@ -276,7 +297,8 @@ class VouchersController extends Controller
 		$query = Hotel::with(['country', 'state', 'city', 'hotelcategory']);
 		$query->where('id', $hid);
 		$hotel = $query->where('status', 1)->first();
-       return view('vouchers.hotel-add-view', compact('hotel','hid','vid'));
+		$voucher = Voucher::find($vid);
+       return view('vouchers.hotel-add-view', compact('hotel','hid','vid','voucher'));
     }
 	
 	public function newRowAddmore(Request $request)
@@ -284,7 +306,6 @@ class VouchersController extends Controller
 		$hotel_id = $request->input('hotel_id');
 		$v_id = $request->input('v_id');
 		$rowCount = $request->input('rowCount');
-		
 		$view = view("vouchers.addmore_markup_hotel",['rowCount'=>$rowCount,'hotel_id'=>$hotel_id,'v_id'=>$v_id])->render();
          return response()->json(['success' => 1, 'html' => $view]);
     }
