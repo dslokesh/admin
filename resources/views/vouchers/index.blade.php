@@ -52,6 +52,7 @@
                     <th>Created On</th>
                     <th>Updated On</th>
 					<th>Hotels</th>
+					<th>Activities</th>
                     <th></th>
                   </tr>
 				  
@@ -73,6 +74,15 @@
 					 <td>
 					 @if($record->is_hotel == 1)
 					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.hotels',$record->id)}}">
+                              <i class="fas fa-plus">
+                              </i>
+                              Add
+                          </a>
+						  @endif
+						  </td>
+					 <td>
+					 @if($record->is_activity == 1)
+					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.activity',$record->id)}}">
                               <i class="fas fa-plus">
                               </i>
                               Add

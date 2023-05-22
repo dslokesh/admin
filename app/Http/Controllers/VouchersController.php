@@ -14,6 +14,9 @@ use App\Models\City;
 use App\Models\Zone;
 use App\Models\VoucherHotel;
 use App\Models\Hotel;
+use App\Models\Activity;
+use App\Models\ActivityPrices;
+use App\Models\AgentPriceMarkup;
 use Illuminate\Http\Request;
 use DB;
 
@@ -425,5 +428,69 @@ class VouchersController extends Controller
         $record->delete();
         return redirect()->back()->with('success', 'Hotel Deleted Successfully.');
     }
+	
+	/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function addActivityList(Request $request,$vid)
+    {
+       $data = $request->all();
+		$typeActivities = config("constants.typeActivities"); 
+        $perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucher = Voucher::find($vid);
+		
+        $query = Activity::with('prices')->where('status',1)->where('is_price',1);
+	
+        if (isset($data['name']) && !empty($data['name'])) {
+            $query->where('title', 'like', '%' . $data['name'] . '%');
+        }
+       
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		//dd($records);
+		
+        return view('vouchers.activities-list', compact('records','typeActivities','vid','voucher'));
+		
+       
+    }
+	
+	public function addActivityView($aid,$vid)
+    {
+		$query = Activity::where('id', $aid);
+		$activity = $query->where('status', 1)->first();
+		$voucher = Voucher::find($vid);
+		$startDate = $voucher->travel_from_date;
+		$endDate = $voucher->travel_to_date;
+		
+		$activityPrices = ActivityPrices::where('activity_id', $aid)->where(function ($query) use ($startDate, $endDate) {
+        $query->where('rate_valid_from', '>=', $startDate)
+            ->where('rate_valid_from', '<=', $endDate)
+            ->orWhere('rate_valid_to', '>=', $startDate)
+            ->where('rate_valid_to', '<=', $endDate);
+    })->get();
+		
+		$typeActivities = config("constants.typeActivities"); 
+		$variants = [];
+		$markups = [];
+		$activity = Activity::find($aid);
+			$variants[$aid] = ActivityPrices::select('variant_code')->distinct()->where('activity_id',  $aid)->get()->toArray();
+			
+			foreach($variants[$aid] as $variant)
+			{
+				$m = AgentPriceMarkup::where('agent_id',  $voucher->agent_id)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
+				
+				if(!empty($m))
+				{
+					$markups[$activity->title][$variant['variant_code']] = [
+						'ticket_only'=>$m->ticket_only,
+						'sic_transfer'=>$m->sic_transfer,
+						'pvt_transfer'=>$m->pvt_transfer,
+					];
+				}
+			}
+       return view('vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices','markups'));
+    }
+	
 	
 }

@@ -11,7 +11,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
 			 <li class="breadcrumb-item"><a href="{{ route('vouchers.index') }}">Vouchers</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('voucher.add.hotels') }}">Hotels</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('voucher.add.hotels',[$voucher->id]) }}">Hotels</a></li>
               <li class="breadcrumb-item active">Hotel Details</li>
             </ol>
           </div>
@@ -26,9 +26,7 @@
         <div class="col-md-12">
 		
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Voucher Code :{{$voucher->code}} ,Hotel : {{ $hotel->name }} </h3>
-            </div>
+           
 			
 			<div class="card-body">
 			

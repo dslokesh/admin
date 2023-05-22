@@ -104,7 +104,11 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::post('voucher-hotel-save', [VouchersController::class, 'hotelSaveInVoucher'])->name('voucher.hotel.save');
         Route::delete('voucher-hotel-delete/{id}', [VouchersController::class, 'destroyHotelFromVoucher'])->name('voucher.hotel.delete');
         //Route::post('register', [UsersController::class, 'register'])->name('register');
-
+		
+		Route::get('add-activity-vouchers/{vid?}', [VouchersController::class, 'addActivityList'])->name('voucher.add.activity');
+        Route::get('activity-view-vouchers/{aid?}/{vid?}', [VouchersController::class, 'addActivityView'])->name('voucher.activity.view');
+        //Route::post('voucher-activity-save', [VouchersController::class, 'hotelSaveInVoucher'])->name('voucher.activity.save');
+		
         Route::resource('users', UsersController::class);
 
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
