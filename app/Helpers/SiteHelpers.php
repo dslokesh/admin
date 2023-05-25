@@ -63,21 +63,22 @@ class SiteHelpers
 		$user = User::where('id',  $agent_id)->first();
 		$m = AgentPriceMarkup::where('agent_id',  $agent_id)->where('activity_id',  $activity_id)->where('variant_code',  $variant_code)->first();
 		
-		if(!empty($m->ticket_only)){
-		$markup['ticket_only'] = $m->ticket_only;
-		}elseif(!empty($user->ticket_only)){
-		$markup['ticket_only'] = $m->ticket_only;	
-		}
-		if(!empty($m->sic_transfer)){
-		$markup['sic_transfer'] = $m->sic_transfer;
-		}elseif(!empty($user->ticket_only)){
-		$markup['sic_transfer'] = $m->sic_transfer;	
-		}
-		if(!empty($m->pvt_transfer)){
-		$markup['pvt_transfer'] = $m->pvt_transfer;
-		}elseif(!empty($user->pvt_transfer)){
-		$markup['pvt_transfer'] = $m->pvt_transfer;	
-		}
+			if(!empty($m->ticket_only)){
+			$markup['ticket_only'] = $m->ticket_only;
+			}elseif(!empty($user->ticket_only)){
+			$markup['ticket_only'] = $user->ticket_only;	
+			}
+			if(!empty($m->sic_transfer)){
+			$markup['sic_transfer'] = $m->sic_transfer;
+			}elseif(!empty($user->ticket_only)){
+			$markup['sic_transfer'] = $user->sic_transfer;	
+			}
+			if(!empty($m->pvt_transfer)){
+			$markup['pvt_transfer'] = $m->pvt_transfer;
+			}elseif(!empty($user->pvt_transfer)){
+			$markup['pvt_transfer'] = $user->pvt_transfer;	
+			}
+		
 		
         return $markup;
     }
