@@ -50,14 +50,14 @@
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid From: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_from{{$rowCount}}" name="rate_valid_from[]"  class="form-control datepicker"  placeholder="Rate Valid From"  required  />
+                <input type="text" id="rate_valid_from{{$rowCount}}" name="rate_valid_from[]"  class="form-control datepicker"  placeholder="Rate Valid From (yyyy-mm-dd)"  required  />
                 @if ($errors->has('rate_valid_from'))
                     <span class="text-danger">{{ $errors->first('rate_valid_from') }}</span>
                 @endif
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid To: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_to{{$rowCount}}" name="rate_valid_to[]" class="form-control datepicker"  placeholder="Rate Valid To"  required  />
+                <input type="text" id="rate_valid_to{{$rowCount}}" name="rate_valid_to[]" class="form-control datepicker"  placeholder="Rate Valid To (yyyy-mm-dd)"  required  />
                 @if ($errors->has('rate_valid_to'))
                     <span class="text-danger">{{ $errors->first('rate_valid_to') }}</span>
                 @endif
