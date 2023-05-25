@@ -92,14 +92,14 @@
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid From: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_from{{$k}}" name="rate_valid_from[]" value="{{ date('Y-m-d',strtotime(old('rate_valid_from')?:$pdata->rate_valid_from)) }}" class="form-control datepicker"  placeholder="Rate Valid From"  />
+                <input type="text" id="rate_valid_from{{$k}}" name="rate_valid_from[]" value="{{ date('Y-m-d',strtotime(old('rate_valid_from')?:$pdata->rate_valid_from)) }}" class="form-control datepicker"  placeholder="Rate Valid From" readonly required   />
                 @if ($errors->has('rate_valid_from'))
                     <span class="text-danger">{{ $errors->first('rate_valid_from') }}</span>
                 @endif
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid To: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_to{{$k}}" name="rate_valid_to[]" value="{{ date('Y-m-d',strtotime(old('rate_valid_to')?:$pdata->rate_valid_to)) }}" class="form-control datepicker"  placeholder="Rate Valid To" />
+                <input type="text" id="rate_valid_to{{$k}}" name="rate_valid_to[]" value="{{ date('Y-m-d',strtotime(old('rate_valid_to')?:$pdata->rate_valid_to)) }}" class="form-control datepicker"  placeholder="Rate Valid To" readonly required  />
                 @if ($errors->has('rate_valid_to'))
                     <span class="text-danger">{{ $errors->first('rate_valid_to') }}</span>
                 @endif
@@ -226,14 +226,16 @@
     success: function(response) {
         // Append the content to the DOM
 		
-			$('.card-body').append(response.html);
-				$('.datepicker').datepicker({
-				weekStart: 1,
-				daysOfWeekHighlighted: "6,0",
-				autoclose: true,
-				todayHighlight: true,
-				format: 'yyyy-mm-dd'
-			});
+			$('.card-body').append(response.html).find('.datepicker').datepicker({
+                weekStart: 1,
+                daysOfWeekHighlighted: "6,0",
+                autoclose: true,
+                todayHighlight: true,
+                dateFormat: 'yyyy-mm-dd'
+            });
+				
+				
+			
 			$('.timepicker').datetimepicker({
 				format: 'hh:mm a'
 			});

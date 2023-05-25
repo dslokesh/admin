@@ -48,10 +48,10 @@
                     <th></th>
                   </tr>
 				  <tr>
-                    <form id="filterForm" method="get" action="{{route('activities.index')}}" >
+                    <form id="filterForm" method="get" action="{{route('voucher.add.activity',$vid)}}" >
                     <th><input type="text" name="name" value="{{request('name')}}" class="form-control"  placeholder="Title" /></th>
                   <th><button class="btn btn-info btn-sm" type="submit">Filter</button>
-                    <a class="btn btn-default btn-sm" href="{{route('activities.index')}}">Clear</a></th>
+                    <a class="btn btn-default btn-sm" href="{{route('voucher.add.activity',$vid)}}">Clear</a></th>
 				  <th></th>
 					
 					<th></th>
@@ -85,7 +85,7 @@
                   </tbody>
                  
                 </table>
-				<div class="pagination pull-right mt-3"> {!! $records->links() !!} </div> 
+				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
               </div>
               <!-- /.card-body -->
             </div>

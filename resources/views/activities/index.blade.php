@@ -130,7 +130,9 @@
                   </tbody>
                  
                 </table>
-				<div class="pagination pull-right mt-3"> {!! $records->links() !!} </div> 
+				<div class="pagination pull-right mt-3"> 
+				{!! $records->appends(request()->query())->links() !!}
+				</div> 
               </div>
               <!-- /.card-body -->
             </div>

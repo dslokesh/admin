@@ -21,7 +21,7 @@ use App\Models\TransferData;
 use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
 use DB;
-
+use Carbon\Carbon;
 
 class VouchersController extends Controller
 {
@@ -478,15 +478,10 @@ class VouchersController extends Controller
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
 		
+
 		$activityPrices = ActivityPrices::where('activity_id', $aid)->get();
-		/* ->where(function ($query) use ($startDate, $endDate) {
-        $query->where('rate_valid_from', '>=', $startDate)
-              ->where('rate_valid_from', '<=', $endDate)
-              ->orWhere(function ($query) use ($startDate, $endDate) {
-                  $query->where('rate_valid_to', '>=', $startDate)
-                        ->where('rate_valid_to', '<=', $endDate);
-              });
-    })->get(); */
+//->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->get();
+
 		
 		$typeActivities = config("constants.typeActivities"); 
 		
@@ -494,6 +489,7 @@ class VouchersController extends Controller
 			
        return view('vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'));
     }
+	
 	
 	public function getPVTtransferAmount(Request $request)
     {

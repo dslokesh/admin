@@ -53,7 +53,7 @@
                    <th></th>
                   </tr>
 				  <tr>
-                    <form id="filterForm" method="get" action="{{route('voucher.add.hotels')}}" >
+                    <form id="filterForm" method="get" action="{{route('voucher.add.hotels',[$vid])}}" >
 					 <th></th>
                     <th><input type="text" name="name" value="{{request('name')}}" class="form-control"  placeholder="Name" /></th>
                     <th></th>
@@ -86,7 +86,7 @@
                 
                    <th></th>
                     <th><button class="btn btn-info btn-sm" type="submit">Filter</button>
-                    <a class="btn btn-default btn-sm" href="{{route('voucher.add.hotels')}}">Clear</a></th>
+                    <a class="btn btn-default btn-sm" href="{{route('voucher.add.hotels',[$vid])}}">Clear</a></th>
                    
                    
                   </form>

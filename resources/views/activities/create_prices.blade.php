@@ -74,21 +74,21 @@
 				 <div class="form-group col-md-3">
 
                 <label for="inputName">End Time: <span class="red">*</span></label>
-                <input type="text" id="end_time1" name="end_time[]" value="{{ old('end_time') }}" class="form-control timepicker"  placeholder="End Time" required />
+                <input type="text" id="end_time1" name="end_time[]" value="{{ old('end_time') }}" class="form-control timepicker"  placeholder="End Time" required  />
                 @if ($errors->has('end_time'))
                     <span class="text-danger">{{ $errors->first('end_time') }}</span>
                 @endif
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid From: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_from1" name="rate_valid_from[]" value="{{ old('rate_valid_from') }}" class="form-control datepicker"  placeholder="Rate Valid From"  />
+                <input type="text" id="rate_valid_from1" name="rate_valid_from[]" value="{{ old('rate_valid_from') }}" class="form-control datepicker"  placeholder="Rate Valid From" readonly required />
                 @if ($errors->has('rate_valid_from'))
                     <span class="text-danger">{{ $errors->first('rate_valid_from') }}</span>
                 @endif
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid To: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_to1" name="rate_valid_to[]" value="{{ old('rate_valid_to') }}" class="form-control datepicker"  placeholder="Rate Valid To" />
+                <input type="text" id="rate_valid_to1" name="rate_valid_to[]" value="{{ old('rate_valid_to') }}" class="form-control datepicker"  placeholder="Rate Valid To" readonly required  />
                 @if ($errors->has('rate_valid_to'))
                     <span class="text-danger">{{ $errors->first('rate_valid_to') }}</span>
                 @endif
