@@ -225,11 +225,14 @@ class HotelController extends Controller
 			$img->save(public_path('/uploads/hotels/thumb/'.$newName));
 
             //** Below code for unlink old image **//
+			if($record->image != 'no-image.png'){
+
 			$oldImage = public_path('/uploads/hotels/'.$record->image);
 			$oldImageThumb = public_path('/uploads/hotels/thumb/'.$record->image);
 			if(!empty($record->image) && @getimagesize($oldImage) && file_exists($oldImage)) {
 				unlink($oldImage);
 				unlink($oldImageThumb);
+			}
 			}
             $record->image = $newName;
 		}

@@ -316,13 +316,15 @@ class AgentsController extends Controller
 			});
 			
 			$img->save(public_path('/uploads/users/thumb/'.$newName));
-
+			
+			if($record->image != 'no-image.png'){
             //** Below code for unlink old image **//
-			$oldImage = public_path('/uploads/users/'.$record->image);
-			$oldImageThumb = public_path('/uploads/users/thumb/'.$record->image);
-			if(!empty($record->image) && @getimagesize($oldImage) && file_exists($oldImage)) {
-				unlink($oldImage);
-				unlink($oldImageThumb);
+				$oldImage = public_path('/uploads/users/'.$record->image);
+				$oldImageThumb = public_path('/uploads/users/thumb/'.$record->image);
+				if(!empty($record->image) && @getimagesize($oldImage) && file_exists($oldImage)) {
+					unlink($oldImage);
+					unlink($oldImageThumb);
+				}
 			}
             $record->image = $newName;
 		}

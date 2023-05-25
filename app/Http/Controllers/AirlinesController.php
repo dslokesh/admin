@@ -139,12 +139,14 @@ class AirlinesController extends Controller
 				$constraint->aspectRatio();
 			});
 			$img->save(public_path('/uploads/airlines/thumb/'.$newName));
+			if($record->logo != 'no-image.png'){
             //** Below code for unlink old image **//
 			$oldImage = public_path('/uploads/airlines/'.$record->logo);
 			$oldImageThumb = public_path('/uploads/airlines/thumb/'.$record->logo);
 			if(!empty($record->logo) && @getimagesize($oldImage) && file_exists($oldImage)) {
 				unlink($oldImage);
 				unlink($oldImageThumb);
+			}
 			}
 			
             $record->logo = $newName;

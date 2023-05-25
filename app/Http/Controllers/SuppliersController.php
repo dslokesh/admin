@@ -221,12 +221,15 @@ class SuppliersController extends Controller
 				$constraint->aspectRatio();
 			});
 			$img->save(public_path('/uploads/suppliers/thumb/'.$newName));
+			if($record->logo != 'no-image.png'){
             //** Below code for unlink old image **//
 			$oldImage = public_path('/uploads/suppliers/'.$record->logo);
 			$oldImageThumb = public_path('/uploads/suppliers/thumb/'.$record->logo);
+			
 			if(!empty($record->logo) && @getimagesize($oldImage) && file_exists($oldImage)) {
 				unlink($oldImage);
 				unlink($oldImageThumb);
+			}
 			}
 			
             $record->logo = $newName;

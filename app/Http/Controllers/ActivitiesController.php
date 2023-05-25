@@ -274,7 +274,12 @@ class ActivitiesController extends Controller
 		//check featured_image
         if($request->hasfile('featured_image')){
             $image = $request->file('featured_image');
-			$record->image = $this->uploadImages($image);
+			$old = '';
+			if($record->image != 'no-image.png'){
+				$old = $record->image;
+			}
+			
+			$record->image = $this->uploadImages($image,$old);
         }
 		$allday = ($request->input('AllDay'))?$request->input('AllDay'):'';
 		$weekdays = ($request->input('day'))?$request->input('day'):[];
