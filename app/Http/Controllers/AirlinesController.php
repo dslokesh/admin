@@ -16,7 +16,8 @@ class AirlinesController extends Controller
      */
     public function index()
     {
-        $records = Airline::orderBy('created_at', 'DESC')->get();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $records = Airline::orderBy('created_at', 'DESC')->paginate($perPage);
 		
         return view('airlines.index', compact('records'));
 

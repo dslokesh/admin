@@ -89,6 +89,7 @@
                   </tbody>
                  
                 </table>
+				<div class="pagination pull-right mt-3"> {!! $records->links() !!} </div> 
               </div>
               <!-- /.card-body -->
             </div>
