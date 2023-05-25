@@ -245,9 +245,9 @@ $(document).on('change', '.priceChange', function(evt) {
 	var activity_id = $("#activity_id").val();
 	let activity_vat = $("#activity_vat").val();
 	
-	let adult = $("body #adult"+inputnumber).val();
-	let child = $("body #child"+inputnumber).val();
-	let infant = $("body #infant"+inputnumber).val();
+	let adult = parseInt($("body #adult"+inputnumber).val());
+	let child = parseInt($("body #child"+inputnumber).val());
+	let infant = parseInt($("body #infant"+inputnumber).val());
 	let markup_p_ticket_only = parseFloat($("body #markup_p_ticket_only"+inputnumber).val());
 	let markup_p_sic_transfer = parseFloat($("body #markup_p_sic_transfer"+inputnumber).val());
 	let markup_p_pvt_transfer = parseFloat($("body #markup_p_pvt_transfer"+inputnumber).val());
@@ -263,7 +263,8 @@ $(document).on('change', '.priceChange', function(evt) {
 	
 	if(t_option_val == 3)
 	{
-	getPVTtransfer(activity_id,adult,markup_p_pvt_transfer,inputnumber);
+		var totaladult = parseInt(adult + child);
+	getPVTtransfer(activity_id,totaladult,markup_p_pvt_transfer,inputnumber);
 	$("#loader-overlay").show();	
 	waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
 		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalprice + pvt_transfer_markupamt_total);
@@ -326,9 +327,12 @@ $(document).on('change', '.t_option', function(evt) {
 		$("body #transfer_zone"+inputnumber).prop('required',true);
 	} else if(t_option_val == 3){
 		var activity_id = $("#activity_id").val();
-		let adult = $("body #adult"+inputnumber).find(':selected').val();
+		let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());
+		let child = parseInt($("body #child"+inputnumber).find(':selected').val());
+		var totaladult = parseInt(adult + child);
+		//alert(totaladult);
 		let markup_p_pvt_transfer = parseFloat($("body #markup_p_pvt_transfer"+inputnumber).val());
-		getPVTtransfer(activity_id,adult,markup_p_pvt_transfer,inputnumber);
+		getPVTtransfer(activity_id,totaladult,markup_p_pvt_transfer,inputnumber);
 		$("#adult"+inputnumber).trigger("change");
 	}
 });
