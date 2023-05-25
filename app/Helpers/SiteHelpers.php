@@ -12,6 +12,11 @@ use App\Models\UserProductRelation;
 use App\Models\Certificate;
 use App\Models\Gallery;
 use App\Models\TeamId;
+use App\Models\ActivityPrices;
+use App\Models\AgentPriceMarkup;
+use App\Models\Zone;
+use App\Models\TransferData;
+use App\Models\Activity;
 
 class SiteHelpers
 {
@@ -49,5 +54,69 @@ class SiteHelpers
         return $color;
     }
 	
+	public function getAgentMarkup($agent_id,$activity_id,$variant_code)
+    {
+		$markup = [];
+		$markup['ticket_only'] = 0;
+		$markup['sic_transfer'] = 0;
+		$markup['pvt_transfer'] = 0;
+		$user = User::where('id',  $agent_id)->first();
+		$m = AgentPriceMarkup::where('agent_id',  $agent_id)->where('activity_id',  $activity_id)->where('variant_code',  $variant_code)->first();
+		
+		if(!empty($m->ticket_only)){
+		$markup['ticket_only'] = $m->ticket_only;
+		}elseif(!empty($user->ticket_only)){
+		$markup['ticket_only'] = $m->ticket_only;	
+		}
+		if(!empty($m->sic_transfer)){
+		$markup['sic_transfer'] = $m->sic_transfer;
+		}elseif(!empty($user->ticket_only)){
+		$markup['sic_transfer'] = $m->sic_transfer;	
+		}
+		if(!empty($m->pvt_transfer)){
+		$markup['pvt_transfer'] = $m->pvt_transfer;
+		}elseif(!empty($user->pvt_transfer)){
+		$markup['pvt_transfer'] = $m->pvt_transfer;	
+		}
+		
+        return $markup;
+    }
 	
+	public function getZone($activity_zones,$sic_TFRS)
+    {
+		$zoneArray = [];
+		
+		if($sic_TFRS == 1)
+		{
+			$zoneArrayJson = json_decode($activity_zones);
+			
+			foreach($zoneArrayJson as $k => $z)
+			{
+				$zone = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
+				
+				$zoneArray[] = [
+				'zone_id' => $zone->id,
+				'zone' => $zone->name,
+				'zoneValue' => $z->zoneValue,
+				];
+			}
+			
+		}
+		
+		return $zoneArray;
+    }
+	
+	public function getActivity($activity_id)
+    {
+		
+		$activity = Activity::where('status', 1)->where('id', $activity_id)->first();
+		return $activity;
+    }
+	
+	public function getZoneName($zoneId)
+    {
+				$zone = Zone::where('status', 1)->where('id', $zoneId)->first();
+				
+		return $zone;
+    }
 }

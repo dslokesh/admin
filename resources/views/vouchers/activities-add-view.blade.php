@@ -80,67 +80,12 @@
           
 			
 				</header>
-				@if(auth()->user()->role_id != 3)
-				<div class="form-group col-lg-12 mb-3">
 				
-					 <table id="example1" class="table table-bordered ">
-                  <thead>
-				  <tr>
-                    <th colspan="2" ><h3>Agent Markup</h3></th>
-                  </tr>
-                  <tr>
-					<th>Price</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-				   
-                  @foreach ($markups as $activityName => $record)
-                  <tr>
-					
-                   
-					<td>
-						<table class="table table-bordered table-striped">
-						<tr>
-							<th>Variant Code</th>
-							<th>Ticket Only</th>
-							<th>SIC Transfer</th>
-							<th>PVT Transfer</th>
-						</tr>
-						@foreach($record as $variant_code => $variant)
-						@php
-						$ticket_only = (isset($variant['ticket_only']))?$variant['ticket_only']:'';
-						$sic_transfer = (isset($variant['sic_transfer']))?$variant['sic_transfer']:'';
-						$pvt_transfer = (isset($variant['pvt_transfer']))?$variant['pvt_transfer']:'';
-						
-						@endphp
-						<tr>
-						<td>{{ $variant_code }}</td>
-						<td>
-						{{$ticket_only}}%
-						</td>
-						<td>
-						{{$sic_transfer}}%
-						</td>
-						<td>
-						{{$pvt_transfer}}%
-						</td>
-						</tr>
-						@endforeach
-						</table>
-					</td>
-                  </tr>
-				 
-                  @endforeach
-
-                  </tbody>
-                 
-                </table>
-				</div>
-				@endif
-				<form action="{{route('voucher.hotel.save')}}" method="post" class="form" enctype="multipart/form-data">
+				<form action="{{route('voucher.activity.save')}}" method="post" class="form" >
 				{{ csrf_field() }}
 				 <input type="hidden" id="activity_id" name="activity_id" value="{{ $aid }}"  />
 				 <input type="hidden" id="v_id" name="v_id" value="{{ $vid }}"  />
+				 <input type="hidden" id="activity_vat" name="activity_vat" value="{{ ($activity->vat > 0)?$activity->vat:0 }}"  />
 				<div class="row p-2">
 				<div class="col-lg-12">
 				<h3>Activity Details</h3>
@@ -156,57 +101,104 @@
 				  
                   <tr>
 					<th>Tour Option</th>
-                    <th>Transfer Option</th>
+                    <th id="top">Transfer Option</th>
 					<th>Tour Date</th>
 					<th>Adult</th>
                     <th>Child(3-10Yrs)</th>
                     <th>Infant</th>
+					<th>Ticket Only</th>
+					<th>SIC Transfer</th>
+					<th>PVT Transfer</th>
 					<th>Total Amount</th>
                   </tr>
 				  @if(!empty($activityPrices))
 					  @foreach($activityPrices as $kk => $ap)
+				  
+				  @php
+				  $markup = SiteHelpers::getAgentMarkup($voucher->agent_id,$ap->activity_id,$ap->variant_code);
+				  $actZone = SiteHelpers::getZone($activity->zones,$activity->sic_TFRS);
+				 
+				  @endphp
 				   <tr>
-                    <th><input type="checkbox"  name="activity_select[]" id="activity_select{{$kk}}" /> {{$ap->variant_name}} - {{$ap->variant_code}}</th>
-					<td> <select name="transfer_option[]" id="transfer_option{{$kk}}" class="form-control">
-						<option value="">--select--</option>
+                    <th><input type="checkbox"  name="activity_select[]" id="activity_select{{$kk}}" value="{{ $aid }}" class="actcsk" data-inputnumber="{{$kk}}" /> {{$ap->variant_name}} - {{$ap->variant_code}}
+					<input type="hidden"  name="variant_name[]" id="variant_name{{$kk}}" value="{{ $ap->variant_name }}" data-inputnumber="{{$kk}}" /> 
+					<input type="hidden"  name="variant_code[]" id="variant_code{{$kk}}" value="{{ $ap->variant_code }}" data-inputnumber="{{$kk}}" /> 
+					</th>
+					<td> <select name="transfer_option[]" id="transfer_option{{$kk}}" class="form-control t_option" data-inputnumber="{{$kk}}" disabled="disabled">
+						<option value="">--Select--</option>
 						@if($activity->entry_type=='Activity')
-						<option value="">Without Transfer</option>
+						<option value="Without Transfer" data-id="1">Without Transfer</option>
 						@endif
 						@if($activity->sic_TFRS==1)
-						<option value="">Shared Transfer</option>
+						<option value="Shared Transfer" data-id="2">Shared Transfer</option>
 						@endif
 						@if($activity->pvt_TFRS==1)
-						<option value="">Pvt Transfer</option>
+						<option value="Pvt Transfer" data-id="3">Pvt Transfer</option>
 						@endif
 						</select>
+						<input type="hidden" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[]"    />
+						</td>
+						<td style="display:none" id="transfer_zone_td{{$kk}}"> 
+						
+						<select name="transfer_zone[]" id="transfer_zone{{$kk}}" class="form-control zoneselect"  data-inputnumber="{{$kk}}">
+						<option value="" data-zonevalue="0">--Select Zone--</option>
+						@if($activity->sic_TFRS==1)
+						@foreach($actZone as $z)
+						<option value="{{$z['zone_id']}}" data-zonevalue="3">{{$z['zone']}}</option>
+						@endforeach
+						@endif
+						</select>
+						
+						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[]"    />
 					</td>
-					<td><input type="text" id="tour_date{{$kk}}"  name="tour_date[]"  class="form-control datepicker"   /></td>
-					<td><select name="adult[]" id="adult{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}">
+					<td><input type="text" id="tour_date{{$kk}}"  name="tour_date[]"  class="form-control datepicker"  disabled="disabled" /></td>
+					<td><select name="adult[]" id="adult{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
 						
 						@for($a=$ap->adult_min_no_allowed; $a<=$ap->adult_max_no_allowed; $a++)
 						<option value="{{$a}}">{{$a}}</option>
 						@endfor
 						</select></td>
-                    <td><select name="child[]" id="child{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}">
+                    <td><select name="child[]" id="child{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
 						@for($child=$ap->chield_min_no_allowed; $child<=$ap->chield_max_no_allowed; $child++)
 						<option value="{{$child}}">{{$child}}</option>
 						@endfor
 						</select></td>
-                    <td><select name="infant[]" id="infant{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}">
+                    <td><select name="infant[]" id="infant{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
 						@for($inf=$ap->infant_min_no_allowed; $inf<=$ap->infant_max_no_allowed; $inf++)
 						<option value="{{$inf}}">{{$inf}}</option>
 						@endfor
 						</select></td>
 						<td>
+						{{$markup['ticket_only']}}%
+						<input type="hidden" value="{{$markup['ticket_only']}}" id="markup_p_ticket_only{{$kk}}"  name="markup_p_ticket_only[]"    />
+						</td>
+						<td>
+						{{$markup['sic_transfer']}}%
+						<input type="hidden" value="{{$markup['sic_transfer']}}" id="markup_p_sic_transfer{{$kk}}"  name="markup_p_sic_transfer[]"    />
+						</td>
+						<td>
+						{{$markup['pvt_transfer']}}%
+						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[]"    />
+						</td>
+						<td>
 						@php
-						$price = (($ap->adult_rate_with_vat*$ap->adult_min_no_allowed) + ($ap->chield_rate_with_vat*$ap->chield_min_no_allowed) + ($ap->infant_rate_with_vat*$ap->infant_min_no_allowed));
-						@endphp
-						<input type="hidden" value="{{$ap->adult_rate_with_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[]"    />
+						$priceAd = ($ap->adult_rate_without_vat*$ap->adult_min_no_allowed);
+						$mar = (($priceAd * $markup['ticket_only'])/100);
+						$price = ($priceAd + ($ap->chield_rate_without_vat*$ap->chield_min_no_allowed) + ($ap->infant_rate_without_vat*$ap->infant_min_no_allowed));
 						
-						<input type="hidden" value="{{$ap->chield_rate_with_vat}}" id="childPrice{{$kk}}"  name="childPrice[]"    />
-						<input type="hidden" value="{{$ap->infant_rate_with_vat}}" id="infPrice{{$kk}}"  name="infPrice[]"    />
-						<span id="price{{$kk}}">{{$price}}</span>
-						<input type="hidden" id="totalprice{{$kk}}" value="{{$price}}"  name="totalPrice[]"    />
+						$price +=$mar;
+						if($activity->vat > 0){
+						$vat = (($activity->vat * $price)/100);
+						$price +=$vat;
+						}
+						
+						@endphp
+						<input type="hidden" value="{{$ap->adult_rate_without_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[]"    />
+						
+						<input type="hidden" value="{{$ap->chield_rate_without_vat}}" id="childPrice{{$kk}}"  name="childPrice[]"    />
+						<input type="hidden" value="{{$ap->infant_rate_without_vat}}" id="infPrice{{$kk}}"  name="infPrice[]"    />
+						<span id="price{{$kk}}">{{number_format($price, 2, '.', '')}}</span>
+						<input type="hidden" id="totalprice{{$kk}}" value="{{$price}}"  name="totalprice[]"    />
 						</td>
                   </tr>
 				  @endforeach
@@ -250,20 +242,141 @@
 
 $(document).on('change', '.priceChange', function(evt) {
 	let inputnumber = $(this).data('inputnumber');
+	var activity_id = $("#activity_id").val();
+	let activity_vat = $("#activity_vat").val();
+	
 	let adult = $("body #adult"+inputnumber).val();
 	let child = $("body #child"+inputnumber).val();
 	let infant = $("body #infant"+inputnumber).val();
-	
+	let markup_p_ticket_only = parseFloat($("body #markup_p_ticket_only"+inputnumber).val());
+	let markup_p_sic_transfer = parseFloat($("body #markup_p_sic_transfer"+inputnumber).val());
+	let markup_p_pvt_transfer = parseFloat($("body #markup_p_pvt_transfer"+inputnumber).val());
+	let zonevalprice = parseFloat($("body #zonevalprice"+inputnumber).val());
 	let adultPrice = $("body #adultPrice"+inputnumber).val();
 	let childPrice = $("body #childPrice"+inputnumber).val();
 	let infPrice = $("body #infPrice"+inputnumber).val();
-	var totalPrice = parseFloat((adult * adultPrice) + (child * childPrice) + (infant * infPrice));
+	var ad_price = (adult*adultPrice);
+	var ticket_only_markupamt = ((ad_price*markup_p_ticket_only)/100);
+	var sic_transfer_markupamt = ((zonevalprice*markup_p_sic_transfer)/100);
 	
-	$("body #totalprice"+inputnumber).val(totalPrice.toFixed(2));
-	$("body #price"+inputnumber).text(totalPrice.toFixed(2));
+	let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
+	
+	if(t_option_val == 3)
+	{
+	getPVTtransfer(activity_id,adult,markup_p_pvt_transfer,inputnumber);
+	$("#loader-overlay").show();	
+	waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
+		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalprice + pvt_transfer_markupamt_total);
+		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
+		let grandTotal = (vatPrice + totalPrice);
+		$("body #totalprice"+inputnumber).val(grandTotal.toFixed(2));
+		$("body #price"+inputnumber).text(grandTotal.toFixed(2));
+		$("#loader-overlay").hide();
+		});
+	}
+	else
+	{
+		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalprice);
+		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
+		let grandTotal = (vatPrice + totalPrice);
+		$("body #totalprice"+inputnumber).val(grandTotal.toFixed(2));
+		$("body #price"+inputnumber).text(grandTotal.toFixed(2));
+	}
 	
 });
 
+$(document).on('change', '.actcsk', function(evt) {
+	let inputnumber = $(this).data('inputnumber');
+	if ($(this).is(':checked')) {
+      $("body #transfer_option"+inputnumber).prop('required',true);
+	  $("body #tour_date"+inputnumber).prop('required',true);
+	  
+	  $("body #transfer_option"+inputnumber).prop('disabled',false);
+	  $("body #tour_date"+inputnumber).prop('disabled',false);
+	  $("body #adult"+inputnumber).prop('disabled',false);
+	  $("body #child"+inputnumber).prop('disabled',false);
+	  $("body #infant"+inputnumber).prop('disabled',false);
+    } else {
+      $("body #transfer_option"+inputnumber).prop('required',false);
+	  $("body #tour_date"+inputnumber).prop('required',false);
+	  
+	  $("body #transfer_option"+inputnumber).prop('disabled',true);
+	  $("body #tour_date"+inputnumber).prop('disabled',true);
+	  $("body #adult"+inputnumber).prop('disabled',true);
+	  $("body #child"+inputnumber).prop('disabled',true);
+	  $("body #infant"+inputnumber).prop('disabled',true);
+    }
+});
+
+$(document).on('change', '.t_option', function(evt) {
+	//alert("Asas");
+	//alert("Asas");
+	let inputnumber = $(this).data('inputnumber');
+	let t_option_val = $(this).find(':selected').data("id");
+	$("#top").removeAttr("colspan");
+	$("#transfer_zone_td"+inputnumber).css("display","none");
+	$("body #transfer_zone"+inputnumber).prop('required',false);
+	$("#zonevalprice"+inputnumber).val(0);
+	$('#transfer_zone'+inputnumber).prop('selectedIndex',0);
+	$("#pvt_traf_val"+inputnumber).val(0);
+	$("#adult"+inputnumber).trigger("change");
+	if(t_option_val == 2){
+		$("#top").attr("colspan",2);
+		$("#transfer_zone_td"+inputnumber).css("display","block");
+		$("body #transfer_zone"+inputnumber).prop('required',true);
+	} else if(t_option_val == 3){
+		var activity_id = $("#activity_id").val();
+		let adult = $("body #adult"+inputnumber).find(':selected').val();
+		let markup_p_pvt_transfer = parseFloat($("body #markup_p_pvt_transfer"+inputnumber).val());
+		getPVTtransfer(activity_id,adult,markup_p_pvt_transfer,inputnumber);
+		$("#adult"+inputnumber).trigger("change");
+	}
+});
+
+$(document).on('change', '.zoneselect', function(evt) {
+	let inputnumber = $(this).data('inputnumber');
+	let zonevalue = $(this).find(':selected').data("zonevalue");
+		$("#top").attr("colspan",2);
+		$("#zonevalprice"+inputnumber).val(zonevalue);
+		$("#adult"+inputnumber).trigger("change");
+});
+
+function getPVTtransfer(acvt_id,adult,markupPer,inputnumber)
+{
+		$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+		$.ajax({
+            url: "{{route('voucher.getPVTtransferAmount')}}",
+            type: 'POST',
+            dataType: "json",
+            data: {
+               acvt_id: acvt_id,
+			   adult: adult,
+			   markupPer: markupPer
+            },
+            success: function( data ) {
+               //console.log( data );
+			   $("#pvt_traf_val"+inputnumber).val(data);
+            }
+          });
+}
+
+function waitForInputValue(inputnumber, callback) {
+  var $input = $("body #pvt_traf_val" + inputnumber);
+  
+  var interval = setInterval(function() {
+    var pvt_transfer_markupamt_total = parseFloat($input.val());
+    
+    if (!isNaN(pvt_transfer_markupamt_total)) {
+      // Value is available, execute the callback function
+      clearInterval(interval); // Stop the interval
+      callback(pvt_transfer_markupamt_total);
+    }
+  }, 2000); // Check every 100 milliseconds
+}
 });
 
 

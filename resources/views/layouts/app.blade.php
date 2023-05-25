@@ -15,6 +15,9 @@
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
+<div id="loader-overlay">
+  <div class="loader"></div>
+</div>
   <!-- Navbar -->
   @include('inc.header')
   <!-- /.navbar -->
@@ -78,6 +81,7 @@
 <script src="{{ asset('dist/js/owl.carousel.min.js') }}"></script>
 <script>
   $(function () {
+  $("#loader-overlay").hide();
    $('.select2').select2()
     $('#example2').DataTable({
       "paging": true,

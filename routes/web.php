@@ -107,8 +107,9 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		
 		Route::get('add-activity-vouchers/{vid?}', [VouchersController::class, 'addActivityList'])->name('voucher.add.activity');
         Route::get('activity-view-vouchers/{aid?}/{vid?}', [VouchersController::class, 'addActivityView'])->name('voucher.activity.view');
-        //Route::post('voucher-activity-save', [VouchersController::class, 'hotelSaveInVoucher'])->name('voucher.activity.save');
-		
+        Route::post('get-pvt-transfer-amount', [VouchersController::class, 'getPVTtransferAmount'])->name('voucher.getPVTtransferAmount');
+		Route::post('voucher-activity-save', [VouchersController::class, 'activitySaveInVoucher'])->name('voucher.activity.save');
+		 Route::delete('voucher-activity-delete/{id}', [VouchersController::class, 'destroyActivityFromVoucher'])->name('voucher.activity.delete');
         Route::resource('users', UsersController::class);
 
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');

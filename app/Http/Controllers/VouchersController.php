@@ -17,7 +17,9 @@ use App\Models\Hotel;
 use App\Models\Activity;
 use App\Models\ActivityPrices;
 use App\Models\AgentPriceMarkup;
+use App\Models\TransferData;
 use Illuminate\Http\Request;
+use App\Models\VoucherActivity;
 use DB;
 
 
@@ -133,7 +135,8 @@ class VouchersController extends Controller
     public function show(Voucher $voucher)
     {
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
-        return view('vouchers.view', compact('voucher','voucherHotel'));
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
+        return view('vouchers.view', compact('voucher','voucherHotel','voucherActivity'));
     }
 
     /**
@@ -199,6 +202,15 @@ class VouchersController extends Controller
 		$record->nof_night = $request->input('nof_night');
 		$record->status = $request->input('status');
         $record->save();
+		if($record->is_hotel != 1)
+		{
+		$voucherHotel = VoucherHotel::where('voucher_id',$record->id)->delete();
+		}
+		if($record->is_activity != 1)
+		{
+		$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->delete();
+		}
+		
         return redirect('vouchers')->with('success','Voucher Updated.');
     }
 
@@ -211,6 +223,9 @@ class VouchersController extends Controller
     public function destroy($id)
     {
         $record = Voucher::find($id);
+		$voucherHotel = VoucherHotel::where('voucher_id',$id)->delete();
+		$voucherActivity = VoucherActivity::where('voucher_id',$id)->delete();
+		
         $record->delete();
         return redirect('vouchers')->with('success', 'Voucher Deleted.');
     }
@@ -463,34 +478,122 @@ class VouchersController extends Controller
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
 		
-		$activityPrices = ActivityPrices::where('activity_id', $aid)->where(function ($query) use ($startDate, $endDate) {
+		$activityPrices = ActivityPrices::where('activity_id', $aid)->get();
+		/* ->where(function ($query) use ($startDate, $endDate) {
         $query->where('rate_valid_from', '>=', $startDate)
-            ->where('rate_valid_from', '<=', $endDate)
-            ->orWhere('rate_valid_to', '>=', $startDate)
-            ->where('rate_valid_to', '<=', $endDate);
-    })->get();
+              ->where('rate_valid_from', '<=', $endDate)
+              ->orWhere(function ($query) use ($startDate, $endDate) {
+                  $query->where('rate_valid_to', '>=', $startDate)
+                        ->where('rate_valid_to', '<=', $endDate);
+              });
+    })->get(); */
 		
 		$typeActivities = config("constants.typeActivities"); 
-		$variants = [];
-		$markups = [];
-		$activity = Activity::find($aid);
-			$variants[$aid] = ActivityPrices::select('variant_code')->distinct()->where('activity_id',  $aid)->get()->toArray();
+		
 			
-			foreach($variants[$aid] as $variant)
-			{
-				$m = AgentPriceMarkup::where('agent_id',  $voucher->agent_id)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
-				
-				if(!empty($m))
-				{
-					$markups[$activity->title][$variant['variant_code']] = [
-						'ticket_only'=>$m->ticket_only,
-						'sic_transfer'=>$m->sic_transfer,
-						'pvt_transfer'=>$m->pvt_transfer,
-					];
-				}
-			}
-       return view('vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices','markups'));
+			
+       return view('vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'));
     }
 	
+	public function getPVTtransferAmount(Request $request)
+    {
+		$activity = Activity::where('id', $request->acvt_id)->where('status', 1)->first();
+		$price = 0;
+		$total = 0;
+		$markupPer = $request->markupPer;
+		//$activityPrices = ActivityPrices::where('activity_id', $aid)->get();
+		if($activity->pvt_TFRS == 1)
+		{
+			$td = TransferData::where('transfer_id', $activity->transfer_plan)->where('qty', $request->adult)->first();
+			if(!empty($td))
+			{
+				$price = $td->price;
+			}
+		}
+		
+		$markup = (($markupPer * $price)/100);
+		$total = $markup + $price;
+		return $total;
+    }
+	
+	
+	public function activitySaveInVoucher(Request $request)
+    {
+		$activity_select = $request->input('activity_select');
+	if(isset($activity_select))
+	{
+		
+		$voucher_id = $request->input('v_id');
+		$activity_vat = $request->input('activity_vat');
+		$activity_id = $request->input('activity_id');
+		$variant_name = $request->input('variant_name');
+		$variant_code = $request->input('variant_code');
+		$transfer_option = $request->input('transfer_option');
+		$tour_date = $request->input('tour_date');
+		$pvt_traf_val_with_markup = $request->input('pvt_traf_val');
+		$transfer_zone = $request->input('transfer_zone');
+		$zonevalprice_without_markup = $request->input('zonevalprice');
+		$adult = $request->input('adult');
+		$child = $request->input('child');
+		$infant = $request->input('infant');
+		$markup_p_ticket_only = $request->input('markup_p_ticket_only');
+		$markup_p_sic_transfer = $request->input('markup_p_sic_transfer');
+		$markup_p_pvt_transfer = $request->input('markup_p_pvt_transfer');
+		$adultPrice = $request->input('adultPrice');
+		$childPrice = $request->input('childPrice');
+		$infPrice = $request->input('infPrice');
+		$totalprice = $request->input('totalprice');
+		
+		$data = [];
+		foreach($activity_select as $k => $v)
+		{
+			
+			$data[] = [
+			'voucher_id' => $voucher_id,
+			'activity_id' => $activity_id,
+			'activity_vat' => $activity_vat,
+			'variant_name' => $variant_name[$k],
+			'variant_code' => $variant_code[$k],
+			'transfer_option' => $transfer_option[$k],
+			'tour_date' => $tour_date[$k],
+			'pvt_traf_val_with_markup' => $pvt_traf_val_with_markup[$k],
+			'transfer_zone' => $transfer_zone[$k],
+			'zonevalprice_without_markup' => $zonevalprice_without_markup[$k],
+			'adult' => $adult[$k],
+			'child' => $child[$k],
+			'infant' => $infant[$k],
+			'markup_p_ticket_only' => $markup_p_ticket_only[$k],
+			'markup_p_sic_transfer' => $markup_p_sic_transfer[$k],
+			'markup_p_pvt_transfer' => $markup_p_pvt_transfer[$k],
+			'adultPrice' => $adultPrice[$k],
+			'childPrice' => $childPrice[$k],
+			'infPrice' => $infPrice[$k],
+			'totalprice' => $totalprice[$k],
+					
+                ];
+		}
+		
+		if(count($data) > 0)
+		{
+			VoucherActivity::insert($data);
+		}
+		
+		if ($request->has('save_and_continue')) {
+         return redirect()->route('voucher.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
+		} else {
+        return redirect('vouchers')->with('success', 'Activity Added Successfully.');
+		}
+	}
+		
+       return redirect()->back()->with('error', 'Please select activity variant.');
+	   
+    }
+	
+	public function destroyActivityFromVoucher($id)
+    {
+        $record = VoucherActivity::find($id);
+        $record->delete();
+        return redirect()->back()->with('success', 'Activity Deleted Successfully.');
+    }
 	
 }

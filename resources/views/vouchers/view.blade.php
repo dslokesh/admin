@@ -35,10 +35,11 @@
 			<a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Hotel Details</a>
 			</li>
 			@endif
+			@if($voucher->is_activity == 1)
 			<li class="nav-item">
 			<a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Activity Details</a>
 			</li>
-		
+		@endif
 			</ul>
 			</div>
 		 </div>
@@ -281,9 +282,69 @@
 			
 			</div>
 			<div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
-			
-			
-		
+			@if(!empty($voucherActivity) && $voucher->is_activity == 1)
+				<div class="row p-2">
+			 
+			  <div class="col-md-12">
+                <table class="table table-bordered">
+                  <thead>
+				  
+                  <tr>
+					<th>Tour Option</th>
+                    <th>Transfer Option</th>
+					<th>Tour Date</th>
+					<th>Adult</th>
+                    <th>Child(3-10Yrs)</th>
+                    <th>Infant</th>
+					<th>Total Amount</th>
+					<th></th>
+                  </tr>
+				  @if(!empty($voucherActivity))
+					  @foreach($voucherActivity as $ap)
+					@php
+					$activity = SiteHelpers::getActivity($ap->activity_id);
+					@endphp
+				   <tr>
+                    <td>{{$activity->title}} - {{$ap->variant_name}} - {{$ap->variant_code}}</td>
+					<td>{{$ap->transfer_option}}
+					@if($ap->transfer_option == 'Shared Transfer')
+						@php
+					$zone = SiteHelpers::getZoneName($ap->transfer_zone);
+					@endphp
+						- <b>Zone :</b> {{$zone->name}}
+					@endif
+					</td>
+					<td>{{$ap->tour_date}}</td>
+					<td>{{$ap->adult}}</td>
+                    <td>{{$ap->child}}</td>
+                    <td>{{$ap->infant}}</td>
+					<td>{{$ap->totalprice}}</td>
+					<td>
+					
+						   <form id="delete-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.delete',$ap->id)}}" style="display:none;">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                            </form>
+                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to delete this?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('delete-form-{{$ap->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            "><i class="fas fa-trash"></i></a>
+                         </td>
+                  </tr>
+				  @endforeach
+				 @endif
+				  </table>
+              </div>
+			 </div>	
+		@endif
 			</div>
 
 		</div>

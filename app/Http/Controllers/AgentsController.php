@@ -157,9 +157,9 @@ class AgentsController extends Controller
         $record->created_by = Auth::user()->id;
 		$record->role_id = 3; 
         $record->password = bcrypt($request['password']);
-		$record->ticket_only = $request->input('ticket_only');
-		$record->sic_transfer = $request->input('sic_transfer');
-		$record->pvt_transfer = $request->input('pvt_transfer');
+		$record->ticket_only = (!empty($request->input('ticket_only')))?$request->input('ticket_only'):0;
+		$record->sic_transfer = (!empty($request->input('sic_transfer')))?$request->input('sic_transfer'):0;
+		$record->pvt_transfer = (!empty($request->input('pvt_transfer')))?$request->input('pvt_transfer'):0;
 		$record->vat = $request->input('vat');
         $record->save();
         $record->attachRole('3');
@@ -341,9 +341,9 @@ class AgentsController extends Controller
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
 		$record->is_active = $request->input('status');
-		$record->ticket_only = $request->input('ticket_only');
-		$record->sic_transfer = $request->input('sic_transfer');
-		$record->pvt_transfer = $request->input('pvt_transfer');
+		$record->ticket_only = (!empty($request->input('ticket_only')))?$request->input('ticket_only'):0;
+		$record->sic_transfer = (!empty($request->input('sic_transfer')))?$request->input('sic_transfer'):0;
+		$record->pvt_transfer = (!empty($request->input('pvt_transfer')))?$request->input('pvt_transfer'):0;
 		$record->vat = $request->input('vat');
         $record->save();
 		
