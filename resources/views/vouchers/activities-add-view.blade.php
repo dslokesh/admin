@@ -144,7 +144,7 @@
 						<option value="" data-zonevalue="0">--Select Zone--</option>
 						@if($activity->sic_TFRS==1)
 						@foreach($actZone as $z)
-						<option value="{{$z['zone_id']}}" data-zonevalue="3">{{$z['zone']}}</option>
+						<option value="{{$z['zoneValue']}}" data-zonevalue="3">{{$z['zone']}}</option>
 						@endforeach
 						@endif
 						</select>
