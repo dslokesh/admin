@@ -251,13 +251,13 @@ $(document).on('change', '.priceChange', function(evt) {
 	let markup_p_ticket_only = parseFloat($("body #markup_p_ticket_only"+inputnumber).val());
 	let markup_p_sic_transfer = parseFloat($("body #markup_p_sic_transfer"+inputnumber).val());
 	let markup_p_pvt_transfer = parseFloat($("body #markup_p_pvt_transfer"+inputnumber).val());
-	let zonevalprice = parseFloat($("body #zonevalprice"+inputnumber).val());
+	
 	let adultPrice = $("body #adultPrice"+inputnumber).val();
 	let childPrice = $("body #childPrice"+inputnumber).val();
 	let infPrice = $("body #infPrice"+inputnumber).val();
 	var ad_price = (adult*adultPrice);
 	var ticket_only_markupamt = ((ad_price*markup_p_ticket_only)/100);
-	var sic_transfer_markupamt = ((zonevalprice*markup_p_sic_transfer)/100);
+	
 	
 	let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
 	
@@ -267,7 +267,7 @@ $(document).on('change', '.priceChange', function(evt) {
 	getPVTtransfer(activity_id,totaladult,markup_p_pvt_transfer,inputnumber);
 	$("#loader-overlay").show();	
 	waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
-		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalprice + pvt_transfer_markupamt_total);
+		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
 		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
 		let grandTotal = (vatPrice + totalPrice);
 		$("body #totalprice"+inputnumber).val(grandTotal.toFixed(2));
@@ -275,9 +275,22 @@ $(document).on('change', '.priceChange', function(evt) {
 		$("#loader-overlay").hide();
 		});
 	}
+	else if(t_option_val == 2)
+	{
+		let zonevalue = parseFloat($("#transfer_zone"+inputnumber).find(':selected').data("zonevalue"));
+		var totaladult = parseInt(adult + child);
+		let zonevalueTotal = totaladult * zonevalue;
+		$("#zonevalprice"+inputnumber).val(zonevalueTotal);
+		var sic_transfer_markupamt = ((zonevalueTotal *  markup_p_sic_transfer)/100);
+		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
+		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
+		let grandTotal = (vatPrice + totalPrice);
+		$("body #totalprice"+inputnumber).val(grandTotal.toFixed(2));
+		$("body #price"+inputnumber).text(grandTotal.toFixed(2));
+	}
 	else
 	{
-		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalprice);
+		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt);
 		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
 		let grandTotal = (vatPrice + totalPrice);
 		$("body #totalprice"+inputnumber).val(grandTotal.toFixed(2));
@@ -339,9 +352,13 @@ $(document).on('change', '.t_option', function(evt) {
 
 $(document).on('change', '.zoneselect', function(evt) {
 	let inputnumber = $(this).data('inputnumber');
-	let zonevalue = $(this).find(':selected').data("zonevalue");
-		$("#top").attr("colspan",2);
-		$("#zonevalprice"+inputnumber).val(zonevalue);
+	let zonevalue = parseFloat($(this).find(':selected').data("zonevalue"));
+	$("#top").attr("colspan",2);
+	let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());
+		let child = parseInt($("body #child"+inputnumber).find(':selected').val());
+		var totaladult = parseInt(adult + child);
+		let zonevalueTotal = totaladult * zonevalue;
+		$("#zonevalprice"+inputnumber).val(zonevalueTotal);
 		$("#adult"+inputnumber).trigger("change");
 });
 
