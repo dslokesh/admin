@@ -293,7 +293,7 @@ class VouchersController extends Controller
         $query->where('status', 1);
           
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
-
+		
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();

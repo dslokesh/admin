@@ -64,7 +64,7 @@
               </div>
 			  <div class="col-lg-4 mb-3">
                 <label for="inputName">Hotel Category:</label>
-                {{ $hotel->hotelcategory->name }}
+				{{ ($hotel->hotelcategory)?$hotel->hotelcategory->name:''}}
               </div>
               <div class="form-group col-lg-4 mb-3">
                 <label for="inputName">City:</label>

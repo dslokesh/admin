@@ -99,11 +99,11 @@
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $record->name}}</td>
                     <td>{{ $record->mobile}}</td>
-                    <td>{{ $record->hotelcategory->name}}</td>
+                    <td>{{ ($record->hotelcategory)?$record->hotelcategory->name:''}}</td>
                     <td>{{ $record->address}}</td>
-                    <td>{{ $record->country->name}}</td>
-                    <td>{{ $record->state->name}}</td>
-                    <td>{{ $record->city->name}}</td>
+                    <td>{{ ($record->country)?$record->country->name:''}}</td>
+					<td>{{ ($record->state)?$record->state->name:''}}</td>
+					<td>{{ ($record->city)?$record->city->name:''}}</td>
                     <td>{{ $record->zip_code}}</td>
                    <td>
 				   <a class="btn btn-info btn-sm" href="{{route('voucher.hotel.view',[$record->id,$vid])}}">
