@@ -94,12 +94,14 @@ class SiteHelpers
 			foreach($zoneArrayJson as $k => $z)
 			{
 				$zone = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
-				
+				if(!empty($zone))
+				{
 				$zoneArray[] = [
 				'zone_id' => $zone->id,
 				'zone' => $zone->name,
 				'zoneValue' => $z->zoneValue,
 				];
+				}
 			}
 			
 		}
