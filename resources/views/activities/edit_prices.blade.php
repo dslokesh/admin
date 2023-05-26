@@ -226,17 +226,35 @@
     success: function(response) {
         // Append the content to the DOM
 		
-			$('.card-body').append(response.html).find('.datepicker').datepicker({
+			$('.card-body').append(response.html).find('#rate_valid_from'+rowCount).datepicker({
                 weekStart: 1,
                 daysOfWeekHighlighted: "6,0",
                 autoclose: true,
                 todayHighlight: true,
-                dateFormat: 'yyyy-mm-dd'
+                dateFormat: 'yyyy-mm-dd',
+				onSelect: function(){
+            var selected = $(this).datepicker("getDate");
+			var dateObject = new Date(selected);
+			var formattedDate = $.datepicker.formatDate("yy-mm-dd", dateObject);
+			$('body #rate_valid_from'+rowCount).val(formattedDate);
+        }
             });
-				
-				
 			
-			$('.timepicker').datetimepicker({
+			$('.card-body').append(response.html).find('#rate_valid_to'+rowCount).datepicker({
+                weekStart: 1,
+                daysOfWeekHighlighted: "6,0",
+                autoclose: true,
+                todayHighlight: true,
+                dateFormat: 'yyyy-mm-dd',
+				onSelect: function(){
+            var selected2 = $(this).datepicker("getDate");
+			var dateObject2 = new Date(selected2);
+			var formattedDate2 = $.datepicker.formatDate("yy-mm-dd", dateObject2);
+			$('body #rate_valid_to'+rowCount).val(formattedDate2);
+        }
+            });
+			
+			$('body .timepicker').datetimepicker({
 				format: 'hh:mm a'
 			});
 
