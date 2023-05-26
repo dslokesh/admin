@@ -91,16 +91,19 @@ class SiteHelpers
 		{
 			$zoneArrayJson = json_decode($activity_zones);
 			
-			foreach($zoneArrayJson as $k => $z)
+			if(count($zoneArrayJson) > 0 or !empty($zoneArrayJson))
 			{
-				$zone = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
-				if(!empty($zone))
+				foreach($zoneArrayJson as $k => $z)
 				{
-				$zoneArray[] = [
-				'zone_id' => $zone->id,
-				'zone' => $zone->name,
-				'zoneValue' => $z->zoneValue,
-				];
+					$zone = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
+					if(!empty($zone))
+					{
+					$zoneArray[] = [
+					'zone_id' => $zone->id,
+					'zone' => $zone->name,
+					'zoneValue' => $z->zoneValue,
+					];
+					}
 				}
 			}
 			
