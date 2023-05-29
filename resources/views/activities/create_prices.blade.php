@@ -266,8 +266,8 @@ $(document).on('change', '.vatCal', function(evt) {
 	let vat = parseFloat("{{$activity->vat}}")/100;
 	let inputvale = parseFloat($(this).val());
 	
-	let taxvalu = vat*inputvale;
-	let taxAmount = inputvale - taxvalu;
+	let taxvalu = parseFloat(1 + vat);
+	let taxAmount = parseFloat(inputvale / taxvalu);
 	let withVatInputId = $(this).data('withvatinputid');
 	//alert(withVatInputId);
 	$("body #"+withVatInputId).val(taxAmount.toFixed(2));
