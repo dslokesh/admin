@@ -45,12 +45,12 @@
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>Email</th>
-                    <th>Company Name</th>
+                    <th>Company</th>
                     <th>City</th>
                     <th>Status</th>
-                    <th>Created On</th>
-                    <th>Updated On</th>
-					<th></th>
+                    <th>Created</th>
+                    <th>Updated</th>
+					<th width="17%"></th>
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('agents.index')}}" >

@@ -49,11 +49,11 @@
                     <th>Country</th>
                     <th>State</th>
                     <th>City</th>
-                    <th>Zip Code</th>
+                    <th>Zip</th>
                     <th>Status</th>
-                    <th>Created On</th>
-                    <th>Updated On</th>
-                    <th></th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th width="12%"></th>
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('customers.index')}}" >
@@ -109,9 +109,10 @@
                     <td>{{ $record->mobile}}</td>
 					<td>{{ $record->email}}</td>
                     <td>{{ $record->address}}</td>
-                    <td>{{ $record->country->name}}</td>
-                    <td>{{ $record->state->name}}</td>
-                    <td>{{ $record->city->name}}</td>
+                    <td>{{ ($record->country)?$record->country->name:''}}</td>
+					 <td>{{ ($record->state)?$record->state->name:''}}</td>
+					  <td>{{ ($record->city)?$record->city->name:''}}</td>
+                   
                     <td>{{ $record->zip_code}}</td>
                      <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>

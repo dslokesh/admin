@@ -45,13 +45,13 @@
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>Email</th>
-                    <th>Company Name</th>
+                    <th>Company</th>
                     <th>City</th>
-                    <th>Zip Code</th>
+                    <th>Zip</th>
                     <th>Status</th>
-                    <th>Created On</th>
-                    <th>Updated On</th>
-                    <th></th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th width="17%"></th>
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('suppliers.index')}}" >
@@ -91,7 +91,7 @@
                     <td>{{ $record->mobile}}</td>
 					<td>{{ $record->email}}</td>
                     <td>{{ $record->company_name}}</td>
-                    <td>{{ $record->city->name}}</td>
+                    <td>{{ ($record->city)?$record->city->name:''}}</td>
                     <td>{{ $record->zip_code}}</td>
                      <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>

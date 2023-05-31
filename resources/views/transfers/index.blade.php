@@ -63,8 +63,7 @@
                    
                     <th><button class="btn btn-info btn-sm" type="submit">Filter</button>
                     <a class="btn btn-default btn-sm" href="{{route('transfers.index')}}">Clear</a></th>
-                    <th></th>
-                     <th></th>
+                  
                   </form>
                   </tr>
                   </thead>

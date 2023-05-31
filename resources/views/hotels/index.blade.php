@@ -49,11 +49,10 @@
                     <th>Country</th>
                     <th>State</th>
                     <th>City</th>
-                    <th>Zip Code</th>
+                    <th>Zip</th>
                     <th>Status</th>
-                    <th>Created On</th>
-                    <th>Updated On</th>
-                    <th></th>
+                  
+                    <th width="12%"></th>
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('hotels.index')}}" >
@@ -91,8 +90,7 @@
                     <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Active</option>
 					          <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Inactive</option>
                  </select></th>
-					<th></th>
-                    <th></th>
+					
                    
                     <th><button class="btn btn-info btn-sm" type="submit">Filter</button>
                     <a class="btn btn-default btn-sm" href="{{route('hotels.index')}}">Clear</a></th>
@@ -114,8 +112,7 @@
                     <td>{{ $record->city->name}}</td>
                     <td>{{ $record->zip_code}}</td>
                      <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
-                    <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
-                    <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
+                   
                      <td>
 					  <a class="btn btn-info btn-sm" href="{{route('hotels.show',$record->id)}}">
                               <i class="fas fa-eye">

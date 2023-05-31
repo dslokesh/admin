@@ -42,18 +42,18 @@
                   <thead>
                   <tr>
 				   <th>Code</th>
-                    <th>Agent Name</th>
-					<th>Customer Name</th>
+                    <th>Agent</th>
+					<th>Customer</th>
 					<th>Country</th>
 					<th>Hotel</th>
 					<th>Flight</th>
 					<th>Activity</th>
                     <th>Status</th>
-                    <th>Created On</th>
-                    <th>Updated On</th>
+                    <th>Created</th>
+                    <th>Updated</th>
 					<th>Hotels</th>
-					<th>Activities</th>
-                    <th></th>
+					<th width="7%">Activities</th>
+                    <th width="12%"></th>
                   </tr>
 				  
                   </thead>
@@ -76,7 +76,7 @@
 					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.hotels',$record->id)}}">
                               <i class="fas fa-plus">
                               </i>
-                              Add
+                             
                           </a>
 						  @endif
 						  </td>
@@ -85,7 +85,7 @@
 					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.activity',$record->id)}}">
                               <i class="fas fa-plus">
                               </i>
-                              Add
+                             
                           </a>
 						  @endif
 						  </td>

@@ -45,8 +45,8 @@
                     <th>Name</th>
 					<th>Country</th>
                     <th>Status</th>
-                    <th>Created On</th>
-                    <th>Updated On</th>
+                    <th>Created</th>
+                    <th>Updated</th>
                     <th></th>
                   </tr>
 				  <tr>
@@ -65,8 +65,7 @@
                    
                     <th><button class="btn btn-info btn-sm" type="submit">Filter</button>
                     <a class="btn btn-default btn-sm" href="{{route('states.index')}}">Clear</a></th>
-                    <th></th>
-                     <th></th>
+                   
                   </form>
                   </tr>
                   </thead>

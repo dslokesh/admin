@@ -46,9 +46,9 @@
 					 <th>Type of Activity</th>
                     <th>Status</th>
 					<th>Is Price</th>
-                    <th>Created On</th>
-                    <th>Updated On</th>
-                    <th></th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th width="17%"></th>
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('activities.index')}}" >
