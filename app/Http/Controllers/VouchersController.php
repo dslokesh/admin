@@ -66,12 +66,14 @@ class VouchersController extends Controller
      */
     public function store(Request $request)
     {
+		
         $request->validate([
             'agent_id'=>'required',
-			'customer_id'=>'required',
 			'country_id'=>'required',
 			'travel_from_date'=>'required',
 			'nof_night'=>'required',
+			'customer_name'=>'required',
+			'customer_mobile'=>'required',
 			'arrival_airlines_id' => 'required_if:is_flight,==,1',
 			'arrival_date' => 'required_if:is_flight,==,1',
         ], [
@@ -86,10 +88,27 @@ class VouchersController extends Controller
 		
 		$arrival_date = $request->input('arrival_date'); // get the value of the date input
 		$depature_date = $request->input('depature_date'); // get the value of the date input
-
+		$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
+		
+		if(empty($customer))
+		{
+			$customer = new Customer();
+			$customer->name = $request->input('customer_name');
+			$customer->mobile = $request->input('customer_mobile');
+			$customer->email = $request->input('customer_email');
+			$customer->save();
+		}
+		else
+		{
+			$customer->name = $request->input('customer_name');
+			$customer->email = $request->input('customer_email');
+			$customer->save();
+		}
+			
+		
         $record = new Voucher();
         $record->agent_id = $request->input('agent_id_select');
-		$record->customer_id = $request->input('customer_id_select');
+		$record->customer_id = $customer->id;
 		$record->country_id = $request->input('country_id');
 		$record->is_hotel = $request->input('is_hotel');
 		$record->is_flight = $request->input('is_flight');
@@ -150,7 +169,8 @@ class VouchersController extends Controller
         $record = Voucher::find($id);
 		$countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$airlines = Airline::where('status', 1)->orderBy('name', 'ASC')->get();
-        return view('vouchers.edit')->with(['record'=>$record,'countries'=>$countries,'airlines'=>$airlines]);
+		$customer = Customer::where('id',$record->customer_id)->first();
+        return view('vouchers.edit')->with(['record'=>$record,'countries'=>$countries,'airlines'=>$airlines,'customer'=>$customer]);
     }
 
     /**
@@ -164,9 +184,10 @@ class VouchersController extends Controller
     {
         $request->validate([
             'agent_id'=>'required',
-			'customer_id'=>'required',
 			'country_id'=>'required',
 			'travel_from_date'=>'required',
+			'customer_name'=>'required',
+			'customer_mobile'=>'required',
 			'nof_night'=>'required',
 			'arrival_airlines_id' => 'required_if:is_flight,==,1',
 			'arrival_date' => 'required_if:is_flight,==,1',
@@ -181,10 +202,26 @@ class VouchersController extends Controller
 
 		$arrival_date = $request->input('arrival_date'); // get the value of the date input
 		$depature_date = $request->input('depature_date'); // get the value of the date input
+		$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
+		
+		if(empty($customer))
+		{
+			$customer = new Customer();
+			$customer->name = $request->input('customer_name');
+			$customer->mobile = $request->input('customer_mobile');
+			$customer->email = $request->input('customer_email');
+			$customer->save();
+		}
+		else
+		{
+			$customer->name = $request->input('customer_name');
+			$customer->email = $request->input('customer_email');
+			$customer->save();
+		}
 		
         $record = Voucher::find($id);
         $record->agent_id = $request->input('agent_id_select');
-		$record->customer_id = $request->input('customer_id_select');
+		$record->customer_id = $customer->id;
 		$record->country_id = $request->input('country_id');
 		$record->is_hotel = $request->input('is_hotel');
 		$record->is_flight = $request->input('is_flight');

@@ -30,7 +30,7 @@
               <h3 class="card-title">Add Voucher</h3>
             </div>
             <div class="card-body row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-12">
                 <label for="inputName">Agency Name: <span class="red">*</span></label>
                 <input type="text" id="agent_id" name="agent_id" value="{{ old('agent_id') }}" class="form-control"  placeholder="Agency Name" />
                 @if ($errors->has('agent_id'))
@@ -40,22 +40,32 @@
 				<input type="hidden" id="agent_id_select" name="agent_id_select"  />
 				
               </div>
-			   
+			   <div class="form-group col-md-12" id="agent_details">
+			   </div>
 			  <div class="form-group col-md-6">
-                <label for="inputName">Customer Name: <span class="red">*</span> <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Create New</button></label>
-                <input type="text" id="customer_id" name="customer_id" value="{{ old('customer_id') ?: $customerTBA->name }}" class="form-control"  placeholder="Customer  Name" />
-                @if ($errors->has('customer_id'))
-                    <span class="text-danger">{{ $errors->first('customer_id') }}</span>
+                <label for="inputName">Customer Name: <span class="red">*</span></label>
+                <input type="text" id="customer_name" name="customer_name" value="{{ old('customer_name') }}" class="form-control"  placeholder="Customer Name" />
+				@if ($errors->has('customer_name'))
+                    <span class="text-danger">{{ $errors->first('customer_name') }}</span>
                 @endif
-				
-				<input type="hidden" id="customer_id_select" value="{{ old('customer_id') ?: $customerTBA->id }}" name="customer_id_select"  />
-				
               </div>
-			  <div class="form-group col-md-6" id="agent_details">
-			   </div>
-			  <div class="form-group col-md-6" id="cus_details">
-			   <b>Email:</b>{{$customerTBA->email}} <b>Mobile No:</b>{{$customerTBA->mobile}} <b>Address:</b>{{$customerTBA->address. " ".$customerTBA->zip_code;}}
-			   </div>
+			 
+                <div class="form-group col-md-6">
+                <label for="inputName">Customer Mobile: <span class="red">*</span></label>
+                <input type="text" id="customer_mobile" name="customer_mobile" value="{{ old('customer_mobile') }}" class="form-control"  placeholder="Customer Mobile" />
+				@if ($errors->has('customer_mobile'))
+                    <span class="text-danger">{{ $errors->first('customer_mobile') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Customer Email:</label>
+                <input type="email" id="customer_email" name="customer_email" value="{{ old('customer_email') }}" class="form-control"  placeholder="Customer Email" />
+				@if ($errors->has('customer_email'))
+                    <span class="text-danger">{{ $errors->first('customer_email') }}</span>
+                @endif
+              </div>
+			  
+			  
 			    <div class="form-group col-md-6">
                 <label for="inputName">Country: <span class="red">*</span></label>
                 <select name="country_id" id="country_id" class="form-control">
@@ -349,7 +359,7 @@
   
   var pathcustomer = "{{ route('auto.customer') }}";
   
-    $( "#customer_id" ).autocomplete({
+    /* $( "#customer_id" ).autocomplete({
         source: function( request, response ) {
           $.ajax({
             url: pathcustomer,
@@ -378,7 +388,7 @@
 				 $('#cus_details').html('');
             }
         }
-      });
+      }); */
 	  
 	$(document).ready(function() {
 		if($('#is_flight').find(":selected").val() == 1)
