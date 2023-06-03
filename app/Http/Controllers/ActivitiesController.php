@@ -122,6 +122,10 @@ class ActivitiesController extends Controller
 			$zoneArrayJson = json_encode($zoneArray);
 			$record->zones = $zoneArrayJson;
 		}
+		else
+		{
+			$record->zones = '';
+		}
 		
 		if($request->hasfile('featured_image')){
             $image = $request->file('featured_image');
@@ -133,7 +137,7 @@ class ActivitiesController extends Controller
 		$record->code = $request->input('code');
 		$record->type_activity = $request->input('type_activity');
 		$record->entry_type = $request->input('entry_type');
-		$record->priror_booking_time = $request->input('priror_booking_time');
+		$record->priror_booking_time = 1;
 		$record->vat = $request->input('vat');
 		$record->black_sold_out = $request->input('black_sold_out');
 		$record->is_opendated = $request->input('is_opendated');
@@ -315,13 +319,17 @@ class ActivitiesController extends Controller
 			$zoneArrayJson = json_encode($zoneArray);
 			$record->zones = $zoneArrayJson;
 		}
+		else
+		{
+			$record->zones = '';
+		}
 		
 		$record->sic_TFRS = $sic_TFRS;
         $record->title = $request->input('title');
 		$record->type_activity = $request->input('type_activity');
 		$record->code = $request->input('code');
 		$record->entry_type = $request->input('entry_type');
-		$record->priror_booking_time = $request->input('priror_booking_time');
+		$record->priror_booking_time = 1;
 		$record->vat = $request->input('vat');
 		$record->black_sold_out = $request->input('black_sold_out');
 		$record->is_opendated = $request->input('is_opendated');

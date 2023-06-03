@@ -52,6 +52,7 @@
                     <th>Created</th>
                     <th>Updated</th>
 					<th>Hotels</th>
+					<th>Itinerary</th>
 					<th width="7%">Activities</th>
                     <th width="12%"></th>
                   </tr>
@@ -71,10 +72,20 @@
                      <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
+
 					 <td>
 					 @if($record->is_hotel == 1)
 					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.hotels',$record->id)}}">
                               <i class="fas fa-plus">
+                              </i>
+                             
+                          </a>
+						  @endif
+						  </td>
+						   <td>
+					 @if($record->is_activity == 1)
+					 <a class="btn btn-info btn-sm" href="{{route('voucherActivityItineraryPdf',$record->id)}}">
+                              <i class="fas fa-download">
                               </i>
                              
                           </a>

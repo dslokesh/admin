@@ -288,19 +288,20 @@
 			  <div class="col-md-12">
                 <table class="table table-bordered">
                   <thead>
-				  
+				   @if(!empty($voucherActivity))
+					  @foreach($voucherActivity as $ap)
                   <tr>
 					<th>Tour Option</th>
                     <th>Transfer Option</th>
 					<th>Tour Date</th>
 					<th>Adult</th>
-                    <th>Child(3-10Yrs)</th>
+                    <th>Child</th>
                     <th>Infant</th>
+					<th>Net Discount</th>
 					<th>Total Amount</th>
 					<th></th>
                   </tr>
-				  @if(!empty($voucherActivity))
-					  @foreach($voucherActivity as $ap)
+				 
 					@php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					@endphp
@@ -318,6 +319,7 @@
 					<td>{{$ap->adult}}</td>
                     <td>{{$ap->child}}</td>
                     <td>{{$ap->infant}}</td>
+					<td>{{$ap->discountPrice}}</td>
 					<td>{{$ap->totalprice}}</td>
 					<td>
 					

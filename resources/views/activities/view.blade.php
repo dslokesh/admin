@@ -74,10 +74,7 @@
                {{ $activity->entry_type }}
               </div>
 			  
-			  <div class="col-lg-6 mb-3">
-                <label for="inputName">Priror Booking Time:</label>
-               {{ $activity->priror_booking_time }}
-              </div>
+			  
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Vat:</label>
                {{ $activity->vat }}%

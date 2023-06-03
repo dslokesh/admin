@@ -60,14 +60,14 @@
                 @endif
               </div>
 			  <div class="form-group col-md-3">
-                <label for="inputName">Slot Duration: <span class="red">*</span></label>
+                <label for="inputName">Slot Duration(In minutes): <span class="red">*</span></label>
                 <input type="text" id="slot_duration{{$k}}" name="slot_duration[]" value="{{ old('slot_duration')?:$pdata->slot_duration }}" class="form-control"  placeholder="Slot Duration" required />
                 @if ($errors->has('slot_duration'))
                     <span class="text-danger">{{ $errors->first('slot_duration') }}</span>
                 @endif
               </div>
 			   <div class="form-group col-md-3">
-                <label for="inputName">Activity Duration: <span class="red">*</span></label>
+                <label for="inputName">Activity Duration(In minutes): <span class="red">*</span></label>
                 <input type="text" id="activity_duration{{$k}}" name="activity_duration[]" value="{{ old('activity_duration')?:$pdata->activity_duration }}" class="form-control"  placeholder="Activity Duration" required />
                 @if ($errors->has('activity_duration'))
                     <span class="text-danger">{{ $errors->first('activity_duration') }}</span>
@@ -240,7 +240,7 @@
         }
             });
 			
-			$('.card-body').append(response.html).find('#rate_valid_to'+rowCount).datepicker({
+			$('.card-body').find('#rate_valid_to'+rowCount).datepicker({
                 weekStart: 1,
                 daysOfWeekHighlighted: "6,0",
                 autoclose: true,

@@ -61,7 +61,7 @@
                 <label for="inputName">Entry Type: <span class="red">*</span></label>
                 <select name="entry_type" id="entry_type" class="form-control">
 				<option value="">--select--</option>
-                   <option value="Activity" @if($record->entry_type =='Activity') {{'selected="selected"'}} @endif>Activity</option>
+                   <option value="Ticket Only" @if($record->entry_type =='Ticket Only') {{'selected="selected"'}} @endif>Ticket Only</option>
 					<option value="Tour" @if($record->entry_type == 'Tour') {{'selected="selected"'}} @endif >Tour</option>
 				
                  </select>
@@ -69,18 +69,7 @@
                     <span class="text-danger">{{ $errors->first('entry_type') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-4">
-                <label for="inputName">Priror Booking Time:</label>
-                <select  id="priror_booking_time" name="priror_booking_time" class="form-control">
-				<option value="">--select--</option>
-				@for($i=0; $i<101;$i++)
-                    <option value="{{$i}}" @if($record->priror_booking_time == $i) {{'selected="selected"'}} @endif>{{$i}}</option>
-				@endfor
-                 </select>
-				 @if ($errors->has('priror_booking_time'))
-                    <span class="text-danger">{{ $errors->first('priror_booking_time') }}</span>
-                @endif
-              </div>
+			  
 			   <div class="form-group col-md-4">
                 <label for="inputName">Vat %:</label>
                 <select  id="vat" name="vat" class="form-control">
@@ -93,13 +82,7 @@
               </div>
 			  
 			  
-			   <div class="form-group col-md-4">
-                <label for="inputName">Black Out/Sold Out Date(separate By Comma): <span class="red">*</span></label>
-                <input type="text" id="black_sold_out" name="black_sold_out" value="{{ old('black_sold_out') ?: $record->black_sold_out }}" class="form-control"  placeholder="Black Out/Sold Out Date" />
-                @if ($errors->has('black_sold_out'))
-                    <span class="text-danger">{{ $errors->first('black_sold_out') }}</span>
-                @endif
-              </div>
+			  
 			   <div class="form-group col-md-4">
                 <label for="inputName">Is Open Dated: <span class="red">*</span></label>
                 <select name="is_opendated" id="is_opendated" class="form-control">
@@ -133,7 +116,13 @@
                     <span class="text-danger">{{ $errors->first('transfer_plan') }}</span>
                 @endif
               </div>
-			   
+			    <div class="form-group col-md-12">
+                <label for="inputName">Black Out/Sold Out Date(separate By Comma YYYY-MM-DD): <span class="red">*</span></label>
+                <input type="text" id="black_sold_out" name="black_sold_out" value="{{ old('black_sold_out') ?: $record->black_sold_out }}" class="form-control"  placeholder="Black Out/Sold Out Date" />
+                @if ($errors->has('black_sold_out'))
+                    <span class="text-danger">{{ $errors->first('black_sold_out') }}</span>
+                @endif
+              </div>
 			  <div class="col-sm-12">
 				<label for="inputName">Availability: <span class="red">*</span></label>
 					<div class="form-group clearfix">
@@ -196,7 +185,7 @@
 						@endforeach
                  </select></td>
 						<td><input type="text" id="zone_val" value="{{$z->zoneValue}}" class="form-control" name="zoneValue[]"></td>
-						<td></td>
+						<td>@if($k > 0)<a class="delete-row btn btn-danger btn-sm">Delete</a>@endif</td>
 					  </tr>
 					  @endforeach
 					@else

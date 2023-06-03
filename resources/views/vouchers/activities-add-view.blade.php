@@ -98,21 +98,22 @@
 			  <div class="col-md-12">
                 <table class="table table-bordered">
                   <thead>
-				  
+				  @if(!empty($activityPrices))
+					  @foreach($activityPrices as $kk => $ap)
                   <tr>
 					<th>Tour Option</th>
                     <th id="top">Transfer Option</th>
 					<th>Tour Date</th>
-					<th>Adult</th>
-                    <th>Child(3-10Yrs)</th>
-                    <th>Infant</th>
+					<th>Adult (Above {{$ap->chield_end_age}} Yrs)</th>
+                    <th>Child({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</th>
+                    <th>Infant (Below {{$ap->chield_start_age}} Yrs)</th>
 					<th>Ticket Only</th>
 					<th>SIC Transfer</th>
 					<th>PVT Transfer</th>
+					<th>Net Discount</th>
 					<th>Total Amount</th>
                   </tr>
-				  @if(!empty($activityPrices))
-					  @foreach($activityPrices as $kk => $ap)
+				  
 				  
 				  @php
 				  $markup = SiteHelpers::getAgentMarkup($voucher->agent_id,$ap->activity_id,$ap->variant_code);
@@ -179,6 +180,9 @@
 						<td>
 						{{$markup['pvt_transfer']}}%
 						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[]"    />
+						</td>
+						<td>
+						<input type="text" id="discount{{$kk}}" value="0"  name="discount[]" disabled="disabled" data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
 						</td>
 						<td>
 						@php
@@ -248,6 +252,8 @@ $(document).on('change', '.priceChange', function(evt) {
 	let adult = parseInt($("body #adult"+inputnumber).val());
 	let child = parseInt($("body #child"+inputnumber).val());
 	let infant = parseInt($("body #infant"+inputnumber).val());
+	let discount = parseFloat($("body #discount"+inputnumber).val());
+	//alert(discount);
 	let markup_p_ticket_only = parseFloat($("body #markup_p_ticket_only"+inputnumber).val());
 	let markup_p_sic_transfer = parseFloat($("body #markup_p_sic_transfer"+inputnumber).val());
 	let markup_p_pvt_transfer = parseFloat($("body #markup_p_pvt_transfer"+inputnumber).val());
@@ -260,7 +266,8 @@ $(document).on('change', '.priceChange', function(evt) {
 	
 	
 	let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
-	
+	let grandTotal = 0;
+	let grandTotalAfterDis = 0;
 	if(t_option_val == 3)
 	{
 		var totaladult = parseInt(adult + child);
@@ -269,36 +276,79 @@ $(document).on('change', '.priceChange', function(evt) {
 	waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
 		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
 		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
-		let grandTotal = (vatPrice + totalPrice);
-		$("body #totalprice"+inputnumber).val(grandTotal.toFixed(2));
-		$("body #price"+inputnumber).text(grandTotal.toFixed(2));
+		 grandTotal = (vatPrice + totalPrice);
+		grandTotalAfterDis = parseFloat(grandTotal - discount);
+		if(isNaN(grandTotalAfterDis))
+		{
+		$("body #totalprice"+inputnumber).val(0);
+		$("body #price"+inputnumber).text(0);
+		}
+		else
+		{
+			if(grandTotalAfterDis > 0)
+			{
+			$("body #totalprice"+inputnumber).val(grandTotalAfterDis.toFixed(2));
+			$("body #price"+inputnumber).text(grandTotalAfterDis.toFixed(2));
+			}
+			else
+			{
+				$("body #totalprice"+inputnumber).val(0);
+				$("body #price"+inputnumber).text(0);
+			}
+		}
 		$("#loader-overlay").hide();
 		});
 	}
-	else if(t_option_val == 2)
-	{
-		let zonevalue = parseFloat($("#transfer_zone"+inputnumber).find(':selected').data("zonevalue"));
-		var totaladult = parseInt(adult + child);
-		let zonevalueTotal = totaladult * zonevalue;
-		$("#zonevalprice"+inputnumber).val(zonevalueTotal);
-		var sic_transfer_markupamt = ((zonevalueTotal *  markup_p_sic_transfer)/100);
-		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
-		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
-		let grandTotal = (vatPrice + totalPrice);
-		$("body #totalprice"+inputnumber).val(grandTotal.toFixed(2));
-		$("body #price"+inputnumber).text(grandTotal.toFixed(2));
-	}
 	else
 	{
-		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt);
-		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
-		let grandTotal = (vatPrice + totalPrice);
-		$("body #totalprice"+inputnumber).val(grandTotal.toFixed(2));
-		$("body #price"+inputnumber).text(grandTotal.toFixed(2));
+		if(t_option_val == 2)
+		{
+			let zonevalue = parseFloat($("#transfer_zone"+inputnumber).find(':selected').data("zonevalue"));
+			var totaladult = parseInt(adult + child);
+			let zonevalueTotal = totaladult * zonevalue;
+			$("#zonevalprice"+inputnumber).val(zonevalueTotal);
+			var sic_transfer_markupamt = ((zonevalueTotal *  markup_p_sic_transfer)/100);
+			var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
+			let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
+			 grandTotal = (vatPrice + totalPrice);
+			 grandTotalAfterDis = parseFloat(grandTotal - discount);
+		}
+		else
+		{
+			var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt);
+			let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
+			 grandTotal = (vatPrice + totalPrice);
+			 grandTotalAfterDis = parseFloat(grandTotal - discount);
+			
+		}
+		
+		if(isNaN(grandTotalAfterDis))
+		{
+		$("body #totalprice"+inputnumber).val(0);
+		$("body #price"+inputnumber).text(0);
+		}
+		else
+		{
+		if(grandTotalAfterDis > 0)
+			{
+			$("body #totalprice"+inputnumber).val(grandTotalAfterDis.toFixed(2));
+			$("body #price"+inputnumber).text(grandTotalAfterDis.toFixed(2));
+			}
+			else
+			{
+				$("body #totalprice"+inputnumber).val(0);
+				$("body #price"+inputnumber).text(0);
+			}
+		}
 	}
 	
+	
+	
 });
-
+$(document).on('blur','.priceChangedis',function(){
+	let inputnumber = $(this).data('inputnumber');
+  $("#adult"+inputnumber).trigger("change");
+});
 $(document).on('change', '.actcsk', function(evt) {
 	let inputnumber = $(this).data('inputnumber');
 	if ($(this).is(':checked')) {
@@ -310,6 +360,7 @@ $(document).on('change', '.actcsk', function(evt) {
 	  $("body #adult"+inputnumber).prop('disabled',false);
 	  $("body #child"+inputnumber).prop('disabled',false);
 	  $("body #infant"+inputnumber).prop('disabled',false);
+	  $("body #discount"+inputnumber).prop('disabled',false);
     } else {
       $("body #transfer_option"+inputnumber).prop('required',false);
 	  $("body #tour_date"+inputnumber).prop('required',false);
@@ -319,6 +370,7 @@ $(document).on('change', '.actcsk', function(evt) {
 	  $("body #adult"+inputnumber).prop('disabled',true);
 	  $("body #child"+inputnumber).prop('disabled',true);
 	  $("body #infant"+inputnumber).prop('disabled',true);
+	  $("body #discount"+inputnumber).prop('disabled',true);
     }
 });
 
@@ -400,7 +452,13 @@ function waitForInputValue(inputnumber, callback) {
 }
 });
 
+$(document).on('keypress', '.onlynumbrf', function(evt) {
+	var charCode = (evt.which) ? evt.which : evt.keyCode
+  if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
+  return true;
 
+});
 
   </script>   
 @endsection

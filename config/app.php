@@ -179,6 +179,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 		Spatie\Permission\PermissionServiceProvider::class,
 		jeremykenedy\LaravelRoles\RolesServiceProvider::class,
+		Barryvdh\Snappy\ServiceProvider::class,
     ],
 
     /*
@@ -232,6 +233,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
 		'SiteHelpers' => App\Helpers\SiteHelpers::class,
+		'SPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+		'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 

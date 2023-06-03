@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
 use DB;
 use Carbon\Carbon;
+use SPDF;
 
 class VouchersController extends Controller
 {
@@ -575,6 +576,7 @@ class VouchersController extends Controller
 		$adultPrice = $request->input('adultPrice');
 		$childPrice = $request->input('childPrice');
 		$infPrice = $request->input('infPrice');
+		$discount = $request->input('discount');
 		$totalprice = $request->input('totalprice');
 		
 		$data = [];
@@ -601,6 +603,7 @@ class VouchersController extends Controller
 			'adultPrice' => $adultPrice[$k],
 			'childPrice' => $childPrice[$k],
 			'infPrice' => $infPrice[$k],
+			'discountPrice' => $discount[$k],
 			'totalprice' => $totalprice[$k],
 					
                 ];
@@ -629,4 +632,25 @@ class VouchersController extends Controller
         return redirect()->back()->with('success', 'Activity Deleted Successfully.');
     }
 	
+ public function voucherActivityItineraryPdf(Request $request, $vid)
+    {
+		$voucher = Voucher::find($vid);
+		if (empty($voucher)) {
+            return abort(404); //record not found
+        }
+		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
+       
+        
+        
+
+        $pdf = SPDF::loadView('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity'));
+       $pdf->setPaper('A4')->setOrientation('portrait');
+        return $pdf->download('Itinerary'.$vid.'.pdf');
+		
+	
+	
+	return \Response::make($content,200, $headers);
+    }
+
 }
