@@ -347,6 +347,12 @@ $(document).on('change', '.priceChange', function(evt) {
 });
 $(document).on('blur','.priceChangedis',function(){
 	let inputnumber = $(this).data('inputnumber');
+	let inputvale = parseFloat($(this).val());
+	if(inputvale == null || isNaN(inputvale))
+	{
+		inputvale = 0;
+		$(this).val(0);
+	}
   $("#adult"+inputnumber).trigger("change");
 });
 $(document).on('change', '.actcsk', function(evt) {
