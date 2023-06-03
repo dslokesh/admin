@@ -127,8 +127,8 @@
 					</th>
 					<td> <select name="transfer_option[]" id="transfer_option{{$kk}}" class="form-control t_option" data-inputnumber="{{$kk}}" disabled="disabled">
 						<option value="">--Select--</option>
-						@if($activity->entry_type=='Activity')
-						<option value="Without Transfer" data-id="1">Without Transfer</option>
+						@if($activity->entry_type=='Ticket Only')
+						<option value="Ticket Only" data-id="1">Ticket Only</option>
 						@endif
 						@if($activity->sic_TFRS==1)
 						<option value="Shared Transfer" data-id="2">Shared Transfer</option>

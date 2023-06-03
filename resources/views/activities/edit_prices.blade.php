@@ -119,7 +119,7 @@
                   </tr>
 				   <tr>
                     <td>Adult</td>
-					<td><input type="text" id="adult_rate_with_vat{{$k}}"  name="adult_rate_with_vat[]"  class="form-control onlynumbrf vatCal" value="{{ $pdata->adult_rate_with_vat }}"  data-withvatinputid="adult_rate_without_vat{{$k}}" /></td>
+					<td><input type="text" id="adult_rate_with_vat{{$k}}"  name="adult_rate_with_vat[]"  class="form-control onlynumbrf vatCal" value="{{ $pdata->adult_rate_with_vat }}"  data-withvatinputid="adult_rate_without_vat{{$k}}" required /></td>
 					<td><input type="text" id="adult_rate_without_vat{{$k}}"  name="adult_rate_without_vat[]"  class="form-control onlynumbr" readonly value="{{ $pdata->adult_rate_without_vat }}" /></td>
                     <td><input type="text" id="adult_max_no_allowed{{$k}}" name="adult_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->adult_max_no_allowed }}" /></td>
                     <td><input type="text" id="adult_min_no_allowed{{$k}}"  name="adult_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->adult_min_no_allowed }}" /></td>
@@ -128,7 +128,7 @@
                   </tr>
 				  <tr>
                     <td>Child</td>
-					<td><input type="text" id="chield_rate_with_vat{{$k}}"  name="chield_rate_with_vat[]"  class="form-control onlynumbrf vatCal" value="{{ $pdata->chield_rate_with_vat }}"  data-withvatinputid="chield_rate_without_vat{{$k}}" /></td>
+					<td><input type="text" id="chield_rate_with_vat{{$k}}"  name="chield_rate_with_vat[]"  class="form-control onlynumbrf vatCal" value="{{ $pdata->chield_rate_with_vat }}"  data-withvatinputid="chield_rate_without_vat{{$k}}" required /></td>
 					<td><input type="text" id="chield_rate_without_vat{{$k}}"  name="chield_rate_without_vat[]"  class="form-control onlynumbr" readonly  value="{{ $pdata->chield_rate_without_vat }}" /></td>
                     <td><input type="text" id="chield_max_no_allowed{{$k}}"  name="chield_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->chield_max_no_allowed }}" /></td>
                     <td><input type="text" id="chield_min_no_allowed{{$k}}" name="chield_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->chield_min_no_allowed }}" /></td>
@@ -137,7 +137,7 @@
                   </tr>
 				   <tr>
                     <td>Infant</td>
-					<td><input type="text" id="infant_rate_with_vat{{$k}}"  name="infant_rate_with_vat[]"  class="form-control onlynumbrf vatCal"  value="{{ $pdata->infant_rate_with_vat }}"  data-withvatinputid="infant_rate_without_vat{{$k}}" /></td>
+					<td><input type="text" id="infant_rate_with_vat{{$k}}"  name="infant_rate_with_vat[]"  class="form-control onlynumbrf vatCal"  value="{{ $pdata->infant_rate_with_vat }}"  data-withvatinputid="infant_rate_without_vat{{$k}}" required /></td>
 					<td><input type="text" id="infant_rate_without_vat{{$k}}"  name="infant_rate_without_vat[]"  class="form-control onlynumbr" readonly value="{{ $pdata->infant_rate_without_vat }}" /></td>
                     <td><input type="text" id="infant_max_no_allowed{{$k}}"  name="infant_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->infant_max_no_allowed }}" /></td>
                     <td><input type="text" id="infant_min_no_allowed{{$k}}"  name="infant_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->infant_min_no_allowed }}" /></td>
@@ -299,6 +299,11 @@ $(document).on('keypress', '.onlynumbr_text', function(evt) {
 $(document).on('change', '.vatCal', function(evt) {
 	let vat = parseFloat("{{$activity->vat}}")/100;
 	let inputvale = parseFloat($(this).val());
+	if(inputvale == null || isNaN(inputvale))
+	{
+		inputvale = 0;
+		$(this).val(0);
+	}
 	
 	let taxvalu = parseFloat(1 + vat);
 	let taxAmount = parseFloat(inputvale / taxvalu);
