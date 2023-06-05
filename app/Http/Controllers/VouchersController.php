@@ -715,7 +715,7 @@ class VouchersController extends Controller
 					  }
 				$dataArray[$vh->hotel->name.$kk] = [
 				'hhotelActName' => $vh->hotel->name,
-				'TouCheckInCheckOutDate' =>$vh->check_in_date.'-'.$vh->check_out_date,
+				'TouCheckInCheckOutDate' =>$vh->check_in_date.' / '.$vh->check_out_date,
 				'NoofPax' => $noofPax,
 				'totalprice' => $netRate,
 				];
