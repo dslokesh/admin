@@ -85,7 +85,7 @@
 						  </td>
 						   <td>
 						   
-					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}">
+					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}" style="display:none">
                               <i class="fas fa-download">
                               </i>
                              
