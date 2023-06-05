@@ -52,7 +52,7 @@
                     <th>Created</th>
                     <th>Updated</th>
 					<th>Hotels</th>
-					<th>Invoice</th>
+					<th style="display:none">Invoice</th>
 					<th>Itinerary</th>
 					<th width="7%">Activities</th>
                     <th width="12%"></th>
