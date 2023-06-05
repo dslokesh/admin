@@ -52,9 +52,10 @@
                     <th>Created</th>
                     <th>Updated</th>
 					<th>Hotels</th>
-					<th style="display:none">Invoice</th>
-					<th>Itinerary</th>
+					
 					<th width="7%">Activities</th>
+					<th>Invoice</th>
+					<th>Itinerary</th>
                     <th width="12%"></th>
                   </tr>
 				  
@@ -83,9 +84,19 @@
                           </a>
 						  @endif
 						  </td>
-						   <td  style="display:none">
 						   
-					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}" style="display:none">
+					 <td>
+					 @if($record->is_activity == 1)
+					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.activity',$record->id)}}">
+                              <i class="fas fa-plus">
+                              </i>
+                             
+                          </a>
+						  @endif
+						  </td>
+						  <td>
+						   
+					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}" >
                               <i class="fas fa-download">
                               </i>
                              
@@ -96,15 +107,6 @@
 					 @if($record->is_activity == 1)
 					 <a class="btn btn-info btn-sm" href="{{route('voucherActivityItineraryPdf',$record->id)}}">
                               <i class="fas fa-download">
-                              </i>
-                             
-                          </a>
-						  @endif
-						  </td>
-					 <td>
-					 @if($record->is_activity == 1)
-					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.activity',$record->id)}}">
-                              <i class="fas fa-plus">
                               </i>
                              
                           </a>
