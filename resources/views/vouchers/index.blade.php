@@ -52,6 +52,7 @@
                     <th>Created</th>
                     <th>Updated</th>
 					<th>Hotels</th>
+					<th>Invoice</th>
 					<th>Itinerary</th>
 					<th width="7%">Activities</th>
                     <th width="12%"></th>
@@ -81,6 +82,15 @@
                              
                           </a>
 						  @endif
+						  </td>
+						   <td>
+						   
+					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}">
+                              <i class="fas fa-download">
+                              </i>
+                             
+                          </a>
+						  
 						  </td>
 						   <td>
 					 @if($record->is_activity == 1)

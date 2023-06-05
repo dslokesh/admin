@@ -21,6 +21,7 @@ use App\Models\TransferData;
 use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
 use DB;
+use SiteHelpers;
 use Carbon\Carbon;
 use SPDF;
 
@@ -652,5 +653,90 @@ class VouchersController extends Controller
 	
 	return \Response::make($content,200, $headers);
     }
-
+	
+	public function voucherInvoicePdf(Request $request, $vid)
+    {
+		$voucher = Voucher::find($vid);
+		if (empty($voucher)) {
+            return abort(404); //record not found
+        }
+		
+		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
+		$agent = User::where('id',$voucher->agent_id)->first();
+		$customer = Customer::where('id',$voucher->customer_id)->first();
+		
+       $voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
+	  
+		
+        $dataArray = [];
+		$discountTotal = 0;
+		$subTotal = 0;
+		
+		if(!empty($voucherActivity)){
+					 foreach($voucherActivity as $kkh => $ap)
+					 {
+						
+					$activity = SiteHelpers::getActivity($ap->activity_id);
+					$vat =  1 + $activity->vat;
+					$vatPrice = $ap->totalprice/$vat;
+					$total = ($ap->totalprice+$ap->discountPrice) - ($vatPrice);
+				$dataArray[$ap->variant_code.$kkh] = [
+				'hhotelActName' => $activity->title.'-'.$ap->variant_name.'-'.$ap->variant_code,
+				'TouCheckInCheckOutDate' => $ap->tour_date,
+				'NoofPax' => $ap->adult+$ap->child,
+				'totalprice' => $total,
+				];
+				$discountTotal += $ap->discountPrice;
+				$subTotal+= $total ;
+					 }
+					
+			}
+			
+		if(!empty($voucherHotel)){
+					 foreach($voucherHotel as $kk => $vh)
+					 {
+					  $hotelData = json_decode($vh->hotel_other_details);
+					  $noofPax = 0;
+						$netRate = 0;
+					  foreach($hotelData as $k => $hd)
+					  {
+						  
+						  $noofPax+= $hd->nop_s;
+						  $noofPax+= $hd->nop_d;
+						  $noofPax+= $hd->nop_eb;
+						  $noofPax+= $hd->nop_cwb;
+						  $noofPax+= $hd->nop_cnb;
+						  
+						  $netRate+= $hd->nr_s;
+						  $netRate+= $hd->nr_d;
+						  $netRate+= $hd->nr_eb;
+						  $netRate+= $hd->nr_cwb;
+						  $netRate+= $hd->nr_cnb;
+					  }
+				$dataArray[$vh->hotel->name.$kk] = [
+				'hhotelActName' => $vh->hotel->name,
+				'TouCheckInCheckOutDate' =>$vh->check_in_date.'-'.$vh->check_out_date,
+				'NoofPax' => $noofPax,
+				'totalprice' => $netRate,
+				];
+				$subTotal+= $netRate;
+					 }
+					
+			}
+			$subTotalGrand = $subTotal;
+			$vatGrand = 1 + $agent->vat;
+			$vatTotal = $subTotalGrand/$vatGrand;
+			$grandWithVatTotal = ($vatTotal+$subTotal) - $discountTotal;
+			
+       
+//return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotalGrand','grandWithVatTotal','vatTotal'));
+        $pdf = SPDF::loadView('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotalGrand','grandWithVatTotal','vatTotal'));
+       $pdf->setPaper('A4')->setOrientation('portrait');
+        return $pdf->download('Itinerary'.$vid.'.pdf');
+		
+	
+	
+	return \Response::make($content,200, $headers);
+    }
+	
 }

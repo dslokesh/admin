@@ -35,8 +35,8 @@ return [
     
     'pdf' => [
         'enabled' => true,
-		'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf"',
-        //'binary' => env('SNAPPY_PDF', '/usr/local/bin/wkhtmltoimage'),
+		//'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf"',
+        'binary' => env('SNAPPY_PDF', '/usr/local/bin/wkhtmltoimage'),
         'timeout' => false,
         'options' => [],
         'env'     => [],

@@ -112,6 +112,8 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		 Route::delete('voucher-activity-delete/{id}', [VouchersController::class, 'destroyActivityFromVoucher'])->name('voucher.activity.delete');
 		
 		 Route::get('voucher-activity-itinerary-Pdf/{vid?}', [VouchersController::class, 'voucherActivityItineraryPdf'])->name('voucherActivityItineraryPdf');
+		  Route::get('voucher-invoice-Pdf/{vid?}', [VouchersController::class, 'voucherInvoicePdf'])->name('voucherInvoicePdf');
+		  
         Route::resource('users', UsersController::class);
 
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
