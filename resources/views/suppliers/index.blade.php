@@ -98,7 +98,7 @@
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
                      <td>
 					  <a class="btn btn-info btn-sm"  href="{{route('suppliers.markup.activity',$record->id)}}">
-                              Markup
+                              Costing
                               
                           </a>
 					  <a class="btn btn-info btn-sm" href="{{route('suppliers.show',$record->id)}}">

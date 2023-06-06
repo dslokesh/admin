@@ -98,7 +98,9 @@
 			  <div class="col-md-12">
                 <table class="table table-bordered">
                   <thead>
-				 
+				  @if(!empty($activityPrices))
+					  @foreach($activityPrices as $kk => $ap)
+				  @if($kk == 0)
                   <tr>
 					<th>Tour Option</th>
                     <th id="top">Transfer Option</th>
@@ -112,8 +114,7 @@
 					<th>Net Discount</th>
 					<th>Total Amount</th>
                   </tr>
-				   @if(!empty($activityPrices))
-					  @foreach($activityPrices as $kk => $ap)
+				  @endif
 				  
 				  @php
 				  $markup = SiteHelpers::getAgentMarkup($voucher->agent_id,$ap->activity_id,$ap->variant_code);
