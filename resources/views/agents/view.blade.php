@@ -84,7 +84,7 @@
                 {{$agent->postcode}}
               </div>
 			   <div class="form-group col-lg-6 mb-3">
-                <label for="inputName">Vat:</label>
+                <label for="inputName">TRN No:</label>
                 {{$agent->vat}}
               </div>
              <div class="form-group col-lg-6 mb-3">

@@ -275,9 +275,11 @@ $(document).on('change', '.priceChange', function(evt) {
 	$("#loader-overlay").show();	
 	waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
 		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
-		let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
-		 grandTotal = (vatPrice + totalPrice);
-		grandTotalAfterDis = parseFloat(grandTotal - discount);
+		
+		grandTotal = ( (totalPrice - discount));
+		let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
+		grandTotalAfterDis = parseFloat(grandTotal);
+			 
 		if(isNaN(grandTotalAfterDis))
 		{
 		$("body #totalprice"+inputnumber).val(0);
@@ -305,20 +307,22 @@ $(document).on('change', '.priceChange', function(evt) {
 		{
 			let zonevalue = parseFloat($("#transfer_zone"+inputnumber).find(':selected').data("zonevalue"));
 			var totaladult = parseInt(adult + child);
-			let zonevalueTotal = totaladult * zonevalue;
+			let zonevalueTotal = (totaladult * zonevalue);
 			$("#zonevalprice"+inputnumber).val(zonevalueTotal);
 			var sic_transfer_markupamt = ((zonevalueTotal *  markup_p_sic_transfer)/100);
 			var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
-			let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
-			 grandTotal = (vatPrice + totalPrice);
-			 grandTotalAfterDis = parseFloat(grandTotal - discount);
+			
+			grandTotal = ( (totalPrice - discount));
+			 let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
+			 grandTotalAfterDis = parseFloat(vatPrice + grandTotal);
 		}
 		else
 		{
 			var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt);
-			let vatPrice = parseFloat(((totalPrice*activity_vat)/100));
-			 grandTotal = (vatPrice + totalPrice);
-			 grandTotalAfterDis = parseFloat(grandTotal - discount);
+			
+			 grandTotal = ( (totalPrice - discount));
+			let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
+			 grandTotalAfterDis = parseFloat(vatPrice + grandTotal);
 			
 		}
 		

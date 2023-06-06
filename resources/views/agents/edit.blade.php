@@ -147,7 +147,7 @@
                 @endif
               </div>
 			   <div class="form-group col-md-6">
-                <label for="inputName">Vat:</label>
+                <label for="inputName">TRN No.:</label>
                 <input type="text" id="vat" name="vat"  value="{{ old('vat') ?: $record->vat }}" class="form-control"   />
                 @if ($errors->has('vat'))
                     <span class="text-danger">{{ $errors->first('vat') }}</span>

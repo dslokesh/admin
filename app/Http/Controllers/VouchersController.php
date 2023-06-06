@@ -547,7 +547,7 @@ class VouchersController extends Controller
 		}
 		
 		$markup = (($markupPer * $price)/100);
-		$total = $markup + $price;
+		$total = ($markup + ($price*$request->adult));
 		return $total;
     }
 	
@@ -679,7 +679,8 @@ class VouchersController extends Controller
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					$vat =  1 + $activity->vat;
 					$vatPrice = $ap->totalprice/$vat;
-					$total = ($ap->totalprice+$ap->discountPrice) - ($vatPrice);
+					//$total = ($ap->totalprice+$ap->discountPrice) - ($vatPrice);
+					$total = $ap->totalprice;
 				$dataArray[$ap->variant_code.$kkh] = [
 				'hhotelActName' => $activity->title.'-'.$ap->variant_name.'-'.$ap->variant_code,
 				'TouCheckInCheckOutDate' => $ap->tour_date,
@@ -724,7 +725,7 @@ class VouchersController extends Controller
 					
 			}
 			$subTotalGrand = $subTotal;
-			$vatGrand = 1 + $agent->vat;
+			$vatGrand = '1.05';
 			$vatTotal = $subTotalGrand/$vatGrand;
 			$grandWithVatTotal = ($vatTotal+$subTotal) - $discountTotal;
 			

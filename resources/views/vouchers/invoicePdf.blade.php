@@ -46,8 +46,8 @@
                     <tr>
                         <td align="left" valign="top" width="136" style="width: 136px;">
                          
-                            <img src="images/logo.png" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
-                            <h3>Company Name</h3>
+                            <img src="https://www.abateratourism.com/templates/shaper_travel/images/styles/style4/logo.png" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+                            <h3>Abatera Tourism LLC</h3>
                         </td>
                         <td  align="center" valign="middle" > <h1>INVOICE</h1></td>
                     </tr>
@@ -77,7 +77,7 @@
                          <p>{{$agent->address}} {{$agent->address}}/{{($agent->city)?$agent->city->name:''}}/{{($agent->state)?$agent->state->name:''}}/{{($agent->country)?$agent->country->name:''}}</p>
                          <p>{{$agent->phone}},{{$agent->mobile}}</p>
                          <p>{{$agent->email }}</p>
-						 <p>VAT : {{$agent->vat}}%</p>
+						 <p>TRN No. : {{$agent->vat}}%</p>
 						 @endif
                         </td>
                         <td align="right" valign="top">
@@ -188,10 +188,7 @@
                          <p>Payment Terms</p>
                         </td>
                         <td align="right" valign="top">
-                         <p>Sub Total: {{number_format($subTotalGrand,2)}}</p> 
-                          <p>Discount: {{number_format($discountTotal,2)}}</p>
-                          <p>VAT{{$agent->vat}}% : {{number_format($vatTotal,2)}}</p>
-                          <p>Grant Total: {{number_format($grandWithVatTotal,2)}}</p>
+                          <p>Grant Total: {{number_format($subTotalGrand,2)}}</p>
                          
                          </td>
                     </tr>
