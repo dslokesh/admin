@@ -546,8 +546,9 @@ class VouchersController extends Controller
 			}
 		}
 		
-		$markup = (($markupPer * $price)/100);
-		$total = ($markup + ($price*$request->adult));
+		$totalPrice  = $price*$request->adult;
+		$markup = (($markupPer/100) * $totalPrice);
+		$total = ($markup + $totalPrice);
 		return $total;
     }
 	
