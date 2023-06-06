@@ -33,7 +33,7 @@
 </style>
 </head>
   <body  style="font-size:16px; width:100%; height:100%;">
-      <table id="mainStructure" class="full-width" width="800" align="center" border="0" cellspacing="0" cellpadding="0" style="background-color: #efefef; max-width: 800px; outline: rgb(239, 239, 239) solid 1px;  margin: 0px auto;"><!--START LAYOUT-2 ( LOGO / MENU )-->
+      <table id="mainStructure" class="full-width" width="800" align="center" border="0" cellspacing="0" cellpadding="0" style="background-color: #efefef; max-width: 800px;   margin: 0px auto;"><!--START LAYOUT-2 ( LOGO / MENU )-->
         <tr>
           <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
             <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
