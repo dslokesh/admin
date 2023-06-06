@@ -261,8 +261,10 @@ $(document).on('change', '.priceChange', function(evt) {
 	let adultPrice = $("body #adultPrice"+inputnumber).val();
 	let childPrice = $("body #childPrice"+inputnumber).val();
 	let infPrice = $("body #infPrice"+inputnumber).val();
-	var ad_price = (adult*adultPrice);
-	var ticket_only_markupamt = ((ad_price*markup_p_ticket_only)/100);
+	var ad_price = (adult*adultPrice) ;
+	var chd_price = (child*childPrice) ;
+	var ad_ch_TotalPrice = ad_price + chd_price;
+	var ticket_only_markupamt = ((ad_ch_TotalPrice*markup_p_ticket_only)/100);
 	
 	
 	let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
@@ -274,7 +276,7 @@ $(document).on('change', '.priceChange', function(evt) {
 	getPVTtransfer(activity_id,totaladult,markup_p_pvt_transfer,inputnumber);
 	$("#loader-overlay").show();	
 	waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
-		var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
+		var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
 		
 		grandTotal = ( (totalPrice - discount));
 		let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
@@ -310,7 +312,7 @@ $(document).on('change', '.priceChange', function(evt) {
 			let zonevalueTotal = (totaladult * zonevalue);
 			$("#zonevalprice"+inputnumber).val(zonevalueTotal);
 			var sic_transfer_markupamt = ((zonevalueTotal *  markup_p_sic_transfer)/100);
-			var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
+			var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
 			
 			grandTotal = ( (totalPrice - discount));
 			 let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
@@ -318,7 +320,7 @@ $(document).on('change', '.priceChange', function(evt) {
 		}
 		else
 		{
-			var totalPrice = parseFloat(ad_price + (child * childPrice) + (infant * infPrice) + ticket_only_markupamt);
+			var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt);
 			
 			 grandTotal = ( (totalPrice - discount));
 			let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
