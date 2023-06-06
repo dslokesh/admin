@@ -733,7 +733,7 @@ class VouchersController extends Controller
 //return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotalGrand','grandWithVatTotal','vatTotal'));
         $pdf = SPDF::loadView('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotalGrand','grandWithVatTotal','vatTotal'));
        $pdf->setPaper('A4')->setOrientation('portrait');
-        return $pdf->download('Itinerary'.$vid.'.pdf');
+        return $pdf->download('Invoice'.$vid.'.pdf');
 		
 	
 	

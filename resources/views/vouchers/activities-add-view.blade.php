@@ -137,7 +137,7 @@
 						<option value="Pvt Transfer" data-id="3">Pvt Transfer</option>
 						@endif
 						</select>
-						<input type="hidden" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[]"    />
+						<input type="text" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[]"    />
 						</td>
 						<td style="display:none" id="transfer_zone_td{{$kk}}"> 
 						
@@ -150,7 +150,7 @@
 						@endif
 						</select>
 						
-						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[]"    />
+						<input type="text" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[]"    />
 					</td>
 					<td><input type="text" id="tour_date{{$kk}}"  name="tour_date[]"  class="form-control datepicker"  disabled="disabled" /></td>
 					<td><select name="adult[]" id="adult{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
@@ -197,10 +197,10 @@
 						}
 						
 						@endphp
-						<input type="hidden" value="{{$ap->adult_rate_without_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[]"    />
+						<input type="text" value="{{$ap->adult_rate_without_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[]"    />
 						
-						<input type="hidden" value="{{$ap->chield_rate_without_vat}}" id="childPrice{{$kk}}"  name="childPrice[]"    />
-						<input type="hidden" value="{{$ap->infant_rate_without_vat}}" id="infPrice{{$kk}}"  name="infPrice[]"    />
+						<input type="text" value="{{$ap->chield_rate_without_vat}}" id="childPrice{{$kk}}"  name="childPrice[]"    />
+						<input type="text" value="{{$ap->infant_rate_without_vat}}" id="infPrice{{$kk}}"  name="infPrice[]"    />
 						<span id="price{{$kk}}">{{number_format($price, 2, '.', '')}}</span>
 						<input type="hidden" id="totalprice{{$kk}}" value="{{$price}}"  name="totalprice[]"    />
 						</td>
