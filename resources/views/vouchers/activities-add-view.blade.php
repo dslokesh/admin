@@ -280,7 +280,7 @@ $(document).on('change', '.priceChange', function(evt) {
 		
 		grandTotal = ( (totalPrice - discount));
 		let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
-		grandTotalAfterDis = parseFloat(grandTotal);
+		grandTotalAfterDis = parseFloat(grandTotal+vatPrice);
 			 
 		if(isNaN(grandTotalAfterDis))
 		{
