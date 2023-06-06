@@ -77,15 +77,15 @@
                          <p>{{$agent->address}} {{$agent->address}}/{{($agent->city)?$agent->city->name:''}}/{{($agent->state)?$agent->state->name:''}}/{{($agent->country)?$agent->country->name:''}}</p>
                          <p>{{$agent->phone}},{{$agent->mobile}}</p>
                          <p>{{$agent->email }}</p>
-						 <p>TRN No. : {{$agent->vat}}%</p>
+						 <p>TRN No. : {{$agent->vat}}</p>
 						 @endif
                         </td>
                         <td align="right" valign="top">
-                          <p>Invoice No.: 000{{$voucher->id}}</p>
-                          <p>Invoice Date.: {{date("d-M-Y")}}</p>
+                          <p>Invoice No.:<br/> 000{{$voucher->id}}</p>
+                          <p>Invoice Date.:<br/> {{date("d-M-Y")}}</p>
 						  @if(!empty($customer))
-                          <p>Guest Name: {{$customer->name}}</p>
-                          <p>Guest Mobile No.: {{$customer->mobile}}</p>
+                          <p>Guest Name: <br/>{{$customer->name}}</p>
+                          <p>Guest Mobile No.:<br/> {{$customer->mobile}}</p>
 						  @endif
                          
                          </td>
@@ -152,7 +152,7 @@
 									{{$ap['NoofPax']}}
 									@else
 									Adult : {{$ap['adult']}} <br/>
-									Adult : {{$ap['child']}} <br/>
+									Child : {{$ap['child']}} <br/>
 									@endif
                                     </td>
                                     <td>
@@ -191,25 +191,25 @@
                     <tr>
                         <td align="left" valign="top">
                          <p>Bank Details</p>
-						 <p>ABATERA TOURISM LLC
-Account -0033488116001   | IBAN - AE530400000033488116001
-Corresponding Bank (USD) : BANK OF NEW YORK,NEW YORK, U.S.A
-SWIFT CODE (AED) : NRAKAEAK | Swift Code(USD) : IRVTUS3N
-Branch Name: Bur Dubai Branch
+						 <p>ABATERA TOURISM LLC<br/>
+Account -0033488116001  <br/> IBAN - AE530400000033488116001
+Corresponding Bank (USD) : <br/>BANK OF NEW YORK,NEW YORK, U.S.A<br/>
+SWIFT CODE (AED) : NRAKAEAK<br/> | Swift Code(USD) : IRVTUS3N<br/>
+Branch Name: Bur Dubai Branch<br/>
 ---------------------------------------------
- 
+ <br/>
 
-ABATERA TOURISM LLC
-Account -1001303922 | IBAN -  AE870230000001001303922
-SWIFT CODE(AED) : CBDUAEAD
-Branch Name: Immigration Branch
+ABATERA TOURISM LLC<br/>
+Account -1001303922 <br/> IBAN -  AE870230000001001303922<br/>
+SWIFT CODE(AED) : CBDUAEAD<br/>
+Branch Name: Immigration Branch<br/>
  
 ---------------------------------------------
-
+<br/>
  
-ABATERA TOURISM LLC  
-Account – 9622223261
-IBAN - AE850860000009622223261s
+ABATERA TOURISM LLC  <br/>
+Account – 9622223261<br/>
+IBAN - AE850860000009622223261s<br/>
 SWIFT CODE(AED) : WIOBAEADXXX</p>
                         </td>
                         <td align="right" valign="top">
