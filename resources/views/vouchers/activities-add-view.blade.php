@@ -171,15 +171,15 @@
 						</select></td>
 						<td>
 						{{$markup['ticket_only']}}%
-						<input type="hidden" value="{{$markup['ticket_only']}}" id="markup_p_ticket_only{{$kk}}"  name="markup_p_ticket_only[]"    />
+						<input type="text" value="{{$markup['ticket_only']}}" id="markup_p_ticket_only{{$kk}}"  name="markup_p_ticket_only[]"    />
 						</td>
 						<td>
 						{{$markup['sic_transfer']}}%
-						<input type="hidden" value="{{$markup['sic_transfer']}}" id="markup_p_sic_transfer{{$kk}}"  name="markup_p_sic_transfer[]"    />
+						<input type="text" value="{{$markup['sic_transfer']}}" id="markup_p_sic_transfer{{$kk}}"  name="markup_p_sic_transfer[]"    />
 						</td>
 						<td>
 						{{$markup['pvt_transfer']}}%
-						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[]"    />
+						<input type="text" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[]"    />
 						</td>
 						<td>
 						<input type="text" id="discount{{$kk}}" value="0"  name="discount[]" disabled="disabled" data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
