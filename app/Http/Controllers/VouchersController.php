@@ -685,7 +685,10 @@ class VouchersController extends Controller
 				$dataArray[$ap->variant_code.$kkh] = [
 				'hhotelActName' => $activity->title.'-'.$ap->variant_name.'-'.$ap->variant_code,
 				'TouCheckInCheckOutDate' => $ap->tour_date,
-				'NoofPax' => $ap->adult+$ap->child,
+				'adult' => $ap->adult,
+				'child' => $ap->child,
+				'NoofPax' => 0,
+				'hotel' => 0,
 				'totalprice' => $total,
 				];
 				$discountTotal += $ap->discountPrice;
@@ -719,6 +722,9 @@ class VouchersController extends Controller
 				'hhotelActName' => $vh->hotel->name,
 				'TouCheckInCheckOutDate' =>$vh->check_in_date.' / '.$vh->check_out_date,
 				'NoofPax' => $noofPax,
+				'adult' => 0,
+				'child' => 0,
+				'hotel' => 1,
 				'totalprice' => $netRate,
 				];
 				$subTotal+= $netRate;

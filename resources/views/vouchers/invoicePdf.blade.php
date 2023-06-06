@@ -148,7 +148,12 @@
                                       
                                     </td>
                                     <td>
+									@if($ap['hotel'])
 									{{$ap['NoofPax']}}
+									@else
+									Adult : {{$ap['adult']}} <br/>
+									Adult : {{$ap['child']}} <br/>
+									@endif
                                     </td>
                                     <td>
                                      
@@ -185,7 +190,27 @@
                     </tr>
                     <tr>
                         <td align="left" valign="top">
-                         <p>Payment Terms</p>
+                         <p>Bank Details</p>
+						 <p>ABATERA TOURISM LLC
+Account -0033488116001   | IBAN - AE530400000033488116001
+Corresponding Bank (USD) : BANK OF NEW YORK,NEW YORK, U.S.A
+SWIFT CODE (AED) : NRAKAEAK | Swift Code(USD) : IRVTUS3N
+Branch Name: Bur Dubai Branch
+---------------------------------------------
+ 
+
+ABATERA TOURISM LLC
+Account -1001303922 | IBAN -  AE870230000001001303922
+SWIFT CODE(AED) : CBDUAEAD
+Branch Name: Immigration Branch
+ 
+---------------------------------------------
+
+ 
+ABATERA TOURISM LLC  
+Account – 9622223261
+IBAN - AE850860000009622223261s
+SWIFT CODE(AED) : WIOBAEADXXX</p>
                         </td>
                         <td align="right" valign="top">
                           <p>Grant Total: {{number_format($subTotalGrand,2)}}</p>
