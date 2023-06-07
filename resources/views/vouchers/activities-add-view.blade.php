@@ -143,7 +143,7 @@
 						<td style="display:none" id="transfer_zone_td{{$kk}}"> 
 						
 						<select name="transfer_zone[]" id="transfer_zone{{$kk}}" class="form-control zoneselect"  data-inputnumber="{{$kk}}">
-						<option value="" data-zonevalue="0">--Select Zone--</option>
+						
 						@if($activity->sic_TFRS==1)
 						@foreach($actZone as $z)
 						<option value="{{$z['zone_id']}}" data-zonevalue="{{$z['zoneValue']}}">{{$z['zone']}}</option>
