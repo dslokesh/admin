@@ -264,6 +264,20 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			  
 			   @endrole
+			    @php
+          $class=''; $active='';
+          if($controller == 'ReporsController' and in_array($action,array('voucherReport'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('voucherReport') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-file"></i>
+                  <p>Voucher Report</p>
+                </a>
+              </li>
+			  
 		@role(1)
 		@php
 		 

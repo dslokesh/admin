@@ -22,6 +22,7 @@ use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\VouchersController;
+use App\Http\Controllers\ReporsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -114,6 +115,9 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		 Route::get('voucher-activity-itinerary-Pdf/{vid?}', [VouchersController::class, 'voucherActivityItineraryPdf'])->name('voucherActivityItineraryPdf');
 		  Route::get('voucher-invoice-Pdf/{vid?}', [VouchersController::class, 'voucherInvoicePdf'])->name('voucherInvoicePdf');
 		  
+		   Route::get('voucher-report', [ReporsController::class, 'voucherReport'])->name('voucherReport');
+		   Route::get('voucher-report-export', [ReporsController::class, 'voucherReportExport'])->name('voucherReportExport');
+		   
         Route::resource('users', UsersController::class);
 
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
