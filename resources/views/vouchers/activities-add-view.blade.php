@@ -141,15 +141,18 @@
 						<input type="hidden" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[]"    />
 						</td>
 						<td style="display:none" id="transfer_zone_td{{$kk}}"> 
-						
+						@if($activity->sic_TFRS==1)
 						<select name="transfer_zone[]" id="transfer_zone{{$kk}}" class="form-control zoneselect"  data-inputnumber="{{$kk}}">
 						
-						@if($activity->sic_TFRS==1)
+						
 						@foreach($actZone as $z)
 						<option value="{{$z['zone_id']}}" data-zonevalue="{{$z['zoneValue']}}">{{$z['zone']}}</option>
 						@endforeach
-						@endif
+						
 						</select>
+						@else
+							<input type="hidden" id="transfer_zone{{$kk}}" value=""  name="transfer_zone[]"    />
+						@endif
 						
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[]"    />
 					</td>
