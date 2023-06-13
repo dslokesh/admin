@@ -24,7 +24,9 @@
     <section class="content">
     <div class="row">
         <div class="col-md-12">
-		
+		@php
+		$tourDateArray = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date)
+		@endphp
           <div class="card">
            
 			
@@ -40,6 +42,8 @@
 			      <div class="col-lg-4 mb-3">
                 <label for="inputName">Name:</label>
                 {{$activity->title}}
+				
+				
               </div>
 			  <div class="col-lg-4 mb-3">
                 <label for="inputName">Code:</label>
@@ -142,13 +146,16 @@
 						</td>
 						<td style="display:none" id="transfer_zone_td{{$kk}}"> 
 						@if($activity->sic_TFRS==1)
+						@if(!empty($actZone))
 						<select name="transfer_zone[]" id="transfer_zone{{$kk}}" class="form-control zoneselect"  data-inputnumber="{{$kk}}">
 						
 						
 						@foreach($actZone as $z)
 						<option value="{{$z['zone_id']}}" data-zonevalue="{{$z['zoneValue']}}">{{$z['zone']}}</option>
 						@endforeach
-						
+						@else
+							<input type="hidden" id="transfer_zone{{$kk}}" value=""  name="transfer_zone[]"    />
+						@endif
 						</select>
 						@else
 							<input type="hidden" id="transfer_zone{{$kk}}" value=""  name="transfer_zone[]"    />
@@ -156,9 +163,18 @@
 						
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[]"    />
 					</td>
-					<td><input type="text" id="tour_date{{$kk}}"  name="tour_date[]"  class="form-control datepicker"  disabled="disabled" /></td>
-					<td><select name="adult[]" id="adult{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
+					<td>
+					<select name="tour_date[]" id="tour_date{{$kk}}" class="form-control" required disabled="disabled" >
 						
+						<option value="">--Select--</option>
+						@foreach($tourDateArray as $dt)
+						<option value="{{$dt}}">{{$dt}}</option>
+						@endforeach
+						
+						</select>
+					</td>
+					<td><select name="adult[]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" disabled="disabled">
+						<option value="">0</option>
 						@for($a=$ap->adult_min_no_allowed; $a<=$ap->adult_max_no_allowed; $a++)
 						<option value="{{$a}}">{{$a}}</option>
 						@endfor
@@ -205,8 +221,8 @@
 						
 						<input type="hidden" value="{{$ap->chield_rate_without_vat}}" id="childPrice{{$kk}}"  name="childPrice[]"    />
 						<input type="hidden" value="{{$ap->infant_rate_without_vat}}" id="infPrice{{$kk}}"  name="infPrice[]"    />
-						<span id="price{{$kk}}">{{number_format($price, 2, '.', '')}}</span>
-						<input type="hidden" id="totalprice{{$kk}}" value="{{$price}}"  name="totalprice[]"    />
+						<span id="price{{$kk}}">0</span>
+						<input type="hidden" id="totalprice{{$kk}}" value="0"  name="totalprice[]"    />
 						</td>
                   </tr>
 				  @endforeach

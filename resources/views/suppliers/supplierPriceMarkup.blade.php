@@ -56,18 +56,9 @@
 						<table class="table table-bordered table-striped">
 						<tr>
 							<th>Variant Code</th>
-							<th>Ticket Only</th>
-							@if($record->sic_TFRS==1)
-							<th>SIC Transfer</th>
-							@else
-							<th style="display:none">SIC Transfer</th>
-							@endif
-							
-							 @if($record->pvt_TFRS==1)
-							<th>PVT Transfer</th>
-							@else
-							<th style="display:none">PVT Transfer</th>
-							@endif
+							<th>Adult</th>
+							<th>Child</th>
+							<th>Infant</th>
 						</tr>
 						@foreach($variants[$record->id] as $variant)
 						@php
@@ -80,18 +71,13 @@
 						<td>
 						<input type="text"  name="ticket_only[{{ $record->id}}][{{$variant['variant_code']}}]" value="{{$ticket_only}}" min="0" max="100" class="form-control onlynumbr" required  />
 						</td>
-						 @if($record->sic_TFRS==1)
+						 
 						<td>
-						@else
-							<td style="display:none">
-						@endif
+						
 						<input type="text" name="sic_transfer[{{ $record->id}}][{{$variant['variant_code']}}]" value="{{$sic_transfer}}" min="0" max="100" class="form-control onlynumbr" required />
 						</td>
-						@if($record->pvt_TFRS==1)
+						
 						<td>
-						@else
-							<td style="display:none">
-						@endif
 						<input type="text" name="pvt_transfer[{{ $record->id}}][{{$variant['variant_code']}}]" value="{{$pvt_transfer}}" min="0" max="100" class="form-control onlynumbr" required />
 						</td>
 						</tr>

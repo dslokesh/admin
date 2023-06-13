@@ -125,4 +125,27 @@ class SiteHelpers
 				
 		return $zone;
     }
+	
+	public function getDateList($startDate,$endDate)
+    {
+			
+			// Create DateTime objects from the start and end dates
+			$start = new \DateTime($startDate);
+			$end = new \DateTime($endDate);
+
+			// Add one day to the end date to include it in the range
+			$end->modify('+1 day');
+
+			// Initialize an empty array to store the dates
+			$dates = [];
+
+			// Iterate over each day and add it to the array
+			$interval = new \DateInterval('P1D'); // 1 day interval
+			$period = new \DatePeriod($start, $interval, $end);
+			foreach ($period as $date) {
+			$dates[] = $date->format('Y-m-d');
+			}
+
+		return $dates;
+    }
 }

@@ -120,8 +120,17 @@
                     <span class="text-danger">{{ $errors->first('travel_to_date') }}</span>
                 @endif
               </div>
-			  
-			     <div class="form-group col-md-6">
+			  <div class="form-group col-md-2">
+                <label for="inputName">Vat Invoice:</label>
+                <select name="vat_invoice" id="vat_invoice" class="form-control">
+                    <option value="1" @if($record->vat_invoice ==1) {{'selected="selected"'}} @endif>Yes</option>
+					          <option value="0" @if($record->vat_invoice ==0) {{'selected="selected"'}} @endif >No</option>
+                 </select>
+				  @if ($errors->has('vat_invoice'))
+                    <span class="text-danger">{{ $errors->first('vat_invoice') }}</span>
+                @endif
+              </div>
+			     <div class="form-group col-md-4">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">
                     <option value="1" @if($record->status ==1) {{'selected="selected"'}} @endif>Active</option>

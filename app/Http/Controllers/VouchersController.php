@@ -126,6 +126,8 @@ class VouchersController extends Controller
 		$record->travel_from_date = $request->input('travel_from_date');
 		$record->travel_to_date = $request->input('travel_to_date');
 		$record->nof_night = $request->input('nof_night');
+		$record->vat_invoice = $request->input('vat_invoice');
+		$record->guest_name = $request->input('customer_name');
 		$record->status = $request->input('status');
         $record->save();
 		$code = 'V-'.date("Y")."-00".$record->id;
@@ -239,6 +241,8 @@ class VouchersController extends Controller
 		$record->travel_from_date = $request->input('travel_from_date');
 		$record->travel_to_date = $request->input('travel_to_date');
 		$record->nof_night = $request->input('nof_night');
+		$record->vat_invoice = $request->input('vat_invoice');
+		$record->guest_name = $request->input('customer_name');
 		$record->status = $request->input('status');
         $record->save();
 		if($record->is_hotel != 1)

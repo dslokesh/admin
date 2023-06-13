@@ -49,8 +49,8 @@
                 @endif
               </div>
 			  <div class="form-group col-md-3">
-                <label for="inputName">Slot Duration(In minutes): <span class="red">*</span></label>
-                <input type="text" id="slot_duration1" name="slot_duration[]" value="{{ old('slot_duration') }}" class="form-control"  placeholder="Slot Duration" required />
+                <label for="inputName">Slot Duration(In minutes):</label>
+                <input type="text" id="slot_duration1" name="slot_duration[]" value="{{ old('slot_duration') }}" class="form-control"  placeholder="Slot Duration"  />
                 @if ($errors->has('slot_duration'))
                     <span class="text-danger">{{ $errors->first('slot_duration') }}</span>
                 @endif
@@ -93,7 +93,34 @@
                     <span class="text-danger">{{ $errors->first('rate_valid_to') }}</span>
                 @endif
               </div>
-			   
+			   <div class="form-group col-md-3">
+                <label for="inputName">For Backend Only: <span class="red">*</span></label>
+                <select name="for_backend_only" id="for_backend_only" class="form-control">
+				<option value="1" @if(old('for_backend_only') ==1) {{'selected="selected"'}} @endif>Yes</option>
+				<option value="0" @if(old('for_backend_only') ==0) {{'selected="selected"'}} @endif>No</option>
+                   
+                 </select>
+				 @if ($errors->has('for_backend_only'))
+                    <span class="text-danger">{{ $errors->first('for_backend_only') }}</span>
+                @endif
+              </div>
+			    <div class="form-group col-md-3">
+			  
+                <label for="inputName">Pickup Time: <span class="red">*</span></label>
+                <input type="text" id="pickup_time{{$k}}" name="pickup_time[]" value="{{ old('pickup_time') }}" class="form-control timepicker"  placeholder="Pickup Time" required />
+                @if ($errors->has('pickup_time'))
+                    <span class="text-danger">{{ $errors->first('pickup_time') }}</span>
+                @endif
+              </div>
+                
+				 <div class="form-group col-md-3">
+
+                <label for="inputName">Drop Time: <span class="red">*</span></label>
+                <input type="text" id="drop_time{{$k}}" name="drop_time[]" value="{{ old('drop_time') }}" class="form-control timepicker"  placeholder="Drop Time" required />
+                @if ($errors->has('drop_time'))
+                    <span class="text-danger">{{ $errors->first('drop_time') }}</span>
+                @endif
+              </div>
 			  <div class="col-md-12">
                 <table class="table table-bordered">
                   <thead>

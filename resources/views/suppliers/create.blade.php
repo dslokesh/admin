@@ -30,6 +30,18 @@
               <h3 class="card-title">Add Supplier</h3>
             </div>
             <div class="card-body row">
+			 <div class="form-group col-md-6">
+                <label for="inputName">Service Type: <span class="red">*</span></label>
+                <select name="service_type" id="service_type" class="form-control">
+					<option value="">--select--</option>
+				   <option value="Ticket" @if(old('service_type') =='Ticket') {{'selected="selected"'}} @endif>Ticket</option>
+				  <option value="Transfer" @if(old('service_type') =='Transfer') {{'selected="selected"'}} @endif >Transfer</option>
+				  <option value="Both" @if(old('service_type') =='Both') {{'selected="selected"'}} @endif >Both</option>
+                 </select>
+				 @if ($errors->has('service_type'))
+                    <span class="text-danger">{{ $errors->first('service_type') }}</span>
+                @endif
+              </div>
                 <div class="form-group col-md-6">
                 <label for="inputName">Name: <span class="red">*</span></label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control"  placeholder="Name" />

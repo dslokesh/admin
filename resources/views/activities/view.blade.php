@@ -130,7 +130,7 @@
               </div>
 			  
 			   <div class="form-group col-lg-12 mb-3">
-                <label for="inputName">Exclusion:</label>
+                <label for="inputName">Important Information:</label>
                 {!!$activity->exclusion!!}
               </div>
 			  
@@ -263,8 +263,19 @@
                 <label for="inputName">Rate Valid To:</label>
 				{{ $pdata->rate_valid_to ? date(config('app.date_format'),strtotime($pdata->rate_valid_to)) : null }}
               </div>
+			 <div class="col-lg-6 mb-3">
+                <label for="inputName">For Backend Only:</label>
+              {!! SiteHelpers::statusColorYesNo($pdata->for_backend_only) !!}
+              </div>
 			 
-			   
+			  <div class="col-lg-6 mb-3">
+                <label for="inputName">Pickup Time:</label>
+               {{ $pdata->pickup_time }}
+              </div>
+			    <div class="col-lg-6 mb-3">
+                <label for="inputName">Drop Time:</label>
+               {{ $pdata->drop_time }}
+              </div>
 			  <div class="col-md-12">
                 <table class="table table-bordered">
                   <thead>

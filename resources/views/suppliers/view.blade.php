@@ -37,7 +37,10 @@
 			
 				<div class="profile-content">
 					<div class="row">
-              
+              <div class="col-lg-6 mb-3">
+                <label for="inputName">Service Type:</label>
+                {{ $supplier->service_type }}
+              </div>
 			 
 			      <div class="col-lg-6 mb-3">
                 <label for="inputName">Email:</label>
@@ -118,9 +121,9 @@
 						<table class="table table-bordered table-striped">
 						<tr>
 							<th>Variant Code</th>
-							<th>Ticket Only</th>
-							<th>SIC Transfer</th>
-							<th>PVT Transfer</th>
+							<th>Adult</th>
+							<th>Child</th>
+							<th>Infant</th>
 						</tr>
 						@foreach($record as $variant_code => $variant)
 						@php

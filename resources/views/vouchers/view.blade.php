@@ -68,7 +68,7 @@
 			      <div class="col-lg-6 mb-3">
                 <label for="inputName">Customer Name:</label>
 				@if(isset($voucher->customer))
-                {{ $voucher->customer->name }} </br>
+                {{ $voucher->guest_name }} </br>
 				<b>Email:</b>{{$voucher->customer->email}} <b>Mobile No:</b>{{$voucher->customer->mobile}} <b>Address:</b>{{$voucher->customer->address. " ".$voucher->customer->zip_code;}}
 				@endif
               </div>
@@ -79,6 +79,10 @@
 			  <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Country:</label>
                 {{($voucher->country)?$voucher->country->name:''}}
+              </div>
+			  <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Vat Invoice:</label>
+				{!! SiteHelpers::statusColorYesNo($voucher->vat_invoice) !!}
               </div>
               <div class="form-group col-lg-6 mb-3">
 			        <label for="inputName">Status:</label>

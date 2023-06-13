@@ -78,7 +78,8 @@ class SuppliersController extends Controller
             'state_id' => 'required',
             'country_id' => 'required',
             'zip_code' => 'required',
-			'code' => 'required'
+			'code' => 'required',
+			'service_type' => 'required'
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
             'country_id.required' => 'The country field is required.',
@@ -120,6 +121,7 @@ class SuppliersController extends Controller
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
+		$record->service_type = $request->input('service_type');
         $record->status = $request->input('status');
 		
         $record->save();
@@ -195,7 +197,8 @@ class SuppliersController extends Controller
             'state_id' => 'required',
             'country_id' => 'required',
             'zip_code' => 'required',
-			'code' => 'required'
+			'code' => 'required',
+			'service_type' => 'required'
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
             'country_id.required' => 'The country field is required.',
@@ -246,6 +249,7 @@ class SuppliersController extends Controller
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
+		$record->service_type = $request->input('service_type');
         $record->status = $request->input('status');
 		
         $record->save();

@@ -41,6 +41,7 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+					<th>Service Type</th>
 					<th>Code</th>
                     <th>Name</th>
                     <th>Mobile</th>
@@ -55,6 +56,7 @@
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('suppliers.index')}}" >
+					 <th></th>
 					 <th></th>
                     <th><input type="text" name="name" value="{{request('name')}}" class="form-control"  placeholder="Name" /></th>
                     <th></th>
@@ -86,6 +88,7 @@
                   @foreach ($records as $record)
 				  
                   <tr>
+				  <td>{{ $record->service_type}}</td>
                     <td>{{ $record->code}}</td>
                     <td>{{ $record->name}}</td>
                     <td>{{ $record->mobile}}</td>

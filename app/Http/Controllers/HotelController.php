@@ -36,6 +36,12 @@ class HotelController extends Controller
         if (isset($data['city_id']) && !empty($data['city_id'])) {
             $query->where('city_id', $data['city_id']);
         }
+		if (isset($data['zone_id']) && !empty($data['zone_id'])) {
+            $query->where('zone_id', $data['zone_id']);
+        }
+		if (isset($data['hotel_category_id']) && !empty($data['hotel_category_id'])) {
+            $query->where('hotel_category_id', $data['hotel_category_id']);
+        }
         if (isset($data['status']) && !empty($data['status'])) {
             if ($data['status'] == 1)
                 $query->where('status', 1);
@@ -44,13 +50,13 @@ class HotelController extends Controller
         }
 
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
-
+		$zones = Zone::where('status', 1)->orderBy('name', 'ASC')->get();
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
         $hotelcategories = HotelCategory::where('status', 1)->orderBy('name', 'ASC')->get();
 
-        return view('hotels.index', compact('records', 'countries', 'states', 'cities', 'hotelcategories'));
+        return view('hotels.index', compact('records', 'countries', 'states', 'cities', 'hotelcategories','zones'));
     }
 
 

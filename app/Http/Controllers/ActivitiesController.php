@@ -419,6 +419,10 @@ class ActivitiesController extends Controller
 		$start_time = $request->input('start_time');
 		$rate_valid_from = $request->input('rate_valid_from');
 		$rate_valid_to = $request->input('rate_valid_to');
+		$pickup_time = $request->input('pickup_time');
+		$drop_time = $request->input('drop_time');
+		$for_backend_only = $request->input('for_backend_only');
+		
 		$adult_rate_without_vat = $request->input('adult_rate_without_vat');
 		$adult_rate_with_vat = $request->input('adult_rate_with_vat');
 		$adult_max_no_allowed = $request->input('adult_max_no_allowed');
@@ -457,6 +461,10 @@ class ActivitiesController extends Controller
 					'end_time' => $end_time[$k],
 					'rate_valid_from' => $rate_valid_from[$k],
 					'rate_valid_to' => $rate_valid_to[$k],
+					'pickup_time' => $pickup_time[$k],
+					'drop_time' => $drop_time[$k],
+					'for_backend_only' => $for_backend_only[$k],
+					
 					'adult_rate_without_vat' => $adult_rate_without_vat[$k],
 					'adult_rate_with_vat' => $adult_rate_with_vat[$k],
 					'adult_max_no_allowed' => $adult_max_no_allowed[$k],

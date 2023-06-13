@@ -24,7 +24,9 @@
     <section class="content">
     <div class="row">
         <div class="col-md-12">
-		
+		@php
+		$tourDateArray = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date)
+		@endphp
           <div class="card">
            
 			
@@ -127,12 +129,28 @@
 				</div>
 				 <div class="col-lg-6 mb-3">
                 <label for="inputName">Check In Date: <span class="red">*</span></label>
-               <input type="text" id="check_in_date" name="check_in_date"  class="form-control datepicker" value="{{$voucher->travel_from_date}}"  placeholder="Check In Date" />
+				<select name="check_in_date" id="check_in_date" class="form-control" required  >
+						
+						<option value="">--Select--</option>
+						@foreach($tourDateArray as $dt)
+						<option value="{{$dt}}">{{$dt}}</option>
+						@endforeach
+						
+						</select>
+              
 			
               </div>
 			   <div class="col-lg-6 mb-3">
                 <label for="inputName">Check Out Date: <span class="red">*</span></label>
-               <input type="text" id="check_out_date" name="check_out_date"  class="form-control datepicker" value="{{$voucher->travel_to_date}}"  placeholder="Check Out Date" />
+				<select name="check_out_date" id="check_out_date" class="form-control" required  >
+						
+						<option value="">--Select--</option>
+						@foreach($tourDateArray as $dt2)
+						<option value="{{$dt2}}">{{$dt2}}</option>
+						@endforeach
+						
+						</select>
+              
 				
               </div>
 				 <div class="col-lg-12">
@@ -260,13 +278,13 @@
         // Append the content to the DOM
 		
 			$('#hDetailsDiv').append(response.html);
-				$('.datepicker').datepicker({
+				/* $('.datepicker').datepicker({
 				weekStart: 1,
 				daysOfWeekHighlighted: "6,0",
 				autoclose: true,
 				todayHighlight: true,
 				format: 'yyyy-mm-dd'
-			});
+			}); */
 			
 
     },

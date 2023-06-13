@@ -229,7 +229,7 @@
                 @endif
               </div>
 			   <div class="form-group col-md-6">
-                <label for="inputName">Exclusion: <span class="red">*</span></label>
+                <label for="inputName">Important Information: <span class="red">*</span></label>
 				
                 <textarea placeholder="Exclusion" name="exclusion" cols="50" rows="10" id="exclusion" class="form-control box-size short-text-editor2">{{ old('exclusion') }}</textarea>
                 @if ($errors->has('exclusion'))
