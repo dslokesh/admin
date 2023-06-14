@@ -262,7 +262,21 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Agents</p>
                 </a>
               </li>
-			  
+			   @php
+          $class=''; $active='';
+          if($controller == 'AgentAmountController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			 <li class="nav-item">
+                <a href="{{ route('agentamounts.index') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-money-bill"></i>
+                  <p>Agent Amounts</p>
+                </a>
+              </li>
 			   @endrole
 			    @php
           $class=''; $active='';

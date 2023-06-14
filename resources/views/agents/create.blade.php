@@ -164,6 +164,27 @@
                     <span class="text-danger">{{ $errors->first('pvt_transfer') }}</span>
                 @endif
               </div>
+			  <div class="form-group col-md-6">
+                <label for="inputName">Agent Category:</label>
+                <input type="text" id="agent_category" name="agent_category"  value="{{ old('agent_category')}}" class="form-control"   />
+                @if ($errors->has('agent_category'))
+                    <span class="text-danger">{{ $errors->first('agent_category') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-6">
+                <label for="inputName"> Agent Credit Limit (Amount):</label>
+                <input type="text" id="agent_credit_limit" name="agent_credit_limit"  value="{{ old('agent_credit_limit')}}" class="form-control"   />
+                @if ($errors->has('agent_credit_limit'))
+                    <span class="text-danger">{{ $errors->first('agent_credit_limit') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-6">
+                <label for="inputName">Sales Person:</label>
+                <input type="text" id="sales_person" name="sales_person"  value="{{ old('sales_person')}}" class="form-control"   />
+                @if ($errors->has('sales_person'))
+                    <span class="text-danger">{{ $errors->first('sales_person') }}</span>
+                @endif
+              </div>
 			  
 			   <div class="form-group col-md-6">
                 <label for="inputName">Status: <span class="red">*</span></label>

@@ -101,6 +101,21 @@
                 <label for="inputName">PVT Transfer:</label>
                 {{$agent->pvt_transfer}}%
               </div>
+               
+			  <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Agent Category:</label>
+                {{$agent->agent_category}}%
+              </div>
+               
+			  <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Agent Credit Limit (Amount):</label>
+                {{$agent->agent_credit_limit}}%
+              </div>
+               
+			  <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Sales Person:</label>
+                {{$agent->sales_person}}%
+              </div>
              
               <div class="form-group col-lg-6 mb-3">
 			        <label for="inputName">Status:</label>

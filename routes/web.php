@@ -23,6 +23,8 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\VouchersController;
 use App\Http\Controllers\ReporsController;
+use App\Http\Controllers\AgentAmountController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -119,7 +121,8 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		   Route::get('voucher-report-export', [ReporsController::class, 'voucherReportExport'])->name('voucherReportExport');
 		   
         Route::resource('users', UsersController::class);
-
+		Route::resource('agentamounts', AgentAmountController::class);
+		
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
         Route::post('permissions/save', [PermissionRoleController::class, 'postSave'])->name('permrole.save');
     });

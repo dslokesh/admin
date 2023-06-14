@@ -154,6 +154,10 @@ class AgentsController extends Controller
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
         $record->is_active = $request->input('status');
+		$record->agent_category = $request->input('agent_category');
+		$record->agent_credit_limit = (!empty($request->input('agent_credit_limit')))?$request->input('agent_credit_limit'):0;
+		$record->sales_person = $request->input('sales_person');
+		$record->agent_amount_balance = 0;
         $record->created_by = Auth::user()->id;
 		$record->role_id = 3; 
         $record->password = bcrypt($request['password']);
@@ -343,6 +347,10 @@ class AgentsController extends Controller
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
 		$record->is_active = $request->input('status');
+		$record->agent_category = $request->input('agent_category');
+		$record->agent_credit_limit = (!empty($request->input('agent_credit_limit')))?$request->input('agent_credit_limit'):0;
+		$record->sales_person = $request->input('sales_person');
+		//$record->agent_amount_balance = (!empty($request->input('agent_amount_balance')))?$request->input('agent_amount_balance'):0;
 		$record->ticket_only = (!empty($request->input('ticket_only')))?$request->input('ticket_only'):0;
 		$record->sic_transfer = (!empty($request->input('sic_transfer')))?$request->input('sic_transfer'):0;
 		$record->pvt_transfer = (!empty($request->input('pvt_transfer')))?$request->input('pvt_transfer'):0;
