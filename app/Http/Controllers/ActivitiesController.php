@@ -111,12 +111,16 @@ class ActivitiesController extends Controller
 		{
 			$zones = $request->input('zones');
 			$zoneValue = $request->input('zoneValue');
+			$pickup_time = $request->input('pickup_time');
+			$dropup_time = $request->input('dropup_time');
 			$zoneArray = [];
 			foreach($zones as $k => $z)
 			{
 				$zoneArray[] = [
 				'zone' => $z,
 				'zoneValue' => $zoneValue[$k],
+				'pickup_time' => $pickup_time[$k],
+				'dropup_time' => $dropup_time[$k],
 				];
 			}
 			
@@ -199,6 +203,8 @@ class ActivitiesController extends Controller
 				$zoneArray[] = [
 				'zone' => $zone->name,
 				'zoneValue' => $z->zoneValue,
+				'pickup_time' => (!empty($z->pickup_time))?$z->pickup_time:'',
+				'dropup_time' => (!empty($z->dropup_time))?$z->dropup_time:'',
 				];
 			}
 			
@@ -309,12 +315,16 @@ class ActivitiesController extends Controller
 		{
 			$zones = $request->input('zones');
 			$zoneValue = $request->input('zoneValue');
+			$pickup_time = $request->input('pickup_time');
+			$dropup_time = $request->input('dropup_time');
 			$zoneArray = [];
 			foreach($zones as $k => $z)
 			{
 				$zoneArray[] = [
 				'zone' => $z,
 				'zoneValue' => $zoneValue[$k],
+				'pickup_time' => $pickup_time[$k],
+				'dropup_time' => $dropup_time[$k],
 				];
 			}
 			
@@ -325,6 +335,7 @@ class ActivitiesController extends Controller
 		{
 			$record->zones = '';
 		}
+		
 		
 		$record->sic_TFRS = $sic_TFRS;
         $record->title = $request->input('title');
@@ -461,9 +472,9 @@ class ActivitiesController extends Controller
 					'end_time' => $end_time[$k],
 					'rate_valid_from' => $rate_valid_from[$k],
 					'rate_valid_to' => $rate_valid_to[$k],
-					'pickup_time' => $pickup_time[$k],
-					'drop_time' => $drop_time[$k],
-					'for_backend_only' => $for_backend_only[$k],
+					'pickup_time' => '',
+					'drop_time' => '',
+					'for_backend_only' => (!empty($for_backend_only[$k]))?$for_backend_only[$k]:0,
 					
 					'adult_rate_without_vat' => $adult_rate_without_vat[$k],
 					'adult_rate_with_vat' => $adult_rate_with_vat[$k],

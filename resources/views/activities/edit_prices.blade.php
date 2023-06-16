@@ -107,28 +107,28 @@
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">For Backend Only: <span class="red">*</span></label>
-                <select name="for_backend_only" id="for_backend_only" class="form-control">
-				<option value="1" @if($pdata->for_backend_only ==1) {{'selected="selected"'}} @endif>Yes</option>
-				<option value="0" @if($pdata->for_backend_only ==0) {{'selected="selected"'}} @endif>No</option>
+                <select name="for_backend_only[]" id="for_backend_only" class="form-control">
+				<option value="1" @if($pdata->for_backend_only == 1) {{'selected="selected"'}} @endif>Yes</option>
+				<option value="0" @if($pdata->for_backend_only === 0) {{'selected="selected"'}} @endif>No</option>
                    
                  </select>
 				 @if ($errors->has('for_backend_only'))
                     <span class="text-danger">{{ $errors->first('for_backend_only') }}</span>
                 @endif
               </div>
-			    <div class="form-group col-md-3">
+			    <div class="form-group col-md-3" style="display:none">
 			  
                 <label for="inputName">Pickup Time: <span class="red">*</span></label>
-                <input type="text" id="pickup_time{{$k}}" name="pickup_time[]" value="{{ old('pickup_time')?:$pdata->pickup_time }}" class="form-control timepicker"  placeholder="Pickup Time" required />
+                <input type="text" id="pickup_time{{$k}}" name="pickup_time[]" value="{{ old('pickup_time')?:$pdata->pickup_time }}" class="form-control "  placeholder="Pickup Time"  />
                 @if ($errors->has('pickup_time'))
                     <span class="text-danger">{{ $errors->first('pickup_time') }}</span>
                 @endif
               </div>
                 
-				 <div class="form-group col-md-3">
+				 <div class="form-group col-md-3" style="display:none">
 
                 <label for="inputName">Drop Time: <span class="red">*</span></label>
-                <input type="text" id="drop_time{{$k}}" name="drop_time[]" value="{{ old('drop_time')?:$pdata->drop_time }}" class="form-control timepicker"  placeholder="Drop Time" required />
+                <input type="text" id="drop_time{{$k}}" name="drop_time[]" value="{{ old('drop_time')?:$pdata->drop_time }}" class="form-control "  placeholder="Drop Time"  />
                 @if ($errors->has('drop_time'))
                     <span class="text-danger">{{ $errors->first('drop_time') }}</span>
                 @endif

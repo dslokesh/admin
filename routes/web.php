@@ -122,7 +122,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		   
         Route::resource('users', UsersController::class);
 		Route::resource('agentamounts', AgentAmountController::class);
-		
+		Route::post('voucher-status-change/{id}', [VouchersController::class, 'statusChangeVoucher'])->name('voucher.status.change');
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
         Route::post('permissions/save', [PermissionRoleController::class, 'postSave'])->name('permrole.save');
     });

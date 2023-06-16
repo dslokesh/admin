@@ -156,18 +156,21 @@
 			 <div class="col-lg-12 mb-3">
 				<h4>Transfer Plan</h4>
 				 </div>
-			  <div class="col-lg-6 mb-3">
+			  <div class="col-lg-12 mb-3">
                <table id="myTable" class="table">
 					  <tr>
 						<th>Zone</th>
 						<th>Value</th>
-						
+						<th>Pick Up Time</th>
+						<th>Drop Up Time</th>
 					  </tr>
 					  @if(!empty($zoneArray))
 						  @foreach($zoneArray as $k => $z)
 					  <tr>
 						<td>{{$z['zone']}} </td>
 						<td>{{$z['zoneValue']}}</td>
+						<td>{{$z['pickup_time']}} </td>
+						<td>{{$z['dropup_time']}}</td>
 					  </tr>
 					  @endforeach
 					@endif
@@ -268,14 +271,7 @@
               {!! SiteHelpers::statusColorYesNo($pdata->for_backend_only) !!}
               </div>
 			 
-			  <div class="col-lg-6 mb-3">
-                <label for="inputName">Pickup Time:</label>
-               {{ $pdata->pickup_time }}
-              </div>
-			    <div class="col-lg-6 mb-3">
-                <label for="inputName">Drop Time:</label>
-               {{ $pdata->drop_time }}
-              </div>
+			 
 			  <div class="col-md-12">
                 <table class="table table-bordered">
                   <thead>

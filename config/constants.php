@@ -23,6 +23,15 @@ return [
 	1 => 'Ticket Only',
 	2 => 'Slot Wise',
 	],
+	
+	'voucherStatus' => [
+	1 => 'Draft',
+	2 => 'Create Quotation',
+	3 => 'In Process',
+	4 => 'Confirmed',
+	5 => 'Vouchered',
+	6 => 'Canceled',
+	],
 	//'RECAPTCHA_SITE_KEY' => '6LdeR9UUAAAAADpy3OzNUr6P04htVf3UtZtVFMEZ',
 	//'RECAPTCHA_SECRET_KEY' => '6LdeR9UUAAAAAL7zjTU6NhSfCVGqj6k1Rmji1cvv',
 	//'formErrorMsg' => 'There are some error in form submission, please find error in below form.',

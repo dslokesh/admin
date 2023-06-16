@@ -148,4 +148,37 @@ class SiteHelpers
 
 		return $dates;
     }
+	
+	public function voucherStatus($val)
+    {
+		$voucherStatus = config("constants.voucherStatus");
+		if($val ==1)
+		{
+			$color = '<span class="badge bg-primary">Draft</span>';
+		}
+		else if($val == 2)
+		{
+			$color = '<span class="badge bg-secondary">Create Quotation</span>';
+		}
+		else if($val == 3)
+		{
+			$color = '<span class="badge bg-info">In Process</span>';
+		}
+		else if($val == 4)
+		{
+			$color = '<span class="badge bg-warning">Confirmed</span>';
+		}
+		else if($val == 5)
+		{
+			$color = '<span class="badge bg-success">Vouchered</span>';
+		}
+		else if($val == 6)
+		{
+			$color = '<span class="badge bg-danger">Canceled</span>';
+		}
+		 
+		 return $color;
+	}
+	
+	
 }

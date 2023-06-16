@@ -175,7 +175,9 @@
 					  <tr>
 						<th>Zone</th>
 						<th>Value</th>
-						<th><a id="add-row" class="btn btn-success">Add Row</a></th>
+						<th>Pick Up Time</th>
+						<th>Drop Up Time</th>
+						<th><a id="add-row" class="btn btn-success btn-sm">Add </a></th>
 					  </tr>
 					  <tr>
 						<td> <select name="zones[]" id="zones" class="form-control">
@@ -185,6 +187,8 @@
 				@endforeach
                  </select></td>
 						<td><input type="text" id="zone_val" class="form-control" name="zoneValue[]"></td>
+						<td><input type="text" id="pickup_time" value="" class="form-control timepicker" name="pickup_time[]"></td>
+						<td><input type="text" id="dropup_time" value="" class="form-control timepicker" name="dropup_time[]"></td>
 						<td></td>
 					  </tr>
 					
@@ -349,13 +353,21 @@
   
   // Add Row
 $("#add-row").on("click", function() {
+	$('.timepicker').datetimepicker({
+				format: 'hh:mm a'
+			});
   var newRow = $("<tr>");
   var cols = "";
   cols += '<td><select name="zones[]"  class="form-control"><option value="">--select--</option>@foreach($zones as $zone)<option value="{{$zone->id}}" >{{$zone->name}}</option>@endforeach                </select></td>';
   cols += '<td><input type="text"  class="form-control" name="zoneValue[]"></td>';
+   cols += '<td><input type="text"  class="form-control timepicker" name="pickup_time[]"></td>';
+  cols += '<td><input type="text"  class="form-control timepicker" name="dropup_time[]"></td>';
   cols += '<td><a class="delete-row btn btn-danger btn-sm">Delete</a></td>';
   newRow.append(cols);
   $("#myTable").append(newRow);
+  $('#myTable .timepicker').datetimepicker({
+				format: 'hh:mm a'
+			});
 });
 
 // Remove Row

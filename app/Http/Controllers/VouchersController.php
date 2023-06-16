@@ -159,7 +159,9 @@ class VouchersController extends Controller
     {
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
 		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
-        return view('vouchers.view', compact('voucher','voucherHotel','voucherActivity'));
+	
+		$voucherStatus = config("constants.voucherStatus");
+        return view('vouchers.view', compact('voucher','voucherHotel','voucherActivity','voucherStatus'));
     }
 
     /**
@@ -271,6 +273,17 @@ class VouchersController extends Controller
 		
         $record->delete();
         return redirect('vouchers')->with('success', 'Voucher Deleted.');
+    }
+	
+	public function statusChangeVoucher(Request $request,$id)
+    {
+		$data = $request->all();
+		
+        $record = Voucher::find($id);
+		$record->status_main = $data['statusv'];
+		$record->payment_date = $data['payment_date'];
+		$record->save();
+        return redirect()->back()->with('success', 'Status Change Successfully.');
     }
 	
 	public function autocompleteAgent(Request $request)

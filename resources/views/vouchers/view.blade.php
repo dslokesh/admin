@@ -85,9 +85,15 @@
 				{!! SiteHelpers::statusColorYesNo($voucher->vat_invoice) !!}
               </div>
               <div class="form-group col-lg-6 mb-3">
-			        <label for="inputName">Status:</label>
+			        <label for="inputName">Display Status:</label>
 					{!! SiteHelpers::statusColor($voucher->status) !!}
               </div>
+			  
+			    <div class="form-group col-lg-6 mb-3">
+			        <label for="inputName">Voucher Status:</label>
+					{!! SiteHelpers::voucherStatus($voucher->status_main) !!}
+              </div>
+			  
               <div class="col-lg-2 mb-3">
                 <label for="inputName">Travel Date From:</label>
 				{{ $voucher->travel_from_date ? date(config('app.date_format'),strtotime($voucher->travel_from_date)) : null }}
@@ -139,11 +145,123 @@
                 {{ $voucher->depature_terminal }}
               </div>
 			  @endif
-              
+               
             
           </div>
 		  
+				<div class="row">
+        <div class="col-12">
+		
+		  @if($voucher->status_main == 1)
+           <form id="status-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
+                                {{csrf_field()}}
+								<input type="hidden" id="statusv" value="2" name="statusv"  /> 
+								<input type="hidden" id="payment_date" name="payment_date"  /> 
+                            </form>
+						
+							<a class="btn btn-success float-right" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to change  status this?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('status-form').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">Create Quotation</a>
+                            
+						@endif
+						
+						@if($voucher->status_main == 2)
+					<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
+                                {{csrf_field()}}
+								<input type="hidden" id="statusv" value="6" name="statusv"  /> 
+								<input type="hidden" id="payment_date" name="payment_date"  /> 
+                            </form>
+						
+							<a class="btn btn-secondary" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to cancel this voucher?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('cancel-form').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">Cancel</a>
+           <form id="status-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
+                                {{csrf_field()}}
+								<input type="hidden" id="statusv" value="3" name="statusv"  /> 
+								<input type="hidden" id="payment_date" name="payment_date"  /> 
+                            </form>
+						
+							<a class="btn btn-success float-right" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to change  status this?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('status-form').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">In Process</a>
+                            
+						@endif
+						
+					@if($voucher->status_main == 3)
+					
+				<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
+                                {{csrf_field()}}
+								<input type="hidden" id="statusv" value="6" name="statusv"  /> 
+								<input type="hidden" id="payment_date" name="payment_date"  /> 
+                            </form>
+						
+							<a class="btn btn-secondary" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to cancel this voucher?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('cancel-form').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">Cancel</a>
+				<a class="btn btn-success float-right statusBtnChange" href="javascript:void(0)" data-status="4">Confirmed</a>
+				<a class="btn btn-info  float-right statusBtnChange mr-3" href="javascript:void(0)" data-status="5">Vouchered</a>
+				@endif
 				
+				@if($voucher->status_main == 4)
+					<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
+                                {{csrf_field()}}
+								<input type="hidden" id="statusv" value="6" name="statusv"  /> 
+								<input type="hidden" id="payment_date" name="payment_date"  /> 
+                            </form>
+						
+							<a class="btn btn-secondary" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to cancel this voucher?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('cancel-form').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">Cancel</a>
+				<a class="btn btn-success float-right statusBtnChange" href="javascript:void(0)" data-status="5">Vouchered</a>
+				@endif
+						
+        </div>
+      </div>
 				</div>
          
 				</header>
@@ -357,7 +475,51 @@
 </div>
 
       </div>
-  
+  <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" data-backdrop="static">
+  <div class="modal-dialog">
+ <form id="status-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}">
+ {{csrf_field()}}
+			<input type="hidden" id="statusv" value="" name="statusv"  /> 
+			
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header"> Payment Date
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+      
+    <div class="row">
+        <div class="col-md-12">
+          <div class="card-primary">
+          <div id="message"></div>
+		  <div id="errors"></div>
+            <div class="card-body row">
+                <div class="form-group col-md-12">
+                <label for="inputName">Payment Date: <span class="red">*</span></label>
+                <input type="text" id="payment_date" name="payment_date" value="{{ old('name') }}" class="form-control datepicker" required  placeholder="Payment Date" />
+                    <span class="text-danger" id="err_name"></span>
+              </div>
+			
+            </div>
+			
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button type="bu" class="btn btn-success float-right" id="btnSaveData">Save</button>
+        </div>
+      </div>
+    
+      </div>
+     
+    </div>
+ </form>
+  </div>
+</div>
     </section>
     <!-- /.content -->
 @endsection
@@ -365,6 +527,35 @@
 
 
 @section('scripts')
-
-
+<script type="text/javascript">
+  $(function(){
+	   $(".statusBtnChange").on('click', function(event) {
+		
+	  var status  = $(this).data('status');
+	$('#statusv').val(status);
+		$('#myModal').modal("show");
+				if(confirm('Are you sure, You want to change status this?'))
+				{
+				event.preventDefault();
+				//document.getElementById('status-form').submit();
+				}
+				else
+				{
+				event.preventDefault();
+				}
+	}); 
+			$("#btnSaveData").on('click', function(event) {
+				
+				if($("#payment_date").val() == '')
+				{
+					confirm('Payment date required');
+					return false;
+				}
+				else
+				{
+					document.getElementById('status-form').submit();
+				}
+	}); 
+	});
+</script>
 @endsection
