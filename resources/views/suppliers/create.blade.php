@@ -49,13 +49,7 @@
                     <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-6">
-                <label for="inputName">Code: <span class="red">*</span></label>
-                <input type="text" id="code" name="code" value="{{ old('code') }}" class="form-control"  placeholder="Name" />
-                @if ($errors->has('code'))
-                    <span class="text-danger">{{ $errors->first('code') }}</span>
-                @endif
-              </div>
+			  
                 <div class="form-group col-md-6">
                 <label for="inputName">Mobile: <span class="red">*</span></label>
                 <input type="text" id="mobile" name="mobile" value="{{ old('mobile') }}" class="form-control"  placeholder="Mobile" />

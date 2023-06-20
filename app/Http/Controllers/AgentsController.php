@@ -175,7 +175,7 @@ class AgentsController extends Controller
 		
 		$userCount = User::where("role_id",3)->count();
 		$codeNumber  = $userCount + 1;
-		$code = 'A00'.$codeNumber;
+		$code = 'TA-700'.$codeNumber;
 		$recordUser = User::find($record->id);
 		$recordUser->code = $code;
 		$recordUser->save();

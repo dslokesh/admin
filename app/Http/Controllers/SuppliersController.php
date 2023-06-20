@@ -78,7 +78,7 @@ class SuppliersController extends Controller
             'state_id' => 'required',
             'country_id' => 'required',
             'zip_code' => 'required',
-			'code' => 'required',
+			//'code' => 'required',
 			'service_type' => 'required'
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
@@ -110,7 +110,7 @@ class SuppliersController extends Controller
 		}
 		
         $record->name = $request->input('name');
-		$record->code = $request->input('code');
+		//$record->code = $request->input('code');
         $record->mobile = $request->input('mobile');
 		$record->email = $request->input('email');
 		$record->company_name = $request->input('company_name');
@@ -125,6 +125,13 @@ class SuppliersController extends Controller
         $record->status = $request->input('status');
 		
         $record->save();
+		
+		
+		$code = 'SP-900'.$record->id;
+		$recordUser = Supplier::find($record->id);
+		$recordUser->code = $code;
+		$recordUser->save();
+		
         return redirect('suppliers')->with('success', 'Supplier Created Successfully.');
     }
 
@@ -197,7 +204,7 @@ class SuppliersController extends Controller
             'state_id' => 'required',
             'country_id' => 'required',
             'zip_code' => 'required',
-			'code' => 'required',
+			//'code' => 'required',
 			'service_type' => 'required'
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
@@ -238,7 +245,7 @@ class SuppliersController extends Controller
             $record->logo = $newName;
 		}
         $record->name = $request->input('name');
-		$record->code = $request->input('code');
+		//$record->code = $request->input('code');
         $record->mobile = $request->input('mobile');
 		$record->email = $request->input('email');
 		$record->company_name = $request->input('company_name');

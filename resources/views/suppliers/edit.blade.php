@@ -52,7 +52,7 @@
               </div>
 			   <div class="form-group col-md-6">
                 <label for="inputName">Code: <span class="red">*</span></label>
-                <input type="text" id="code" name="code" value="{{ old('code') ?: $record->code }}" class="form-control"  placeholder="Code" />
+                <input type="text" readonly value="{{ old('code') ?: $record->code }}" class="form-control"  placeholder="Code" />
                 @if ($errors->has('code'))
                     <span class="text-danger">{{ $errors->first('code') }}</span>
                 @endif

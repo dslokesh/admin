@@ -2,7 +2,10 @@
  <!-- Script -->
 	<script type="text/javascript">
 	$(document).ready(function(){
-
+	var country = "{{old('country_id')}}";
+	var oldstate = "{{old('state_id')}}";
+	var oldcity = "{{old('city_id')}}";
+	
 	$("body #country_id").on("change", function () {
             var country_id = $(this).val();
 			$("#state_id").prop("disabled",true);
@@ -17,9 +20,13 @@
                             $("#state_id").append('<option value="' + value
                                 .id + '">' + value.name + '</option>');
                         });
+					$('#state_id').val(oldstate).prop('selected', true);
 					$("#state_id").prop("disabled",false);
 					$('#city_id').html('<option value="">--select--</option>');
 					$("#city_id").prop("disabled",false);
+					if(oldstate){
+					$("body #state_id").trigger("change");
+					}
                 }
             });
         });
@@ -37,10 +44,17 @@
                             $("#city_id").append('<option value="' + value
                                 .id + '">' + value.name + '</option>');
                         });
-					$("#city_id").prop("disabled",false)
+					$("#city_id").prop("disabled",false);
+					$('#city_id').val(oldcity).prop('selected', true);
                 }
             });
         });
+		
+	if(country){
+		$("body #country_id").trigger("change");
+	}
+	
+	
 	});
 	</script>    
 
