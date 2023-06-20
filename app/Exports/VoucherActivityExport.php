@@ -21,6 +21,7 @@ class VoucherActivityExport implements FromView
 	
 	public function view(): View
     {
+		
         return view('exports.voucher-activity-export', [
             'records' => $this->records
         ]);

@@ -31,34 +31,50 @@
 				  
                   </thead>
                   <tbody>
+				 @foreach($records as $record)
 				 
                   <tr>
-					<td>1</td>
-                    <td>2</td>
-					<td>3</td>
-					<td>4</td>
-					<td>5</td>
-					<td>PICKUP LOCATION</td>
-					<td>DROPOFF LOCATION</td>
-                    <td>asa</td>
-                    <td>sds</td>
-                    <td>fgf</td>
+					<td>{{$record->voucher->code}}</td>
+                    <td>{{$record->tour_date}}</td>
+					<td>{{$record->activity->title}}</td>
+					<td>{{$record->voucher->customer->name}}</td>
+					<td>{{$record->voucher->customer->mobile}}</td>
+					<td>{{$record->pickup_location}}</td>
+					<td>{{$record->dropoff_location}}</td>
+                    <td>{{$record->adult}}</td>
+                    <td>{{$record->child}}</td>
+                    <td>{{$record->infant}}</td>
 					<td>
-					sas
+					@if($record->transfer_option == "Shared Transfer")
+					SIC
+					@endif
+					@if($record->transfer_option == 'Pvt Transfer')
+					PVT
+					@endif
 					
 				</td>
-					<td>DROP OFF TIME</td>
-					<td>DRIVER NAME</td>
-					<td>SUPPLIER TICKET</td>
-					<td>SUPPLIER TRANSFER</td>
-					<td>fg</td>
+					<td>{{$record->dropoff_time}}</td>
+					<td>{{$record->driver_name}}</td>
+					<td>{{$record->supplier_ticket}}</td>
+					<td>{{$record->supplier_transfer}}</td>
+					<td>{{$record->totalprice}}</td>
 					<td>
-					asas
+					@if($record->transfer_option == "Shared Transfer")
+					@php
+					$markup_sic_transfer =  (($record->zonevalprice_without_markup) * ($record->markup_p_sic_transfer/100));
+					@endphp
+					{{$record->zonevalprice_without_markup + $markup_sic_transfer}}
+					@endif
+					@if($record->transfer_option == 'Pvt Transfer')
+					{{$record->pvt_traf_val_with_markup}}
+					@endif
 					</td>
-					<td>REMARKS</td>
-					<td>REMARKS</td>
-					<td>ACTUAL PICK UP TIME</td>
+					
+					<td>{{$record->voucher->agent->full_name}}</td>
+					<td>{{$record->remark}}</td>
+					<td>{{$record->actual_pickup_time}}</td>
                   </tr>
+				  @endforeach
                   </tbody>
                  
                 </table>

@@ -61,7 +61,7 @@ class ReporsController extends Controller
     {
         $data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
-		$query = VoucherActivity::where('id','!=', null);
+		$query = VoucherActivity::with(["voucher",'activity','voucher.customer'])->where('id','!=', null);
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
 			if($data['booking_type'] == 2) {
@@ -75,10 +75,21 @@ class ReporsController extends Controller
         }
 		
         $records = $query->orderBy('created_at', 'DESC')->get();
+   // return Excel::download(new VoucherActivityExport(['records' => $records]), 'users.xlsx');
 
-
-        return Excel::download(new VoucherActivityExport($records), 'records.csv');
+return Excel::download(new VoucherActivityExport($records), 'records'.date('d-M-Y s').'.csv');        //return Excel::download(new VoucherActivityExport($records), 'records.csv');
     }
+	
+	public function voucherReportSave(Request $request)
+    {
+		$data = $request->all();
+		
+		$record = VoucherActivity::find($data['id']);
+        $record->{$data['inputname']} = $data['val'];
+        $record->save();
+		$response[] = array("status"=>1);
+        return response()->json($response);
+	}
 
    
 }

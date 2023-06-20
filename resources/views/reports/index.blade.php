@@ -29,9 +29,14 @@
             <div class="card">
               <div class="card-header">
 				<div class="card-tools">
-				<!-- <a href="{{ route('voucherReportExport', request()->input()) }}">Export to Excel</a> -->
-				   </div>
-				   <div class="row">
+				 <div class="row">
+				<!-- /<a href="{{ route('voucherReportExport', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>-->
+				   </div></div>
+				   
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+			  <div class="row">
             <form id="filterForm" class="form-inline" method="get" action="{{ route('voucherReport') }}" >
               <div class="form-row align-items-center">
 			   <div class="col-auto col-md-3">
@@ -91,9 +96,6 @@
             </form>
           </div>
         </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -128,8 +130,8 @@
 					<td>{{$record->activity->title}}</td>
 					<td>{{$record->voucher->customer->name}}</td>
 					<td>{{$record->voucher->customer->mobile}}</td>
-					<td>PICKUP LOCATION</td>
-					<td>DROPOFF LOCATION</td>
+					<td><input type="text" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  /></td>
+					<td><input type="text" class="form-control inputsave" id="dropoff_location{{$record->id}}" data-name="dropoff_location"  data-id="{{$record->id}}" value="{{$record->dropoff_location}}" /></td>
                     <td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
                     <td>{{$record->infant}}</td>
@@ -142,10 +144,10 @@
 					@endif
 					
 				</td>
-					<td>DROP OFF TIME</td>
-					<td>DRIVER NAME</td>
-					<td>SUPPLIER TICKET</td>
-					<td>SUPPLIER TRANSFER</td>
+					<td><input type="text" class="form-control inputsave" id="dropoff_time{{$record->id}}" data-name="dropoff_time"  data-id="{{$record->id}}" value="{{$record->dropoff_time}}" /></td>
+					<td><input type="text" class="form-control inputsave" id="driver_name{{$record->id}}" data-name="driver_name"  data-id="{{$record->id}}" value="{{$record->driver_name}}" /></td>
+					<td><input type="text" class="form-control inputsave" id="supplier_ticket{{$record->id}}" data-name="supplier_ticket"  data-id="{{$record->id}}" value="{{$record->supplier_ticket}}" /></td>
+					<td><input type="text" class="form-control inputsave" id="supplier_transfer{{$record->id}}" data-name="supplier_transfer"  data-id="{{$record->id}}" value="{{$record->supplier_transfer}}" /></td>
 					<td>{{$record->totalprice}}</td>
 					<td>
 					@if($record->transfer_option == "Shared Transfer")
@@ -159,8 +161,8 @@
 					@endif
 					</td>
 					<td>{{$record->voucher->agent->full_name}}</td>
-					<td>REMARKS</td>
-					<td>ACTUAL PICK UP TIME</td>
+					<td><input type="text" class="form-control inputsave" id="remark{{$record->id}}" data-name="remark"  data-id="{{$record->id}}" value="{{$record->remark}}" /></td>
+					<td><input type="text" class="form-control inputsave" id="actual_pickup_time{{$record->id}}" data-name="actual_pickup_time"  data-id="{{$record->id}}" value="{{$record->actual_pickup_time}}" /></td>
                   </tr>
                   </tbody>
                   @endforeach
@@ -182,3 +184,34 @@
     </section>
     <!-- /.content -->
 @endsection
+@section('scripts')
+ <!-- Script -->
+ <script type="text/javascript">
+$(document).ready(function() {
+	
+	$(document).on('change', '.inputsave', function(evt) {
+		$("#loader-overlay").show();
+		$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+		$.ajax({
+            url: "{{route('voucherReportSave')}}",
+            type: 'POST',
+            dataType: "json",
+            data: {
+               id: $(this).data('id'),
+			   inputname: $(this).data('name'),
+			   val: $(this).val()
+            },
+            success: function( data ) {
+               //console.log( data );
+			  $("#loader-overlay").hide();
+            }
+          });
+	 });	
+});
+
+  </script> 
+  @endsection
