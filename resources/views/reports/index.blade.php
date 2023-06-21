@@ -89,7 +89,7 @@
               </div>
             </form>
           </div>
-        </div><div class="row">
+        </div><div class="col-md-12" style="overflow-x:auto">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
