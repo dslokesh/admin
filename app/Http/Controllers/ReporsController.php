@@ -38,6 +38,7 @@ class ReporsController extends Controller
     {
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
 		$query = VoucherActivity::where('id','!=', null);
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
@@ -51,9 +52,15 @@ class ReporsController extends Controller
 			}
         }
 		
+		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('status_main', '=', $data['booking_status']);
+			});
+		}
+		
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
-        return view('reports.index', compact('records'));
+        return view('reports.index', compact('records','voucherStatus'));
 
     }
 	
@@ -73,7 +80,11 @@ class ReporsController extends Controller
 			}
 			}
         }
-		
+		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('status_main', '=', $data['booking_status']);
+			});
+		}
         $records = $query->orderBy('created_at', 'DESC')->get();
    // return Excel::download(new VoucherActivityExport(['records' => $records]), 'users.xlsx');
 

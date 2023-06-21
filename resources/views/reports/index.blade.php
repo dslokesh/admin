@@ -30,7 +30,7 @@
               <div class="card-header">
 				<div class="card-tools">
 				 <div class="row">
-				<!-- /<a href="{{ route('voucherReportExport', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>-->
+				<a href="{{ route('voucherReportExport', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>
 				   </div></div>
 				   
               </div>
@@ -76,15 +76,9 @@
                   </div>
                  <select name="booking_status" id="booking_status" class="form-control">
 						<option value = "">All</option>
-						<option value = "1">Vouchered</option>
-						<option value = "2">Confirmed</option>
-						<option value = "3">Completed</option>
-						<option value = "4">Cancelled</option>
-						<option value = "5">Auto-Released</option>
-						<option value = "6">On Request</option>
-						<option value = "7">InProcess</option>
-						<option value = "8">InQueue</option>
-						<option value = "9">Rejected</option>
+						@foreach($voucherStatus as $vsk => $vs)
+						<option value = "{{$vsk}}" @if(request('booking_status')==$vsk) selected="selected" @endif>{{$vs}}</option>
+						@endforeach
                  </select>
                 </div>
               </div>
@@ -125,11 +119,11 @@
                   <tbody>
 				  @foreach ($records as $record)
                   <tr>
-					<td>{{$record->voucher->code}}</td>
+					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
                     <td>{{$record->tour_date}}</td>
-					<td>{{$record->activity->title}}</td>
-					<td>{{$record->voucher->customer->name}}</td>
-					<td>{{$record->voucher->customer->mobile}}</td>
+					<td>{{($record->activity)?$record->activity->title:''}}</td>
+					<td>{{($record->voucher->customer)?$record->voucher->customer->name:''}}</td>
+					<td>{{($record->voucher->customer)?$record->voucher->customer->mobile:''}}</td>
 					<td><input type="text" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  /></td>
 					<td><input type="text" class="form-control inputsave" id="dropoff_location{{$record->id}}" data-name="dropoff_location"  data-id="{{$record->id}}" value="{{$record->dropoff_location}}" /></td>
                     <td>{{$record->adult}}</td>
@@ -160,7 +154,7 @@
 					{{$record->pvt_traf_val_with_markup}}
 					@endif
 					</td>
-					<td>{{$record->voucher->agent->full_name}}</td>
+					<td>{{($record->voucher->agent)?$record->voucher->agent->full_name:''}}</td>
 					<td><input type="text" class="form-control inputsave" id="remark{{$record->id}}" data-name="remark"  data-id="{{$record->id}}" value="{{$record->remark}}" /></td>
 					<td><input type="text" class="form-control inputsave" id="actual_pickup_time{{$record->id}}" data-name="actual_pickup_time"  data-id="{{$record->id}}" value="{{$record->actual_pickup_time}}" /></td>
                   </tr>

@@ -34,11 +34,11 @@
 				 @foreach($records as $record)
 				 
                   <tr>
-					<td>{{$record->voucher->code}}</td>
+					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
                     <td>{{$record->tour_date}}</td>
-					<td>{{$record->activity->title}}</td>
-					<td>{{$record->voucher->customer->name}}</td>
-					<td>{{$record->voucher->customer->mobile}}</td>
+					<td>{{($record->activity)?$record->activity->title:''}}</td>
+					<td>{{($record->voucher->customer)?$record->voucher->customer->name:''}}</td>
+					<td>{{($record->voucher->customer)?$record->voucher->customer->mobile:''}}</td>
 					<td>{{$record->pickup_location}}</td>
 					<td>{{$record->dropoff_location}}</td>
                     <td>{{$record->adult}}</td>
@@ -69,8 +69,7 @@
 					{{$record->pvt_traf_val_with_markup}}
 					@endif
 					</td>
-					
-					<td>{{$record->voucher->agent->full_name}}</td>
+					<td>{{($record->voucher->agent)?$record->voucher->agent->full_name:''}}</td>
 					<td>{{$record->remark}}</td>
 					<td>{{$record->actual_pickup_time}}</td>
                   </tr>
