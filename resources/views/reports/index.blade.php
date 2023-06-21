@@ -89,7 +89,7 @@
               </div>
             </form>
           </div>
-        </div>
+        </div><div class="row">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -160,7 +160,7 @@
                   </tr>
                   </tbody>
                   @endforeach
-                </table>
+                </table></div>
 				<div class="pagination pull-right mt-3"> 
 				{!! $records->appends(request()->query())->links() !!}
 				</div> 
