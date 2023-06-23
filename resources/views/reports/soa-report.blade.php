@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Vouchers Report</h1>
+            <h1>SOA Report</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Vouchers Report</li>
+              <li class="breadcrumb-item active">SOA Report</li>
             </ol>
           </div>
         </div>
@@ -30,14 +30,14 @@
               <div class="card-header">
 				<div class="card-tools">
 				 <div class="row">
-				<a href="{{ route('voucherReportExport', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>
+				 <!--<a href="{{ route('voucherReportExport', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>-->
 				   </div></div>
 				   
               </div>
               <!-- /.card-header -->
               <div class="card-body">
 			  <div class="row">
-            <form id="filterForm" class="form-inline" method="get" action="{{ route('voucherReport') }}" >
+            <form id="filterForm" class="form-inline" method="get" action="{{ route('soaReport') }}" >
               <div class="form-row align-items-center">
 			   <div class="col-auto col-md-3">
                 <div class="input-group mb-2">
@@ -47,7 +47,6 @@
                  <select name="booking_type" id="booking_type" class="form-control">
                     <option value = "1">Booking Date</option>
 					<option value = "2">Travel Date</option>
-					<option value = "3">Deadline Date</option>
                  </select>
                 </div>
               </div>
@@ -60,15 +59,10 @@
 				<div class="col-auto col-md-3">
                   <div class="input-group mb-2">
                     <div class="input-group-prepend"><div class="input-group-text">To Date</div></div>
-                    <input type="text" name="to_date" value="{{ request('to_date') }}" class="form-control datepicker" autocomplete ="off"  placeholder="To Date" />
+                    <input type="text" name="to_date" autocomplete ="off" value="{{ request('to_date') }}" class="form-control datepicker"  placeholder="To Date" />
                   </div>
                 </div>
-                <div class="col-auto col-md-3">
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend"><div class="input-group-text">Reference Number</div></div>
-                    <input type="text" name="reference" value="{{ request('reference') }}" class="form-control"  placeholder="Reference Number" />
-                  </div>
-                </div>
+               
                 <div class="col-auto col-md-3">
                 <div class="input-group mb-2">
                   <div class="input-group-prepend">
@@ -85,7 +79,7 @@
                
               <div class="col-auto col-md-2">
                 <button class="btn btn-info mb-2" type="submit">Filter</button>
-                <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('voucherReport') }}">Clear</a>
+                <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('soaReport') }}">Clear</a>
               </div>
             </form>
           </div>
@@ -93,71 +87,51 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-					<th>VOUCHER CODE</th>
-                    <th>SERVICE DATE</th>
-					<th>SERVICE</th>
-					<th>NAME</th>
-					<th>GUEST'S CONTACT</th>
-					<th>PICKUP LOCATION</th>
-					<th>DROPOFF LOCATION</th>
-                    <th>A</th>
-                    <th>C</th>
-                    <th>I</th>
-					<th>SIC/PVT</th>
-					<th>DROP OFF TIME</th>
-					<th>DRIVER NAME</th>
-					<th>SUPPLIER TICKET</th>
-					<th>SUPPLIER TRANSFER</th>
-					<th>TOTAL TICKET COST</th>
-					<th>TOTAL TRANSFER COST</th>
-					<th>AGENCY</th>
-					<th>REMARKS</th>
-					<th>ACTUAL PICK UP TIME</th>
+					<th>Booking Date</th>
+                    <th>Booking</th>
+					<th>Invoice</th>
+					<th>Agent Ref</th>
+					<th>Service Date</th>
+					<th>Guest Name</th>
+					<th>Service Name</th>
+                    <th>Variant</th>
+                    <th>Transfer Type</th>
+                    <th>No.of Adult</th>
+					<th>No. of Child</th>
+					<th>Adult Rate</th>
+					<th>Child Rate</th>
+					<th>Total Amount</th>
+					<th>Discount</th>
+					<th>Total Debit</th>
+					<th>Credit</th>
+					<th>Balance</th>
+					
                   </tr>
 				  
                   </thead>
                   <tbody>
 				  @foreach ($records as $record)
                   <tr>
+					<td>{{($record->voucher)?$record->voucher->payment_date:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
-                    <td>{{$record->tour_date}}</td>
+					<td>{{($record->voucher)?$record->voucher->invoice_number:''}}</td>
+                  
+					<td>Agent Ref</td>
+					<td>{{$record->tour_date}}</td>
+					<td>Guest Name</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
-					<td>{{($record->voucher->customer)?$record->voucher->customer->name:''}}</td>
-					<td>{{($record->voucher->customer)?$record->voucher->customer->mobile:''}}</td>
-					<td><input type="text" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  /></td>
-					<td><input type="text" class="form-control inputsave" id="dropoff_location{{$record->id}}" data-name="dropoff_location"  data-id="{{$record->id}}" value="{{$record->dropoff_location}}" /></td>
+                    <td>{{$record->variant_name}}</td>
+                    <td>Transfer Type</td>
                     <td>{{$record->adult}}</td>
-                    <td>{{$record->child}}</td>
-                    <td>{{$record->infant}}</td>
-					<td>
-					@if($record->transfer_option == "Shared Transfer")
-					SIC
-					@endif
-					@if($record->transfer_option == 'Pvt Transfer')
-					PVT
-					@endif
-					
-				</td>
-					<td><input type="text" class="form-control inputsave" id="dropoff_time{{$record->id}}" data-name="dropoff_time"  data-id="{{$record->id}}" value="{{$record->dropoff_time}}" /></td>
-					<td><input type="text" class="form-control inputsave" id="driver_name{{$record->id}}" data-name="driver_name"  data-id="{{$record->id}}" value="{{$record->driver_name}}" /></td>
-					<td><input type="text" class="form-control inputsave" id="supplier_ticket{{$record->id}}" data-name="supplier_ticket"  data-id="{{$record->id}}" value="{{$record->supplier_ticket}}" /></td>
-					<td><input type="text" class="form-control inputsave" id="supplier_transfer{{$record->id}}" data-name="supplier_transfer"  data-id="{{$record->id}}" value="{{$record->supplier_transfer}}" /></td>
+					<td>{{$record->child}}</td>
+					<td>{{$record->adultPrice}}</td>
+					<td>{{$record->childPrice}}</td>
 					<td>{{$record->totalprice}}</td>
-					<td>
-					@if($record->transfer_option == "Shared Transfer")
-					@php
-					$markup_sic_transfer =  (($record->zonevalprice_without_markup) * ($record->markup_p_sic_transfer/100));
-					@endphp
-					{{$record->zonevalprice_without_markup + $markup_sic_transfer}}
-					@endif
-					@if($record->transfer_option == 'Pvt Transfer')
-					{{$record->pvt_traf_val_with_markup}}
-					@endif
-					</td>
-					<td>{{($record->voucher->agent)?$record->voucher->agent->full_name:''}}</td>
-					<td><input type="text" class="form-control inputsave" id="remark{{$record->id}}" data-name="remark"  data-id="{{$record->id}}" value="{{$record->remark}}" /></td>
-					<td><input type="text" class="form-control inputsave" id="actual_pickup_time{{$record->id}}" data-name="actual_pickup_time"  data-id="{{$record->id}}" value="{{$record->actual_pickup_time}}" /></td>
-                  </tr>
+					<td>{{$record->discountPrice}}</td>
+					<td>Total Debit</td>
+					<td>Credit</td>
+					<td>Balance</td>
+					</tr>
                   </tbody>
                   @endforeach
                 </table></div>

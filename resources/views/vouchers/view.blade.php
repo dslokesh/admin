@@ -497,7 +497,7 @@
             <div class="card-body row">
                 <div class="form-group col-md-12">
                 <label for="inputName">Payment Date: <span class="red">*</span></label>
-                <input type="text" id="payment_date" name="payment_date" value="{{ old('name') }}" class="form-control datepicker" required  placeholder="Payment Date" />
+                <input type="text" id="payment_date" name="payment_date" value="{{ old('name') }}" class="form-control datepicker" required  placeholder="Payment Date" autocomplete ="off" />
                     <span class="text-danger" id="err_name"></span>
               </div>
 			
@@ -532,8 +532,22 @@
 	   $(".statusBtnChange").on('click', function(event) {
 		
 	  var status  = $(this).data('status');
-	$('#statusv').val(status);
+	  
+	$('body #statusv').val(status);
 		$('#myModal').modal("show");
+		$("body").find('#payment_date').datepicker({
+                weekStart: 1,
+                daysOfWeekHighlighted: "6,0",
+                autoclose: true,
+                todayHighlight: true,
+                dateFormat: 'yyyy-mm-dd',
+				onSelect: function(){
+            var selected2 = $(this).datepicker("getDate");
+			var dateObject2 = new Date(selected2);
+			var formattedDate2 = $.datepicker.formatDate("yy-mm-dd", dateObject2);
+			$('body #payment_date').val(formattedDate2);
+        }
+            });
 				if(confirm('Are you sure, You want to change status this?'))
 				{
 				event.preventDefault();
@@ -546,7 +560,7 @@
 	}); 
 			$("#btnSaveData").on('click', function(event) {
 				
-				if($("#payment_date").val() == '')
+				if($("body #payment_date").val() == '')
 				{
 					confirm('Payment date required');
 					return false;

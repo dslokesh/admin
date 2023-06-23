@@ -283,6 +283,13 @@ class VouchersController extends Controller
 		$record->status_main = $data['statusv'];
 		$record->payment_date = $data['payment_date'];
 		$record->save();
+		if($data['statusv'] == 4)
+		{
+		$code = 'INV-100'.$record->id;
+		$recordUser = Voucher::find($record->id);
+		$recordUser->invoice_number = $code;
+		$recordUser->save();
+		}
         return redirect()->back()->with('success', 'Status Change Successfully.');
     }
 	
