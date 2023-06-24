@@ -170,7 +170,7 @@ return Excel::download(new VoucherActivityExport($records), 'records'.date('d-M-
 		if(old('agent_id')){
 		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
 		$agetid = $agentTBA->id;
-		$agetName = $agentTBA->full_name;
+		$agetName = $agentTBA->company_name;
 		}
         return view('reports.agent-ledger-report', compact('records','voucherStatus','agetid','agetName'));
 

@@ -73,7 +73,7 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Agent Name</th>
+                    <th>Agency Name</th>
 					<th>Date</th>
 					<th>Receipt No/ Inovice No.</th>
 					<th>Agent Ref No</th>
@@ -91,7 +91,7 @@
 				  @endphp
 				  @foreach ($records as $record)
                   <tr>
-                    <td>{{($record->agent)?$record->agent->full_name:''}}</td>
+                    <td>{{($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ $record->date_of_receipt ? date(config('app.date_format'),strtotime($record->date_of_receipt)) : null }}</td>
 					<td>{{ ($record->receipt_no)}}</td>
 					<td>Agent Ref No</td>
@@ -158,7 +158,6 @@ var path = "{{ route('auto.agent') }}";
             dataType: "json",
             data: {
                search: request.term,
-               nameorcom:'Name',
             },
             success: function( data ) {
                response( data );

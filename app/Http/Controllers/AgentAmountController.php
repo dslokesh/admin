@@ -43,7 +43,7 @@ class AgentAmountController extends Controller
 		if(old('agent_id')){
 		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
 		$agetid = $agentTBA->id;
-		$agetName = $agentTBA->full_name;
+		$agetName = $agentTBA->company_name;
 		}
 		
 		$records = $query->orderBy('created_at', 'DESC')->paginate($perPage);

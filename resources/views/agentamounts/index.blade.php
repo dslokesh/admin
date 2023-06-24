@@ -42,7 +42,7 @@
                   <thead>
                   <tr>
 					<th>Receipt No.</th>
-					<th>Agent Name</th>
+					<th>Agency Name</th>
 					<th>Amount</th>
 					<th>Date of Receipt</th>
 					<th>Transaction Type</th>
@@ -73,7 +73,7 @@
 				  
                   <tr>
 				  <td>{{ ($record->receipt_no)}}</td>
-                    <td>{{ ($record->agent)?$record->agent->full_name:''}}</td>
+                    <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ $record->amount}}</td>
 					<td>
 					{{ $record->date_of_receipt ? date(config('app.date_format'),strtotime($record->date_of_receipt)) : null }}
@@ -114,7 +114,6 @@
             dataType: "json",
             data: {
                search: request.term,
-               nameorcom:'Name',
             },
             success: function( data ) {
                response( data );
