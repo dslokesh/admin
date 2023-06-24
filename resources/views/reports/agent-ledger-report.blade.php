@@ -44,7 +44,7 @@
                   <div class="input-group-prepend">
                     <div class="input-group-text">Agency</div>
                   </div>
-                <input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agent Name" />
+                <input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />
                 </div>
               </div>
