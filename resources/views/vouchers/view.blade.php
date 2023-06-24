@@ -59,7 +59,7 @@
                <div class="col-lg-6 mb-3">
                 <label for="inputName">Agency Name:</label>
 				@if(isset($voucher->agent))
-               {{ $voucher->agent->full_name }} </br>
+               {{ $voucher->agent->company_name }} </br>
 			   <b>Code:</b>{{$voucher->agent->code}} <b> Email:</b>{{$voucher->agent->email}} <b>Mobile No:</b>{{$voucher->agent->mobile}} <b>Address:</b>{{$voucher->agent->address. " ".$voucher->agent->postcode;}}
 			   
 			   @endif

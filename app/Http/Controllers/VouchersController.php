@@ -296,6 +296,8 @@ class VouchersController extends Controller
 	public function autocompleteAgent(Request $request)
     {
 		$search  = $request->get('search');
+		$nameOrCompany  = ($request->get('nameorcom'))?$request->get('nameorcom'):'Company';
+		if($nameOrCompany == 'Company'){
         $users = User::where('role_id', 3)
 					->where('is_active', 1)
 					->where(function ($query) use($search) {
@@ -308,7 +310,21 @@ class VouchersController extends Controller
 		   $agentDetails = '<b>Code:</b> '.$user->code.' <b>Email:</b>'.$user->email.' <b> Mobile No:</b>'.$user->mobile.' <b>Address:</b>'.$user->address. " ".$user->postcode;
          $response[] = array("value"=>$user->id,"label"=>$user->company_name.'('.$user->code.')',"agentDetails"=>$agentDetails);
       }
-	  
+	}
+	elseif($nameOrCompany == 'Name'){
+        $users = User::where('role_id', 3)
+					->where('is_active', 1)
+					->where(function ($query) use($search) {
+						$query->where('name', 'LIKE', '%'. $search. '%')
+						->orWhere('code', 'LIKE', '%'. $search. '%')
+						->orWhere('mobile', 'LIKE', '%'. $search. '%');
+					})->get();
+		$response = array();
+      foreach($users as $user){
+		   $agentDetails = '<b>Code:</b> '.$user->code.' <b>Email:</b>'.$user->email.' <b> Mobile No:</b>'.$user->mobile.' <b>Address:</b>'.$user->address. " ".$user->postcode;
+         $response[] = array("value"=>$user->id,"label"=>$user->full_name.'('.$user->code.')',"agentDetails"=>$agentDetails);
+      }
+	}	  
         return response()->json($response);
     }
 	

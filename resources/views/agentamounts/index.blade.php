@@ -113,7 +113,8 @@
             type: 'GET',
             dataType: "json",
             data: {
-               search: request.term
+               search: request.term,
+               nameorcom:'Name',
             },
             success: function( data ) {
                response( data );
