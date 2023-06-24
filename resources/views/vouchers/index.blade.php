@@ -65,7 +65,7 @@
 				  
                   <tr>
 				  <td>{{ ($record->code)}}</td>
-                    <td>{{ ($record->agent)?$record->agent->full_name:''}}</td>
+                    <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ ($record->customer)?$record->customer->name:''}}</td>
 					<td>{{ ($record->countr)?$record->country->name:''}}</td>
 					 <td>{!! SiteHelpers::statusColorYesNo($record->is_hotel) !!}</td>
