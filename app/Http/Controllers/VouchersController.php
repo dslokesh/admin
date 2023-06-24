@@ -299,7 +299,7 @@ class VouchersController extends Controller
         $users = User::where('role_id', 3)
 					->where('is_active', 1)
 					->where(function ($query) use($search) {
-						$query->where('name', 'LIKE', '%'. $search. '%')
+						$query->where('company_name', 'LIKE', '%'. $search. '%')
 						->orWhere('code', 'LIKE', '%'. $search. '%')
 						->orWhere('mobile', 'LIKE', '%'. $search. '%');
 					})->get();
