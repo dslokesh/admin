@@ -306,7 +306,7 @@ class VouchersController extends Controller
 		$response = array();
       foreach($users as $user){
 		   $agentDetails = '<b>Code:</b> '.$user->code.' <b>Email:</b>'.$user->email.' <b> Mobile No:</b>'.$user->mobile.' <b>Address:</b>'.$user->address. " ".$user->postcode;
-         $response[] = array("value"=>$user->id,"label"=>$user->_full_name.'('.$user->code.')',"agentDetails"=>$agentDetails);
+         $response[] = array("value"=>$user->id,"label"=>$user->company_name.'('.$user->code.')',"agentDetails"=>$agentDetails);
       }
 	  
         return response()->json($response);
