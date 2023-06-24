@@ -69,7 +69,7 @@
 					{{$record->pvt_traf_val_with_markup}}
 					@endif
 					</td>
-					<td>{{($record->voucher->agent)?$record->voucher->agent->full_name:''}}</td>
+					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{$record->remark}}</td>
 					<td>{{$record->actual_pickup_time}}</td>
                   </tr>

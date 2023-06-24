@@ -32,7 +32,7 @@
             <div class="card-body row">
               <div class="form-group col-md-12">
                 <label for="inputName">Agency Name: <span class="red">*</span></label>
-                <input type="text" id="agent_id" name="agent_id" value="{{ old('agent_id') }}" class="form-control"  placeholder="Agent Name" />
+                <input type="text" id="agent_id" name="agent_id" value="{{ old('agent_id') }}" class="form-control"  placeholder="Agency Name" />
                 @if ($errors->has('agent_id'))
                     <span class="text-danger">{{ $errors->first('agent_id') }}</span>
                 @endif

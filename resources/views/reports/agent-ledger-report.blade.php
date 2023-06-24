@@ -42,7 +42,7 @@
 			   <div class="col-auto col-md-3">
                 <div class="input-group mb-2">
                   <div class="input-group-prepend">
-                    <div class="input-group-text">Agent</div>
+                    <div class="input-group-text">Agency</div>
                   </div>
                 <input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agent Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />

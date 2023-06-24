@@ -154,7 +154,7 @@
 					{{$record->pvt_traf_val_with_markup}}
 					@endif
 					</td>
-					<td>{{($record->voucher->agent)?$record->voucher->agent->full_name:''}}</td>
+					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td><input type="text" class="form-control inputsave" id="remark{{$record->id}}" data-name="remark"  data-id="{{$record->id}}" value="{{$record->remark}}" /></td>
 					<td><input type="text" class="form-control inputsave" id="actual_pickup_time{{$record->id}}" data-name="actual_pickup_time"  data-id="{{$record->id}}" value="{{$record->actual_pickup_time}}" /></td>
                   </tr>

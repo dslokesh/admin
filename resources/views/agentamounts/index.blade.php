@@ -52,7 +52,7 @@
 				   <tr>
 				    <form id="filterForm" method="get" action="{{route('agentamounts.index')}}" >
 					<th><input type="text" name="receipt_no" value="{{request('receipt_no')}}" autocomplete="off" class="form-control"  placeholder="Receipt No" /></th>
-					<th> <input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agent Name" />
+					<th> <input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />
 					</th>
 					<th><input type="text" name="amount" value="{{request('amount')}}" autocomplete="off" class="form-control"  placeholder="Amount" /></th>
