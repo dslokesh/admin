@@ -42,7 +42,7 @@
                   <thead>
                   <tr>
 				   <th>Code</th>
-                    <th>Agent</th>
+                    <th>Agency</th>
 					<th>Customer</th>
 					<th>Country</th>
 					<th>Hotel</th>
