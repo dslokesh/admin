@@ -187,8 +187,8 @@
 				@endforeach
                  </select></td>
 						<td><input type="text" id="zone_val" class="form-control" name="zoneValue[]"></td>
-						<td><input type="text" id="pickup_time" value="" class="form-control timepicker" name="pickup_time[]"></td>
-						<td><input type="text" id="dropup_time" value="" class="form-control timepicker" name="dropup_time[]"></td>
+						<td><input type="text" id="pickup_time" value="" class="form-control " name="pickup_time[]"></td>
+						<td><input type="text" id="dropup_time" value="" class="form-control " name="dropup_time[]"></td>
 						<td></td>
 					  </tr>
 					
@@ -360,8 +360,8 @@ $("#add-row").on("click", function() {
   var cols = "";
   cols += '<td><select name="zones[]"  class="form-control"><option value="">--select--</option>@foreach($zones as $zone)<option value="{{$zone->id}}" >{{$zone->name}}</option>@endforeach                </select></td>';
   cols += '<td><input type="text"  class="form-control" name="zoneValue[]"></td>';
-   cols += '<td><input type="text"  class="form-control timepicker" name="pickup_time[]"></td>';
-  cols += '<td><input type="text"  class="form-control timepicker" name="dropup_time[]"></td>';
+   cols += '<td><input type="text"  class="form-control " name="pickup_time[]"></td>';
+  cols += '<td><input type="text"  class="form-control " name="dropup_time[]"></td>';
   cols += '<td><a class="delete-row btn btn-danger btn-sm">Delete</a></td>';
   newRow.append(cols);
   $("#myTable").append(newRow);

@@ -68,9 +68,17 @@
 			      <div class="col-lg-6 mb-3">
                 <label for="inputName">Customer Name:</label>
 				@if(isset($voucher->customer))
-                {{ $voucher->guest_name }} </br>
+                {{ $voucher->name }} </br>
 				<b>Email:</b>{{$voucher->customer->email}} <b>Mobile No:</b>{{$voucher->customer->mobile}} <b>Address:</b>{{$voucher->customer->address. " ".$voucher->customer->zip_code;}}
 				@endif
+              </div>
+			  <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Agent Reference No.:</label>
+                {{ $voucher->agent_ref_no }}
+              </div>
+			  <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Guest Name:</label>
+                {{ $voucher->guest_name }}
               </div>
 			   <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Voucher Code:</label>
@@ -112,7 +120,7 @@
                 <label for="inputName">Arrival Airline:</label>
                 {{ ($voucher->arrivalairline)?$voucher->arrivalairline->name:'' }}
               </div>
-			  <div class="col-lg-3 mb-3">
+			  <div class="col-lg-2 mb-3">
                 <label for="inputName">Arrival Date:</label>
 				{{ $voucher->arrival_date ? date(config('app.date_format'),strtotime($voucher->arrival_date)) : null }}
               </div>
@@ -121,17 +129,20 @@
                 <label for="inputName">Arrival Airport:</label>
                 {{ $voucher->arrival_airport }}
               </div>
-			   <div class="col-lg-3 mb-3">
+			   <div class="col-lg-2 mb-3">
                 <label for="inputName">Arrival Terminal:</label>
                 {{ $voucher->arrival_terminal }}
               </div>
-			 
+			 <div class="col-lg-2 mb-3">
+                <label for="inputName">Arrival Flight No:</label>
+                {{ $voucher->arrival_flight_no }}
+              </div>
 			 
 			  <div class="col-lg-3 mb-3">
                 <label for="inputName">Depature Airline:</label>
 				 {{ ($voucher->depatureairline)?$voucher->depatureairline->name:'' }}
               </div>
-			  <div class="col-lg-3 mb-3">
+			  <div class="col-lg-2 mb-3">
                 <label for="inputName">Depature Date:</label>
 				{{ $voucher->depature_date ? date(config('app.date_format'),strtotime($voucher->depature_date)) : null }}
               </div>
@@ -140,9 +151,13 @@
                 <label for="inputName">Depature Airport:</label>
                 {{ $voucher->depature_airport }}
               </div>
-			   <div class="col-lg-3 mb-3">
+			   <div class="col-lg-2 mb-3">
                 <label for="inputName">Depature Terminal:</label>
                 {{ $voucher->depature_terminal }}
+              </div>
+			  <div class="col-lg-2 mb-3">
+                <label for="inputName">Depature Flight No:</label>
+                {{ $voucher->depature_flight_no }}
               </div>
 			  @endif
                
@@ -435,6 +450,12 @@
 					$zone = SiteHelpers::getZoneName($ap->transfer_zone);
 					@endphp
 						- <b>Zone :</b> {{$zone->name}}
+					@endif
+					
+					@if($ap->transfer_option == 'Shared Transfer')
+					- <b>Pickup Location :</b> {{$ap->pickup_location}}
+					@elseif($ap->transfer_option == 'Pvt Transfer')
+					- <b>Pickup Location :</b> {{$ap->pickup_location}}
 					@endif
 					</td>
 					<td>{{$ap->tour_date}}</td>

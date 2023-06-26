@@ -127,7 +127,10 @@ class VouchersController extends Controller
 		$record->travel_to_date = $request->input('travel_to_date');
 		$record->nof_night = $request->input('nof_night');
 		$record->vat_invoice = $request->input('vat_invoice');
-		$record->guest_name = $request->input('customer_name');
+		$record->agent_ref_no = $request->input('agent_ref_no');
+		$record->guest_name = $request->input('guest_name');
+		$record->arrival_flight_no = $request->input('arrival_flight_no');
+		$record->depature_flight_no = $request->input('depature_flight_no');
 		$record->status = $request->input('status');
         $record->save();
 		$code = 'V-'.date("Y")."-00".$record->id;
@@ -244,7 +247,10 @@ class VouchersController extends Controller
 		$record->travel_to_date = $request->input('travel_to_date');
 		$record->nof_night = $request->input('nof_night');
 		$record->vat_invoice = $request->input('vat_invoice');
-		$record->guest_name = $request->input('customer_name');
+		$record->agent_ref_no = $request->input('agent_ref_no');
+		$record->guest_name = $request->input('guest_name');
+		$record->arrival_flight_no = $request->input('arrival_flight_no');
+		$record->depature_flight_no = $request->input('depature_flight_no');
 		$record->status = $request->input('status');
         $record->save();
 		if($record->is_hotel != 1)
@@ -283,13 +289,27 @@ class VouchersController extends Controller
 		$record->status_main = $data['statusv'];
 		$record->payment_date = $data['payment_date'];
 		$record->save();
-		if($data['statusv'] == 4)
+		if($record->vat_invoice == 1)
 		{
-		$code = 'INV-100'.$record->id;
+			$code = 'VIN-100'.$record->id;
+		}else{
+			$code = 'WVIN-100'.$record->id;
+		}
+		
+		if($data['statusv'] == 5)
+		{
 		$recordUser = Voucher::find($record->id);
 		$recordUser->invoice_number = $code;
 		$recordUser->save();
 		}
+		
+		if($data['statusv'] == 4)
+		{
+		$recordUser = Voucher::find($record->id);
+		$recordUser->booking_date = date("Y-m-d");
+		$recordUser->save();
+		}
+		
         return redirect()->back()->with('success', 'Status Change Successfully.');
     }
 	
@@ -620,6 +640,7 @@ class VouchersController extends Controller
 		$infPrice = $request->input('infPrice');
 		$discount = $request->input('discount');
 		$totalprice = $request->input('totalprice');
+		$pickup_location = $request->input('pickup_location');
 		
 		$data = [];
 		foreach($activity_select as $k => $v)
@@ -647,6 +668,7 @@ class VouchersController extends Controller
 			'infPrice' => $infPrice[$k],
 			'discountPrice' => $discount[$k],
 			'totalprice' => $totalprice[$k],
+			'pickup_location' => $pickup_location[$k],
 					
                 ];
 		}

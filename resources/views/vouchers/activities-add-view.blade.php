@@ -151,7 +151,7 @@
 						
 						
 						@foreach($actZone as $z)
-						<option value="{{$z['zone_id']}}" data-zonevalue="{{$z['zoneValue']}}">{{$z['zone']}}</option>
+						<option value="{{$z['zone_id']}}" data-zonevalue="{{$z['zoneValue']}}" data-zoneptime="{{$z['pickup_time']}}">{{$z['zone']}}</option>
 						@endforeach
 						@else
 							<input type="hidden" id="transfer_zone{{$kk}}" value=""  name="transfer_zone[]"    />
@@ -162,6 +162,9 @@
 						@endif
 						
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[]"    />
+					</td>
+					<td  style="display:none" id="pickup_location_td{{$kk}}"> 
+							<input type="text" id="pickup_location{{$kk}}" value=""  name="pickup_location[]" placeholder="Pickup Location" class="form-control"   />
 					</td>
 					<td>
 					<select name="tour_date[]" id="tour_date{{$kk}}" class="form-control" required disabled="disabled" >
@@ -288,6 +291,7 @@ $(document).on('change', '.priceChange', function(evt) {
 	
 	
 	let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
+	$("body #pickup_location"+inputnumber).val('');
 	let grandTotal = 0;
 	let grandTotalAfterDis = 0;
 	if(t_option_val == 3)
@@ -328,6 +332,9 @@ $(document).on('change', '.priceChange', function(evt) {
 		if(t_option_val == 2)
 		{
 			let zonevalue = parseFloat($("#transfer_zone"+inputnumber).find(':selected').data("zonevalue"));
+			let zoneptime = $("#transfer_zone"+inputnumber).find(':selected').data("zoneptime");
+			
+			$("body #pickup_location"+inputnumber).val(zoneptime);
 			var totaladult = parseInt(adult + child);
 			let zonevalueTotal = (totaladult * zonevalue);
 			$("#zonevalprice"+inputnumber).val(zonevalueTotal);
@@ -413,6 +420,7 @@ $(document).on('change', '.t_option', function(evt) {
 	let t_option_val = $(this).find(':selected').data("id");
 	$("#top").removeAttr("colspan");
 	$("#transfer_zone_td"+inputnumber).css("display","none");
+	$("#pickup_location_td"+inputnumber).css("display","none");
 	$("body #transfer_zone"+inputnumber).prop('required',false);
 	$("#zonevalprice"+inputnumber).val(0);
 	$('#transfer_zone'+inputnumber).prop('selectedIndex',0);
@@ -421,8 +429,11 @@ $(document).on('change', '.t_option', function(evt) {
 	if(t_option_val == 2){
 		$("#top").attr("colspan",2);
 		$("#transfer_zone_td"+inputnumber).css("display","block");
+		$("#pickup_location_td"+inputnumber).css("display","block");
 		$("body #transfer_zone"+inputnumber).prop('required',true);
 	} else if(t_option_val == 3){
+		$("#top").attr("colspan",2);
+		$("#pickup_location_td"+inputnumber).css("display","block");
 		var activity_id = $("#activity_id").val();
 		let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());
 		let child = parseInt($("body #child"+inputnumber).find(':selected').val());

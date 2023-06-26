@@ -102,7 +102,6 @@
             dataType: "json",
             data: {
                search: request.term,
-               nameorcom:'Name',
             },
             success: function( data ) {
                response( data );

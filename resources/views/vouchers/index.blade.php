@@ -95,13 +95,13 @@
 						  @endif
 						  </td>
 						  <td>
-						   
+						   @if($record->status_main == 5)
 					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}" >
                               <i class="fas fa-download">
                               </i>
                              
                           </a>
-						  
+						  @endif
 						  </td>
 						   <td>
 					 @if($record->is_activity == 1)

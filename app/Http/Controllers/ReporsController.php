@@ -34,22 +34,33 @@ class ReporsController extends Controller
 		$query = VoucherActivity::where('id','!=', null);
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
-			if($data['booking_type'] == 2) {
+			
 			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
 			$startDate = $data['from_date'];
 			$endDate =  $data['to_date'];
-			 $query->whereDate('tour_date', '>=', $startDate);
-			 $query->whereDate('tour_date', '<=', $endDate);
-			}
-			}
-        }
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
+				 $q->where('booking_date', '>=', $startDate);
+				 $q->where('booking_date', '<=', $endDate);
+				});
 		
-		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
+				}
+				}
+			}
+        if(isset($data['reference']) && !empty($data['reference'])) {
 			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('status_main', '=', $data['booking_status']);
+				$q->where('agent_ref_no', '=', $data['reference']);
 			});
 		}
 		
+		$query->whereHas('voucher', function($q)  use($data){
+				$q->where('status_main', '=', 5);
+			});
+			
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
         return view('reports.index', compact('records','voucherStatus'));
@@ -63,20 +74,34 @@ class ReporsController extends Controller
 		$query = VoucherActivity::with(["voucher",'activity','voucher.customer'])->where('id','!=', null);
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
-			if($data['booking_type'] == 2) {
+			
 			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
 			$startDate = $data['from_date'];
 			$endDate =  $data['to_date'];
-			 $query->whereDate('tour_date', '>=', $startDate);
-			 $query->whereDate('tour_date', '<=', $endDate);
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
+				 $q->where('booking_date', '>=', $startDate);
+				 $q->where('booking_date', '<=', $endDate);
+				});
+		
+				}
+				}
 			}
-			}
-        }
-		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
+		
+		if(isset($data['reference']) && !empty($data['reference'])) {
 			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('status_main', '=', $data['booking_status']);
+				$q->where('agent_ref_no', '=', $data['reference']);
 			});
 		}
+		
+		$query->whereHas('voucher', function($q)  use($data){
+				$q->where('status_main', '=', 5);
+		});
+		
         $records = $query->orderBy('created_at', 'DESC')->get();
    // return Excel::download(new VoucherActivityExport(['records' => $records]), 'users.xlsx');
 
@@ -112,21 +137,19 @@ return Excel::download(new VoucherActivityExport($records), 'records'.date('d-M-
 			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
 			$startDate = $data['from_date'];
 			$endDate =  $data['to_date'];
-			if($data['booking_type'] == 2) {
-			 $query->whereDate('tour_date', '>=', $startDate);
-			 $query->whereDate('tour_date', '<=', $endDate);
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
+				 $q->where('booking_date', '>=', $startDate);
+				 $q->where('booking_date', '<=', $endDate);
+				});
+		
+				}
+				}
 			}
-			elseif($data['booking_type'] == 1) {
-				$query->whereHas('voucher', function($q)  use($startDate,$endDate){
-				
-				$q->whereDate('payment_date', '>=', $startDate);
-				$q->whereDate('payment_date', '<=', $endDate);
-			});
-			 
-			}
-			
-			}
-        }
 		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
 			$query->whereHas('voucher', function($q)  use($data){
 				$q->where('status_main', '=', $data['booking_status']);
@@ -151,9 +174,10 @@ return Excel::download(new VoucherActivityExport($records), 'records'.date('d-M-
 		$voucherStatus = config("constants.voucherStatus");
 		$query = AgentAmount::where('id','!=', null);
 		
-		
+		$s = 0;
 		if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
 				$query->where('agent_id', '=', $data['agent_id_select']);
+				$s = 1;
 		}
 		
 		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
@@ -161,9 +185,15 @@ return Excel::download(new VoucherActivityExport($records), 'records'.date('d-M-
 			$endDate =  $data['to_date'];
 			 $query->whereDate('date_of_receipt', '>=', $startDate);
 			 $query->whereDate('date_of_receipt', '<=', $endDate);
+		$s = 1;
 			}
-			
+		if($s == 1){	
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		}
+		else
+		{
+		$records = AgentAmount::where('id','=', null)->orderBy('created_at', 'DESC')->paginate($perPage);	
+		}
 		$agetid = '';
 		$agetName = '';
 		

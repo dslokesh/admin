@@ -149,28 +149,28 @@
                     <td>Adult</td>
 					<td><input type="text" id="adult_rate_with_vat{{$k}}"  name="adult_rate_with_vat[]"  class="form-control onlynumbrf vatCal" value="{{ $pdata->adult_rate_with_vat }}"  data-withvatinputid="adult_rate_without_vat{{$k}}" required /></td>
 					<td><input type="text" id="adult_rate_without_vat{{$k}}"  name="adult_rate_without_vat[]"  class="form-control onlynumbr" readonly value="{{ $pdata->adult_rate_without_vat }}" /></td>
-                    <td><input type="text" id="adult_max_no_allowed{{$k}}" name="adult_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->adult_max_no_allowed }}" /></td>
-                    <td><input type="text" id="adult_min_no_allowed{{$k}}"  name="adult_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->adult_min_no_allowed }}" /></td>
-					<td><input type="text" id="adult_start_age{{$k}}" name="adult_start_age[]" value="{{ $pdata->adult_start_age }}" class="form-control onlynumbrf" /></td>
-					  <td><input type="text" id="adult_end_age{{$k}}" name="adult_end_age[]" value="{{ $pdata->adult_end_age }}" class="form-control onlynumbrf" /></td>
+                    <td><input type="text" id="adult_max_no_allowed{{$k}}" name="adult_max_no_allowed[]"  class="form-control onlynumbr notNull" value="{{ $pdata->adult_max_no_allowed }}" /></td>
+                    <td><input type="text" id="adult_min_no_allowed{{$k}}"  name="adult_min_no_allowed[]"  class="form-control onlynumbr notNull" value="{{ $pdata->adult_min_no_allowed }}" /></td>
+					<td><input type="text" id="adult_start_age{{$k}}" name="adult_start_age[]" value="{{ $pdata->adult_start_age }}" class="form-control onlynumbrf notNull" /></td>
+					  <td><input type="text" id="adult_end_age{{$k}}" name="adult_end_age[]" value="{{ $pdata->adult_end_age }}" class="form-control onlynumbrf notNull" /></td>
                   </tr>
 				  <tr>
                     <td>Child</td>
 					<td><input type="text" id="chield_rate_with_vat{{$k}}"  name="chield_rate_with_vat[]"  class="form-control onlynumbrf vatCal" value="{{ $pdata->chield_rate_with_vat }}"  data-withvatinputid="chield_rate_without_vat{{$k}}" required /></td>
 					<td><input type="text" id="chield_rate_without_vat{{$k}}"  name="chield_rate_without_vat[]"  class="form-control onlynumbr" readonly  value="{{ $pdata->chield_rate_without_vat }}" /></td>
-                    <td><input type="text" id="chield_max_no_allowed{{$k}}"  name="chield_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->chield_max_no_allowed }}" /></td>
-                    <td><input type="text" id="chield_min_no_allowed{{$k}}" name="chield_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->chield_min_no_allowed }}" /></td>
-					 <td><input type="text" id="chield_start_age{{$k}}" name="chield_start_age[]" value="{{ $pdata->chield_start_age }}" class="form-control onlynumbrf" /></td>
-					  <td><input type="text" id="chield_end_age{{$k}}" name="chield_end_age[]" value="{{ $pdata->chield_start_age }}" class="form-control onlynumbrf" /></td>
+                    <td><input type="text" id="chield_max_no_allowed{{$k}}"  name="chield_max_no_allowed[]"  class="form-control onlynumbr notNull" value="{{ $pdata->chield_max_no_allowed }}" /></td>
+                    <td><input type="text" id="chield_min_no_allowed{{$k}}" name="chield_min_no_allowed[]"  class="form-control onlynumbr notNull" value="{{ $pdata->chield_min_no_allowed }}" /></td>
+					 <td><input type="text" id="chield_start_age{{$k}}" name="chield_start_age[]" value="{{ $pdata->chield_start_age }}" class="form-control onlynumbrf notNull" /></td>
+					  <td><input type="text" id="chield_end_age{{$k}}" name="chield_end_age[]" value="{{ $pdata->chield_start_age }}" class="form-control onlynumbrf notNull" /></td>
                   </tr>
 				   <tr>
                     <td>Infant</td>
 					<td><input type="text" id="infant_rate_with_vat{{$k}}"  name="infant_rate_with_vat[]"  class="form-control onlynumbrf vatCal"  value="{{ $pdata->infant_rate_with_vat }}"  data-withvatinputid="infant_rate_without_vat{{$k}}" required /></td>
 					<td><input type="text" id="infant_rate_without_vat{{$k}}"  name="infant_rate_without_vat[]"  class="form-control onlynumbr" readonly value="{{ $pdata->infant_rate_without_vat }}" /></td>
-                    <td><input type="text" id="infant_max_no_allowed{{$k}}"  name="infant_max_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->infant_max_no_allowed }}" /></td>
-                    <td><input type="text" id="infant_min_no_allowed{{$k}}"  name="infant_min_no_allowed[]"  class="form-control onlynumbr" value="{{ $pdata->infant_min_no_allowed }}" /></td>
-					 <td><input type="text" id="infant_start_age{{$k}}" name="infant_start_age[]" value="{{ $pdata->infant_start_age }}" class="form-control onlynumbrf"  /></td>
-                    <td><input type="text" id="infant_end_age{{$k}}" name="infant_end_age[]" value="{{ $pdata->infant_end_age }}" class="form-control onlynumbrf" /></td>
+                    <td><input type="text" id="infant_max_no_allowed{{$k}}"  name="infant_max_no_allowed[]"  class="form-control onlynumbr notNull" value="{{ $pdata->infant_max_no_allowed }}" /></td>
+                    <td><input type="text" id="infant_min_no_allowed{{$k}}"  name="infant_min_no_allowed[]"  class="form-control onlynumbr notNull" value="{{ $pdata->infant_min_no_allowed }}" /></td>
+					 <td><input type="text" id="infant_start_age{{$k}}" name="infant_start_age[]" value="{{ $pdata->infant_start_age }}" class="form-control onlynumbrf notNull"  /></td>
+                    <td><input type="text" id="infant_end_age{{$k}}" name="infant_end_age[]" value="{{ $pdata->infant_end_age }}" class="form-control onlynumbrf notNull" /></td>
                   </tr>
 				  </table>
               </div>
@@ -340,6 +340,17 @@ $(document).on('change', '.vatCal', function(evt) {
 	$("body #"+withVatInputId).val(taxAmount.toFixed(2));
 	
 });
+
+$(document).on('change', 'body .notNull', function(evt) {
+	let inputvale = parseFloat($(this).val());
+	if(inputvale == null || isNaN(inputvale))
+	{
+		inputvale = 0;
+		$(this).val(0);
+	}
+	
+});
+
 
    
   </script>   

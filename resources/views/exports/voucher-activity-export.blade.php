@@ -24,9 +24,11 @@
 					<th>SUPPLIER TRANSFER</th>
 					<th>TOTAL TICKET COST</th>
 					<th>TOTAL TRANSFER COST</th>
+					<th>ACTUAL TOTAl COST</th>
+					<th>ACTUAL TRANSFER COST</th>
 					<th>AGENCY</th>
 					<th>REMARKS</th>
-					<th>ACTUAL PICK UP TIME</th>
+					<th>PICK UP TIME</th>
                   </tr>
 				  
                   </thead>
@@ -69,6 +71,8 @@
 					{{$record->pvt_traf_val_with_markup}}
 					@endif
 					</td>
+					<td>{{$record->actual_total_cost}}</td>
+					<td>{{$record->actual_transfer_cost}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{$record->remark}}</td>
 					<td>{{$record->actual_pickup_time}}</td>

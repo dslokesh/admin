@@ -112,16 +112,25 @@
                   <tbody>
 				  @foreach ($records as $record)
                   <tr>
-					<td>{{($record->voucher)?$record->voucher->payment_date:''}}</td>
+					<td>{{($record->voucher)?$record->voucher->booking_date:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->invoice_number:''}}</td>
                   
-					<td>Agent Ref</td>
+					<td>{{($record->voucher)?$record->voucher->agent_ref_no:''}}</td>
 					<td>{{$record->tour_date}}</td>
-					<td>Guest Name</td>
+					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
                     <td>{{$record->variant_name}}</td>
-                    <td>Transfer Type</td>
+                    <td>{{$record->transfer_option}}
+					@if($record->transfer_option == "Shared Transfer")
+					SIC
+					@php
+					$zone = SiteHelpers::getZoneName($record->transfer_zone);
+					@endphp
+						- <b>Zone :</b> {{$zone->name}}
+					
+					@endif
+					</td>
                     <td>{{$record->adult}}</td>
 					<td>{{$record->child}}</td>
 					<td>{{$record->adultPrice}}</td>

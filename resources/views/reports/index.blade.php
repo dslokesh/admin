@@ -47,7 +47,7 @@
                  <select name="booking_type" id="booking_type" class="form-control">
                     <option value = "1">Booking Date</option>
 					<option value = "2">Travel Date</option>
-					<option value = "3">Deadline Date</option>
+					<!--<option value = "3">Deadline Date</option>-->
                  </select>
                 </div>
               </div>
@@ -69,7 +69,7 @@
                     <input type="text" name="reference" value="{{ request('reference') }}" class="form-control"  placeholder="Reference Number" />
                   </div>
                 </div>
-                <div class="col-auto col-md-3">
+                <div class="col-auto col-md-3" style="display:none">
                 <div class="input-group mb-2">
                   <div class="input-group-prepend">
                     <div class="input-group-text">Booking Status</div>
@@ -110,9 +110,12 @@
 					<th>SUPPLIER TRANSFER</th>
 					<th>TOTAL TICKET COST</th>
 					<th>TOTAL TRANSFER COST</th>
+					<th>ACTUAL TOTAl COST</th>
+					<th>ACTUAL TRANSFER COST</th>
 					<th>AGENCY</th>
 					<th>REMARKS</th>
-					<th>ACTUAL PICK UP TIME</th>
+					<th>PICK UP TIME</th>
+					
                   </tr>
 				  
                   </thead>
@@ -124,7 +127,7 @@
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
 					<td>{{($record->voucher->customer)?$record->voucher->customer->name:''}}</td>
 					<td>{{($record->voucher->customer)?$record->voucher->customer->mobile:''}}</td>
-					<td><input type="text" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  /></td>
+					<td><input type="hidden" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  />{{$record->pickup_location}}</td>
 					<td><input type="text" class="form-control inputsave" id="dropoff_location{{$record->id}}" data-name="dropoff_location"  data-id="{{$record->id}}" value="{{$record->dropoff_location}}" /></td>
                     <td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
@@ -132,6 +135,11 @@
 					<td>
 					@if($record->transfer_option == "Shared Transfer")
 					SIC
+					@php
+					$zone = SiteHelpers::getZoneName($record->transfer_zone);
+					@endphp
+						- <b>Zone :</b> {{$zone->name}}
+					
 					@endif
 					@if($record->transfer_option == 'Pvt Transfer')
 					PVT
@@ -154,9 +162,13 @@
 					{{$record->pvt_traf_val_with_markup}}
 					@endif
 					</td>
+					<td><input type="text" class="form-control inputsave" id="actual_total_cost{{$record->id}}" data-name="actual_total_cost"  data-id="{{$record->id}}" value="{{$record->actual_total_cost}}" /></td>
+					<td><input type="text" class="form-control inputsave" id="actual_transfer_cost{{$record->id}}" data-name="actual_transfer_cost"  data-id="{{$record->id}}" value="{{$record->actual_transfer_cost}}" /></td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
+					
 					<td><input type="text" class="form-control inputsave" id="remark{{$record->id}}" data-name="remark"  data-id="{{$record->id}}" value="{{$record->remark}}" /></td>
 					<td><input type="text" class="form-control inputsave" id="actual_pickup_time{{$record->id}}" data-name="actual_pickup_time"  data-id="{{$record->id}}" value="{{$record->actual_pickup_time}}" /></td>
+					
                   </tr>
                   </tbody>
                   @endforeach

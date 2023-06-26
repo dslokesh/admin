@@ -67,7 +67,20 @@
                     <span class="text-danger">{{ $errors->first('customer_email') }}</span>
                 @endif
               </div>
-			  
+			  <div class="form-group col-md-6">
+                <label for="inputName">Agent Reference No.: <span class="red">*</span></label>
+                <input type="text" id="agent_ref_no" name="agent_ref_no" value="{{ old('agent_ref_no')?: $record->agent_ref_no }}" class="form-control"  placeholder="Agent Reference No." />
+				@if ($errors->has('agent_ref_no'))
+                    <span class="text-danger">{{ $errors->first('agent_ref_no') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName">Guest Name: <span class="red">*</span></label>
+                <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name')?: $record->guest_name }}" class="form-control"  placeholder="Guest Name" />
+				@if ($errors->has('guest_name'))
+                    <span class="text-danger">{{ $errors->first('guest_name') }}</span>
+                @endif
+              </div>
 			  <div class="form-group col-md-6">
 			  <label for="inputName">Country: <span class="red">*</span></label>
                 <select name="country_id" id="country_id" class="form-control">
@@ -137,7 +150,7 @@
 					          <option value="0" @if($record->status ==0) {{'selected="selected"'}} @endif >Inactive</option>
                  </select>
               </div>
-			   <div class="form-group col-md-6">
+			   <div class="form-group col-md-12">
                 <label for="inputName">Flight: <span class="red">*</span></label>
                 <select name="is_flight" id="is_flight" class="form-control">
                     <option value="1" @if($record->is_flight ==1) {{'selected="selected"'}} @endif>Yes</option>
@@ -156,7 +169,7 @@
                     <span class="text-danger">{{ $errors->first('arrival_airlines_id') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-3 flight_is_div">
+			   <div class="form-group col-md-2 flight_is_div">
                 <label for="inputName">Arrival Date: <span class="red">*</span></label>
                  <input type="text" id="arrival_date" name="arrival_date" value="{{ old('arrival_date') ?: $record->arrival_date }}" class="form-control datepicker"  placeholder="Arrival Date" />
 				  @if ($errors->has('arrival_date'))
@@ -170,11 +183,18 @@
                     <span class="text-danger">{{ $errors->first('arrival_airport') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-3 flight_is_div">
+			  <div class="form-group col-md-2 flight_is_div">
                 <label for="inputName">Arrival Terminal: <span class="red">*</span></label>
                  <input type="text" id="arrival_terminal" name="arrival_terminal" value="{{ old('arrival_terminal') ?: $record->arrival_terminal }}" class="form-control "  placeholder="Arrival Terminal" />
 				  @if ($errors->has('arrival_terminal'))
                     <span class="text-danger">{{ $errors->first('arrival_terminal') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-2 flight_is_div">
+                <label for="inputName">Arrival Flight No: <span class="red">*</span></label>
+                 <input type="text" id="arrival_flight_no" name="arrival_flight_no" value="{{ old('arrival_flight_no') }}" class="form-control "  placeholder="Arrival Flight No" />
+				  @if ($errors->has('arrival_flight_no'))
+                    <span class="text-danger">{{ $errors->first('arrival_flight_no') }}</span>
                 @endif
               </div>
 			  <div class="form-group col-md-3 flight_is_div">
@@ -189,7 +209,7 @@
                     <span class="text-danger">{{ $errors->first('depature_airlines_id') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-3 flight_is_div">
+			   <div class="form-group col-md-2 flight_is_div">
                 <label for="inputName">Depature Date: <span class="red">*</span></label>
                 <input type="text" id="depature_date" name="depature_date" value="{{ old('depature_date') ?: $record->depature_date }}" class="form-control datepicker"  placeholder="Depature Date" />
 				 @if ($errors->has('depature_date'))
@@ -203,14 +223,20 @@
                     <span class="text-danger">{{ $errors->first('depature_airport') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-3 flight_is_div">
+			  <div class="form-group col-md-2 flight_is_div">
                 <label for="inputName">Depature Terminal: <span class="red">*</span></label>
                  <input type="text" id="depature_terminal" name="depature_terminal" value="{{ old('depature_terminal') ?: $record->depature_terminal }}" class="form-control "  placeholder="Depature Terminal" />
 				  @if ($errors->has('depature_terminal'))
                     <span class="text-danger">{{ $errors->first('depature_terminal') }}</span>
                 @endif
               </div>
-			  
+			  <div class="form-group col-md-2 flight_is_div">
+                <label for="inputName">Depature Flight No: <span class="red">*</span></label>
+                 <input type="text" id="depature_flight_no" name="depature_flight_no" value="{{ old('depature_flight_no') }}" class="form-control "  placeholder="Depature Flight No" />
+				  @if ($errors->has('depature_flight_no'))
+                    <span class="text-danger">{{ $errors->first('depature_flight_no') }}</span>
+                @endif
+              </div>
             </div>
             <!-- /.card-body -->
           </div>
