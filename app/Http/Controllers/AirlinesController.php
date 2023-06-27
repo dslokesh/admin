@@ -6,6 +6,7 @@ use App\Models\Airline;
 use Illuminate\Http\Request;
 use DB;
 use Image;
+use Illuminate\Support\Facades\Auth;
 
 class AirlinesController extends Controller
 {
@@ -56,6 +57,7 @@ class AirlinesController extends Controller
         $record->name = $request->input('name');
 		$record->code = $request->input('code');
 		$record->status = $request->input('status');
+		$record->created_by = Auth::user()->id;
 		 /** Below code for save image **/
 		$destinationPath = public_path('/uploads/airlines/');
        
@@ -156,6 +158,7 @@ class AirlinesController extends Controller
 		$record->code = $request->input('code');
         $record->name = $request->input('name');
         $record->status = $request->input('status');
+		$record->updated_by = Auth::user()->id;
         $record->save();
         return redirect('airlines')->with('success','Airline Updated.');
     }

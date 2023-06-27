@@ -24,6 +24,7 @@ use DB;
 use SiteHelpers;
 use Carbon\Carbon;
 use SPDF;
+use Illuminate\Support\Facades\Auth;
 
 class VouchersController extends Controller
 {
@@ -178,10 +179,12 @@ class VouchersController extends Controller
 		$record->arrival_flight_no = $request->input('arrival_flight_no');
 		$record->depature_flight_no = $request->input('depature_flight_no');
 		$record->status = $request->input('status');
+		$record->created_by = Auth::user()->id;
         $record->save();
 		$code = 'V-'.date("Y")."-00".$record->id;
 		$recordUser = Voucher::find($record->id);
 		$recordUser->code = $code;
+		
 		$recordUser->save();
 		
 		if ($request->has('save_and_hotel')) {
@@ -298,6 +301,7 @@ class VouchersController extends Controller
 		$record->arrival_flight_no = $request->input('arrival_flight_no');
 		$record->depature_flight_no = $request->input('depature_flight_no');
 		$record->status = $request->input('status');
+		$record->updated_by = Auth::user()->id;
         $record->save();
 		if($record->is_hotel != 1)
 		{
@@ -346,6 +350,7 @@ class VouchersController extends Controller
 		{
 		$recordUser = Voucher::find($record->id);
 		$recordUser->invoice_number = $code;
+		$recordUser->updated_by = Auth::user()->id;
 		$recordUser->save();
 		}
 		
@@ -353,6 +358,7 @@ class VouchersController extends Controller
 		{
 		$recordUser = Voucher::find($record->id);
 		$recordUser->booking_date = date("Y-m-d");
+		$recordUser->updated_by = Auth::user()->id;
 		$recordUser->save();
 		}
 		
@@ -556,6 +562,8 @@ class VouchersController extends Controller
 					'markup_v_eb' => $markup_v_eb[$k],
 					'markup_v_cwb' => $markup_v_cwb[$k],
 					'markup_v_cnb' => $markup_v_cnb[$k],
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
 					
                 ];
 		}
@@ -715,7 +723,8 @@ class VouchersController extends Controller
 			'discountPrice' => $discount[$k],
 			'totalprice' => $totalprice[$k],
 			'pickup_location' => $pickup_location[$k],
-					
+			'created_by' => Auth::user()->id,
+			'updated_by' => Auth::user()->id,	
                 ];
 		}
 		

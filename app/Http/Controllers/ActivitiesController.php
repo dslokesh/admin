@@ -8,6 +8,7 @@ use App\Models\Zone;
 use App\Models\Files;
 use App\Models\ActivityPrices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use DB;
 use Image;
 use File;
@@ -154,6 +155,7 @@ class ActivitiesController extends Controller
 		$record->description = $request->input('description');
 		$record->cancellation_policy = $request->input('cancellation_policy');
         $record->status = $request->input('status');
+		$record->created_by = Auth::user()->id;
 		$record->save();
 		
 		//Upload Additional images
@@ -354,6 +356,7 @@ class ActivitiesController extends Controller
 		$record->description = $request->input('description');
 		$record->cancellation_policy = $request->input('cancellation_policy');
         $record->status = $request->input('status');
+		$record->updated_by = Auth::user()->id;
         $record->save();
 		
 		//Upload Additional images
@@ -502,6 +505,8 @@ class ActivitiesController extends Controller
 					'cancellation_valueSIC' => $cancellation_valueSIC[$k],
 					'booking_window_valuePVT' => $booking_window_valuePVT[$k],
 					'cancellation_valuePVT' => $cancellation_valuePVT[$k],
+					'created_by' => Auth::user()->id,
+					'updated_by' => Auth::user()->id,
 					
                 ];
 		}

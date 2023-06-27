@@ -13,6 +13,7 @@ use App\Models\SupplierPriceMarkup;
 use Illuminate\Http\Request;
 use DB;
 use Image;
+use Illuminate\Support\Facades\Auth;
 
 class SuppliersController extends Controller
 {
@@ -123,7 +124,7 @@ class SuppliersController extends Controller
         $record->city_id = $request->input('city_id');
 		$record->service_type = $request->input('service_type');
         $record->status = $request->input('status');
-		
+		$record->created_by = Auth::user()->id;
         $record->save();
 		
 		
@@ -258,7 +259,7 @@ class SuppliersController extends Controller
         $record->city_id = $request->input('city_id');
 		$record->service_type = $request->input('service_type');
         $record->status = $request->input('status');
-		
+		$record->updated_by = Auth::user()->id;
         $record->save();
         return redirect('suppliers')->with('success', 'Supplier Updated.');
     }
@@ -375,6 +376,8 @@ class SuppliersController extends Controller
 				'ticket_only' => $ac,
 				'sic_transfer' => $sic_transfer[$activity_id][$variant_code],
 				'pvt_transfer' => $pvt_transfer[$activity_id][$variant_code],
+				'created_by' => Auth::user()->id,
+				'updated_by' => Auth::user()->id,
 				];
 				}
 			}

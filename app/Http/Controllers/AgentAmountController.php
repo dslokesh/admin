@@ -7,7 +7,7 @@ use App\Models\AgentAmount;
 use DB;
 use SiteHelpers;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Auth;
 
 class AgentAmountController extends Controller
 {
@@ -89,7 +89,9 @@ class AgentAmountController extends Controller
 		$record->date_of_receipt = $date_of_receipt;
 		$record->transaction_type = $request->input('transaction_type');
 		$record->remark = $request->input('remark');
-		
+		$record->created_by = Auth::user()->id;
+		$record->updated_by = Auth::user()->id;
+
         $record->save();
 		$receipt_no = 'A-'.date("Y")."-00".$record->id;
 		$recordUser = AgentAmount::find($record->id);

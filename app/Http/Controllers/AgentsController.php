@@ -355,6 +355,7 @@ class AgentsController extends Controller
 		$record->sic_transfer = (!empty($request->input('sic_transfer')))?$request->input('sic_transfer'):0;
 		$record->pvt_transfer = (!empty($request->input('pvt_transfer')))?$request->input('pvt_transfer'):0;
 		$record->vat = $request->input('vat');
+		$record->updated_by = Auth::user()->id;
         $record->save();
 		
 		$additionalContactInsert = [];
@@ -501,6 +502,8 @@ class AgentsController extends Controller
 				'ticket_only' => $ac,
 				'sic_transfer' => $sic_transfer[$activity_id][$variant_code],
 				'pvt_transfer' => $pvt_transfer[$activity_id][$variant_code],
+				'created_by' => Auth::user()->id,
+				'updated_by' => Auth::user()->id,
 				];
 				}
 			}

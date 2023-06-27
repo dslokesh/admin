@@ -373,9 +373,7 @@ class UsersController extends Controller
         $user->postcode = $request->input('postcode');
         $user->email = $request->input('email');
         $user->is_active = $request->input('is_active');
-       
-       
-
+		$user->updated_by = Auth::user()->id;
         $user->save();
 		
         
