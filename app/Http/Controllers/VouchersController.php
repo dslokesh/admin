@@ -32,12 +32,58 @@ class VouchersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 		 $perPage = config("constants.ADMIN_PAGE_LIMIT");
-        $records = Voucher::orderBy('created_at', 'DESC')->paginate($perPage);
+		 $data = $request->all();
+		$query = Voucher::where('id','!=', null);
+		if (isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+            $query->where('agent_id', $data['agent_id_select']);
+        }
 		
-        return view('vouchers.index', compact('records'));
+		if (isset($data['code']) && !empty($data['code'])) {
+            $query->where('code', 'like', '%' . $data['code'] . '%');
+        }
+		
+		if (isset($data['status']) && !empty($data['status'])) {
+            if ($data['status'] == 1)
+                $query->where('status', 1);
+            if ($data['status'] == 2)
+                $query->where('status', 0);
+        }
+		
+		if (isset($data['is_hotel']) && !empty($data['is_hotel'])) {
+            if ($data['is_hotel'] == 1)
+                $query->where('is_hotel', 1);
+            if ($data['is_hotel'] == 2)
+                $query->where('is_hotel', 0);
+        }
+		
+		if (isset($data['is_flight']) && !empty($data['is_flight'])) {
+            if ($data['is_flight'] == 1)
+                $query->where('is_flight', 1);
+            if ($data['is_flight'] == 2)
+                $query->where('is_flight', 0);
+        }
+		
+		if (isset($data['is_activity']) && !empty($data['is_activity'])) {
+            if ($data['is_activity'] == 1)
+                $query->where('is_activity', 1);
+            if ($data['is_activity'] == 2)
+                $query->where('is_activity', 0);
+        }
+		
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		$agetid = '';
+		$agetName = '';
+		
+		if(old('agent_id')){
+		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
+		$agetid = $agentTBA->id;
+		$agetName = $agentTBA->company_name;
+		}
+		
+        return view('vouchers.index', compact('records','agetid','agetName'));
 
     }
 

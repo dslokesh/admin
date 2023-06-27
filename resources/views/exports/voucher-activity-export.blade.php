@@ -57,8 +57,8 @@
 				</td>
 					<td>{{$record->dropoff_time}}</td>
 					<td>{{$record->driver_name}}</td>
-					<td>{{$record->supplier_ticket}}</td>
-					<td>{{$record->supplier_transfer}}</td>
+					<td>{{($record->supplierticket)?$record->supplierticket->name:''}}</td>
+					<td>{{($record->suppliertransfer)?$record->suppliertransfer->name:''}}</td>
 					<td>{{$record->totalprice}}</td>
 					<td>
 					@if($record->transfer_option == "Shared Transfer")

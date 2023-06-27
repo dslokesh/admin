@@ -41,7 +41,7 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-				   <th>Code</th>
+					<th>Code</th>
                     <th>Agency</th>
 					<th>Customer</th>
 					<th>Country</th>
@@ -61,6 +61,44 @@
 				  
                   </thead>
                   <tbody>
+				   <form id="filterForm" method="get" action="{{route('vouchers.index')}}" >
+				   <tr>
+					<th><input type="text" name="code" value="{{request('code')}}" autocomplete="off" class="form-control"  placeholder="Code" /></th>
+                    <th><input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
+					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  /></th>
+					<th>Customer</th>
+					<th>Country</th>
+					<th><select name="is_hotel" id="is_hotel" class="form-control">
+                    <option value="" @if(request('is_hotel') =='') {{'selected="selected"'}} @endif>Select</option>
+                    <option value="1" @if(request('is_hotel') ==1) {{'selected="selected"'}} @endif>Yes</option>
+					          <option value="2" @if(request('is_hotel') ==2) {{'selected="selected"'}} @endif >No</option>
+                 </select></th>
+					<th><select name="is_flight" id="is_flight" class="form-control">
+                    <option value="" @if(request('is_flight') =='') {{'selected="selected"'}} @endif>Select</option>
+                    <option value="1" @if(request('is_flight') ==1) {{'selected="selected"'}} @endif>Yes</option>
+					          <option value="2" @if(request('is_flight') ==2) {{'selected="selected"'}} @endif >No</option>
+                 </select></th>
+					<th><select name="is_activity" id="is_activity" class="form-control">
+                    <option value="" @if(request('is_activity') =='') {{'selected="selected"'}} @endif>Select</option>
+                    <option value="1" @if(request('is_activity') ==1) {{'selected="selected"'}} @endif>Yes</option>
+					          <option value="2" @if(request('is_activity') ==2) {{'selected="selected"'}} @endif >No</option>
+                 </select></th>
+                    <th><select name="status" id="status" class="form-control">
+                    <option value="" @if(request('status') =='') {{'selected="selected"'}} @endif>Select</option>
+                    <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Active</option>
+					          <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Inactive</option>
+                 </select></th>
+                    <th></th>
+                    <th></th>
+					<th></th>
+					
+					<th ></th>
+					<th></th>
+					<th></th>
+                    <th width="12%"><button class="btn btn-info btn-sm" type="submit">Filter</button>
+                    <a class="btn btn-default btn-sm" href="{{route('vouchers.index')}}">Clear</a></th>
+					 </form>
+                  </tr>
                   @foreach ($records as $record)
 				  
                   <tr>
@@ -160,4 +198,42 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    var path = "{{ route('auto.agent') }}";
+  
+    $( "#agent_id" ).autocomplete({
+        source: function( request, response ) {
+          $.ajax({
+            url: path,
+            type: 'GET',
+            dataType: "json",
+            data: {
+               search: request.term,
+            },
+            success: function( data ) {
+               response( data );
+            }
+          });
+        },
+		
+        select: function (event, ui) {
+           $('#agent_id').val(ui.item.label);
+           //console.log(ui.item); 
+		   $('#agent_id_select').val(ui.item.value);
+		    $('#agent_details').html(ui.item.agentDetails);
+           return false;
+        },
+        change: function(event, ui){
+            // Clear the input field if the user doesn't select an option
+            if (ui.item == null){
+                $('#agent_id').val('');
+				 $('#agent_id_select').val('');
+				 $('#agent_details').html('');
+            }
+        }
+      });
+  
+</script>
 @endsection

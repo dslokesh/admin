@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Vouchers Report</h1>
+            <h1>Logistic Report</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Vouchers Report</li>
+              <li class="breadcrumb-item active">Logistic Report</li>
             </ol>
           </div>
         </div>
@@ -148,8 +148,22 @@
 				</td>
 					<td><input type="text" class="form-control inputsave" id="dropoff_time{{$record->id}}" data-name="dropoff_time"  data-id="{{$record->id}}" value="{{$record->dropoff_time}}" /></td>
 					<td><input type="text" class="form-control inputsave" id="driver_name{{$record->id}}" data-name="driver_name"  data-id="{{$record->id}}" value="{{$record->driver_name}}" /></td>
-					<td><input type="text" class="form-control inputsave" id="supplier_ticket{{$record->id}}" data-name="supplier_ticket"  data-id="{{$record->id}}" value="{{$record->supplier_ticket}}" /></td>
-					<td><input type="text" class="form-control inputsave" id="supplier_transfer{{$record->id}}" data-name="supplier_transfer"  data-id="{{$record->id}}" value="{{$record->supplier_transfer}}" /></td>
+					<td>
+					 <select name="supplier_ticket{{$record->id}}" id="supplier_ticket{{$record->id}}" class="form-control inputsaveSp">
+						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value="">All</option>
+						@foreach($supplier_ticket as  $stv)
+						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value = "{{$stv->id}}" @if($record->supplier_ticket==$stv->id) selected="selected" @endif >{{$stv->name}}</option>
+						@endforeach
+                 </select>
+					</td>
+					<td>
+					 <select name="supplier_transfer{{$record->id}}" id="supplier_transfer{{$record->id}}" class="form-control inputsaveSp">
+						<option data-name="supplier_transfer"  data-id="{{$record->id}}" value="">All</option>
+						@foreach($supplier_transfer as  $stt)
+						<option data-name="supplier_transfer"  data-id="{{$record->id}}" value = "{{$stt->id}}" @if($record->supplier_transfer==$stt->id) selected="selected" @endif >{{$stt->name}}</option>
+						@endforeach
+                 </select>
+					</td>
 					<td>{{$record->totalprice}}</td>
 					<td>
 					@if($record->transfer_option == "Shared Transfer")
@@ -217,6 +231,29 @@ $(document).ready(function() {
             }
           });
 	 });	
+	 
+	 $(document).on('change', '.inputsaveSp', function(evt) {
+		$("#loader-overlay").show();
+		$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+		$.ajax({
+            url: "{{route('voucherReportSave')}}",
+            type: 'POST',
+            dataType: "json",
+            data: {
+               id: $(this).find(':selected').data('id'),
+			   inputname: $(this).find(':selected').data('name'),
+			   val: $(this).val()
+            },
+            success: function( data ) {
+               //console.log( data );
+			  $("#loader-overlay").hide();
+            }
+          });
+	 });
 });
 
   </script> 

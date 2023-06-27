@@ -288,7 +288,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			  <li class="nav-item">
                 <a href="{{ route('voucherReport') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-file"></i>
-                  <p>Voucher Report</p>
+                  <p>Logistic Report</p>
                 </a>
               </li>
 			  @php

@@ -115,6 +115,15 @@ $('.timepicker').datetimepicker({
         });
   });
   
+  $('.datepickerdiscurdate').datepicker({
+        weekStart: 1,
+		minDate: 0,
+        daysOfWeekHighlighted: "6,0",
+        autoclose: true,
+        todayHighlight: true,
+		dateFormat: 'yy-mm-dd'
+    });
+  
  
 
 </script>

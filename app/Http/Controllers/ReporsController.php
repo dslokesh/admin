@@ -12,6 +12,7 @@ use App\Models\TransferData;
 use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
 use App\Models\AgentAmount;
+use App\Models\Supplier;
 use DB;
 use SiteHelpers;
 use Carbon\Carbon;
@@ -31,6 +32,9 @@ class ReporsController extends Controller
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
+		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		
 		$query = VoucherActivity::where('id','!=', null);
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
@@ -63,7 +67,7 @@ class ReporsController extends Controller
 			
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
-        return view('reports.index', compact('records','voucherStatus'));
+        return view('reports.index', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
 
     }
 	
@@ -71,7 +75,7 @@ class ReporsController extends Controller
     {
         $data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
-		$query = VoucherActivity::with(["voucher",'activity','voucher.customer'])->where('id','!=', null);
+		$query = VoucherActivity::with(["voucher",'activity','voucher.customer','supplierticket','suppliertransfer'])->where('id','!=', null);
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
 			
@@ -105,7 +109,7 @@ class ReporsController extends Controller
         $records = $query->orderBy('created_at', 'DESC')->get();
    // return Excel::download(new VoucherActivityExport(['records' => $records]), 'users.xlsx');
 
-return Excel::download(new VoucherActivityExport($records), 'records'.date('d-M-Y s').'.csv');        //return Excel::download(new VoucherActivityExport($records), 'records.csv');
+return Excel::download(new VoucherActivityExport($records), 'logistic_records'.date('d-M-Y s').'.csv');        //return Excel::download(new VoucherActivityExport($records), 'records.csv');
     }
 	
 	public function voucherReportSave(Request $request)

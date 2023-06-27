@@ -174,7 +174,7 @@
 								<input type="hidden" id="payment_date" name="payment_date"  /> 
                             </form>
 						
-							<a class="btn btn-success float-right" href="javascript:void(0)" onclick="
+							<a class="btn btn-success float-right mr-3" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to change  status this?'))
                                 {
                                     event.preventDefault();
@@ -214,7 +214,7 @@
 								<input type="hidden" id="payment_date" name="payment_date"  /> 
                             </form>
 						
-							<a class="btn btn-success float-right" href="javascript:void(0)" onclick="
+							<a class="btn btn-success float-right mr-3" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to change  status this?'))
                                 {
                                     event.preventDefault();
@@ -229,7 +229,7 @@
                             
 						@endif
 						
-					@if($voucher->status_main == 3)
+					@if($voucher->status_main < 4)
 					
 				<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
                                 {{csrf_field()}}
@@ -249,7 +249,7 @@
                                 }
                             
                             ">Cancel</a>
-				<a class="btn btn-success float-right statusBtnChange" href="javascript:void(0)" data-status="4">Confirmed</a>
+				<a class="btn btn-success float-right statusBtnChange mr-3" href="javascript:void(0)" data-status="4">Confirmed</a>
 				<a class="btn btn-info  float-right statusBtnChange mr-3" href="javascript:void(0)" data-status="5">Vouchered</a>
 				@endif
 				

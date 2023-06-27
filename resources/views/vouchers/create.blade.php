@@ -112,7 +112,7 @@
               </div>
 			  <div class="form-group col-md-2">
                 <label for="inputName">Travel Date From: <span class="red">*</span></label>
-               <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date') }}" class="form-control datepicker"  placeholder="Travel Date From" />
+               <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date')?:date('Y-m-d') }}" class="form-control datepickerdiscurdate"  placeholder="Travel Date From" />
 				  @if ($errors->has('travel_from_date'))
                     <span class="text-danger">{{ $errors->first('travel_from_date') }}</span>
                 @endif
@@ -122,7 +122,11 @@
                <select name="nof_night" id="nof_night" class="form-control">
 			   <option value="">--select--</option>
 					@for($i =1; $i<30; $i++)
+						@if(!empty(old('nof_night')))
 					  <option value="{{$i}}" @if(old('nof_night') == $i) {{'selected="selected"'}} @endif >{{$i}}</option>
+						@else
+						 <option value="{{$i}}" @if($i == 7) {{'selected="selected"'}} @endif >{{$i}}</option>	
+						@endif
 					@endfor
                  </select>
 				  @if ($errors->has('nof_night'))
@@ -499,6 +503,8 @@
       $('#travel_to_date').val(formattedDate);
     }
   });
+  
+  $("#nof_night").trigger("change");
   
 });
 

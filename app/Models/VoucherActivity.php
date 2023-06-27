@@ -19,5 +19,15 @@ class VoucherActivity extends Model
         return $this->belongsTo(Activity::class,'activity_id','id');
     }
 	
+	public function supplierticket()
+    {
+        return $this->belongsTo(Supplier::class,'supplier_ticket','id');
+    }
+	
+	public function suppliertransfer()
+    {
+        return $this->belongsTo(Supplier::class,'supplier_transfer','id');
+    }
+	
 	
 }
