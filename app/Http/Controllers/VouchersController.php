@@ -697,6 +697,7 @@ class VouchersController extends Controller
 		$pickup_location = $request->input('pickup_location');
 		
 		$data = [];
+		$total_activity_amount = 0;
 		foreach($activity_select as $k => $v)
 		{
 			
@@ -726,12 +727,19 @@ class VouchersController extends Controller
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,	
                 ];
+
+				$total_activity_amount +=$totalprice[$k];
 		}
 		
 		if(count($data) > 0)
 		{
 			VoucherActivity::insert($data);
+			$voucher = Voucher::find($voucher_id);
+			$voucher->total_activity_amount = $total_activity_amount;
+			$voucher->save();
 		}
+
+		
 		
 		if ($request->has('save_and_continue')) {
          return redirect()->route('voucher.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
