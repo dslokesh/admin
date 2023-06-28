@@ -187,8 +187,8 @@
 						@endforeach
                  </select></td>
 						<td><input type="text" id="zone_val{{$k}}" value="{{$z->zoneValue}}" class="form-control" name="zoneValue[]"></td>
-						<td><input type="text" id="pickup_time{{$k}}" value="{{($z->pickup_time)?$z->pickup_time:''}}" class="form-control " name="pickup_time[]"></td>
-						<td><input type="text" id="dropup_time{{$k}}" value="{{($z->dropup_time)?$z->dropup_time:''}}" class="form-control " name="dropup_time[]"></td>
+						<td><input type="text" id="pickup_time{{$k}}" value="{{(isset($z->pickup_time))?$z->pickup_time:''}}" class="form-control " name="pickup_time[]"></td>
+						<td><input type="text" id="dropup_time{{$k}}" value="{{(isset($z->dropup_time))?$z->dropup_time:''}}" class="form-control " name="dropup_time[]"></td>
 						<td>@if($k > 0)<a class="delete-row btn btn-danger btn-sm">Delete</a>@endif</td>
 					  </tr>
 					  @endforeach
