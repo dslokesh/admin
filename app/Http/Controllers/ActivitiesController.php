@@ -241,8 +241,21 @@ class ActivitiesController extends Controller
 			$days = explode(",",$record->availability);
 		}
 		
-		$zonesData = json_decode($record->zones);
 		
+		$zoneArrayJson = json_decode($record->zones);
+			
+			foreach($zoneArrayJson as $k => $z)
+			{
+				$zone = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
+				
+				$zonesData[] = [
+				'zone' => $zone->name,
+				'zoneValue' => $z->zoneValue,
+				'pickup_time' => (!empty($z->pickup_time))?$z->pickup_time:'',
+				'dropup_time' => (!empty($z->dropup_time))?$z->dropup_time:'',
+				];
+			}
+
 		
 		$images = '["';
 		$image_key = [];
