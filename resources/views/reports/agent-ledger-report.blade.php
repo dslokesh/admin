@@ -79,7 +79,7 @@
 					<th>Agent Ref No</th>
 					<th>Debit Amount</th>
 					<th>Credit Amount</th>
-                    <th>Cumulative Balance Balance</th>
+                    <th>Cumulative Balance</th>
                     
                   </tr>
 				  
