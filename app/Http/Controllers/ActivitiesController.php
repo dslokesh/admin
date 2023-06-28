@@ -246,10 +246,10 @@ class ActivitiesController extends Controller
 			
 			foreach($zoneArrayJson as $k => $z)
 			{
-				$zones = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
+				$zonesSelect = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
 				
 				$zonesData[] = [
-				'zone' => $zones->name,
+				'zone' => $zonesSelect->name,
 				'zoneValue' => $z->zoneValue,
 				'pickup_time' => (!empty($z->pickup_time))?$z->pickup_time:'',
 				'dropup_time' => (!empty($z->dropup_time))?$z->dropup_time:'',
