@@ -241,7 +241,7 @@ class ActivitiesController extends Controller
 			$days = explode(",",$record->availability);
 		}
 		
-		dd($zones);
+		
 		$zoneArrayJson = json_decode($record->zones);
 			
 			foreach($zoneArrayJson as $k => $z)
