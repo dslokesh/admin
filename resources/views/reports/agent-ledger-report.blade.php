@@ -76,11 +76,10 @@
                     <th>Agency Name</th>
 					<th>Date</th>
 					<th>Receipt No/ Inovice No.</th>
-					<th>Agent Ref No</th>
+					<th>Transaction From</th>
 					<th>Debit Amount</th>
 					<th>Credit Amount</th>
                     <th>Cumulative Balance</th>
-                    
                   </tr>
 				  
                   </thead>
@@ -94,7 +93,10 @@
                     <td>{{($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ $record->date_of_receipt ? date(config('app.date_format'),strtotime($record->date_of_receipt)) : null }}</td>
 					<td>{{ ($record->receipt_no)}}</td>
-					<td>Agent Ref No</td>
+					<td>
+					{{($record->transaction_from == '2')?'Vouchered':''}}
+					{{($record->transaction_from == '3')?'Canceled':''}}
+					</td>
 					<td>
 					@if($record->transaction_type == 'Debit')
 					{{$record->amount}}
@@ -111,6 +113,7 @@
 					
 					{{$record->amount}}
 					@endif</td>
+					
                     <td>Cumulative Balance</td>
 					</tr>
                   </tbody>

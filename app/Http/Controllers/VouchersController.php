@@ -25,6 +25,7 @@ use SiteHelpers;
 use Carbon\Carbon;
 use SPDF;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AgentAmount;
 
 class VouchersController extends Controller
 {
@@ -359,6 +360,20 @@ class VouchersController extends Controller
 			$record->save();
 			$agent->agent_amount_balance -= $record->total_activity_amount;
 			$agent->save();
+			
+			$agentAmount = new AgentAmount();
+			$agentAmount->agent_id = $record->agent_id;
+			$agentAmount->amount = $record->total_activity_amount;
+			$agentAmount->date_of_receipt = date("Y-m-d");
+			$agentAmount->transaction_type = "Debit";
+			$agentAmount->transaction_from = 2;
+			$agentAmount->created_by = Auth::user()->id;
+			$agentAmount->updated_by = Auth::user()->id;
+			$agentAmount->save();
+			$receipt_no = 'VA-'.date("Y")."-00".$agentAmount->id;
+			$recordUser = AgentAmount::find($agentAmount->id);
+			$recordUser->receipt_no = $receipt_no;
+			$recordUser->save();
 			
 			}else{
 				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');

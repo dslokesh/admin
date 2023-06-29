@@ -20,7 +20,7 @@ class AgentAmountController extends Controller
     {
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$data = $request->all();
-		$query = AgentAmount::with('agent')->where('id','!=', null);
+		$query = AgentAmount::with('agent')->where('transaction_from',1);
 		if (isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
             $query->where('agent_id', $data['agent_id_select']);
         }
@@ -88,6 +88,7 @@ class AgentAmountController extends Controller
 		$record->amount = $request->input('amount');
 		$record->date_of_receipt = $date_of_receipt;
 		$record->transaction_type = $request->input('transaction_type');
+		$record->transaction_from = 1;
 		$record->remark = $request->input('remark');
 		$record->created_by = Auth::user()->id;
 		$record->updated_by = Auth::user()->id;
