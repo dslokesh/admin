@@ -334,32 +334,53 @@ class VouchersController extends Controller
 	public function statusChangeVoucher(Request $request,$id)
     {
 		$data = $request->all();
-		
-        $record = Voucher::find($id);
-		$record->status_main = $data['statusv'];
-		$record->payment_date = $data['payment_date'];
-		$record->save();
-		if($record->vat_invoice == 1)
-		{
-			$code = 'VIN-100'.$record->id;
-		}else{
-			$code = 'WVIN-100'.$record->id;
-		}
-		
+		$record = Voucher::find($id);
 		if($data['statusv'] == 5)
 		{
-		$recordUser = Voucher::find($record->id);
-		$recordUser->invoice_number = $code;
-		$recordUser->updated_by = Auth::user()->id;
-		$recordUser->save();
-		}
-		
-		if($data['statusv'] == 4)
+		$agent = User::find($record->agent_id);
+		if(!empty($agent))
 		{
-		$recordUser = Voucher::find($record->id);
-		$recordUser->booking_date = date("Y-m-d");
-		$recordUser->updated_by = Auth::user()->id;
-		$recordUser->save();
+			
+			$agentAmountBalance = $agent->agent_amount_balance;
+			
+			if($agentAmountBalance >= $record->total_activity_amount)
+			{
+			
+			if($record->vat_invoice == 1)
+			{
+			$code = 'VIN-100'.$record->id;
+			}else{
+			$code = 'WVIN-100'.$record->id;
+			}
+			$record->invoice_number = $code;
+			$record->updated_by = Auth::user()->id;
+			$record->status_main = 5;
+			$record->payment_date = $data['payment_date'];
+			$record->save();
+			$agent->agent_amount_balance -= $record->total_activity_amount;
+			$agent->save();
+			
+			}else{
+				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');
+			}
+			
+		}else{
+				 return redirect()->back()->with('error', 'Agency  Name not found this voucher. Please select agent first.');
+			}
+		
+		}else if($data['statusv'] == 4)
+		{
+			$record->booking_date = date("Y-m-d");
+			$record->status_main = 4;
+			$record->payment_date = $data['payment_date'];
+			$record->updated_by = Auth::user()->id;
+			$record->save();
+		}
+		else
+		{
+			$record->status_main = $data['statusv'];
+			$record->payment_date = $data['payment_date'];
+			$record->save();
 		}
 		
         return redirect()->back()->with('success', 'Status Change Successfully.');

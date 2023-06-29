@@ -181,13 +181,7 @@
                     <span class="text-danger">{{ $errors->first('agent_category') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-6">
-                <label for="inputName"> Agent Credit Limit (Amount):</label>
-                <input type="text" id="agent_credit_limit" name="agent_credit_limit"  value="{{ old('agent_credit_limit') ?: $record->agent_credit_limit}}" class="form-control"   />
-                @if ($errors->has('agent_credit_limit'))
-                    <span class="text-danger">{{ $errors->first('agent_credit_limit') }}</span>
-                @endif
-              </div>
+			 
 			  <div class="form-group col-md-6">
                 <label for="inputName">Sales Person:</label>
                 <input type="text" id="sales_person" name="sales_person"  value="{{ old('sales_person') ?: $record->sales_person}}" class="form-control"   />
@@ -202,6 +196,29 @@
 					          <option value="0" @if($record->is_active ==0) {{'selected="selected"'}} @endif >Inactive</option>
                  </select>
               </div>
+			   <div class="form-group col-md-6">
+                <label for="inputName"> Agent Crrent Credit Limit (Amount):</label>
+               <br/>{{ $record->agent_credit_limit}}
+			   <br/>
+                <a href="javascript:;" id="c_limit_btn" class="btn btn-secondary btn-sm">Change Limit</a>
+				<div id="credit_limit_div" class="hide">
+				<div class="row">
+			   <div class="form-group col-md-4">
+                <label for="inputName">Type: <span class="red">*</span></label>
+                <select name="credit_limit_type" id="credit_limit_type" class="form-control">
+					<option value="">Select</option>
+                    <option value="1">Plus (+)</option>
+					<option value="2" >Minus (-)</option>
+                 </select>
+              </div>
+			  <div class="form-group col-md-8">
+                <label for="inputName">Amount: <span class="red">*</span></label>
+                 <input type="text" id="credit_amount" name="credit_amount"  value="0" class="form-control"   />
+              </div>
+			  </div>
+			   </div>
+              </div>
+			   
 			   <div class="form-group col-md-12">
                 <label for="inputName">Additional Contact:</label>
 				<a id="addRowBtn" class="btn btn-success btn-sm">Add Row</a>
@@ -263,6 +280,23 @@
  @include('inc.citystatecountryjs')
  <script>
  $(document).ready(function() {
+	 $("#c_limit_btn").click(function() {
+		 if ($('#credit_limit_div').hasClass('hide'))
+		 {
+			 $("#credit_limit_div").removeClass("hide").addClass("show");
+			 $("#c_limit_btn").text("Cancel");
+			 $('#credit_limit_type').prop("required",true);
+			 $('#credit_amount').prop("required",true);
+		 }
+		 else if ($('#credit_limit_div').hasClass('show'))
+		 {
+			 $("#credit_limit_div").removeClass("show").addClass("hide");
+			 $("#c_limit_btn").text("Change Limit");
+			 $('#credit_limit_type').prop("required",false);
+			 $('#credit_amount').prop("required",true);
+		 }
+		 
+	 });
   // add row with input fields when "Add Row" button is clicked
   $("#addRowBtn").click(function() {
     // create new row

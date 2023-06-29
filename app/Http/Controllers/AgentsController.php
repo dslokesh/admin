@@ -157,7 +157,7 @@ class AgentsController extends Controller
 		$record->agent_category = $request->input('agent_category');
 		$record->agent_credit_limit = (!empty($request->input('agent_credit_limit')))?$request->input('agent_credit_limit'):0;
 		$record->sales_person = $request->input('sales_person');
-		$record->agent_amount_balance = 0;
+		$record->agent_amount_balance = (!empty($request->input('agent_credit_limit')))?$request->input('agent_credit_limit'):0;
         $record->created_by = Auth::user()->id;
 		$record->role_id = 3; 
         $record->password = bcrypt($request['password']);
@@ -348,7 +348,7 @@ class AgentsController extends Controller
         $record->city_id = $request->input('city_id');
 		$record->is_active = $request->input('status');
 		$record->agent_category = $request->input('agent_category');
-		$record->agent_credit_limit = (!empty($request->input('agent_credit_limit')))?$request->input('agent_credit_limit'):0;
+		//$record->agent_credit_limit = (!empty($request->input('agent_credit_limit')))?$request->input('agent_credit_limit'):0;
 		$record->sales_person = $request->input('sales_person');
 		//$record->agent_amount_balance = (!empty($request->input('agent_amount_balance')))?$request->input('agent_amount_balance'):0;
 		$record->ticket_only = (!empty($request->input('ticket_only')))?$request->input('ticket_only'):0;
@@ -356,6 +356,17 @@ class AgentsController extends Controller
 		$record->pvt_transfer = (!empty($request->input('pvt_transfer')))?$request->input('pvt_transfer'):0;
 		$record->vat = $request->input('vat');
 		$record->updated_by = Auth::user()->id;
+		
+		if(($request->input('credit_limit_type') == 1) && ($request->input('credit_amount') > 0))
+		{
+			$record->agent_credit_limit +=$request->input('credit_amount');
+			$record->agent_amount_balance +=$request->input('credit_amount');
+		}elseif(($request->input('credit_limit_type') == 2) && ($request->input('credit_amount') > 0))
+		{
+			$record->agent_credit_limit -=$request->input('credit_amount');
+			$record->agent_amount_balance -=$request->input('credit_amount');
+		}
+		
         $record->save();
 		
 		$additionalContactInsert = [];

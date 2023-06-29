@@ -91,12 +91,31 @@ class AgentAmountController extends Controller
 		$record->remark = $request->input('remark');
 		$record->created_by = Auth::user()->id;
 		$record->updated_by = Auth::user()->id;
-
+		
         $record->save();
 		$receipt_no = 'A-'.date("Y")."-00".$record->id;
 		$recordUser = AgentAmount::find($record->id);
 		$recordUser->receipt_no = $receipt_no;
-		$recordUser->save();
+		
+		
+		if(($request->input('transaction_type') == "Credit"))
+		{
+			$agent = User::find($record->agent_id);
+			$agent->agent_amount_balance += $request->input('amount');
+			$agent->save();
+			$recordUser->save();
+		}else if(($request->input('transaction_type') == "Debit"))
+		{
+			$agent = User::find($record->agent_id);
+			if($agent->agent_amount_balance >= $request->input('amount')){
+			$agent->agent_amount_balance -= $request->input('amount');
+			$agent->save();
+			$recordUser->save();
+			}
+			else{
+				return redirect()->route('agentamounts.index')->with('error', 'Agency amount cannot be set to 0.');
+			}
+		}
 		
 		
         return redirect()->route('agentamounts.index')->with('success', 'Data Created Successfully.');
