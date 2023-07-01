@@ -892,10 +892,10 @@ class VouchersController extends Controller
 					 }
 					
 			}
-			$subTotalGrand = $subTotal - $discountTotal;
+			$subTotalGrand = $subTotal;
 			$vatGrand = '1.05';
 			$vatTotal = $subTotalGrand/$vatGrand;
-			$grandWithVatTotal = ($vatTotal+$subTotal) ;
+			$grandWithVatTotal = ($vatTotal+$subTotalGrand) - $discountTotal;
 			
        
 return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotalGrand','grandWithVatTotal','vatTotal'));
