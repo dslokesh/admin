@@ -194,10 +194,14 @@
                     <tr>
 					
                         <td align="right" valign="top">
-						
-						<p>Sub Total: AED {{number_format($grandWithOutVatTotal,2)}}</p>
+						@if($voucher->vat_invoice == 1)
+							<p>Sub Total: AED {{number_format($grandWithOutVatTotal,2)}}</p>
 						<p>Vat(5%): AED {{number_format($vatTotal,2)}}</p>
                          <p>Grant Total: AED {{number_format($grandWithVatTotal,2)}}</p>
+						@else
+							<p>Grant Total: AED {{number_format($grandWithVatTotal,2)}}</p>
+						@endif
+						
                          
                          </td>
                     </tr>
