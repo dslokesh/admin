@@ -892,20 +892,16 @@ class VouchersController extends Controller
 					 }
 					
 			}
-			$subTotalGrand = $subTotal;
+			$withVatTotalAmount = $subTotal;
 			$vatGrand = '1.05';
-			$vatTotal = $subTotalGrand/$vatGrand;
-			$grandWithVatTotal = ($vatTotal+$subTotalGrand) - $discountTotal;
-			echo "subTotalGrand".$subTotalGrand;
-			echo "vatGrand".$vatGrand;
-			echo "vatTotal".$vatTotal;
-			echo "grandWithVatTotal".$grandWithVatTotal;
-			echo "discountTotal".$discountTotal;
-			exit;
+			$grandWithOutVatTotal = ($withVatTotalAmount/$vatGrand) - $discountTotal;
+			$grandWithVatTotal = ($withVatTotalAmount) - $discountTotal;
+			$vatTotal = ($withVatTotalAmount) - $grandWithOutVatTotal;
+			
 			
        
-return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotalGrand','grandWithVatTotal','vatTotal'));
-        $pdf = SPDF::loadView('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotalGrand','grandWithVatTotal','vatTotal'));
+return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','grandWithVatTotal','grandWithOutVatTotal','vatTotal'));
+        $pdf = SPDF::loadView('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','grandWithOutVatTotal','grandWithVatTotal','vatTotal'));
        $pdf->setPaper('A4')->setOrientation('portrait');
         return $pdf->download('Invoice'.$vid.'.pdf');
 		
