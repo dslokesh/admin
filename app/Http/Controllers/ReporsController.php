@@ -160,9 +160,23 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 			});
 		}
 		
+		if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('agent_id', '=', $data['agent_id_select']);
+			});
+		}
+		
+		$agetid = '';
+		$agetName = '';
+		if(old('agent_id')){
+		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
+		$agetid = $agentTBA->id;
+		$agetName = $agentTBA->company_name;
+		}
+		
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
-        return view('reports.soa-report', compact('records','voucherStatus'));
+        return view('reports.soa-report', compact('records','voucherStatus','agetid','agetName'));
 
     }
 	
