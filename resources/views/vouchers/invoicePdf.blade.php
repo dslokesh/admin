@@ -205,7 +205,7 @@
                         <td align="left" valign="top">
 						<div style="width:100%">
 						<p>Bank Details</p>
-						<div style="width:33%; flot:left">
+						<div style="width:33%; float:left">
                          
 						 <p>ABATERA TOURISM LLC<br/>
 Account -0033488116001  <br/> IBAN - AE530400000033488116001

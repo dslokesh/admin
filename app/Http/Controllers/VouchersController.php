@@ -895,7 +895,7 @@ class VouchersController extends Controller
 			$subTotalGrand = $subTotal;
 			$vatGrand = '1.05';
 			$vatTotal = $subTotalGrand/$vatGrand;
-			$subWithOutVat = ($subTotal - $vatTotal);
+			$subWithOutVat = ($subTotalGrand - $vatTotal);
 			$grandWithVatTotal = ($vatTotal+$subTotal) - $discountTotal;
 			
        
