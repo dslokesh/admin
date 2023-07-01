@@ -124,7 +124,7 @@
 					
 				</th>
 					<th>{{$totalCredit}}</th>
-                    <th></th>
+           
 					</tr>
                 </table>
 				<div class="pagination pull-right mt-3"> 
