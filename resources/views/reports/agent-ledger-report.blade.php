@@ -79,7 +79,6 @@
 					<th>Transaction From</th>
 					<th>Debit Amount</th>
 					<th>Credit Amount</th>
-                    <th>Cumulative Balance</th>
                   </tr>
 				  
                   </thead>
@@ -114,7 +113,6 @@
 					{{$record->amount}}
 					@endif</td>
 					
-                    <td>Cumulative Balance</td>
 					</tr>
                   </tbody>
                   @endforeach
