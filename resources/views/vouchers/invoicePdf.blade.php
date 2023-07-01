@@ -192,13 +192,11 @@
                       <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse; border-top: 2px solid #000!important;"></td>
                     </tr>
                     <tr>
-					 <td align="left" valign="top">
-						
-                        </td>
+					
                         <td align="right" valign="top">
 						<p>Sub Total: AED {{number_format($subWithOutVat,2)}}</p>
-						<p>Vat(5%): AED {{number_format($vatTotal,2)}}</p>
-                          <p>Grant Total: AED {{number_format($subTotalGrand,2)}}</p>
+						
+                         <p>Grant Total: AED {{number_format($subTotalGrand,2)}}</p>
                          
                          </td>
                     </tr>
