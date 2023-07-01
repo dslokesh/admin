@@ -122,6 +122,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		    Route::post('voucher-report-save', [ReporsController::class, 'voucherReportSave'])->name('voucherReportSave');
 			
 		 Route::get('soa-report', [ReporsController::class, 'soaReport'])->name('soaReport');
+         Route::get('soa-report-export', [ReporsController::class, 'soaReportExcel'])->name('soaReportExcel');
 		  Route::get('agent-ledger-report', [ReporsController::class, 'agentLedgerReport'])->name('agentLedgerReport');
 			
         Route::resource('users', UsersController::class);

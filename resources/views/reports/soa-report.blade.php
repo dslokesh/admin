@@ -30,7 +30,7 @@
               <div class="card-header">
 				<div class="card-tools">
 				 <div class="row">
-				 <!--<a href="{{ route('voucherReportExport', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>-->
+				<a href="{{ route('soaReportExcel', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>
 				   </div></div>
 				   
               </div>

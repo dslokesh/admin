@@ -18,6 +18,7 @@ use SiteHelpers;
 use Carbon\Carbon;
 use SPDF;
 use App\Exports\VoucherActivityExport;
+use App\Exports\SOAExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReporsController extends Controller
@@ -177,6 +178,56 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
         return view('reports.soa-report', compact('records','voucherStatus','agetid','agetName'));
+
+    }
+	
+	 public function soaReportExcel(Request $request)
+    {
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		$query = VoucherActivity::where('id','!=', null);
+		
+		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
+			
+			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
+				 $q->where('booking_date', '>=', $startDate);
+				 $q->where('booking_date', '<=', $endDate);
+				});
+		
+				}
+				}
+			}
+		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('status_main', '=', $data['booking_status']);
+			});
+		}
+		
+		if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('agent_id', '=', $data['agent_id_select']);
+			});
+		}
+		
+		$agetid = '';
+		$agetName = '';
+		if(old('agent_id')){
+		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
+		$agetid = $agentTBA->id;
+		$agetName = $agentTBA->company_name;
+		}
+		
+        $records = $query->orderBy('created_at', 'DESC')->get();
+		return Excel::download(new SOAExport($records), 'accounts_receivables_records'.date('d-M-Y s').'.csv');
 
     }
 	
