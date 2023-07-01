@@ -41,7 +41,7 @@
                     <td>{{$record->variant_name}}</td>
                     <td>{{$record->transfer_option}}
 					@if($record->transfer_option == "Shared Transfer")
-					{{($record->transferZone)?$record->transferZone->name:''}}
+					- <b>Zone :</b> {{($record->transferZone)?$record->transferZone->name:''}}
 					@endif
 					</td>
 					<td>
