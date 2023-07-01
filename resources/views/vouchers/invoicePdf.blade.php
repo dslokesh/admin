@@ -193,29 +193,35 @@
                     </tr>
                     <tr>
                         <td align="left" valign="top">
+						<div style="width:100%">
+						<div style="width:33%">
                          <p>Bank Details</p>
 						 <p>ABATERA TOURISM LLC<br/>
 Account -0033488116001  <br/> IBAN - AE530400000033488116001
 Corresponding Bank (USD) : <br/>BANK OF NEW YORK,NEW YORK, U.S.A<br/>
 SWIFT CODE (AED) : NRAKAEAK<br/> | Swift Code(USD) : IRVTUS3N<br/>
 Branch Name: Bur Dubai Branch<br/>
----------------------------------------------
- <br/>
+</div>
+ <div style="width:33%">
 
 ABATERA TOURISM LLC<br/>
 Account -1001303922 <br/> IBAN -  AE870230000001001303922<br/>
 SWIFT CODE(AED) : CBDUAEAD<br/>
 Branch Name: Immigration Branch<br/>
  
----------------------------------------------
-<br/>
+</div>
+<div style="width:33%">
  
 ABATERA TOURISM LLC  <br/>
 Account – 9622223261<br/>
 IBAN - AE850860000009622223261s<br/>
 SWIFT CODE(AED) : WIOBAEADXXX</p>
+</div>
+</div>
                         </td>
                         <td align="right" valign="top">
+						<p>Sub Total: AED {{number_format($subTotalGrand,2)}}</p>
+						<p>Vat(5%): AED {{number_format($vatTotal,2)}}</p>
                           <p>Grant Total: AED {{number_format($subTotalGrand,2)}}</p>
                          
                          </td>
@@ -239,10 +245,8 @@ SWIFT CODE(AED) : WIOBAEADXXX</p>
                       <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse; border-top: 2px solid #000!important;"></td>
                     </tr>
                     <tr>
-                        <td align="left" valign="top">
-                         
-                        </td>
-                        <td align="right" valign="middle">
+                       
+                        <td align="left" valign="middle">
 						@if($voucher->vat_invoice == 1)
 							<p>VAT Credit on this Tax Invoice can only be claimed after maturity of service date</p>
 						@endif
@@ -252,7 +256,7 @@ SWIFT CODE(AED) : WIOBAEADXXX</p>
                          </td>
                     </tr>
                     <tr>
-                      <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
+                      <td valign="top"  height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
                     </tr>
                   </table>
                 </td>
