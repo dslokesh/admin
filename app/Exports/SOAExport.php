@@ -16,7 +16,7 @@ class SOAExport implements FromView
     public function __construct($records)
     {
 		$this->records = $records;
-        dd($this->records);
+       // dd($this->records);
     }
 	
 	public function view(): View
@@ -25,6 +25,7 @@ class SOAExport implements FromView
         return view('exports.soa-export', [
             'records' => $this->records
         ]);
+
     }
 	
     
