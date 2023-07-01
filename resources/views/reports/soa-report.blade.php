@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>SOA Report</h1>
+            <h1>Accounts Receivables Report</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">SOA Report</li>
+              <li class="breadcrumb-item active">Accounts Receivables Report</li>
             </ol>
           </div>
         </div>
@@ -102,9 +102,6 @@
 					<th>Child Rate</th>
 					<th>Total Amount</th>
 					<th>Discount</th>
-					<th>Total Debit</th>
-					<th>Credit</th>
-					<th>Balance</th>
 					
                   </tr>
 				  
@@ -137,9 +134,6 @@
 					<td>{{$record->childPrice}}</td>
 					<td>{{$record->totalprice}}</td>
 					<td>{{$record->discountPrice}}</td>
-					<td>Total Debit</td>
-					<td>Credit</td>
-					<td>Balance</td>
 					</tr>
                   </tbody>
                   @endforeach

@@ -208,7 +208,7 @@
                         <td align="left" valign="top">
 						<div style="width:100%">
 						<p>Bank Details</p>
-						<div style="width:32%; float:left; border-right:1px solid #000; padding:5px">
+						<div style="width:30%; float:left; border-right:1px solid #000; padding:5px">
                          
 						 <p>ABATERA TOURISM LLC<br/>
 Account -0033488116001  <br/> IBAN - AE530400000033488116001
@@ -216,7 +216,7 @@ Corresponding Bank (USD) : <br/>BANK OF NEW YORK,NEW YORK, U.S.A<br/>
 SWIFT CODE (AED) : NRAKAEAK<br/> | Swift Code(USD) : IRVTUS3N<br/>
 Branch Name: Bur Dubai Branch</p>
 </div>
- <div style="width:32%; float:left; border-right:1px solid #000;padding:5px">
+ <div style="width:30%; float:left; border-right:1px solid #000;padding:5px">
 <p>
 ABATERA TOURISM LLC<br/>
 Account -1001303922 <br/> IBAN -  AE870230000001001303922<br/>
@@ -224,7 +224,7 @@ SWIFT CODE(AED) : CBDUAEAD<br/>
 Branch Name: Immigration Branch</p>
  
 </div>
-<div style="width:32%; float:left;padding:5px">
+<div style="width:30%; float:left;padding:5px">
  <p>
 ABATERA TOURISM LLC  <br/>
 Account – 9622223261<br/>

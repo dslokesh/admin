@@ -301,7 +301,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			   <li class="nav-item">
                 <a href="{{ route('soaReport') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-file"></i>
-                  <p>SOA Report</p>
+                  <p>Accounts Receivables Report</p>
                 </a>
               </li>
 			  @php
