@@ -17,9 +17,10 @@ use DB;
 use SiteHelpers;
 use Carbon\Carbon;
 use SPDF;
+
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\VoucherActivityExport;
 use App\Exports\SOAExport;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ReporsController extends Controller
 {
@@ -227,6 +228,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		}
 		
         $records = $query->orderBy('created_at', 'DESC')->get();
+		
 		return Excel::download(new SOAExport($records), 'accounts_receivables_records'.date('d-M-Y s').'.csv');
 
     }
