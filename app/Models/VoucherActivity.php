@@ -42,6 +42,12 @@ class VoucherActivity extends Model
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
+
+    public function transferZone()
+    {
+        return $this->belongsTo(Zone::class, 'transfer_zone', 'id');
+    }
+    
 	
 	
 }

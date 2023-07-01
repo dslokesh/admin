@@ -187,7 +187,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
-		$query = VoucherActivity::with(["voucher",'activity'])->where('id','!=', null);
+		$query = VoucherActivity::with(["voucher",'activity','transferZone'])->where('id','!=', null);
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
 			
