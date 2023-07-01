@@ -192,17 +192,28 @@
                       <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse; border-top: 2px solid #000!important;"></td>
                     </tr>
                     <tr>
+					 <td align="left" valign="top">
+						
+                        </td>
+                        <td align="right" valign="top">
+						<p>Sub Total: AED {{number_format($subWithOutVat,2)}}</p>
+						<p>Vat(5%): AED {{number_format($vatTotal,2)}}</p>
+                          <p>Grant Total: AED {{number_format($subTotalGrand,2)}}</p>
+                         
+                         </td>
+                    </tr>
                         <td align="left" valign="top">
 						<div style="width:100%">
-						<div style="width:33%">
-                         <p>Bank Details</p>
+						<p>Bank Details</p>
+						<div style="width:33%; flot:left">
+                         
 						 <p>ABATERA TOURISM LLC<br/>
 Account -0033488116001  <br/> IBAN - AE530400000033488116001
 Corresponding Bank (USD) : <br/>BANK OF NEW YORK,NEW YORK, U.S.A<br/>
 SWIFT CODE (AED) : NRAKAEAK<br/> | Swift Code(USD) : IRVTUS3N<br/>
 Branch Name: Bur Dubai Branch<br/>
 </div>
- <div style="width:33%">
+ <div style="width:33%; float:left">
 
 ABATERA TOURISM LLC<br/>
 Account -1001303922 <br/> IBAN -  AE870230000001001303922<br/>
@@ -210,7 +221,7 @@ SWIFT CODE(AED) : CBDUAEAD<br/>
 Branch Name: Immigration Branch<br/>
  
 </div>
-<div style="width:33%">
+<div style="width:33%; float:left">
  
 ABATERA TOURISM LLC  <br/>
 Account – 9622223261<br/>
@@ -219,12 +230,7 @@ SWIFT CODE(AED) : WIOBAEADXXX</p>
 </div>
 </div>
                         </td>
-                        <td align="right" valign="top">
-						<p>Sub Total: AED {{number_format($subTotalGrand,2)}}</p>
-						<p>Vat(5%): AED {{number_format($vatTotal,2)}}</p>
-                          <p>Grant Total: AED {{number_format($subTotalGrand,2)}}</p>
-                         
-                         </td>
+                        
                     </tr>
                     <tr>
                       <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
