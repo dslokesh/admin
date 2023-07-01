@@ -49,7 +49,13 @@
                             <img src="https://www.abateratourism.com/templates/shaper_travel/images/styles/style4/logo.png" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
                             <h3>Abatera Tourism LLC</h3>
                         </td>
-                        <td  align="center" valign="middle" > <h1>INVOICE</h1></td>
+                        <td  align="center" valign="middle" > <h1>
+						@if($record->vat_invoice == 1)
+							VAT INVOICE
+						@else
+							PROFORMA INVOICE
+						@endif
+						</h1></td>
                     </tr>
                     <tr>
                       <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
@@ -73,7 +79,7 @@
                         <td align="left" valign="top">
 						@if(!empty($agent))
                          <p>Invoice To</p>
-                         <p>{{$agent->name}}</p>
+                         <p>{{$agent->company_name}}</p>
                          <p>{{$agent->address}} {{$agent->address}}/{{($agent->city)?$agent->city->name:''}}/{{($agent->state)?$agent->state->name:''}}/{{($agent->country)?$agent->country->name:''}}</p>
                          <p>{{$agent->phone}},{{$agent->mobile}}</p>
                          <p>{{$agent->email }}</p>
@@ -81,12 +87,9 @@
 						 @endif
                         </td>
                         <td align="right" valign="top">
-                          <p>Invoice No.:<br/> 000{{$voucher->id}}</p>
+                          <p>Invoice No.:<br/> {{$voucher->invoice_number}}</p>
                           <p>Invoice Date.:<br/> {{date("d-M-Y")}}</p>
-						  @if(!empty($customer))
-                          <p>Guest Name: <br/>{{$customer->name}}</p>
-                          <p>Guest Mobile No.:<br/> {{$customer->mobile}}</p>
-						  @endif
+                          <p>Guest Name: <br/>{{$customer->guest_name}}</p>
                          
                          </td>
                     </tr>
@@ -114,10 +117,10 @@
                                 <thead>
                                   <tr>
                                     <th>
-                                      Tour Name/Hotel Name
+                                      Service 
                                     </th>
                                     <th>
-                                      Tour / CheckIn-CheckOut Date
+                                      Service Date
                                     </th>
                                     <th>
                                       Time Slot
@@ -156,7 +159,7 @@
 									@endif
                                     </td>
                                     <td>
-                                     
+                                     {{$voucher->agent_ref_no}}
                                     </td>
                                     <td>
 									{{number_format($ap['totalprice'],2)}}
@@ -213,7 +216,7 @@ IBAN - AE850860000009622223261s<br/>
 SWIFT CODE(AED) : WIOBAEADXXX</p>
                         </td>
                         <td align="right" valign="top">
-                          <p>Grant Total: {{number_format($subTotalGrand,2)}}</p>
+                          <p>Grant Total: AED {{number_format($subTotalGrand,2)}}</p>
                          
                          </td>
                     </tr>
@@ -240,8 +243,11 @@ SWIFT CODE(AED) : WIOBAEADXXX</p>
                          
                         </td>
                         <td align="right" valign="middle">
-                          <p>_______________________</p>
-                          <p>Authorised Signature</p>
+						@if($record->vat_invoice == 1)
+							VAT Credit on this Tax Invoice can only be claimed after maturity of service date
+						@endif
+						
+                          <p>System generated invoice no signature is required.</p>
                          
                          </td>
                     </tr>
