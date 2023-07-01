@@ -50,7 +50,7 @@
                             <h3>Abatera Tourism LLC</h3>
                         </td>
                         <td  align="center" valign="middle" > <h1>
-						@if($record->vat_invoice == 1)
+						@if($voucher->vat_invoice == 1)
 							VAT INVOICE
 						@else
 							PROFORMA INVOICE
@@ -243,8 +243,8 @@ SWIFT CODE(AED) : WIOBAEADXXX</p>
                          
                         </td>
                         <td align="right" valign="middle">
-						@if($record->vat_invoice == 1)
-							VAT Credit on this Tax Invoice can only be claimed after maturity of service date
+						@if($voucher->vat_invoice == 1)
+							<p>VAT Credit on this Tax Invoice can only be claimed after maturity of service date</p>
 						@endif
 						
                           <p>System generated invoice no signature is required.</p>
