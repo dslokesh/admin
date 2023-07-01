@@ -24,8 +24,6 @@
 					<th>Discount</th>
 					<th>Total Amount</th>
 					
-					
-					
                   </tr>
 				  
                   </thead>
