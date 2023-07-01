@@ -228,8 +228,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		}
 		
         $records = $query->orderBy('created_at', 'DESC')->get();
-		
-		return Excel::download(new SOAExport($records), 'accounts_receivables_records'.date('d-M-Y s').'.csv');
+		return Excel::download(new SOAExport($records), 'logistic_records'.date('d-M-Y s').'.csv');
+		//return Excel::download(new SOAExport($records), 'accounts_receivables_records'.date('d-M-Y s').'.csv');
 
     }
 	
