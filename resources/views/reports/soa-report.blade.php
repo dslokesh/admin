@@ -131,7 +131,7 @@
                     <td>{{$record->adult}}</td>
 					<td>{{$record->child}}</td>
 					<td>{{$record->adultPrice}}</td>
-					<td>{{$record->childPrice}}</td>
+					<td>{{($record->child > 0)?$record->childPrice:0}}</td>
 					<td>{{$record->totalprice}}</td>
 					<td>{{$record->discountPrice}}</td>
 					</tr>
