@@ -195,9 +195,9 @@
 					
                         <td align="right" valign="top">
 						
-						<p>Sub Total: AED {{number_format($subTotalGrand - $vatTotal,2)}}</p>
+						<p>Sub Total: AED {{number_format($subTotalGrand,2)}}</p>
 						<p>Vat(5%): AED {{number_format($vatTotal,2)}}</p>
-                         <p>Grant Total: AED {{number_format($subTotalGrand,2)}}</p>
+                         <p>Grant Total: AED {{number_format($grandWithVatTotal,2)}}</p>
                          
                          </td>
                     </tr>
