@@ -96,6 +96,7 @@
 					<th>Service Name</th>
                     <th>Variant</th>
                     <th>Transfer Type</th>
+					 <th>Transfer Cost</th>
                     <th>No.of Adult</th>
 					<th>No. of Child</th>
 					<th>Adult Rate</th>
@@ -126,6 +127,17 @@
 					@endphp
 						- <b>Zone :</b> {{$zone->name}}
 					
+					@endif
+					</td>
+					<td>
+					@if($record->transfer_option == "Shared Transfer")
+					@php
+					$markup_sic_transfer =  (($record->zonevalprice_without_markup) * ($record->markup_p_sic_transfer/100));
+					@endphp
+					{{$record->zonevalprice_without_markup + $markup_sic_transfer}}
+					@endif
+					@if($record->transfer_option == 'Pvt Transfer')
+					{{$record->pvt_traf_val_with_markup}}
 					@endif
 					</td>
                     <td>{{$record->adult}}</td>
