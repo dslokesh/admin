@@ -267,7 +267,7 @@ Branch Name: Bur Dubai Branch
                       <strong>ABATERA TOURISM LLC</strong><br/>
 Account -1001303922 <br/> IBAN -  AE870230000001001303922<br/>
 SWIFT CODE(AED) : CBDUAEAD<br/>
-Branch Name: Immigration Branch<
+Branch Name: Immigration Branch
                         </td>
                         <td valign="top">
                         <h3>&nbsp;</h3>
