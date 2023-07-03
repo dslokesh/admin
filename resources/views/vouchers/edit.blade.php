@@ -76,7 +76,12 @@
               </div>
 			   <div class="form-group col-md-6">
                 <label for="inputName">Guest Name: <span class="red">*</span></label>
+				@if(empty($record->guest_name))
                 <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name')?: $record->guest_name }}" class="form-control"  placeholder="Guest Name" />
+				@else
+					 <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name')?: $customer->name }}" class="form-control"  placeholder="Guest Name" />
+				@endif
+				
 				@if ($errors->has('guest_name'))
                     <span class="text-danger">{{ $errors->first('guest_name') }}</span>
                 @endif
