@@ -140,6 +140,8 @@
 					@endif
 					@php
 					$totalPerson = $record->adult + $record->child;
+					$transferCostPerPersonSIC = 0;
+					$transferCostPerPersonPVT = 0;
 					@endphp
 					</td>
 					<td>
@@ -161,8 +163,8 @@
 					</td>
                     <td>{{$record->adult}}</td>
 					<td>{{$record->child}}</td>
-					<td>{{$record->adultPrice}}</td>
-					<td>{{($record->child > 0)?$record->childPrice:0}}</td>
+					<td>{{$record->adultPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT}}</td>
+					<td>{{($record->child > 0)?$record->childPrice+ $transferCostPerPersonSIC + $transferCostPerPersonPVT:0}}</td>
 					<td>{{$record->discountPrice}}</td>
 					<td>{{$record->totalprice}}</td>
 					
