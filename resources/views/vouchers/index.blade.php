@@ -85,8 +85,13 @@
                  </select></th>
                     <th><select name="status" id="status" class="form-control">
                     <option value="" @if(request('status') =='') {{'selected="selected"'}} @endif>Select</option>
-                    <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Active</option>
-					          <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Inactive</option>
+                    <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Draft</option>
+					          <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Create Quotation</option>
+					 <option value="3" @if(request('status') ==3) {{'selected="selected"'}} @endif >In Process</option>
+					 <option value="4" @if(request('status') ==4) {{'selected="selected"'}} @endif >Confirmed</option>
+					 <option value="5" @if(request('status') ==5) {{'selected="selected"'}} @endif >Vouchered</option>
+					 <option value="6" @if(request('status') ==6) {{'selected="selected"'}} @endif >Canceled</option>
+					
                  </select></th>
                     <th></th>
                     <th></th>
@@ -109,7 +114,7 @@
 					 <td>{!! SiteHelpers::statusColorYesNo($record->is_hotel) !!}</td>
 					  <td>{!! SiteHelpers::statusColorYesNo($record->is_flight) !!}</td>
 					   <td>{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
-                     <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
+                     <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
 
@@ -165,7 +170,7 @@
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
-                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
+                            <a class="btn btn-danger btn-sm hide" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to delete this?'))
                                 {
                                     event.preventDefault();

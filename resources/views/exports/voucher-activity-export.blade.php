@@ -18,6 +18,7 @@
                     <th>C</th>
                     <th>I</th>
 					<th>SIC/PVT</th>
+					<th>PICK UP TIME</th>
 					<th>DROP OFF TIME</th>
 					<th>DRIVER NAME</th>
 					<th>SUPPLIER TICKET</th>
@@ -28,7 +29,7 @@
 					<th>ACTUAL TRANSFER COST</th>
 					<th>AGENCY</th>
 					<th>REMARKS</th>
-					<th>PICK UP TIME</th>
+					
                   </tr>
 				  
                   </thead>
@@ -55,6 +56,7 @@
 					@endif
 					
 				</td>
+				<td>{{$record->actual_pickup_time}}</td>
 					<td>{{$record->dropoff_time}}</td>
 					<td>{{$record->driver_name}}</td>
 					<td>{{($record->supplierticket)?$record->supplierticket->name:''}}</td>
@@ -75,7 +77,7 @@
 					<td>{{$record->actual_transfer_cost}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{$record->remark}}</td>
-					<td>{{$record->actual_pickup_time}}</td>
+					
                   </tr>
 				  @endforeach
                   </tbody>

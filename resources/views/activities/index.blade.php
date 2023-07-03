@@ -103,7 +103,7 @@
                               </i>
                               
                           </a>
-					 <a class="btn btn-info btn-sm" href="{{route('activities.edit',$record->id)}}">
+					 <a class="btn btn-info btn-sm " href="{{route('activities.edit',$record->id)}}">
                               <i class="fas fa-pencil-alt">
                               </i>
                               
@@ -112,7 +112,7 @@
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
-                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
+                            <a class="btn btn-danger btn-sm hide" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to delete this?'))
                                 {
                                     event.preventDefault();

@@ -53,8 +53,8 @@
               </div>
 			  <div class="col-auto col-md-3">
                   <div class="input-group mb-2">
-                    <div class="input-group-prepend"><div class="input-group-text">Form Date</div></div>
-                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepicker"  placeholder="Form Date" />
+                    <div class="input-group-prepend"><div class="input-group-text">From Date</div></div>
+                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepicker"  placeholder="From Date" />
                   </div>
                 </div>
 				<div class="col-auto col-md-3">
@@ -104,6 +104,7 @@
                     <th>C</th>
                     <th>I</th>
 					<th>SIC/PVT</th>
+					<th>PICK UP TIME</th>
 					<th>DROP OFF TIME</th>
 					<th>DRIVER NAME</th>
 					<th>SUPPLIER TICKET</th>
@@ -114,7 +115,7 @@
 					<th>ACTUAL TRANSFER COST</th>
 					<th>AGENCY</th>
 					<th>REMARKS</th>
-					<th>PICK UP TIME</th>
+					
 					
                   </tr>
 				  
@@ -146,6 +147,7 @@
 					@endif
 					
 				</td>
+				<td><input type="text" class="form-control inputsave" id="actual_pickup_time{{$record->id}}" data-name="actual_pickup_time"  data-id="{{$record->id}}" value="{{$record->actual_pickup_time}}" /></td>
 					<td><input type="text" class="form-control inputsave" id="dropoff_time{{$record->id}}" data-name="dropoff_time"  data-id="{{$record->id}}" value="{{$record->dropoff_time}}" /></td>
 					<td><input type="text" class="form-control inputsave" id="driver_name{{$record->id}}" data-name="driver_name"  data-id="{{$record->id}}" value="{{$record->driver_name}}" /></td>
 					<td>
@@ -181,7 +183,7 @@
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					
 					<td><input type="text" class="form-control inputsave" id="remark{{$record->id}}" data-name="remark"  data-id="{{$record->id}}" value="{{$record->remark}}" /></td>
-					<td><input type="text" class="form-control inputsave" id="actual_pickup_time{{$record->id}}" data-name="actual_pickup_time"  data-id="{{$record->id}}" value="{{$record->actual_pickup_time}}" /></td>
+					
 					
                   </tr>
                   </tbody>

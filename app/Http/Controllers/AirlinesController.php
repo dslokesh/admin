@@ -15,10 +15,20 @@ class AirlinesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
-        $records = Airline::orderBy('created_at', 'DESC')->paginate($perPage);
+		$query = Airline::where('id','!=', null);
+        if (isset($data['name']) && !empty($data['name'])) {
+            $query->where('name', 'like', '%' . $data['name'] . '%');
+        }
+		
+		if (isset($data['code']) && !empty($data['code'])) {
+            $query->where('code', $data['code']);
+        }
+		
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
         return view('airlines.index', compact('records'));
 

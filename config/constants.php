@@ -9,7 +9,7 @@ $siteUrl = @$_SERVER['APP_URL'];
 
 return [
 	'SITE_URL' =>$siteUrl,
-	'ADMIN_PAGE_LIMIT' => '10',
+	'ADMIN_PAGE_LIMIT' => '50',
 	'ADMIN_NAME' => 'MyQuip Admin',
 	'SITE_NAME' => 'MyQuip',
 	'SITE_FOOTER' => "© ".date('Y')." MyQuip. All Rights Reserved.",

@@ -43,22 +43,24 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </p>
             </a>
           </li>
-		    @php
+		           
+        @permission('list.countries')
+		 @php
           $class=''; $active='';
           if($controller == 'CountryController' and in_array($action,array('index','create','edit'))){
             $class = 'menu-open';
             $active = 'active';
           }
-		 
 		  
-          @endphp          
-         @role('1|2')
+          @endphp  
               <li class="nav-item">
                 <a href="{{ route('countries.index') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-flag"></i>
                   <p>Countries</p>
                 </a>
               </li>
+	@endpermission
+	 @permission('list.state')
 			  @php
           $class=''; $active='';
           if($controller == 'StateController' and in_array($action,array('index','create','edit'))){
@@ -74,6 +76,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>States</p>
                 </a>
               </li>
+			  @endpermission
+	 @permission('list.city')
 			  @php
           $class=''; $active='';
           if($controller == 'CityController' and in_array($action,array('index','create','edit'))){
@@ -89,6 +93,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Cities</p>
                 </a>
               </li>
+			    @endpermission
+	 @permission('list.zone')
 			   @php
           $class=''; $active='';
           if($controller == 'ZonesController' and in_array($action,array('index','create','edit'))){
@@ -104,6 +110,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Zones</p>
                 </a>
               </li>
+			   @endpermission
+	 @permission('list.vehicle')
 			   @php
           $class=''; $active='';
           if($controller == 'VehiclesController' and in_array($action,array('index','create','edit'))){
@@ -119,6 +127,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Vehicles</p>
                 </a>
               </li>
+			   @endpermission
+	 @permission('list.hotlecat')
 			  @php
           $class=''; $active='';
           if($controller == 'HotelCategoryController' and in_array($action,array('index','create','edit'))){
@@ -134,6 +144,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Hotel Category</p>
                 </a>
               </li>
+		@endpermission
+	 @permission('list.hotel')
 			  @php
           $class=''; $active='';
           if($controller == 'HotelController' and in_array($action,array('index','create','edit','show'))){
@@ -150,7 +162,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 </a>
               </li>
 			  
-			  
+			  @endpermission
+	 @permission('list.airline')
 			   @php
           $class=''; $active='';
           if($controller == 'AirlinesController' and in_array($action,array('index','create','edit','show'))){
@@ -164,6 +177,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Airlines</p>
                 </a>
               </li>
+			   @endpermission
+	 @permission('list.transfer')
 			   @php
           $class=''; $active='';
           if($controller == 'TransfersController' and in_array($action,array('index','create','edit','show'))){
@@ -177,6 +192,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Transfers</p>
                 </a>
               </li>
+			   @endpermission
+	 @permission('list.activity')
 			   @php
           $class=''; $active='';
           if($controller == 'ActivitiesController' and in_array($action,array('index','create','edit','show'))){
@@ -190,6 +207,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Activities</p>
                 </a>
               </li>
+			   @endpermission
+	 @permission('list.voucher')
 			   @php
           $class=''; $active='';
           if($controller == 'VouchersController' and in_array($action,array('index','create','edit','show'))){
@@ -203,6 +222,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Vouchers</p>
                 </a>
               </li>
+			   @endpermission
+	 @permission('list.customer')
 			   @php
           $class=''; $active='';
           if($controller == 'CustomersController' and in_array($action,array('index','create','edit'))){
@@ -216,7 +237,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Cutomers</p>
                 </a>
               </li>
-			
+			 @endpermission
+	 @permission('list.supplier')
 			 @php
           $class=''; $active='';
           if($controller == 'SuppliersController' and in_array($action,array('index','create','edit','show'))){
@@ -230,7 +252,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Suppliers</p>
                 </a>
               </li>
-			   @endrole    
+			   @endpermission
+	 @permission('list.subadmin')   
               @php
           $class=''; $active='';
           if($controller == 'UsersController' and in_array($action,array('index','create','edit','show'))){
@@ -240,13 +263,15 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 		 
 		  
           @endphp          
-         @role('1|2')
+        
               <li class="nav-item">
                 <a href="{{ route('users.index') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-user"></i>
                   <p>Sub Admins</p>
                 </a>
               </li>
+			  @endpermission
+	 @permission('list.agent')  
 			   @php
           $class=''; $active='';
           if($controller == 'AgentsController' and in_array($action,array('index','create','edit','show'))){
@@ -262,6 +287,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Agents</p>
                 </a>
               </li>
+			  @endpermission
+	 @permission('list.agentamount') 
 			   @php
           $class=''; $active='';
           if($controller == 'AgentAmountController' and in_array($action,array('index','create','edit','show'))){
@@ -277,7 +304,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Agent Amounts</p>
                 </a>
               </li>
-			   @endrole
+		@endpermission
+		@permission('list.logisticreport') 
 			    @php
           $class=''; $active='';
           if($controller == 'ReporsController' and in_array($action,array('voucherReport'))){
@@ -291,6 +319,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Logistic Report</p>
                 </a>
               </li>
+		@endpermission
+		@permission('list.accountsreceivables') 
 			  @php
           $class=''; $active='';
           if($controller == 'ReporsController' and in_array($action,array('soaReport'))){
@@ -304,6 +334,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Accounts Receivables</p>
                 </a>
               </li>
+	@endpermission
+		@permission('list.agent ledger') 
 			  @php
           $class=''; $active='';
           if($controller == 'ReporsController' and in_array($action,array('agentLedgerReport'))){
@@ -317,6 +349,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                   <p>Agent Ledger</p>
                 </a>
               </li>
+		@endpermission
 		@role(1)
 		@php
 		 

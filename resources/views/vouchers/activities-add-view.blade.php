@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-md-12">
 		@php
-		$tourDateArray = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date)
+		$tourDateArray = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out)
 		@endphp
           <div class="card">
            

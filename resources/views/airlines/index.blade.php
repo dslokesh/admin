@@ -49,6 +49,20 @@
                     <th>Updated On</th>
                     <th></th>
                   </tr>
+				  <tr>
+                    <form id="filterForm" method="get" action="{{route('airlines.index')}}" >
+					 <th></th>
+                    <th><input type="text" name="name" value="{{request('name')}}" class="form-control"  placeholder="Name" /></th>
+                    <th><input type="text" name="code" value="{{request('code')}}" class="form-control"  placeholder="Code" /></th>
+                    <th><button class="btn btn-info btn-sm" type="submit">Filter</button>
+                    <a class="btn btn-default btn-sm" href="{{route('airlines.index')}}">Clear</a></th>
+					<th></th>
+					
+                   
+                    <th></th>
+                   <th></th>
+                  </form>
+                  </tr>
                   </thead>
                   <tbody>
                   @foreach ($records as $record)
@@ -71,7 +85,7 @@
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
-                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
+                            <a class="btn btn-danger btn-sm hide" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to delete this?'))
                                 {
                                     event.preventDefault();

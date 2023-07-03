@@ -96,6 +96,13 @@
                     <span class="text-danger">{{ $errors->first('country_id') }}</span>
                 @endif
               </div>
+			  <div class="form-group col-md-12">
+                <label for="inputName">Remark:</label>
+                <input type="text" id="remark" name="remark" value="{{ old('remark')}}" class="form-control"  placeholder="Remark" />
+				@if ($errors->has('remark'))
+                    <span class="text-danger">{{ $errors->first('remark') }}</span>
+                @endif
+              </div>
 			   <div class="form-group col-md-6">
                 <label for="inputName">Activity: <span class="red">*</span></label>
                 <select name="is_activity" id="is_activity" class="form-control">
@@ -110,14 +117,14 @@
 					  <option value="0" @if(old('is_hotel') ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			  <div class="form-group col-md-2">
+			  <div class="form-group col-md-3">
                 <label for="inputName">Travel Date From: <span class="red">*</span></label>
                <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date')?:date('Y-m-d') }}" class="form-control datepickerdiscurdate"  placeholder="Travel Date From" />
 				  @if ($errors->has('travel_from_date'))
                     <span class="text-danger">{{ $errors->first('travel_from_date') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-2">
+			  <div class="form-group col-md-3">
                 <label for="inputName">Number Of Night: <span class="red">*</span></label>
                <select name="nof_night" id="nof_night" class="form-control">
 			   <option value="">--select--</option>
@@ -133,14 +140,14 @@
                     <span class="text-danger">{{ $errors->first('nof_night') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-2">
+			   <div class="form-group col-md-3">
                 <label for="inputName">Travel Date To: <span class="red">*</span></label>
                <input type="text" id="travel_to_date" name="travel_to_date" value="{{ old('travel_to_date') }}" class="form-control" readonly placeholder="Travel Date To" />
 				  @if ($errors->has('travel_to_date'))
                     <span class="text-danger">{{ $errors->first('travel_to_date') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-2">
+			   <div class="form-group col-md-3">
                 <label for="inputName">Vat Invoice:</label>
                <select name="vat_invoice" id="vat_invoice" class="form-control">
                     <option value="1" @if(old('vat_invoice') ==1) {{'selected="selected"'}} @endif>Yes</option>
@@ -150,14 +157,7 @@
                     <span class="text-danger">{{ $errors->first('vat_invoice') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-4">
-                <label for="inputName">Status: <span class="red">*</span></label>
-                <select name="status" id="status" class="form-control">
-                    <option value="1" @if(old('status') ==1) {{'selected="selected"'}} @endif>Active</option>
-					<option value="0" @if(old('status') ==0) {{'selected="selected"'}} @endif >Inactive</option>
-                 </select>
-				 
-              </div>
+			  
 			  <div class="form-group col-md-12">
                 <label for="inputName">Flight: <span class="red">*</span></label>
                 <select name="is_flight" id="is_flight" class="form-control">
@@ -253,9 +253,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 mb-3">
           <a href="{{ route('vouchers.index') }}" class="btn btn-secondary">Cancel</a>
           <button type="submit" name="save_and_hotel" class="btn btn-success float-right  ml-3">Save & Add Hotel</button>
+		   <button type="submit" name="save_and_activity" class="btn btn-success float-right  ml-3">Save & Add Activity</button>
 		   <button type="submit" name="save_and_view" class="btn btn-primary float-right">Save</button>
         </div>
       </div>

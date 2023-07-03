@@ -88,29 +88,30 @@
                 <label for="inputName">Country:</label>
                 {{($voucher->country)?$voucher->country->name:''}}
               </div>
+			   <div class="form-group col-lg-6 mb-3">
+                <label for="inputName">Remark:</label>
+                {{ $voucher->remark }}
+              </div>
 			  <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Vat Invoice:</label>
 				{!! SiteHelpers::statusColorYesNo($voucher->vat_invoice) !!}
               </div>
-              <div class="form-group col-lg-6 mb-3">
-			        <label for="inputName">Display Status:</label>
-					{!! SiteHelpers::statusColor($voucher->status) !!}
-              </div>
+              
 			  
 			    <div class="form-group col-lg-6 mb-3">
 			        <label for="inputName">Voucher Status:</label>
 					{!! SiteHelpers::voucherStatus($voucher->status_main) !!}
               </div>
 			  
-              <div class="col-lg-2 mb-3">
+              <div class="col-lg-6 mb-3">
                 <label for="inputName">Travel Date From:</label>
 				{{ $voucher->travel_from_date ? date(config('app.date_format'),strtotime($voucher->travel_from_date)) : null }}
               </div>
-			  <div class="col-lg-2 mb-3">
+			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Number Of Night:</label>
 				{{ $voucher->nof_night  }}
               </div>
-			   <div class="col-lg-2 mb-3">
+			   <div class="col-lg-6 mb-3">
                 <label for="inputName">Travel Date To:</label>
 				{{ $voucher->travel_to_date ? date(config('app.date_format'),strtotime($voucher->travel_to_date)) : null }}
               </div>
@@ -166,7 +167,26 @@
 		  
 				<div class="row">
         <div class="col-12">
-		
+		@if(($voucher->status_main < 5))
+		<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
+                                {{csrf_field()}}
+								<input type="hidden" id="statusv" value="6" name="statusv"  /> 
+								<input type="hidden" id="payment_date" name="payment_date"  /> 
+                            </form>
+						
+							<a class="btn btn-secondary" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to cancel this voucher?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('cancel-form').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">Cancel</a>
+			@endif
 		  @if($voucher->status_main == 1)
            <form id="status-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
                                 {{csrf_field()}}
@@ -190,24 +210,7 @@
 						@endif
 						
 						@if($voucher->status_main == 2)
-					<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
-                                {{csrf_field()}}
-								<input type="hidden" id="statusv" value="6" name="statusv"  /> 
-								<input type="hidden" id="payment_date" name="payment_date"  /> 
-                            </form>
-						
-							<a class="btn btn-secondary" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to cancel this voucher?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('cancel-form').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            ">Cancel</a>
+					
            <form id="status-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
                                 {{csrf_field()}}
 								<input type="hidden" id="statusv" value="3" name="statusv"  /> 
@@ -231,47 +234,12 @@
 						
 					@if($voucher->status_main < 4)
 					
-				<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
-                                {{csrf_field()}}
-								<input type="hidden" id="statusv" value="6" name="statusv"  /> 
-								<input type="hidden" id="payment_date" name="payment_date"  /> 
-                            </form>
-						
-							<a class="btn btn-secondary" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to cancel this voucher?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('cancel-form').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            ">Cancel</a>
 				<a class="btn btn-success float-right statusBtnChange mr-3" href="javascript:void(0)" data-status="4">Confirmed</a>
 				<a class="btn btn-info  float-right statusBtnChange mr-3" href="javascript:void(0)" data-status="5">Vouchered</a>
 				@endif
 				
 				@if($voucher->status_main == 4)
-					<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
-                                {{csrf_field()}}
-								<input type="hidden" id="statusv" value="6" name="statusv"  /> 
-								<input type="hidden" id="payment_date" name="payment_date"  /> 
-                            </form>
-						
-							<a class="btn btn-secondary" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to cancel this voucher?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('cancel-form').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            ">Cancel</a>
+					
 				<a class="btn btn-success float-right statusBtnChange" href="javascript:void(0)" data-status="5">Vouchered</a>
 				@endif
 						

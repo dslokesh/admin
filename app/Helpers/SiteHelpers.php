@@ -128,9 +128,12 @@ class SiteHelpers
 		return $zone;
     }
 	
-	public function getDateList($startDate,$endDate)
+	public function getDateList($startDate,$endDate,$blackoutDates='')
     {
-			
+			$blackDate = [];
+			if(!empty($blackoutDates)){
+				$blackDate = explode(",",$blackoutDates);
+			}
 			// Create DateTime objects from the start and end dates
 			$start = new \DateTime($startDate);
 			$end = new \DateTime($endDate);
@@ -145,7 +148,10 @@ class SiteHelpers
 			$interval = new \DateInterval('P1D'); // 1 day interval
 			$period = new \DatePeriod($start, $interval, $end);
 			foreach ($period as $date) {
-			$dates[] = $date->format('Y-m-d');
+				$dt = $date->format('Y-m-d');
+				if(!in_array($dt,$blackDate)){
+				$dates[] = $dt;
+				}
 			}
 
 		return $dates;

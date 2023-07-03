@@ -27,7 +27,8 @@ class PermissionRoleController extends Controller
         $permissions = Permission::get();
         $counts = $permissions->count();
 
-        $roles = Role::where('slug', '!=', 'admin')->where('slug', '!=', 'technician')->get();
+        //$roles = Role::where('slug', '!=', 'admin')->get();
+		$roles = Role::get();
         $role_perm = PermissionRole::orderBy('created_at', 'asc')->get();
 
         $active_perm = array();

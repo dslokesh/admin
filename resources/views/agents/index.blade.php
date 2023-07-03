@@ -114,7 +114,7 @@
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
-                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
+                            <a class="btn btn-danger btn-sm hide" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to delete this?'))
                                 {
                                     event.preventDefault();

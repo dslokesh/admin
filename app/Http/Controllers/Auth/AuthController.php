@@ -127,7 +127,7 @@ class AuthController extends Controller
 
 				$userId = Auth::user()->id;
 				$totalUserRecords = User::select('count(*) as allcount')->where('role_id',2)->count();
-				$totalAgentRecords = User::select('count(*) as allcount')->where('role_id',2)->count();
+				$totalAgentRecords = User::select('count(*) as allcount')->where('role_id',3)->count();
 				$totalSupplierRecords = Supplier::select('count(*) as allcount')->count();
 				$totalCustomerRecords = Customer::select('count(*) as allcount')->count();
 				$totalActivityRecords = Activity::select('count(*) as allcount')->count();

@@ -51,7 +51,15 @@ class VouchersController extends Controller
             if ($data['status'] == 1)
                 $query->where('status', 1);
             if ($data['status'] == 2)
-                $query->where('status', 0);
+                $query->where('status', 2);
+			if ($data['status'] == 3)
+                $query->where('status', 3);
+			if ($data['status'] == 4)
+                $query->where('status', 4);
+			if ($data['status'] == 6)
+                $query->where('status', 5);
+			if ($data['status'] == 6)
+                $query->where('status', 6);
         }
 		
 		if (isset($data['is_hotel']) && !empty($data['is_hotel'])) {
@@ -179,7 +187,8 @@ class VouchersController extends Controller
 		$record->guest_name = $request->input('guest_name');
 		$record->arrival_flight_no = $request->input('arrival_flight_no');
 		$record->depature_flight_no = $request->input('depature_flight_no');
-		$record->status = $request->input('status');
+		$record->remark = $request->input('remark');
+		$record->status = 1;
 		$record->created_by = Auth::user()->id;
         $record->save();
 		$code = 'V-'.date("Y")."-00".$record->id;
@@ -191,6 +200,15 @@ class VouchersController extends Controller
 		if ($request->has('save_and_hotel')) {
 			if($record->is_hotel == 1){
 			return redirect()->route('voucher.add.hotels',$record->id)->with('success', 'Voucher Created Successfully.');
+			}
+			else
+			{
+				return redirect()->route('vouchers.index')->with('error', 'If select hotel yes than you can add hotel.');
+			}
+		}
+		if ($request->has('save_and_activity')) {
+			if($record->is_activity == 1){
+			return redirect()->route('voucher.add.activity',$record->id)->with('success', 'Voucher Created Successfully.');
 			}
 			else
 			{
@@ -301,7 +319,8 @@ class VouchersController extends Controller
 		$record->guest_name = $request->input('guest_name');
 		$record->arrival_flight_no = $request->input('arrival_flight_no');
 		$record->depature_flight_no = $request->input('depature_flight_no');
-		$record->status = $request->input('status');
+		$record->remark = $request->input('remark');
+		$record->status = 1;
 		$record->updated_by = Auth::user()->id;
         $record->save();
 		if($record->is_hotel != 1)

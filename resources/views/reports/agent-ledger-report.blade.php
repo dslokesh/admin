@@ -50,8 +50,8 @@
               </div>
 			  <div class="col-auto col-md-3">
                   <div class="input-group mb-2">
-                    <div class="input-group-prepend"><div class="input-group-text">Form Date</div></div>
-                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepicker"  placeholder="Form Date" />
+                    <div class="input-group-prepend"><div class="input-group-text">From Date</div></div>
+                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepicker"  placeholder="From Date" />
                   </div>
                 </div>
 				<div class="col-auto col-md-3">
@@ -124,6 +124,16 @@
 					
 				</th>
 					<th>{{$totalCredit}}</th>
+           
+					</tr>
+					<tr>
+                    <th colspan="3"></th>
+					<th>Balance</th>
+					<th colspan="2">
+					{{$totalCredit - $totalDebit}}
+					
+				</th>
+					
            
 					</tr>
                 </table>
