@@ -166,14 +166,14 @@
 					<td>
 					@php
 					$totalAdultPrice = $record->adultPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
-					$totalChildPrice = $record->child + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
+					$totalChildPrice = $record->childPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
 					$vatAd = ((5/100)+$totalAdultPrice);
 					$vatCh = ((5/100)+$totalChildPrice);;
 					$totalAdultPriceWithVat = $totalAdultPrice + $vatAd;
 					$totalChildPriceWithVat = $totalChildPrice + $vatCh;
 					@endphp	
-					{{number_format($totalAdultPriceWithVat,2)}}</td>
-					<td>{{($record->child > 0)?number_format($totalChildPriceWithVat,2):0}}</td>
+					{{number_format($totalAdultPriceWithVat,2)}}/vat {{$vatAd}}/p-{{$record->adultPrice}}</td>
+					<td>{{($record->child > 0)?number_format($totalChildPriceWithVat,2):0}}/vat {{$vatCh}}/p-{{$record->childPrice}}</td>
 					<td>{{$record->discountPrice}}</td>
 					<td>{{$record->totalprice}}</td>
 					
