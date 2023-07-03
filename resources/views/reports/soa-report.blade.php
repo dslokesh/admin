@@ -167,8 +167,8 @@
 					@php
 					$totalAdultPrice = $record->adultPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
 					$totalChildPrice = $record->childPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
-					$vatAd = ((5/100)+$totalAdultPrice);
-					$vatCh = ((5/100)+$totalChildPrice);;
+					$vatAd = ((0.05)*$totalAdultPrice);
+					$vatCh = ((0.05)*$totalChildPrice);;
 					$totalAdultPriceWithVat = $totalAdultPrice + $vatAd;
 					$totalChildPriceWithVat = $totalChildPrice + $vatCh;
 					@endphp	
