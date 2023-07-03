@@ -43,21 +43,35 @@
 					- <b>Zone :</b> {{($record->transferZone)?$record->transferZone->name:''}}
 					@endif
 					</td>
-					<td>
-					@if($record->transfer_option == "Shared Transfer")
-					@php
-					$markup_sic_transfer =  (($record->zonevalprice_without_markup) * ($record->markup_p_sic_transfer/100));
-					@endphp
-					{{$record->zonevalprice_without_markup + $markup_sic_transfer}}
-					@endif
-					@if($record->transfer_option == 'Pvt Transfer')
-					{{$record->pvt_traf_val_with_markup}}
-					@endif
 					</td>
+					@php
+					$transferCostPerPersonSIC = 0;
+					$transferCostPerPersonPVT = 0;
+					$totalPerson = $record->adult + $record->child;
+					$transferCostPerPersonSIC = 0;
+					$transferCostPerPersonPVT = 0;
+					if($record->transfer_option == "Shared Transfer"){
+					$markup_sic_transfer =  (($record->zonevalprice_without_markup) * ($record->markup_p_sic_transfer/100));
+					$transferCostPerPersonSIC = ($record->zonevalprice_without_markup + $markup_sic_transfer)/$totalPerson; 
+					}
+					if($record->transfer_option == 'Pvt Transfer')
+					{
+						$transferCostPerPersonPVT = $record->pvt_traf_val_with_markup/$totalPerson;
+					}
+					
+					$totalAdultPrice = $record->adultPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
+					$totalChildPrice = $record->childPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
+					$vatAd = ((0.05)*$totalAdultPrice);
+					$vatCh = ((0.05)*$totalChildPrice);
+					$totalAdultPriceWithVat = $totalAdultPrice + $vatAd;
+					$totalChildPriceWithVat = $totalChildPrice + $vatCh;
+					@endphp
                     <td>{{$record->adult}}</td>
 					<td>{{$record->child}}</td>
-					<td>{{$record->adultPrice}}</td>
-					<td>{{($record->child > 0)?$record->childPrice:0}}</td>
+					<td>
+					
+					{{$totalAdultPriceWithVat}}</td>
+					<td>{{($record->child > 0)?$totalChildPriceWithVat:0}}</td>
 					<td>{{$record->discountPrice}}</td>
 					<td>{{$record->totalprice}}</td>
 					
