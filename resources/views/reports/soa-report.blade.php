@@ -163,9 +163,7 @@
 					@endphp
                     <td>{{$record->adult}}</td>
 					<td>{{$record->child}}</td>
-					<td>
-					
-					{{$totalAdultPriceWithVat}}</td>
+					<td>{{$totalAdultPriceWithVat}}</td>
 					<td>{{($record->child > 0)?$totalChildPriceWithVat:0}}</td>
 					<td>{{$record->discountPrice}}</td>
 					<td>{{$record->totalprice}}</td>
