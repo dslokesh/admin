@@ -104,7 +104,7 @@
 					<th>Service Name</th>
                     <th>Variant</th>
                     <th>Transfer Type</th>
-					 <th>Transfer Cost</th>
+					<th>Transfer Cost</th>
                     <th>No.of Adult</th>
 					<th>No. of Child</th>
 					<th>Adult Rate</th>
@@ -138,16 +138,22 @@
 						- <b>Zone :</b> {{$zone->name}}
 					
 					@endif
+					@php
+					$totalPerson = $record->adult + $record->child;
+					@endphp
 					</td>
 					<td>
 					@if($record->transfer_option == "Shared Transfer")
 					@php
 					$markup_sic_transfer =  (($record->zonevalprice_without_markup) * ($record->markup_p_sic_transfer/100));
+					$transferCostPerPersonSIC = ($record->zonevalprice_without_markup + $markup_sic_transfer)/$totalPerson; 
 					@endphp
-					{{$record->zonevalprice_without_markup + $markup_sic_transfer}}
+					{{$record->zonevalprice_without_markup + $markup_sic_transfer}} /{{$transferCostPerPersonSIC}}
 					@endif
 					@if($record->transfer_option == 'Pvt Transfer')
 					{{$record->pvt_traf_val_with_markup}}
+					$transferCostPerPersonPVT = $record->pvt_traf_val_with_markup/$totalPerson; 
+					{{$transferCostPerPersonPVT}} /{{$transferCostPerPersonSIC}}
 					@endif
 					</td>
                     <td>{{$record->adult}}</td>
