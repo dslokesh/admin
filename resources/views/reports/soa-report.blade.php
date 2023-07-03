@@ -151,9 +151,12 @@
 					{{$record->zonevalprice_without_markup + $markup_sic_transfer}} /{{$transferCostPerPersonSIC}}
 					@endif
 					@if($record->transfer_option == 'Pvt Transfer')
+						@php
+					$transferCostPerPersonPVT = $record->pvt_traf_val_with_markup/$totalPerson;
+					@endphp					
 					{{$record->pvt_traf_val_with_markup}}
-					$transferCostPerPersonPVT = $record->pvt_traf_val_with_markup/$totalPerson; 
-					{{$transferCostPerPersonPVT}} /{{$transferCostPerPersonSIC}}
+					
+					{{$transferCostPerPersonPVT}} 
 					@endif
 					</td>
                     <td>{{$record->adult}}</td>
