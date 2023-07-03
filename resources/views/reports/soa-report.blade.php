@@ -104,7 +104,6 @@
 					<th>Service Name</th>
                     <th>Variant</th>
                     <th>Transfer Type</th>
-					<th>Transfer Cost</th>
                     <th>No.of Adult</th>
 					<th>No. of Child</th>
 					<th>Adult Rate</th>
@@ -144,36 +143,32 @@
 					$transferCostPerPersonPVT = 0;
 					@endphp
 					</td>
-					<td>
-					@if($record->transfer_option == "Shared Transfer")
 					@php
+					$totalPerson = $record->adult + $record->child;
+					$transferCostPerPersonSIC = 0;
+					$transferCostPerPersonPVT = 0;
+					if($record->transfer_option == "Shared Transfer"){
 					$markup_sic_transfer =  (($record->zonevalprice_without_markup) * ($record->markup_p_sic_transfer/100));
 					$transferCostPerPersonSIC = ($record->zonevalprice_without_markup + $markup_sic_transfer)/$totalPerson; 
-					@endphp
-					{{$record->zonevalprice_without_markup + $markup_sic_transfer}} /{{$transferCostPerPersonSIC}}
-					@endif
-					@if($record->transfer_option == 'Pvt Transfer')
-						@php
-					$transferCostPerPersonPVT = $record->pvt_traf_val_with_markup/$totalPerson;
-					@endphp					
-					{{$record->pvt_traf_val_with_markup}}
+					}
+					if($record->transfer_option == 'Pvt Transfer')
+					{
+						$transferCostPerPersonPVT = $record->pvt_traf_val_with_markup/$totalPerson;
+					}
 					
-					{{$transferCostPerPersonPVT}} 
-					@endif
-					</td>
-                    <td>{{$record->adult}}</td>
-					<td>{{$record->child}}</td>
-					<td>
-					@php
 					$totalAdultPrice = $record->adultPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
 					$totalChildPrice = $record->childPrice + $transferCostPerPersonSIC + $transferCostPerPersonPVT;
 					$vatAd = ((0.05)*$totalAdultPrice);
-					$vatCh = ((0.05)*$totalChildPrice);;
+					$vatCh = ((0.05)*$totalChildPrice);
 					$totalAdultPriceWithVat = $totalAdultPrice + $vatAd;
 					$totalChildPriceWithVat = $totalChildPrice + $vatCh;
-					@endphp	
-					{{number_format($totalAdultPriceWithVat,2)}}/vat {{$vatAd}}/p-{{$record->adultPrice}}</td>
-					<td>{{($record->child > 0)?number_format($totalChildPriceWithVat,2):0}}/vat {{$vatCh}}/p-{{$record->childPrice}}</td>
+					@endphp
+                    <td>{{$record->adult}}</td>
+					<td>{{$record->child}}</td>
+					<td>
+					
+					{{number_format($totalAdultPriceWithVat,2)}}</td>
+					<td>{{($record->child > 0)?number_format($totalChildPriceWithVat,2):0}}</td>
 					<td>{{$record->discountPrice}}</td>
 					<td>{{$record->totalprice}}</td>
 					
