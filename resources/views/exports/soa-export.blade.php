@@ -16,7 +16,6 @@
 					<th>Service Name</th>
                     <th>Variant</th>
                     <th>Transfer Type</th>
-					 <th>Transfer Cost</th>
                     <th>No.of Adult</th>
 					<th>No. of Child</th>
 					<th>Adult Rate</th>
