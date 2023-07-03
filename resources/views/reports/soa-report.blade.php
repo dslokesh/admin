@@ -168,7 +168,7 @@
 					<td>
 					
 					{{number_format($totalAdultPriceWithVat, 2, '.', '' ))}}</td>
-					<td>{{($record->child > 0)?number_format($totalChildPriceWithVat, 2, '.', '' )):0}}</td>
+					<td>{{($record->child > 0)?number_format($totalChildPriceWithVat, 2, '.', '' ):0}}</td>
 					<td>{{$record->discountPrice}}</td>
 					<td>number_format($record->totalprice}}</td>
 					
