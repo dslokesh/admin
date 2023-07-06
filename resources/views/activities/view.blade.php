@@ -228,6 +228,9 @@
 			<div class="bg-row row p-2">
 			
 			
+			<div class="form-group col-md-12 mt-3">
+			<a class="btn btn-danger btn-sm float-right remove-btn" href="javascript:void(0)" onclick="confirm('Are you sure Delete this price block.')"><i class="fas fa-trash"></i></a>
+			</div>
 			
 			 <div class="col-lg-6 mb-3">
                 <label for="inputName">Variant Name:</label>

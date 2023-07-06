@@ -462,10 +462,12 @@ class ActivitiesController extends Controller
 		$cancellation_valueSIC = $request->input('cancellation_valueSIC');
 		$booking_window_valuePVT = $request->input('booking_window_valuePVT');
 		$cancellation_valuePVT = $request->input('cancellation_valuePVT');
+		$u_code = $request->input('u_code');
 		$data = [];
 		foreach($variant_name as $k => $v)
 		{
 			$data[] = [
+					'u_code' => $u_code[$k],	
 					'activity_id' => $request->input('activity_id'),
                     'variant_name' => $v,
 					'variant_code' => $variant_code[$k],

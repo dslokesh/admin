@@ -42,7 +42,7 @@
 			<div class="bg-row row p-2">
 			@if($k > 0)
 			<div class="form-group col-md-12 mt-3">
-			<a class="btn btn-danger btn-sm float-right remove-btn" href="javascript:void(0)">Remove Block <i class="fas fa-trash"></i></a>
+			<a class="btn btn-danger btn-sm float-right remove-btn hide" href="javascript:void(0)">Remove Block <i class="fas fa-trash"></i></a>
 			</div>
 			@endif
                 <div class="form-group col-md-3">
@@ -51,6 +51,8 @@
                 @if ($errors->has('variant_name'))
                     <span class="text-danger">{{ $errors->first('variant_name') }}</span>
                 @endif
+				
+				<input type="hidden" id="u_code{{$k}}"  name="u_code[]"  class="form-control"  value="{{(!empty($pdata->u_code))?$pdata->u_code:$activity->id.'-'.$k.time()}}" />
               </div>
 			   <div class="form-group col-md-3">
                 <label for="inputName">Variant Code: <span class="red">*</span></label>

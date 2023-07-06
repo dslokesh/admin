@@ -127,6 +127,7 @@
 				  @endphp
 				   <tr>
                     <th><input type="checkbox"  name="activity_select[]" id="activity_select{{$kk}}" value="{{ $aid }}" class="actcsk" data-inputnumber="{{$kk}}" /> {{$ap->variant_name}} - {{$ap->variant_code}}
+					<input type="hidden"  name="variant_unique_code[]" id="variant_unique_code{{$kk}}" value="{{ $ap->u_code }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_name[]" id="variant_name{{$kk}}" value="{{ $ap->variant_name }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_code[]" id="variant_code{{$kk}}" value="{{ $ap->variant_code }}" data-inputnumber="{{$kk}}" /> 
 					</th>

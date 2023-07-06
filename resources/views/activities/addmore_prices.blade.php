@@ -10,6 +10,8 @@
                 @if ($errors->has('variant_name'))
                     <span class="text-danger">{{ $errors->first('variant_name') }}</span>
                 @endif
+				
+				<input type="hidden" id="u_code{{$rowCount}}"  name="u_code[]"  class="form-control"  value="{{$activity->id.'-'.$rowCount.time()}}" />
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Variant Code: <span class="red">*</span></label>

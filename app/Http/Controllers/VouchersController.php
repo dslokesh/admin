@@ -750,6 +750,7 @@ class VouchersController extends Controller
 		$discount = $request->input('discount');
 		$totalprice = $request->input('totalprice');
 		$pickup_location = $request->input('pickup_location');
+		$variant_unique_code = $request->input('variant_unique_code');
 		
 		$data = [];
 		$total_activity_amount = 0;
@@ -760,6 +761,7 @@ class VouchersController extends Controller
 			'voucher_id' => $voucher_id,
 			'activity_id' => $activity_id,
 			'activity_vat' => $activity_vat,
+			'variant_unique_code' => $variant_unique_code[$k],
 			'variant_name' => $variant_name[$k],
 			'variant_code' => $variant_code[$k],
 			'transfer_option' => $transfer_option[$k],
