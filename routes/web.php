@@ -97,6 +97,8 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('activity-prices-edit/{id?}', [ActivitiesController::class, 'editPriceForm'])->name('activity.prices.edit');
         Route::post('activity-prices-save', [ActivitiesController::class, 'activityPriceSave'])->name('activity.prices.save');
         Route::get('activity-prices-add-new-row', [ActivitiesController::class, 'newRowAddmore'])->name('activity.prices.new.row');
+		 Route::delete('activity-prices-delete/{u_code}', [ActivitiesController::class, 'activityPricesDelete'])->name('activity.activityPricesDelete');
+		 
         Route::resource('transfers', TransfersController::class);
         Route::resource('vouchers', VouchersController::class);
         Route::get('auto-agent', [VouchersController::class, 'autocompleteAgent'])->name('auto.agent');

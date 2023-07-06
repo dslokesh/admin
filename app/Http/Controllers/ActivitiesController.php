@@ -7,6 +7,7 @@ use App\Models\Transfer;
 use App\Models\Zone;
 use App\Models\Files;
 use App\Models\ActivityPrices;
+use App\Models\VoucherActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -527,6 +528,25 @@ class ActivitiesController extends Controller
 		
 		
         return redirect('activities')->with('success', 'Activity Created Successfully.');
+    }
+	
+	
+	public function activityPricesDelete($u_code)
+    {
+       
+		$vaCount = VoucherActivity::where('variant_unique_code',$u_code);
+			if($vaCount->count() > 0){
+				$dd = $vaCount->first();
+				return redirect('activities/'.$dd->activity_id)->with('error', 'This Activity variant assigned in voucher so cannot delete.');
+			}else{
+			 $record = ActivityPrices::where('u_code',$u_code);
+			 $data = $record->first();
+			 $record->delete();
+			 return redirect('activities/'.$data->activity_id)->with('success', 'Activity Variant Deleted.');
+			}
+        
+		
+		
     }
 	
 	/**

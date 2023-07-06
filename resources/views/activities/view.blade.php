@@ -226,10 +226,25 @@
 			@foreach($priceData as $k => $pdata)
 			
 			<div class="bg-row row p-2">
-			
+			  <form id="delete-form-{{$pdata->u_code.$k}}" method="post" action="{{route('activity.activityPricesDelete',$pdata->u_code)}}" style="display:none;">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                            </form>
 			
 			<div class="form-group col-md-12 mt-3">
-			<a class="btn btn-danger btn-sm float-right remove-btn" href="javascript:void(0)" onclick="confirm('Are you sure Delete this price block.')"><i class="fas fa-trash"></i></a>
+			<a class="btn btn-danger btn-sm float-right remove-btn" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure Delete this price block?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('delete-form-{{$pdata->u_code.$k}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            "><i class="fas fa-trash"></i></a>
+			
 			</div>
 			
 			 <div class="col-lg-6 mb-3">
