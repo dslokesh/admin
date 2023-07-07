@@ -94,7 +94,7 @@
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid From: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_from{{$k}}" name="rate_valid_from[]" value="{{ date('Y-m-d',strtotime(old('rate_valid_from')?:$pdata->rate_valid_from)) }}" class="form-control datepicker"  placeholder="Rate Valid From" required="required"   />
+                <input type="text" id="rate_valid_from{{$k}}" name="rate_valid_from[]" value="{{ date('Y-m-d',strtotime(old('rate_valid_from')?:$pdata->rate_valid_from)) }}" class="form-control datepicker"  placeholder="Rate Valid From" required="required" readonly  />
                 @if ($errors->has('rate_valid_from'))
                     <span class="text-danger">{{ $errors->first('rate_valid_from') }}</span>
                 @endif
@@ -102,7 +102,7 @@
 			  
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid To: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_to{{$k}}" name="rate_valid_to[]" value="{{ date('Y-m-d',strtotime(old('rate_valid_to')?:$pdata->rate_valid_to)) }}" class="form-control datepicker"  placeholder="Rate Valid To" required="required"  />
+                <input type="text" id="rate_valid_to{{$k}}" name="rate_valid_to[]" value="{{ date('Y-m-d',strtotime(old('rate_valid_to')?:$pdata->rate_valid_to)) }}" class="form-control datepicker"  placeholder="Rate Valid To" required="required"  readonly />
                 @if ($errors->has('rate_valid_to'))
                     <span class="text-danger">{{ $errors->first('rate_valid_to') }}</span>
                 @endif
