@@ -129,7 +129,7 @@
 				<label for="inputName">Availability: <span class="red">*</span></label>
 					<div class="form-group clearfix">
 					<div class="icheck-primary d-inline">
-					<input type="checkbox" id="allDaysCheckbox" name="AllDay" value="All" {{old('AllDay') ==1)?"selected":""}}>
+					<input type="checkbox" id="allDaysCheckbox" name="AllDay" value="All" >
 					<label for="checkboxPrimary1">All Days</label>
 					</div>
 					<div class="icheck-primary d-inline">
