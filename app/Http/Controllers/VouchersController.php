@@ -112,8 +112,13 @@ class VouchersController extends Controller
 		}else{
 		$customerTBA = Customer::where('id', 1)->where('status', 1)->first();	
 		}
+		
+		if(Auth::user()->role_id == '3'){
 			
+			 return view('vouchers.createbyagent', compact('countries','airlines','customerTBA'));
+		}else{
         return view('vouchers.create', compact('countries','airlines','customerTBA'));
+		}
     }
 
     /**
@@ -247,7 +252,14 @@ class VouchersController extends Controller
 		$countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$airlines = Airline::where('status', 1)->orderBy('name', 'ASC')->get();
 		$customer = Customer::where('id',$record->customer_id)->first();
-        return view('vouchers.edit')->with(['record'=>$record,'countries'=>$countries,'airlines'=>$airlines,'customer'=>$customer]);
+		if(Auth::user()->role_id == '3'){
+			
+			return view('vouchers.editbyagent')->with(['record'=>$record,'countries'=>$countries,'airlines'=>$airlines,'customer'=>$customer]);
+		}else{
+       return view('vouchers.edit')->with(['record'=>$record,'countries'=>$countries,'airlines'=>$airlines,'customer'=>$customer]);
+		}
+		
+        
     }
 
     /**
