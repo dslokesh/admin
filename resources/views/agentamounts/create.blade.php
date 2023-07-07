@@ -65,9 +65,9 @@
               </div>
 			   <div class="form-group col-md-6 hide">
                 <label for="inputName">Payment Against:</label>
-                <select name="transaction_type" id="transaction_type" class="form-control">
-                    <option value="Debit" @if(old('transaction_type') == '1') {{'selected="selected"'}} @endif>VAT Invoice</option>
-					<option value="Credit" @if(old('transaction_type') == '0') {{'selected="selected"'}} @endif >Non VAT Invoice</option>
+                <select name="is_vat_invoice" id="is_vat_invoice" class="form-control">
+                    <option value="Debit" @if(old('is_vat_invoice') == '1') {{'selected="selected"'}} @endif>VAT Invoice</option>
+					<option value="Credit" @if(old('is_vat_invoice') == '0') {{'selected="selected"'}} @endif >Non VAT Invoice</option>
                  </select>
               </div>
 			  <div class="form-group col-md-6">

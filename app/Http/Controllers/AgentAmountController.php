@@ -90,6 +90,7 @@ class AgentAmountController extends Controller
 		$record->transaction_type = $request->input('transaction_type');
 		$record->transaction_from = 1;
 		$record->remark = $request->input('remark');
+        $record->is_vat_invoice = $request->input('is_vat_invoice');
 		$record->created_by = Auth::user()->id;
 		$record->updated_by = Auth::user()->id;
 		
