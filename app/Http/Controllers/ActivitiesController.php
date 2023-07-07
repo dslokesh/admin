@@ -79,7 +79,7 @@ class ActivitiesController extends Controller
 			'type_activity' => 'required',
 			'entry_type' => 'required',
 			'code' => 'required',
-			'featured_image' => 'required|image|max:' . ($options['allow_img_size'] * 1024),
+			'featured_image' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
 			'image.*' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
         ], [
             'title.sanitize_scripts' => 'Invalid value entered for title field.',

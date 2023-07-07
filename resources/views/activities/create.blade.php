@@ -129,7 +129,7 @@
 				<label for="inputName">Availability: <span class="red">*</span></label>
 					<div class="form-group clearfix">
 					<div class="icheck-primary d-inline">
-					<input type="checkbox" id="allDaysCheckbox" name="AllDay" value="All" >
+					<input type="checkbox" id="allDaysCheckbox" name="AllDay" value="All" {{old('AllDay') ==1)?"selected":""}}>
 					<label for="checkboxPrimary1">All Days</label>
 					</div>
 					<div class="icheck-primary d-inline">
@@ -198,7 +198,7 @@
               </div>
 			  <!--form-group-->
               <div class="form-group col-md-12">
-                  <label for="featured_image">Featured Image <span class="red">*</span></label>
+                  <label for="featured_image">Featured Image</label>
                   <input type="file" class="form-control" name="featured_image" accept="image/x-png,image/gif,image/jpeg">
                   @if ($errors->has('featured_image'))
                       <span class="text-danger">{{ $errors->first('featured_image') }}</span>
@@ -225,7 +225,7 @@
                 @endif
               </div>
 			   <div class="form-group col-md-6">
-                <label for="inputName">Inclusion: <span class="red">*</span></label>
+                <label for="inputName">Inclusion:</label>
 				
                 <textarea placeholder="Inclusion" id="inclusion" name="inclusion" cols="50" rows="10" id="inclusion" class="form-control box-size short-text-editor">{{ old('inclusion') }}</textarea>
                 @if ($errors->has('inclusion'))
@@ -233,7 +233,7 @@
                 @endif
               </div>
 			   <div class="form-group col-md-6">
-                <label for="inputName">Important Information: <span class="red">*</span></label>
+                <label for="inputName">Important Information: </label>
 				
                 <textarea placeholder="Exclusion" name="exclusion" cols="50" rows="10" id="exclusion" class="form-control box-size short-text-editor2">{{ old('exclusion') }}</textarea>
                 @if ($errors->has('exclusion'))
@@ -241,7 +241,7 @@
                 @endif
               </div>
 			   <div class="form-group col-md-12">
-                <label for="inputName">Cancellation Policy: <span class="red">*</span></label>
+                <label for="inputName">Cancellation Policy: </label>
 				
                 <textarea placeholder="Cancellation Policy" name="cancellation_policy" cols="50" rows="10" id="cancellation_policy" class="form-control box-size short-text-editor3">{{ old('cancellation_policy') }}</textarea>
                 @if ($errors->has('cancellation_policy'))
