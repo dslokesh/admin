@@ -401,9 +401,10 @@ class VouchersController extends Controller
 			$agentAmount->created_by = Auth::user()->id;
 			$agentAmount->updated_by = Auth::user()->id;
 			$agentAmount->save();
-			$receipt_no = 'VA-'.date("Y")."-00".$agentAmount->id;
+			//$receipt_no = 'VA-'.date("Y")."-00".$agentAmount->id;
 			$recordUser = AgentAmount::find($agentAmount->id);
-			$recordUser->receipt_no = $receipt_no;
+			$recordUser->receipt_no = $code;
+			$recordUser->is_vat = $record->vat_invoice;
 			$recordUser->save();
 			
 			}else{
@@ -877,7 +878,7 @@ class VouchersController extends Controller
 					//$total = ($ap->totalprice+$ap->discountPrice) - ($vatPrice);
 					$total = $ap->totalprice;
 				$dataArray[$ap->variant_code.$kkh] = [
-				'hhotelActName' => $activity->title.'-'.$ap->variant_name.'-'.$ap->variant_code,
+				'hhotelActName' => $activity->title.'-'.$ap->variant_name,
 				'TouCheckInCheckOutDate' => $ap->tour_date,
 				'adult' => $ap->adult,
 				'child' => $ap->child,

@@ -101,7 +101,6 @@ body
                         <td align="right" valign="top">
                           <p>Invoice No.:  {{$voucher->invoice_number}}</p>
                           <p>Invoice Date.: {{date("d-M-Y")}}</p>
-                          <p>Guest Name: {{$customer->guest_name}}</p>
                          
                          </td>
                     </tr>

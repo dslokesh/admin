@@ -63,7 +63,14 @@
 					<option value="Credit" @if(old('transaction_type') == 'Credit') {{'selected="selected"'}} @endif >Credit</option>
                  </select>
               </div>
-			  <div class="form-group col-md-12">
+			   <div class="form-group col-md-6 hide">
+                <label for="inputName">Payment Against:</label>
+                <select name="transaction_type" id="transaction_type" class="form-control">
+                    <option value="Debit" @if(old('transaction_type') == '1') {{'selected="selected"'}} @endif>VAT Invoice</option>
+					<option value="Credit" @if(old('transaction_type') == '0') {{'selected="selected"'}} @endif >Non VAT Invoice</option>
+                 </select>
+              </div>
+			  <div class="form-group col-md-6">
                 <label for="inputName">Remark:</label>
                  <input type="text" id="remark" name="remark" value="{{ old('remark') }}" class="form-control"  placeholder="Remark" />
 				  @if ($errors->has('remark'))
