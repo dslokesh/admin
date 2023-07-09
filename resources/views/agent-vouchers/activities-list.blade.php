@@ -52,7 +52,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col-md-3">
-              <img src="{{asset('uploads/activities/'.$record->image)}}" class="img-fluid" style="width: 200px;height:200px" />
+              <img src="{{asset('uploads/activities/'.$record->image)}}" class="img-fluid" style="width: 278px;height:173px" />
             </div>
             <div class="col-md-6">
               <h2 class="card-title" style="color: #000"><strong>{{$record->title}}</strong></h2>
