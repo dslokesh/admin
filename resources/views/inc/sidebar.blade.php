@@ -288,6 +288,22 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 </a>
               </li>
 			  @endpermission
+        @php
+        $class=''; $active='';
+        if($controller == 'AgentVouchersController' and in_array($action,array('index','create','edit','show'))){
+          $class = 'menu-open';
+          $active = 'active';
+        }
+   
+    
+        @endphp     
+     <li class="nav-item hide">
+              <a href="{{ route('agent-vouchers.index') }}" class="nav-link {{$active}}">
+                 <i class="nav-icon fas fa-user"></i>
+                <p>Agents Booking</p>
+              </a>
+            </li>
+
 	 @permission('list.agentamount') 
 			   @php
           $class=''; $active='';

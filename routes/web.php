@@ -24,6 +24,7 @@ use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\VouchersController;
 use App\Http\Controllers\ReporsController;
 use App\Http\Controllers\AgentAmountController;
+use App\Http\Controllers\AgentVouchersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,6 +124,14 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		   Route::get('voucher-report-export', [ReporsController::class, 'voucherReportExport'])->name('voucherReportExport');
 		    Route::post('voucher-report-save', [ReporsController::class, 'voucherReportSave'])->name('voucherReportSave');
 			
+           Route::resource('agent-vouchers', AgentVouchersController::class);
+           Route::get('agent-add-activity-vouchers/{vid?}', [AgentVouchersController::class, 'addActivityList'])->name('agent-vouchers.add.activity');
+           Route::get('agent-activity-view-vouchers/{aid?}/{vid?}', [AgentVouchersController::class, 'addActivityView'])->name('agent-vouchers.activity.view');
+           Route::post('agent-activity-get-variant/{aid?}/{vid?}', [AgentVouchersController::class, 'getActivityVariant'])->name('get-agent-vouchers.activity.variant');
+           Route::post('agent-voucher-activity-save', [AgentVouchersController::class, 'activitySaveInVoucher'])->name('agent-voucher.activity.save');
+           Route::delete('agent-voucher-activity-delete/{id}', [AgentVouchersController::class, 'destroyActivityFromVoucher'])->name('agent.voucher.activity.delete');
+           Route::post('agent-voucher-status-change/{id}', [AgentVouchersController::class, 'statusChangeVoucher'])->name('agent.vouchers.status.change');
+
 		 Route::get('soa-report', [ReporsController::class, 'soaReport'])->name('soaReport');
          Route::get('soa-report-export', [ReporsController::class, 'soaReportExcel'])->name('soaReportExcel');
 		  Route::get('agent-ledger-report', [ReporsController::class, 'agentLedgerReport'])->name('agentLedgerReport');

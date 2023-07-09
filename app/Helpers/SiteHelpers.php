@@ -159,6 +159,7 @@ class SiteHelpers
 	
 	public function voucherStatus($val)
     {
+		$color = '';
 		$voucherStatus = config("constants.voucherStatus");
 		if($val ==1)
 		{
