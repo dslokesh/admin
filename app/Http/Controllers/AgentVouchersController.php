@@ -7,20 +7,14 @@ use App\Models\Airline;
 use App\Models\User;
 use App\Models\Customer;
 use App\Models\Country;
-use App\Models\VoucherAirline;
-use App\Models\HotelCategory;
-use App\Models\State;
-use App\Models\City;
 use App\Models\Zone;
-use App\Models\VoucherHotel;
 use App\Models\Hotel;
+use App\Models\VoucherHotel;
 use App\Models\Activity;
 use App\Models\ActivityPrices;
-use App\Models\AgentPriceMarkup;
 use App\Models\TransferData;
 use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
-use DB;
 use SiteHelpers;
 use Carbon\Carbon;
 use SPDF;
@@ -329,11 +323,11 @@ class AgentVouchersController extends Controller
     public function destroy($id)
     {
         $record = Voucher::find($id);
-		$voucherHotel = VoucherHotel::where('voucher_id',$id)->delete();
+		//$voucherHotel = VoucherHotel::where('voucher_id',$id)->delete();
 		$voucherActivity = VoucherActivity::where('voucher_id',$id)->delete();
 		
         $record->delete();
-        return redirect('agent-vouchers.vouchers')->with('success', 'Voucher Deleted.');
+        return redirect('agent-vouchers')->with('success', 'Voucher Deleted.');
     }
 	
 	
@@ -662,4 +656,22 @@ class AgentVouchersController extends Controller
 	return \Response::make($content,200, $headers);
     }
 	
+
+	public function autocompleteHotel(Request $request)
+    {
+		$search  = $request->get('search');
+		$zone  = $request->get('zone');
+		
+        $hotels = Hotel::where('zone_id', $zone)
+					->where('status', 1)
+					->where('name', 'LIKE', '%'. $search. '%')
+					->get();
+		$response = array();
+		
+      foreach($hotels as $hotel){
+         $response[] = array("value"=>$hotel->name,"label"=>$hotel->name);
+      }
+	
+        return response()->json($response);
+    }
 }

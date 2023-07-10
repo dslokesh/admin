@@ -189,5 +189,13 @@ class SiteHelpers
 		 return $color;
 	}
 	
+	public function getActivityLowPrice($activity_id,$agent_id)
+    {
+		$ap = ActivityPrices::where('activity_id', $activity_id)->orderBy('adult_rate_without_vat', 'asc')->first();
+		$markup = self::getAgentMarkup($agent_id,$activity_id,$ap->variant_code);
+		$adult_rate = ActivityPrices::where('activity_id', $activity_id)->orderBy('adult_rate_without_vat', 'asc')->value('adult_rate_without_vat');
+
+		return $adult_rate + $markup['ticket_only'];
+    }
 	
 }

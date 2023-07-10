@@ -30,9 +30,9 @@
               <div class="card-header">
 				<div class="card-tools">
           @if($voucherActivityCount > 0)
-          <a href="{{ route('agent-vouchers.index') }}" class="btn btn-sm btn-success">
+          <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-sm btn-success">
             <i class="fas fa-shopping-cart"></i>
-            View Cart({{$voucherActivityCount}})
+            Checkout({{$voucherActivityCount}})
         </a> 
         @endif
 				 <a href="{{ route('agent-vouchers.index') }}" class="btn btn-sm btn-info">
@@ -41,12 +41,34 @@
                   </a> 
                  
 				   </div>
+           
               </div>
+              <div class="">
+                <div class="col-12 pt-2">
+                <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
+                  <div class="form-row align-items-center">
+            
+                    <div class="col-auto col-md-8">
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend"><div class="input-group-text">Activity Name</div></div>
+                        <input type="text" name="name" value="{{ request('name') }}" class="form-control"  placeholder="Activity Name" />
+                      </div>
+                    </div>
+                   
+                   
+                  <div class="col-auto col-md-4">
+                    <button class="btn btn-info mb-2" type="submit">Filter</button>
+                    <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
+                  </div>
+                </form>
+              </div></div>
               <!-- /.card-header -->
              <div class="card-body">
-               
+             
                   @foreach ($records as $record)
-				  
+				  @php
+            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id);
+          @endphp
                    <!-- Default box -->
       <div class="card collapsed-card">
         <div class="card-header">
@@ -75,7 +97,7 @@
               <span style="color: #000;">
               From 
               <br/>
-              AED 380
+              AED {{$minPrice}}
               <br/>
               </span>
               <br/>

@@ -98,7 +98,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('activity-prices-edit/{id?}', [ActivitiesController::class, 'editPriceForm'])->name('activity.prices.edit');
         Route::post('activity-prices-save', [ActivitiesController::class, 'activityPriceSave'])->name('activity.prices.save');
         Route::get('activity-prices-add-new-row', [ActivitiesController::class, 'newRowAddmore'])->name('activity.prices.new.row');
-		 Route::delete('activity-prices-delete/{u_code}', [ActivitiesController::class, 'activityPricesDelete'])->name('activity.activityPricesDelete');
+		Route::delete('activity-prices-delete/{u_code}', [ActivitiesController::class, 'activityPricesDelete'])->name('activity.activityPricesDelete');
 		 
         Route::resource('transfers', TransfersController::class);
         Route::resource('vouchers', VouchersController::class);
@@ -115,27 +115,28 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('activity-view-vouchers/{aid?}/{vid?}', [VouchersController::class, 'addActivityView'])->name('voucher.activity.view');
         Route::post('get-pvt-transfer-amount', [VouchersController::class, 'getPVTtransferAmount'])->name('voucher.getPVTtransferAmount');
 		Route::post('voucher-activity-save', [VouchersController::class, 'activitySaveInVoucher'])->name('voucher.activity.save');
-		 Route::delete('voucher-activity-delete/{id}', [VouchersController::class, 'destroyActivityFromVoucher'])->name('voucher.activity.delete');
-		
-		 Route::get('voucher-activity-itinerary-Pdf/{vid?}', [VouchersController::class, 'voucherActivityItineraryPdf'])->name('voucherActivityItineraryPdf');
-		  Route::get('voucher-invoice-Pdf/{vid?}', [VouchersController::class, 'voucherInvoicePdf'])->name('voucherInvoicePdf');
-		  
-		   Route::get('voucher-report', [ReporsController::class, 'voucherReport'])->name('voucherReport');
-		   Route::get('voucher-report-export', [ReporsController::class, 'voucherReportExport'])->name('voucherReportExport');
-		    Route::post('voucher-report-save', [ReporsController::class, 'voucherReportSave'])->name('voucherReportSave');
-			
-           Route::resource('agent-vouchers', AgentVouchersController::class);
-           Route::get('agent-add-activity-vouchers/{vid?}', [AgentVouchersController::class, 'addActivityList'])->name('agent-vouchers.add.activity');
-           Route::get('agent-activity-view-vouchers/{aid?}/{vid?}', [AgentVouchersController::class, 'addActivityView'])->name('agent-vouchers.activity.view');
-           Route::post('agent-activity-get-variant/{aid?}/{vid?}', [AgentVouchersController::class, 'getActivityVariant'])->name('get-agent-vouchers.activity.variant');
-           Route::post('agent-voucher-activity-save', [AgentVouchersController::class, 'activitySaveInVoucher'])->name('agent-voucher.activity.save');
-           Route::delete('agent-voucher-activity-delete/{id}', [AgentVouchersController::class, 'destroyActivityFromVoucher'])->name('agent.voucher.activity.delete');
-           Route::post('agent-voucher-status-change/{id}', [AgentVouchersController::class, 'statusChangeVoucher'])->name('agent.vouchers.status.change');
+        Route::delete('voucher-activity-delete/{id}', [VouchersController::class, 'destroyActivityFromVoucher'])->name('voucher.activity.delete');
 
-		 Route::get('soa-report', [ReporsController::class, 'soaReport'])->name('soaReport');
-         Route::get('soa-report-export', [ReporsController::class, 'soaReportExcel'])->name('soaReportExcel');
-		  Route::get('agent-ledger-report', [ReporsController::class, 'agentLedgerReport'])->name('agentLedgerReport');
-			
+        Route::get('voucher-activity-itinerary-Pdf/{vid?}', [VouchersController::class, 'voucherActivityItineraryPdf'])->name('voucherActivityItineraryPdf');
+        Route::get('voucher-invoice-Pdf/{vid?}', [VouchersController::class, 'voucherInvoicePdf'])->name('voucherInvoicePdf');
+
+        Route::get('voucher-report', [ReporsController::class, 'voucherReport'])->name('voucherReport');
+        Route::get('voucher-report-export', [ReporsController::class, 'voucherReportExport'])->name('voucherReportExport');
+        Route::post('voucher-report-save', [ReporsController::class, 'voucherReportSave'])->name('voucherReportSave');
+
+        Route::resource('agent-vouchers', AgentVouchersController::class);
+        Route::get('agent-add-activity-vouchers/{vid?}', [AgentVouchersController::class, 'addActivityList'])->name('agent-vouchers.add.activity');
+        Route::get('agent-activity-view-vouchers/{aid?}/{vid?}', [AgentVouchersController::class, 'addActivityView'])->name('agent-vouchers.activity.view');
+        Route::post('agent-activity-get-variant/{aid?}/{vid?}', [AgentVouchersController::class, 'getActivityVariant'])->name('get-agent-vouchers.activity.variant');
+        Route::post('agent-voucher-activity-save', [AgentVouchersController::class, 'activitySaveInVoucher'])->name('agent-voucher.activity.save');
+        Route::delete('agent-voucher-activity-delete/{id}', [AgentVouchersController::class, 'destroyActivityFromVoucher'])->name('agent.voucher.activity.delete');
+        Route::post('agent-voucher-status-change/{id}', [AgentVouchersController::class, 'statusChangeVoucher'])->name('agent.vouchers.status.change');
+        Route::get('auto-hotel', [AgentVouchersController::class, 'autocompleteHotel'])->name('auto.hotel');
+
+        Route::get('soa-report', [ReporsController::class, 'soaReport'])->name('soaReport');
+        Route::get('soa-report-export', [ReporsController::class, 'soaReportExcel'])->name('soaReportExcel');
+        Route::get('agent-ledger-report', [ReporsController::class, 'agentLedgerReport'])->name('agentLedgerReport');
+        
         Route::resource('users', UsersController::class);
 		Route::resource('agentamounts', AgentAmountController::class);
 		Route::post('voucher-status-change/{id}', [VouchersController::class, 'statusChangeVoucher'])->name('voucher.status.change');

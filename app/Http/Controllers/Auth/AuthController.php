@@ -59,15 +59,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-
-        $credentials = $request->only('email', 'password');
-        $credentials['role_id'] = 4;
-        if (Auth::attempt($credentials)) {
-            return redirect()->route('login')->with('error', 'Oops! Please login from the app.');
-        }else{
+        
             $credentials = $request->only('email', 'password');
             $credentials['is_active'] = 1;
-            //pr($credentials); die;
+           // pr($credentials); die;
             if (Auth::attempt($credentials)) {
                 return redirect()->intended('dashboard')
                             ->withSuccess('You have Successfully loggedin.');
@@ -78,8 +73,6 @@ class AuthController extends Controller
                 }
             }
 
-        }   
-          
 		return redirect()->route('login')->with('error', 'Oops! You have entered invalid credentials.');
     }
       

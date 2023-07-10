@@ -45,13 +45,11 @@
                     <th>Agency</th>
 					<th>Customer</th>
 					<th>Country</th>
-					<th>Hotel</th>
-					<th>Flight</th>
+				
 					<th>Activity</th>
                     <th>Status</th>
                     <th>Created</th>
                     <th>Updated</th>
-					<th>Hotels</th>
 					
 					<th width="7%">Activities</th>
 					<th>Invoice</th>
@@ -68,16 +66,8 @@
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  /></th>
 					<th>Customer</th>
 					<th>Country</th>
-					<th><select name="is_hotel" id="is_hotel" class="form-control">
-                    <option value="" @if(request('is_hotel') =='') {{'selected="selected"'}} @endif>Select</option>
-                    <option value="1" @if(request('is_hotel') ==1) {{'selected="selected"'}} @endif>Yes</option>
-					          <option value="2" @if(request('is_hotel') ==2) {{'selected="selected"'}} @endif >No</option>
-                 </select></th>
-					<th><select name="is_flight" id="is_flight" class="form-control">
-                    <option value="" @if(request('is_flight') =='') {{'selected="selected"'}} @endif>Select</option>
-                    <option value="1" @if(request('is_flight') ==1) {{'selected="selected"'}} @endif>Yes</option>
-					          <option value="2" @if(request('is_flight') ==2) {{'selected="selected"'}} @endif >No</option>
-                 </select></th>
+				
+				
 					<th><select name="is_activity" id="is_activity" class="form-control">
                     <option value="" @if(request('is_activity') =='') {{'selected="selected"'}} @endif>Select</option>
                     <option value="1" @if(request('is_activity') ==1) {{'selected="selected"'}} @endif>Yes</option>
@@ -94,7 +84,7 @@
 					
                  </select></th>
                     <th></th>
-                    <th></th>
+                   
 					<th></th>
 					
 					<th ></th>
@@ -111,23 +101,13 @@
                     <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ ($record->customer)?$record->customer->name:''}}</td>
 					<td>{{ ($record->countr)?$record->country->name:''}}</td>
-					 <td>{!! SiteHelpers::statusColorYesNo($record->is_hotel) !!}</td>
-					  <td>{!! SiteHelpers::statusColorYesNo($record->is_flight) !!}</td>
+					
 					   <td>{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
                      <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
 
-					 <td>
-					 @if($record->is_hotel == 1)
-					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.add.hotels',$record->id)}}">
-                              <i class="fas fa-plus">
-                              </i>
-                             
-                          </a>
-						  @endif
-						  </td>
-						   
+					
 					 <td>
 					 @if($record->is_activity == 1)
 					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.add.activity',$record->id)}}">
