@@ -346,7 +346,8 @@ $(document).on('click', '.loadvari', function(evt) {
     // $("#pickup_location_td"+inputnumber).css("display","block");
      $("body #transfer_zone"+inputnumber).prop('required',true);
    } else if(t_option_val == 3){
-    // $("body #top").attr("colspan",2);
+     $("body #top").attr("colspan",2);
+	 $("body .coltd").css("display","block")
      //$("#pickup_location_td"+inputnumber).css("display","block");
      var activity_id = $("body #activity_id").val();
      let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());

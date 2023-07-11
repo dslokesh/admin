@@ -674,4 +674,74 @@ class AgentVouchersController extends Controller
 	
         return response()->json($response);
     }
+	
+	public function statusChangeVoucher(Request $request,$id)
+    {
+		$data = $request->all();
+		
+		$record = Voucher::find($id);
+		
+		$agent = User::find($record->agent_id);
+		if(!empty($agent))
+		{
+			$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
+			
+			$agentAmountBalance = $agent->agent_amount_balance;
+			
+			if($agentAmountBalance >= $record->total_activity_amount)
+			{
+			
+			if($record->vat_invoice == 1)
+			{
+			$code = 'VIN-100'.$record->id;
+			}else{
+			$code = 'WVIN-100'.$record->id;
+			}
+			
+			$record->guest_name = $data['fname'].' '.$data['lname'];
+			$record->agent_ref_no = $data['agent_ref_no'];
+			$record->remark = $data['remark'];
+			$record->invoice_number = $code;
+			$record->updated_by = Auth::user()->id;
+			$record->status_main = 4;
+			$record->payment_date = $paymentDate;
+			$record->save();
+			//$agent->agent_amount_balance -= $record->total_activity_amount;
+			//$agent->save();
+			
+			/* $agentAmount = new AgentAmount();
+			$agentAmount->agent_id = $record->agent_id;
+			$agentAmount->amount = $record->total_activity_amount;
+			$agentAmount->date_of_receipt = date("Y-m-d");
+			$agentAmount->transaction_type = "Debit";
+			$agentAmount->transaction_from = 2;
+			$agentAmount->created_by = Auth::user()->id;
+			$agentAmount->updated_by = Auth::user()->id;
+			$agentAmount->save();
+			$recordUser = AgentAmount::find($agentAmount->id);
+			$recordUser->receipt_no = $code;
+			$recordUser->is_vat = $record->vat_invoice;
+			$recordUser->save(); */
+			
+			}else{
+				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');
+			}
+			
+		}else{
+				 return redirect()->back()->with('error', 'Agency  Name not found this voucher.');
+			}
+		
+	
+		
+        return redirect()->route('agentVoucherView',$record->id)->with('success', 'Voucher Created Successfully.');
+    }
+	
+	 public function agentVoucherView($vid)
+    {
+		$voucher = Voucher::find($vid);
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
+	
+		$voucherStatus = config("constants.voucherStatus");
+        return view('agent-vouchers.bookedview', compact('voucher','voucherActivity','voucherStatus'));
+    }
 }

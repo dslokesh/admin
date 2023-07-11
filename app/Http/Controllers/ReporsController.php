@@ -14,6 +14,7 @@ use App\Models\VoucherActivity;
 use App\Models\AgentAmount;
 use App\Models\Supplier;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use SiteHelpers;
 use Carbon\Carbon;
 use SPDF;
@@ -242,12 +243,18 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
-		$query = AgentAmount::where('id','!=', null);
-		
 		$s = 0;
-		if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
-				$query->where('agent_id', '=', $data['agent_id_select']);
-				$s = 1;
+		$query = AgentAmount::where('id','!=', null);
+		if(Auth::user()->role_id == '3')
+		{
+			$query->where('agent_id', '=', Auth::user()->id);
+		}
+		else
+		{
+			if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+					$query->where('agent_id', '=', $data['agent_id_select']);
+					$s = 1;
+			}
 		}
 		
 		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {

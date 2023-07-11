@@ -27,7 +27,7 @@
         <div class="row">
 		
           <!-- left column -->
-          <div class="col-md-8">
+          <div class="col-md-12">
 		   <form id="cusDetails" method="post" action="{{route('agent.vouchers.status.change',$voucher->id)}}" >
 			 {{ csrf_field() }}
             <!-- general form elements -->
@@ -40,34 +40,33 @@
             
                 <div class="card-body">
                   <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-2">
-                      <select class="form-control">
-                        <option>Mr.</option>
-                        <option>Mrs.</option>
-                        <option>Miss</option>
-                      </select>
+                    
+                    <div class="col-6">
+					<label for="inputName">Guest Name:</label>
+                     {{$voucher->guest_name}}
                     </div>
-                    <div class="col-5">
-                      <input type="text" name="fname"  class="form-control" placeholder="First Name" required>
+                   
+                
+                    <div class="col-6">
+					<label for="inputName">Email:</label>
+                     {{$voucher->agent->email}}
                     </div>
-                    <div class="col-5">
-                      <input type="text" name="lname"  class="form-control" placeholder="Last Name" required>
+                   
+                    <div class="col-6">
+					  <label for="inputName">Mobile No.:</label>
+                     {{$voucher->agent->mobile}}
                     </div>
-                  </div>
-                  <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-4">
-                      <input type="text" readonly value="{{$voucher->agent->email}}" class="form-control" placeholder="Email ID">
-                    </div>
-                    <div class="col-4">
-                      <input type="text" readonly value="{{$voucher->agent->mobile }}" class="form-control" placeholder="Mobile No.">
-                    </div>
-                    <div class="col-4">
-                      <input type="text" name="agent_ref_no" class="form-control" placeholder="Agent Reference No." required>
+                    <div class="col-6">
+                      
+					   <label for="inputName">Agent Reference No.:</label>
+                     {{$voucher->agent_ref_no}}
                     </div>
                   </div>
                   <div class="row" style="margin-bottom: 5px;">
                     <div class="col-12">
-                      <textarea type="text" class="form-control" style="resize:none;" name="remark" placeholder="Remark" rows="5"></textarea>
+					 <label for="inputName">Remark.:</label>
+                     {{$voucher->remark}}
+                     
                     </div>
                    
                   </div>
@@ -96,12 +95,13 @@
                   <div class="row" style="margin-bottom: 15px;">
                     <div class="col-12"><p>{{$activity->title}} - {{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
                     <div class="col-6">
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
-					
+					<label for="inputName">Pickup Location:</label>
+					{{$ap->pickup_location}}
                      
                     </div>
                     <div class="col-6">
-					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+					<label for="inputName">Remark:</label>
+					{{$ap->remark}}
                     </div>
                   </div>
 				   @endif
@@ -115,50 +115,10 @@
             </div>
             <!-- /.card -->
 
-            <div class="card card-default">
-              <div class="card-header">
-               <h3 class="card-title"><i class="nav-icon fas fa-credit-card" style="color:blueviolet"></i>  Payment Options</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-            
-                <div class="card-body">
-                  <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-12">
-                      <input type="radio" disabled name="payment"  /> Credit Card / Debit Card
-                    </div>
-                  </div>
-                  <div class="row" style="margin-bottom: 5px;">
-                    <div class="col-12">
-                      <input type="radio" checked name="payment"  /> Credit Limit ({{($voucher->agent->agent_amount_balance)?$voucher->agent->agent_amount_balance:0}})
-                    </div>
-                   
-                  </div>
-                </div>
-                <!-- /.card-body -->
-
-               
-            </div>
+           
             <!-- /.card -->
  <!-- general form elements -->
- <div class="card card-default">
-  
-   
-
-    <div class="card-footer">
-      <div class="row" style="margin-bottom: 5px;">
-        <div class="col-md-10 text-left">
-          <input type="checkbox" name="tearmcsk" required id="tearmcsk" /> By clicking Pay Now you agree that you have read ad understood our<br>
-          &nbsp; &nbsp; &nbsp; &nbsp;Terms and Conditions
-		  <br><label id="tearmcsk_message" for="tearmcsk" class="error hide" >This field is required.</label>
-        </div>
-        <div class="col-2 text-right">
-            <button type="buttion" onclick="addToBasket()" class="btn btn-primary">Submit</button>
-        </div>
-      </div>
-    </div>
-
-</div>
+ 
 <!-- /.card -->
 
             <!-- Horizontal Form -->
@@ -168,7 +128,7 @@
           </div>
           <!--/.col (left) -->
           <!-- right column -->
-          <div class="col-md-4">
+          <div class="col-md-12">
             <!-- Form Element sizes -->
 			@php
 				$totalGrand =0; 
@@ -187,22 +147,7 @@
                       <strong> {{$activity->title}}</strong></h3>
                   </div>
 				<div class="col-md-4 text-right">
-                    <form id="delete-form-{{$ap->id}}" method="post" action="{{route('agent.voucher.activity.delete',$ap->id)}}" style="display:none;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                            </form>
-                            <a class="btn-danger btn-sm" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to delete this?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('delete-form-{{$ap->id}}').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            "><i class="fas fa-trash"></i></a>
+                   
                     
                   </div>
 				   </div>

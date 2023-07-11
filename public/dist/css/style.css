@@ -170,3 +170,10 @@ header.profile-header {
 }
 .btn:hover{color:#fff !important;}
 .btn-default:hover{color:#000 !important;}
+
+.card-title {
+    color: #212529;
+}
+.error{
+	color:#dc3545;
+}

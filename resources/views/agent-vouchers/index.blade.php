@@ -99,7 +99,7 @@
                   <tr>
 				  <td>{{ ($record->code)}}</td>
                     <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
-					<td>{{ ($record->customer)?$record->customer->name:''}}</td>
+					<td>{{ ($record->guest_name)?$record->guest_name:''}}</td>
 					<td>{{ ($record->countr)?$record->country->name:''}}</td>
 					
 					   <td>{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
@@ -110,11 +110,13 @@
 					
 					 <td>
 					 @if($record->is_activity == 1)
+						 @if($record->status_main < 4)
 					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.add.activity',$record->id)}}">
                               <i class="fas fa-plus">
                               </i>
                              
                           </a>
+						  @endif
 						  @endif
 						  </td>
 						  <td>
@@ -136,11 +138,14 @@
 						  @endif
 						  </td>
                      <td>
-					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.show',$record->id)}}">
+					 @if($record->status_main > 3)
+					 
+					 <a class="btn btn-info btn-sm" href="{{route('agentVoucherView',$record->id)}}">
                               <i class="fas fa-eye">
                               </i>
                               
                           </a>
+					@endif
 					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.edit',$record->id)}}">
                               <i class="fas fa-pencil-alt">
                               </i>
