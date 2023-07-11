@@ -53,7 +53,20 @@
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
               </div>
-			  
+			   <div class="form-group col-md-6">
+                     <label for="inputName">Password </label>
+                     <input type="password" class="form-control" id="password" name="password" placeholder="password" value="" >
+                     @if ($errors->has('password'))
+                     <span class="text-danger">{{ $errors->first('password') }}</span>
+                     @endif
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label for="inputName">Confirm Password </label>
+                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" value="" >
+                     @if ($errors->has('password_confirmation'))
+                     <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                     @endif
+                  </div>
             <div class="form-group col-md-6">
 			  <label for="inputName">Country: <span class="red">*</span></label>
                 <select name="country_id" id="country_id" class="form-control">

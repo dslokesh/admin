@@ -67,6 +67,8 @@
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
               </div>
+			 
+				  
 			  @if($record->image)
 			  <div class="form-group col-md-4">
 			@else
@@ -83,7 +85,20 @@
                 <img src="{{ url('/uploads/users/thumb/'.$record->image) }}" width="50"  alt="airlines-logo" />
               </div>
               @endif
-			 
+			  <div class="form-group col-md-6">
+                     <label for="inputName">Password </label>
+                     <input type="password" class="form-control" id="password" name="password" placeholder="password" value="" >
+                     @if ($errors->has('password'))
+                     <span class="text-danger">{{ $errors->first('password') }}</span>
+                     @endif
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label for="inputName">Confirm Password </label>
+                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" value="" >
+                     @if ($errors->has('password_confirmation'))
+                     <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                     @endif
+                  </div>
 			   <div class="form-group col-md-6">
                 <label for="inputName">Department:</label>
                 <input type="text" id="department" name="department" value="{{ old('department') ?: $record->department }}" class="form-control"  placeholder="Department" />

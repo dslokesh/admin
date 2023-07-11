@@ -16,6 +16,7 @@ use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
 use DB;
 use Image;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class AgentsController extends Controller
@@ -332,6 +333,13 @@ class AgentsController extends Controller
 			}
             $record->image = $newName;
 		}
+		
+		 if(!empty($request->input('password'))){
+            request()->validate([
+                'password' => 'required|alpha_num|between:6,20|confirmed',
+            ]);
+            $record->password = bcrypt(trim($request->input('password')));
+        }
 		
 		$record->name = $request->input('first_name');
         $record->lname = $request->input('last_name');

@@ -364,7 +364,13 @@ class UsersController extends Controller
             $user->image = $newName;
 		}
 
-        
+        if(!empty($request->input('password'))){
+            request()->validate([
+                'password' => 'required|alpha_num|between:6,20|confirmed',
+            ]);
+			
+            $user->password = bcrypt(trim($request->input('password')));
+        }
         $user->name = $request->input('first_name');
         $user->lname = $request->input('last_name');
         $user->country_id = $request->input('country_id');
