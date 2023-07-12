@@ -271,88 +271,8 @@
 
 
 @section('scripts')
-<script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js
-"></script>
-
-
-
 
 <script type="text/javascript">
-  $(function(){
-
-
-	 $(document).on('change', '.inputsave', function(evt) {
-		
-		$("#loader-overlay").show();
-		$.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-		$.ajax({
-            url: "{{route('voucherReportSave')}}",
-            type: 'POST',
-            dataType: "json",
-            data: {
-               id: $(this).data('id'),
-			   inputname: $(this).data('name'),
-			   val: $(this).val()
-            },
-            success: function( data ) {
-               //console.log( data );
-			  $("#loader-overlay").hide();
-            }
-          });
-	 }); 
-
-	 var path = "{{ route('auto.hotel') }}";
-	 var inputElement = $(this); // Store reference to the input element
-
-	 $(".autocom").each(function() {
-    var inputElement = $(this);
-    inputElement.autocomplete({
-        source: function(request, response) {
-            $.ajax({
-                url: path,
-                type: 'GET',
-                dataType: "json",
-                data: {
-                    search: request.term,
-                    zone: inputElement.attr('data-zone')
-                },
-                success: function(data) {
-                    response(data);
-                }
-            });
-        },
-        select: function(event, ui) {
-            $('#pickup_location' + inputElement.data('id')).val(ui.item.label);
-            return false;
-        },
-        change: function(event, ui) {
-            if (ui.item == null) {
-                $('#pickup_location' + inputElement.data('id')).val('');
-            }
-        }
-    });
-});
-
-
-	});
-	
-	function addToBasket() {   
-    if ($('#cusDetails').valid()) {
-       if ($("#tearmcsk").is(":checked"))
-	   {
-		    $("#tearmcsk_message").addClass('hide');
-			$('#cusDetails').submit();
-	   }
-	   else
-	   {
-		   $("#tearmcsk_message").removeClass('hide');
-	   }
-    }
-}
-
+ 
 </script>
 @endsection

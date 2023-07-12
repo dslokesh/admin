@@ -125,8 +125,12 @@ class AuthController extends Controller
 				$totalCustomerRecords = Customer::select('count(*) as allcount')->count();
 				$totalActivityRecords = Activity::select('count(*) as allcount')->count();
                 $totalHotelRecords = Hotel::select('count(*) as allcount')->count();
-
+				
+				if(Auth::user()->role_id == '3'){
+					 return view('dashboard-agent', compact('totalUserRecords','totalAgentRecords','totalSupplierRecords','totalCustomerRecords','totalActivityRecords','totalHotelRecords'));
+				}else{
                 return view('dashboard', compact('totalUserRecords','totalAgentRecords','totalSupplierRecords','totalCustomerRecords','totalActivityRecords','totalHotelRecords'));
+				}
            
         }
   

@@ -147,13 +147,14 @@
 
     <div class="card-footer">
       <div class="row" style="margin-bottom: 5px;">
-        <div class="col-md-10 text-left">
+        <div class="col-md-8 text-left">
           <input type="checkbox" name="tearmcsk" required id="tearmcsk" /> By clicking Pay Now you agree that you have read ad understood our<br>
           &nbsp; &nbsp; &nbsp; &nbsp;Terms and Conditions
 		  <br><label id="tearmcsk_message" for="tearmcsk" class="error hide" >This field is required.</label>
         </div>
-        <div class="col-2 text-right">
-            <button type="buttion" onclick="addToBasket()" class="btn btn-primary">Submit</button>
+        <div class="col-4 text-right">
+			<button type="submit" name="btn_hold" class="btn btn-primary">Hold</button>
+            <button type="submit" name="btn_paynow" class="btn btn-success">Pay Now</button>
         </div>
       </div>
     </div>
@@ -334,7 +335,7 @@
 
 <script type="text/javascript">
   $(function(){
-
+$('#cusDetails').validate({});
 
 	 $(document).on('change', '.inputsave', function(evt) {
 		
@@ -395,19 +396,6 @@
 
 	});
 	
-	function addToBasket() {   
-    if ($('#cusDetails').valid()) {
-       if ($("#tearmcsk").is(":checked"))
-	   {
-		    $("#tearmcsk_message").addClass('hide');
-			$('#cusDetails').submit();
-	   }
-	   else
-	   {
-		   $("#tearmcsk_message").removeClass('hide');
-	   }
-    }
-}
 
 </script>
 @endsection

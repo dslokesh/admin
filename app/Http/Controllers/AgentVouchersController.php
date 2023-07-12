@@ -211,6 +211,10 @@ class AgentVouchersController extends Controller
     public function show($vid)
     {
 		$voucher = Voucher::find($vid);
+		if($voucher->status_main  > 3)
+		{
+			return redirect()->route('agentVoucherView',$voucher->id);
+		}
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
 		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
 	
@@ -380,7 +384,10 @@ class AgentVouchersController extends Controller
 		$typeActivities = config("constants.typeActivities"); 
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucher = Voucher::find($vid);
-		
+		if($voucher->status_main  > 3)
+		{
+			return redirect()->route('agentVoucherView',$voucher->id);
+		}
         $query = Activity::with('prices')->where('status',1)->where('is_price',1);
 	
         if (isset($data['name']) && !empty($data['name'])) {
@@ -389,8 +396,11 @@ class AgentVouchersController extends Controller
        
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		//dd($records);
+		if($voucher->status_main > 3){
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
-
+		} else { 
+		$voucherActivityCount = 0;
+		}
         return view('agent-vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount'));
 		
        
@@ -680,11 +690,12 @@ class AgentVouchersController extends Controller
 		$data = $request->all();
 		
 		$record = Voucher::find($id);
-		
+		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
+		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
 		if(!empty($agent))
 		{
-			$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
+			
 			
 			$agentAmountBalance = $agent->agent_amount_balance;
 			
@@ -698,18 +709,19 @@ class AgentVouchersController extends Controller
 			$code = 'WVIN-100'.$record->id;
 			}
 			
+			$record->booking_date = date("Y-m-d");
 			$record->guest_name = $data['fname'].' '.$data['lname'];
 			$record->agent_ref_no = $data['agent_ref_no'];
 			$record->remark = $data['remark'];
 			$record->invoice_number = $code;
 			$record->updated_by = Auth::user()->id;
-			$record->status_main = 4;
+			$record->status_main = 5;
 			$record->payment_date = $paymentDate;
 			$record->save();
-			//$agent->agent_amount_balance -= $record->total_activity_amount;
-			//$agent->save();
+			$agent->agent_amount_balance -= $record->total_activity_amount;
+			$agent->save();
 			
-			/* $agentAmount = new AgentAmount();
+			$agentAmount = new AgentAmount();
 			$agentAmount->agent_id = $record->agent_id;
 			$agentAmount->amount = $record->total_activity_amount;
 			$agentAmount->date_of_receipt = date("Y-m-d");
@@ -720,16 +732,29 @@ class AgentVouchersController extends Controller
 			$agentAmount->save();
 			$recordUser = AgentAmount::find($agentAmount->id);
 			$recordUser->receipt_no = $code;
-			$recordUser->is_vat = $record->vat_invoice;
-			$recordUser->save(); */
+			$recordUser->is_vat_invoice = $record->vat_invoice;
+			$recordUser->save(); 
 			
 			}else{
 				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');
 			}
 			
-		}else{
+		}
+		else{
 				 return redirect()->back()->with('error', 'Agency  Name not found this voucher.');
 			}
+		
+		}
+		else if ($request->has('btn_hold')) {
+			$record->booking_date = date("Y-m-d");
+			$record->guest_name = $data['fname'].' '.$data['lname'];
+			$record->agent_ref_no = $data['agent_ref_no'];
+			$record->remark = $data['remark'];
+			$record->updated_by = Auth::user()->id;
+			$record->status_main = 4;
+			$record->payment_date = $paymentDate;
+			$record->save();
+		}
 		
 	
 		

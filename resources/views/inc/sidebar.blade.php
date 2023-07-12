@@ -19,7 +19,13 @@ $controller = preg_replace('/.*\\\/', '', $controller);
       @endif  
     </div>
       <div class="info">
-      <a href="#" class="d-block">{{auth()->user()->full_name}}</a>
+      <a href="#" class="d-block">
+	  @if(auth()->user()->role_id == '3')
+		  {{auth()->user()->company_name}}
+	  @else
+	  {{auth()->user()->full_name}}
+	@endif
+  </a>
       </div>
   </div>
     <!-- Sidebar -->
@@ -288,6 +294,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 </a>
               </li>
 			  @endpermission
+			  @permission('agency.voucher.booking') 
         @php
         $class=''; $active='';
         if($controller == 'AgentVouchersController' and in_array($action,array('index','create','edit','show'))){
@@ -296,14 +303,15 @@ $controller = preg_replace('/.*\\\/', '', $controller);
         }
    
     
-        @endphp     
-     <li class="nav-item hide">
+        @endphp 
+		
+     <li class="nav-item ">
               <a href="{{ route('agent-vouchers.index') }}" class="nav-link {{$active}}">
-                 <i class="nav-icon fas fa-user"></i>
-                <p>Agents Booking</p>
+                 <i class="nav-icon fas fa-gift"></i>
+                <p>My Booking</p>
               </a>
             </li>
-
+@endpermission
 	 @permission('list.agentamount') 
 			   @php
           $class=''; $active='';
