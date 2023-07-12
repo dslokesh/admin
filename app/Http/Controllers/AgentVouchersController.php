@@ -33,9 +33,10 @@ class AgentVouchersController extends Controller
 		 $perPage = config("constants.ADMIN_PAGE_LIMIT");
 		 $data = $request->all();
 		$query = Voucher::where('id','!=', null)->where("agent_id",Auth::user()->id);
-		if (isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+		
+		/* if (isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
             $query->where('agent_id', $data['agent_id_select']);
-        }
+        } */
 		
 		if (isset($data['code']) && !empty($data['code'])) {
             $query->where('code', 'like', '%' . $data['code'] . '%');
@@ -56,7 +57,7 @@ class AgentVouchersController extends Controller
                 $query->where('status', 6);
         }
 		
-		if (isset($data['is_hotel']) && !empty($data['is_hotel'])) {
+		/* if (isset($data['is_hotel']) && !empty($data['is_hotel'])) {
             if ($data['is_hotel'] == 1)
                 $query->where('is_hotel', 1);
             if ($data['is_hotel'] == 2)
@@ -75,7 +76,7 @@ class AgentVouchersController extends Controller
                 $query->where('is_activity', 1);
             if ($data['is_activity'] == 2)
                 $query->where('is_activity', 0);
-        }
+        } */
 		
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		$agetid = '';
