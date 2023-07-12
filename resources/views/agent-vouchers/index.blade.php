@@ -42,6 +42,7 @@
                   <thead>
                   <tr>
 					<th>Code</th>
+					
                     <th>Agency</th>
 					<th>Customer</th>
 					<th>Country</th>
@@ -62,8 +63,10 @@
 				   <form id="filterForm" method="get" action="{{route('agent-vouchers.index')}}" >
 				   <tr>
 					<th><input type="text" name="code" value="{{request('code')}}" autocomplete="off" class="form-control"  placeholder="Code" /></th>
-                    <th><input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
-					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  /></th>
+                    <th>
+					 @if(Auth::user()->role_id !='3')
+					<input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
+					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />@endif</th>
 					<th>Customer</th>
 					<th>Country</th>
 				
