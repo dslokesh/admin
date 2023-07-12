@@ -769,7 +769,7 @@ class VouchersController extends Controller
 		$total_activity_amount = 0;
 		foreach($activity_select as $k => $v)
 		{
-			
+			if($totalprice[$k] > 0){
 			$data[] = [
 			'voucher_id' => $voucher_id,
 			'activity_id' => $activity_id,
@@ -799,6 +799,7 @@ class VouchersController extends Controller
                 ];
 
 				$total_activity_amount +=$totalprice[$k];
+			}
 		}
 		
 		if(count($data) > 0)

@@ -397,11 +397,9 @@ class AgentVouchersController extends Controller
        
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		//dd($records);
-		if($voucher->status_main > 3){
+		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
-		} else { 
-		$voucherActivityCount = 0;
-		}
+		
         return view('agent-vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount'));
 		
        
