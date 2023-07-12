@@ -86,7 +86,13 @@
                     <span class="text-danger">{{ $errors->first('guest_name') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-3 ">
+			   <div class="form-group col-md-3">
+			  <label for="inputName">Booking For: <span class="red">*</span></label>
+             
+                <input type="text" disabled  value="Dubai/Abu Dhabi"/>
+              </div>
+			  
+			  <div class="form-group col-md-3 hide">
 			  <label for="inputName">Country: <span class="red">*</span></label>
                 <select name="country_id" id="country_id" class="form-control" disabled="disabled">
 				<option value="">--select--</option>
