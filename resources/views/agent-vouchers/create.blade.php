@@ -75,7 +75,7 @@
 			  <div class="form-group col-md-3">
 			  <label for="inputName">Booking For: <span class="red">*</span></label>
              
-                <input type="text" disabled  value="Dubai/Abu Dhabi"/>
+                <input type="text" class="form-control" disabled  value="Dubai/Abu Dhabi"/>
               </div>
 			    <div class="form-group col-md-3 hide">
                 <label for="inputName">Country: <span class="red">*</span></label>
