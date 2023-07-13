@@ -520,7 +520,7 @@ class AgentVouchersController extends Controller
 	
  public function voucherActivityItineraryPdf(Request $request, $vid)
     {
-		$voucher = Voucher::find($vid);
+		$voucher = Voucher::where('id',$vid)->where('agent_id',Auth::user()->id)->first();
 		if (empty($voucher)) {
             return abort(404); //record not found
         }
@@ -541,7 +541,7 @@ class AgentVouchersController extends Controller
 	
 	public function voucherInvoicePdf(Request $request, $vid)
     {
-		$voucher = Voucher::find($vid);
+		$voucher = Voucher::where('id',$vid)->where('agent_id',Auth::user()->id)->first();
 		if (empty($voucher)) {
             return abort(404); //record not found
         }
@@ -661,7 +661,7 @@ class AgentVouchersController extends Controller
     {
 		$data = $request->all();
 		
-		$record = Voucher::find($id);
+		$record = Voucher::where('id',$id)->where('agent_id',Auth::user()->id)->first();
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
@@ -735,7 +735,7 @@ class AgentVouchersController extends Controller
 	
 	 public function agentVoucherView($vid)
     {
-		$voucher = Voucher::find($vid);
+		$voucher =  Voucher::where('id',$vid)->where('agent_id',Auth::user()->id)->first();
 		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
 	
 		$voucherStatus = config("constants.voucherStatus");
