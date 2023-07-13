@@ -832,7 +832,14 @@ class VouchersController extends Controller
 	
  public function voucherActivityItineraryPdf(Request $request, $vid)
     {
+		exit;
+		if(Auth::user()->role_id == '3'){
+		$voucher = Voucher::where('id',$vid)->where('agent_id',Auth::user()->id)->first();
+		}else{
 		$voucher = Voucher::find($vid);
+		}
+		
+		
 		if (empty($voucher)) {
             return abort(404); //record not found
         }
@@ -882,7 +889,11 @@ class VouchersController extends Controller
 	
 	public function voucherInvoicePdf(Request $request, $vid)
     {
+		if(Auth::user()->role_id == '3'){
+		$voucher = Voucher::where('id',$vid)->where('agent_id',Auth::user()->id)->first();
+		}else{
 		$voucher = Voucher::find($vid);
+		}
 		if (empty($voucher)) {
             return abort(404); //record not found
         }

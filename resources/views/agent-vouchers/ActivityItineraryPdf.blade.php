@@ -1,394 +1,243 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-<meta charset="utf-8">
-<title>Contract</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-$primary: #3F51B5;
-$dark-primary: #303F9F;
-$light-primary: #C5CAE9;
-$text: #FFFFFF;
-$primary-text: #212121;
-$secondary-text: #757575;
-$accent: #FF4081;
-
-section {
-  padding: 100px 0;
-}
-
-html, body {
-  overflow-x: hidden;
-}
-
-body {
-  font-family: 'Roboto';
-  font-size: 17px;
-  font-weight: 400;
-  background-color: #eee;
-}
-
-h1 {
-  font-size: 200%;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-weight: 400;
-}
-
-header {
-	background: $primary;
-	color: $text;
-	padding: 150px 0;
-
-	p {
-		font-family: 'Allura';
-		color: rgba(255, 255, 255, .2);
-		margin-bottom: 0;
-		font-size: 60px;
-		margin-top: -30px;
-
-	}
-}
-
-.timeline {
-
-	position: relative;
-
-	&::before {
-		content: '';
-		background: $light-primary;
-		width: 5px;
-		height: 95%;
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-	}
-}
-
-.timeline-item {
-	width: 100%;
-	margin-bottom: 70px;
-
-	&:nth-child(even) {
-
-		.timeline-content {
-			float: right;
-			padding: 40px 30px 10px 30px;
-
-			.date {
-				right: auto;
-				left: 0;
-			}
-
-			&::after {
-				content: '';
-				position: absolute;
-				border-style: solid;
-				width: 0;
-				height: 0;
-				top: 30px;
-				left: -15px;
-				border-width: 10px 15px 10px 0;
-				border-color: transparent #f5f5f5 transparent transparent;
-			}
-		}
-	}
-
-	&::after {
-		content: '';
-		display: block;
-		clear: both;
-	}
-}
-
-
-.timeline-content {
-	position: relative;
-	width: 45%;
-	padding: 10px 30px;
-	border-radius: 4px;
-	background: #f5f5f5;
-	box-shadow: 0 20px 25px -15px rgba(0, 0, 0, .3);
-
-	&::after {
-		content: '';
-		position: absolute;
-		border-style: solid;
-		width: 0;
-		height: 0;
-		top: 30px;
-		right: -15px;
-		border-width: 10px 0 10px 15px;
-		border-color: transparent transparent transparent #f5f5f5;
-	}
-}
-
-.timeline-img {
-	width: 30px;
-	height: 30px;
-	background: $primary;
-	border-radius: 50%;
-	position: absolute;
-	left: 50%;
-	margin-top: 25px;
-	margin-left: -15px;
-}
-
-a {
-	background: $primary;
-	color: $text;
-	padding: 8px 20px;
-	text-transform: uppercase;
-	font-size: 14px;
-	margin-bottom: 20px;
-	margin-top: 10px;
-	display: inline-block;
-	border-radius: 2px;
-	box-shadow: 0 1px 3px -1px rgba(0, 0, 0, .6);
-
-	&:hover, &:active, &:focus {
-		background: darken($primary, 10%);
-		color: $text;
-		text-decoration: none;
-	}
-
-}
-
-.timeline-card {
-	padding: 0!important;
-
-	p {
-		padding: 0 20px;
-	}
-
-	a {
-		margin-left: 20px;
-	}
-}
-
-.timeline-item {
-  .timeline-img-header {
-			background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0, .4)), url('https://picsum.photos/1000/800/?random') center center no-repeat;
-			background-size: cover;
-		}
-}
-
-.timeline-img-header {
-
-	height: 200px;
-	position: relative;
-	margin-bottom: 20px;
-
-	h2 {
-		color: $text;
-		position: absolute;
-		bottom: 5px;
-		left: 20px;
-	}
-}
-
-blockquote {
-	margin-top: 30px;
-	color: $secondary-text;
-	border-left-color: $primary;
-	padding: 0 20px;
-}
-
-.date {
-	background: $accent;
-	display: inline-block;
-	color: $text;
-	padding: 10px;
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
-@media screen and (max-width: 768px) {
-
-	.timeline {
-
-		&::before {
-			left: 50px;
-		}
-
-		.timeline-img {
-			left: 50px;
-		}
-
-		.timeline-content {
-			max-width: 100%;
-			width: auto;
-			margin-left: 70px;
-		}
-
-		.timeline-item {
-
-			&:nth-child(even) {
-
-				.timeline-content {
-					float: none;
-
-				}
-			}
-
-			&:nth-child(odd) {
-
-				.timeline-content {
-					
-					&::after {
-						content: '';
-						position: absolute;
-						border-style: solid;
-						width: 0;
-						height: 0;
-						top: 30px;
-						left: -15px;
-						border-width: 10px 15px 10px 0;
-						border-color: transparent #f5f5f5 transparent transparent;
-					}
-				}
-
-			}
-		}
-	}
-	
-}
-
-</style>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Itinerary</title>
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
+<!-- font-family: 'Poppins', sans-serif; -->
+<body style="margin:0 auto; font-family: 'Inter', sans-serif; ">
+  <table style="width: 780px; margin: 0 auto;  border: solid 1px #f1f1f1; padding: 40px;" cellpadding="0"
+    cellspacing="0">
+    <tbody>
+      <tr>
+        <td>
+        	<div style="width: 220px;">
+        		<span style="display: block;font-size: 28px;">
+        		<b>{{$voucher->guest_name}}</b> Trip to
+        		<span style="display:block;font-size: 66px;font-weight: bold;color: #1732bb;font-family: initial;">Dubai</span>
+        	</div>
+        </td>
+        <td valign="bottom" colspan="2" align="right" >
+	        <div style="width: 330px; margin-left: auto; font-size: 13px;">
+	        	<img src="{{asset('images/1.png')}}" style="max-width: 120px">    
+	        </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" style="">
+          <div style=" padding: 20px 40px">
+          	<img src="{{asset('images/2.jpg')}}" style="width: 100%;border-radius: 30px">
+          </div>
+        </td>
+      </tr>
 
-<body>
-<header>
-  <div class="container text-center">
-    <h1>Vertical Timeline</h1>
-    <p>Sava Lazic</p>
-  </div>
-</header>
-
-<section class="timeline">
-  <div class="container">
-    <div class="timeline-item">
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content js--fadeInLeft">
-        <h2>Title</h2>
-        <div class="date">1 MAY 2016</div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias, ullam.</p>
-        <a class="bnt-more" href="javascript:void(0)">More</a>
-      </div>
-    </div> 
-
-    <div class="timeline-item">
-
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content timeline-card js--fadeInRight">
-        <div class="timeline-img-header">
-          <h2>Card Title</h2>
-        </div>
-        <div class="date">25 MAY 2016</div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias, ullam.</p>
-        <a class="bnt-more" href="javascript:void(0)">More</a>
-      </div>
-
-    </div>   
-
-    <div class="timeline-item">
-
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content js--fadeInLeft">
-        <div class="date">3 JUN 2016</div>
-        <h2>Quote</h2>
-        <blockquote>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta explicabo debitis omnis dolor iste fugit totam quasi inventore!</blockquote>
-      </div>
-    </div>   
-
-    <div class="timeline-item">
-
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content js--fadeInRight">
-        <h2>Title</h2>
-        <div class="date">22 JUN 2016</div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias, ullam.</p>
-        <a class="bnt-more" href="javascript:void(0)">More</a>
-      </div>
-    </div>   
-
-    <div class="timeline-item">
-
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content timeline-card js--fadeInLeft">
-        <div class="timeline-img-header">
-          <h2>Card Title</h2>
-        </div>
-        <div class="date">10 JULY 2016</div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias, ullam.</p>
-        <a class="bnt-more" href="javascript:void(0)">More</a>
-      </div>
-    </div>   
-
-    <div class="timeline-item">
-
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content timeline-card js--fadeInRight">
-        <div class="timeline-img-header">
-          <h2>Card Title</h2>
-        </div>
-        <div class="date">30 JULY 2016</div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias, ullam.</p>
-        <a class="bnt-more" href="javascript:void(0)">More</a>
-      </div>
-    </div>  
-
-    <div class="timeline-item">
-
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content js--fadeInLeft">
-        <div class="date">5 AUG 2016</div>
-        <h2>Quote</h2>
-        <blockquote>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta explicabo debitis omnis dolor iste fugit totam quasi inventore!</blockquote>
-      </div>
-    </div>   
-
-    <div class="timeline-item">
-
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content timeline-card js--fadeInRight">
-        <div class="timeline-img-header">
-          <h2>Card Title</h2>
-        </div>
-        <div class="date">19 AUG 2016</div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias, ullam.</p>
-        <a class="bnt-more" href="javascript:void(0)">More</a>
-      </div>
-    </div>  
-
-    <div class="timeline-item">
-
-      <div class="timeline-img"></div>
-
-      <div class="timeline-content js--fadeInLeft">
-        <div class="date">1 SEP 2016</div>
-        <h2>Title</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime ipsa ratione omnis alias cupiditate saepe atque totam aperiam sed nulla voluptatem recusandae dolor, nostrum excepturi amet in dolores. Alias, ullam.</p>
-        <a class="bnt-more" href="javascript:void(0)">More</a>
-      </div>
-    </div>   
-
-
-
-  </div>
-</section>
-
+      <tr>
+      	<td>
+			<div style="display: block;">
+				<p style="margin-bottom: 0">Start Date:{{$voucher->travel_from_date}}</p>
+				<p style="margin-top: 5px">End Date:{{$voucher->travel_to_date}}</p>
+			</div>       		
+      	</td>
+      	<td align="right" colspan="2">
+			<div style="display: block; float: right; text-align: left;">
+				<p style="margin-bottom: 0">Quote ID:{{$voucher->code}}</p>
+				<p style="margin-top: 5px;font-weight: bold"></p>
+			</div>      		
+      	</td>
+      </tr>
+      <tr style="">
+        <td style="padding-top: 20px" colspan="3">
+          <span style=" display: flex; gap:10px">
+          	<span><img src="{{asset('images/2.jpg')}}" style="max-width: 40px"></span>
+          	<span style="font-size: 20px;font-weight: 600">Inclusions</span>
+          </span>
+          	<ul style="padding-left: 20px; margin-bottom: 30px">
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Meet & greet at arrival</li>
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Sightseeing in shared vehicle</li>
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Pick and Drop at time of arrival/departure</li>
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Driver's allowance, Road tax and Fuel charges</li>
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Breakfast</li>
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">124th Floor Burj Khalifa Visit</li>
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Dubai city tour</li>
+          	</ul>
+          </div>
+        </td>
+      </tr>
+      <tr>
+      	<td colspan="3">
+      		<div style="background: #2300c1; border-radius: 30px; border: dashed 3px #f1f1f1; display: flex; align-items: center;">
+      			<div style="flex: 0 0 0 0 calc(65% - 40px );background: #ffffffc7;border-radius: 30px;border: dashed 3px #f1f1f1;padding:20px;margin-top:-3px; margin-bottom: -3px; margin-left: -3px">
+      				<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Adult : AED {{$dataArray['adultP']}} X {{$dataArray['adult']}}</h6>
+      				<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Child : AED {{$dataArray['childP']}} X {{$dataArray['child']}} </h6>
+      				
+      				<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Infant : AED {{$dataArray['infantP']}}</h6>
+      				<p style="font-size: 13px;margin-bottom: 0">Note: All above prices are subject to change without prior notice as per availability, the final date of travel and any changes in taxes.</p>
+      			</div>
+      			<div style="flex: 0 0  35%; text-align: center;">
+      				<h4 style="color: #fff;font-size: 32px;font-weight: 600; margin-bottom: 5px">AED {{$dataArray['totalPrice']}}</h4>
+      				<h6 style="font-size: 22px;color: #fff;margin-top: 0;">Total</h6>
+      			</div>
+      		</div>
+      	</td>
+      </tr>
+      <tr>
+        <td style="font-size: 20px; font-weight: bold; padding-top: 30px !important; padding: 30px 5px 5px;">
+          <img src="{{asset('images/1.png')}}" alt="" style="max-width: 150px">
+        </td>
+        <td style=" font-size: 16px;  padding-top: 30px !important; padding: 5px;">
+          <div style="margin-left: auto; display: flex;  align-items:center; justify-content: flex-end;">
+      		<span>
+      			<img src="{{asset('images/4.png')}}" alt="" style="max-width: 35px">
+      		</span>
+      		<span style="padding-left: 15px">
+      			<p style="margin-top: 0; margin-bottom:0">info@abatera.com</p>
+      			<p style="margin-bottom: 0; margin-top: 5px">+971 566036693</p>
+      		</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+      	<td>
+			<div style="display: block; padding-top: 20px">
+			<p style="margin-bottom: 0">Start Date:{{$voucher->travel_from_date}}</p>
+				<p style="margin-top: 5px">End Date:{{$voucher->travel_to_date}}</p>
+				
+			</div>      		
+      	</td>
+      	<td align="right" colspan="2">
+			<div style="display: block; float: right; text-align: left; padding-top: 20px">
+				<p style="margin-bottom: 0">Quote ID:{{$voucher->code}}</p>
+				<p style="margin-top: 5px;font-weight: bold; margin-bottom: 0"></p>
+			</div>      		
+      	</td>
+      </tr>
+      <tr>
+      	<td colspan="3">
+		@if(!empty($voucherHotel))
+			@foreach($voucherHotel as $vh)
+      		<div style="padding-top: 30px;display: flex;">
+      			<div style="min-width:220px;width: 220px; height: 220px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;">
+      				<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
+      			</div>
+      			<div style="padding-left: 15px">
+      				<span style="display: flex; align-items: center;">
+      					<h5 style="margin: 0;font-size:16px">{{$vh->hotel->name}}</h5> 
+      					<span style="padding-left: 10px;"><!-- <img src="{{asset('images/6.png')}}"> -->{{$vh->hotel->hotelcategory->name}}</span>
+      				</span>
+      				<span style="display: flex; align-items: center; gap: 10px; padding-top: 10px">
+      					<img src="{{asset('images/7.png')}}" alt="" style="width: 18px"> 
+						{{$vh->hotel->address}},{{($vh->hotel->city)?$vh->hotel->city->name:''}},{{($vh->hotel->state)?$vh->hotel->state->name:''}},{{($vh->hotel->country)?$vh->hotel->country->name:''}}
+      					
+      				</span>
+      				<div style="max-width: 350px; padding-top: 15px; display: flex;">
+      					<span>
+      						<span style="color: #ccc;">Check in :</span>
+      						<p style="color: #121212; margin-top: 5px; margin-bottom: 0; font-weight: 500">{{date("d M- Y",strtotime($vh->check_in_date))}}</p>
+      					</span>
+      					<span style="margin-left: auto;">
+      						<span style="color: #ccc;">Check out :</span>
+      						<p style="color: #121212; margin-top: 5px; margin-bottom: 0; font-weight: 500">{{date("d M- Y",strtotime($vh->check_out_date))}}</p>
+      					</span>
+      				</div>
+      				<div style="padding-top: 10px">
+					@php
+					$room = SiteHelpers::hotelRoomsDetails($vh->hotel_other_details)
+					@endphp
+      					<span style="font-size: 16px; display: block; margin-top: 5px">Room Type:{{$room['room_type']}}</span>
+      					<span style="font-size: 16px; display: block; margin-top: 5px">Number of Rooms :{{$room['number_of_rooms']}}</span>
+      					
+      					<span style="font-size: 16px; display: block; margin-top: 5px">Occupancy :{{$room['occupancy']}}</span>
+      				</div>
+      			</div>
+      		</div>
+			@endforeach
+			@endif
+      	</td>
+      </tr>
+      <tr>
+      	<td colspan="3" style="padding-top: 90px;">
+		@if(!empty($voucherActivity))
+			@foreach($voucherActivity as $k => $ap)
+		@php
+					$activity = SiteHelpers::getActivity($ap->activity_id);
+					@endphp
+      		<div style="background: #ddd; border-radius: 15px">
+	      		<div style="display: flex; background:#dcedf7; padding: 15px; border-radius: 15px">
+	      			<div style="min-width:220px;width: 220px; height: 220px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;">
+	      				<img src="{{asset('images/2.jpg')}}" alt="" style="width:100%;max-width: 100%; height: 100%">
+	      			</div>
+	      			<div style="width: 100%;padding-left: 15px">
+	      				<div style="display: flex;">
+	      					<h5 style="margin:0 ">Day {{$k+1}} : {{$activity->title}} - {{$ap->variant_name}}</h5>
+	      					<h5  style="margin-left: auto !important; margin:0">16 June 2023, Sun</h5>
+	      				</div>
+	      				<p> {!!$activity->description!!}</p>
+	      			</div>
+	      		</div>
+	      		<div style="padding: 30px;display: flex;">
+	      			<span>
+			  			<span style="margin:0"><b>Transfer Type </b>: {{$ap->transfer_option}}</span>
+			  			<span style="display: block;padding-top: 6px">Adult : {{$ap->adult}} | Child : {{$ap->child}} | Infant : {{$ap->infant}}</span>
+			  		</span>
+					@if($ap->transfer_option == 'Shared Transfer')
+						<span style="margin-left: auto">
+			  			<p style="margin: 0; font-weight: 600">Pick Up Timings : {{$ap->actual_pickup_time}}</p>
+			  		</span>
+					
+					@elseif($ap->transfer_option == 'Pvt Transfer')
+					<span style="margin-left: auto">
+			  			<p style="margin: 0; font-weight: 600">Pick Up Timings : {{$ap->actual_pickup_time}}</p>
+			  		</span>
+					@endif
+					
+			  		
+	      		</div>
+	      	</div>
+			@endforeach
+			@endif
+      	</td>
+      </tr>
+      <tr>
+      	<td colspan="3" style="padding-top: 90px !important;">
+          <img src="{{asset('images/1.png')}}" alt="" style="max-width: 150px">
+        </td>
+      </tr>
+      <tr>
+      	<td colspan="3" style="padding-top: 20px !important;" align="right">
+          	<div style="display: block;">
+				<p style="margin-bottom: 0">Quote ID:{{$voucher->code}}</p>
+				<p style="margin-top: 5px;font-weight: bold"></p>
+			</div>    
+        </td>
+      </tr>
+      <tr>
+      	<td style="padding-top: 20px" colspan="3">
+          <span style=" display: flex; gap:10px">
+          	<span><img src="{{asset('images/2.jpg')}}" style="max-width: 40px"></span>
+          	<span style="font-size: 20px;font-weight: 600">Inclusions</span>
+          </span>
+          	<ul style="padding-left: 20px; margin-bottom: 30px">
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">After the confirmation of the booking below conditions are applicable</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Transfer options are made available for the Tour if the With Transfer option is been selected at the time of Booking.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">All entrance tickets are non - refundable.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Any amendments to the tour date have to be informed to the agent via email.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Amendment(s) are subject to the Cancellation policy.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Agent reserves the right to reject/cancel the amendment request from you.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Any entry tickets for any show/event/ museum/ amusement park or whatsoever are Non- Cancellable & cannot be refunded under any circumstances. There will be no refund for unused or partially used services.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">There is certain waiting time for the Guests to Pick up. If in case the Guests fail to turn on time it will be a No Show and there would be No Refund or Rescheduling. Refer to individual Tour Voucher for pickup time, Cancellation policy.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Pick Up time advised are tentative and the exact timings will be notified a day prior.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Shared Transfers waiting time is 5 minutes and Private transfers waiting time is 15 minutes</li>
+          	</ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 
 </html>
