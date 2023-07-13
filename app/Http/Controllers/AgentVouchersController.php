@@ -179,7 +179,7 @@ class AgentVouchersController extends Controller
      */
     public function show($vid)
     {
-		$voucher = Voucher::find($vid);
+		$voucher = Voucher::where('id',$vid)->where('agent_id',Auth::user()->id)->first();
 		if($voucher->status_main  > 3)
 		{
 			return redirect()->route('agentVoucherView',$voucher->id);
@@ -199,7 +199,7 @@ class AgentVouchersController extends Controller
      */
     public function edit($id)
     {
-        $record = Voucher::find($id);
+        $record = Voucher::where('id',$id)->where('agent_id',Auth::user()->id)->first();
 		$countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$airlines = Airline::where('status', 1)->orderBy('name', 'ASC')->get();
 		$customer = Customer::where('id',$record->customer_id)->first();
@@ -295,7 +295,7 @@ class AgentVouchersController extends Controller
      */
     public function destroy($id)
     {
-        $record = Voucher::find($id);
+        $record = Voucher::where('id',$id)->where('agent_id',Auth::user()->id)->first();
 		//$voucherHotel = VoucherHotel::where('voucher_id',$id)->delete();
 		$voucherActivity = VoucherActivity::where('voucher_id',$id)->delete();
 		
