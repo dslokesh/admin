@@ -867,11 +867,11 @@ class VouchersController extends Controller
 					
 			}
 			
-         return view('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
+        // return view('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
         
 		
 
-        $pdf = SPDF::loadView('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity'));
+        $pdf = SPDF::loadView('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
        $pdf->setPaper('A4')->setOrientation('portrait');
         return $pdf->download('Itinerary'.$vid.'.pdf');
 		
