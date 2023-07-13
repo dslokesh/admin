@@ -202,4 +202,35 @@ class SiteHelpers
 		return $adult_rate + $markup['ticket_only'];
     }
 	
+	public function hotelRoomsDetails($data)
+    {
+		$rooms = json_decode($data);
+		$room_type = '';
+		$number_of_rooms = 0;
+		$occupancy = 0;
+		
+		
+		if(count($rooms) > 0)
+		{
+			
+			foreach($rooms as $room)
+			{
+				$room_type.=$room->room_type.',';
+				$number_of_rooms+=1;
+				$occupancy +=$room->nop_s + $room->nop_d;
+			}
+			
+		}
+		
+		$dataArray = [
+		'room_type' => rtrim($room_type, ','),
+		'number_of_rooms' => $number_of_rooms,
+		'occupancy' => $occupancy,
+		];
+		
+		return $dataArray;
+    }
+	
+	
+	
 }

@@ -836,11 +836,40 @@ class VouchersController extends Controller
 		if (empty($voucher)) {
             return abort(404); //record not found
         }
-		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
-       
+		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->orderBy("check_in_date","ASC")->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->orderBy("tour_date","ASC")->get();
+		$discountTotal = 0;
+		$subTotal = 0;
+		$dataArray = [
+				'adult' => 0,
+				'child' => 0,
+				'adultP' => 0,
+				'childP' => 0,
+				'infantP' => 0,
+				'totalPrice' => 0,
+				];
+		
+	   if(!empty($voucherActivity)){
+					 foreach($voucherActivity as $kkh => $ap)
+					 {
+						
+					$activity = SiteHelpers::getActivity($ap->activity_id);
+					$vat =  1 + $activity->vat;
+					$vatPrice = $ap->totalprice/$vat;
+					$total = $ap->totalprice;
+				$dataArray['adult'] += $ap->adult;
+				$dataArray['child'] += $ap->child;
+				$dataArray['adultP'] += $ap->adultPrice;
+				$dataArray['childP'] += $ap->childPrice;
+				$dataArray['infantP'] += $ap->infPrice;
+				$dataArray['totalPrice'] += $total;
+					 }
+					
+			}
+			
+         return view('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
         
-        
+		
 
         $pdf = SPDF::loadView('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity'));
        $pdf->setPaper('A4')->setOrientation('portrait');

@@ -487,6 +487,7 @@ class AgentVouchersController extends Controller
 			}
 		}
 		
+		
 		if(count($data) > 0)
 		{
 			
