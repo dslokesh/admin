@@ -47,12 +47,12 @@
 					<th>Customer</th>
 					<th>Country</th>
 				
-					<th class="hide">Activity</th>
+					<th>Activity</th>
                     <th>Status</th>
                     <th>Created</th>
                     <th>Updated</th>
 					
-					<th width="7%" class="hide">Activities</th>
+					<th width="7%">Activities</th>
 					<th>Invoice</th>
 					<th>Itinerary</th>
                     <th width="12%"></th>
@@ -67,17 +67,30 @@
 					 @if(Auth::user()->role_id !='3')
 					<input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />@endif</th>
-					<th></th>
-					<th></th>
+					<th>Customer</th>
+					<th>Country</th>
 				
 				
-					<th class="hide"></th>
-                    <th></th>
+					<th><select name="is_activity" id="is_activity" class="form-control">
+                    <option value="" @if(request('is_activity') =='') {{'selected="selected"'}} @endif>Select</option>
+                    <option value="1" @if(request('is_activity') ==1) {{'selected="selected"'}} @endif>Yes</option>
+					          <option value="2" @if(request('is_activity') ==2) {{'selected="selected"'}} @endif >No</option>
+                 </select></th>
+                    <th><select name="status" id="status" class="form-control">
+                    <option value="" @if(request('status') =='') {{'selected="selected"'}} @endif>Select</option>
+                    <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Draft</option>
+					          <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Create Quotation</option>
+					 <option value="3" @if(request('status') ==3) {{'selected="selected"'}} @endif >In Process</option>
+					 <option value="4" @if(request('status') ==4) {{'selected="selected"'}} @endif >Confirmed</option>
+					 <option value="5" @if(request('status') ==5) {{'selected="selected"'}} @endif >Vouchered</option>
+					 <option value="6" @if(request('status') ==6) {{'selected="selected"'}} @endif >Canceled</option>
+					
+                 </select></th>
                     <th></th>
                    
 					<th></th>
 					
-					<th class="hide"></th>
+					<th ></th>
 					<th></th>
 					<th></th>
                     <th width="12%"><button class="btn btn-info btn-sm" type="submit">Filter</button>
@@ -92,13 +105,13 @@
 					<td>{{ ($record->guest_name)?$record->guest_name:''}}</td>
 					<td>{{ ($record->countr)?$record->country->name:''}}</td>
 					
-					   <td class="hide">{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
+					   <td>{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
                      <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
 
 					
-					 <td class="hide">
+					 <td>
 					 @if($record->is_activity == 1)
 						 @if($record->status_main < 4)
 					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.add.activity',$record->id)}}">
@@ -136,7 +149,7 @@
                               
                           </a>
 					@endif
-					 <a class="btn btn-info btn-sm hide" href="{{route('agent-vouchers.edit',$record->id)}}">
+					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.edit',$record->id)}}">
                               <i class="fas fa-pencil-alt">
                               </i>
                               

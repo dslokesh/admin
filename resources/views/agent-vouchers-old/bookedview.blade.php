@@ -6,307 +6,34 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Booking Confirmation( {{$voucher->code}})</h1>
+            <h1>Voucher Details</h1>
           </div>
-		 
-						  <div class="col-sm-3 text-right">
-						  </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ route('agent-vouchers.index') }}">Vouchers</a></li>
+              <li class="breadcrumb-item active">Voucher Details</li>
+            </ol>
+          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content-header -->
 
   
-    <style type="text/css">
-    /* Multistep */
-/* See below for SASS (allows you easily set dot radius and progress bar thickness and adjusts everything else! */
-.multistep .multistep-step {
-    padding: 0;
-    position: relative;
-    margin-bottom: 10px;
-}
 
-    .multistep .multistep-step .multistep-stepname {
-        margin-bottom: 16px;
-        color: #595959;
-        font-size: 1.6rem;
-        white-space: nowrap;
-    }
-
-    .multistep .multistep-step .multistep-dot {
-        position: absolute;
-        right: 50%;
-        left: 50%;
-        width: 32px;
-        height: 32px;
-        display: block;
-        margin-top: -16px;
-        margin-left: -15.5px;
-        border-radius: 50%;
-        background: #f5f5f5;
-        /* Inner Dot */
-    }
-
-        .multistep .multistep-step .multistep-dot:after {
-            content: ' ';
-            border-radius: 50px;
-            position: absolute;
-            top: 8px;
-            bottom: 8px;
-            left: 8px;
-            right: 8px;
-            background: #e0e0e0;
-        }
-
-    .multistep .multistep-step .progress {
-        position: absolute;
-        width: 100%;
-        height: 10.56px;
-        margin-top: -5.28px;
-        box-shadow: none;
-        border-radius: 0;
-    }
-
-        .multistep .multistep-step .progress .progress-bar {
-            width: 0px;
-            box-shadow: none;
-            background: #fbe8aa;
-        }
-
-    .multistep .multistep-step:first-child > .progress {
-        left: 50%;
-        width: 50%;
-    }
-
-    .multistep .multistep-step:last-child > .progress {
-        width: 50%;
-    }
-
-    .multistep .multistep-step.complete .multistep-dot {
-        background: #fbe8aa;
-    }
-
-        .multistep .multistep-step.complete .multistep-dot:after {
-            background: #808080;
-        }
-
-    .multistep .multistep-step.complete .progress > .progress-bar {
-        width: 100%;
-    }
-
-    .multistep .multistep-step.next:hover .multistep-dot {
-        background: #fbe8aa;
-    }
-
-        .multistep .multistep-step.next:hover .multistep-dot:after {
-            background: #808080;
-        }
-
-    .multistep .multistep-step.current .multistep-dot {
-        background: #fbe8aa;
-    }
-
-        .multistep .multistep-step.current .multistep-dot:after {
-            background: #808080;
-        }
-
-    .multistep .multistep-step.current .progress > .progress-bar {
-        width: 50%;
-    }
-
-    .multistep .multistep-step.current:first-child > .progress > .progress-bar {
-        width: 0%;
-    }
-
-    .multistep .multistep-step.current:last-child > .progress > .progress-bar {
-        width: 100%;
-    }
-
-    .multistep .multistep-step a.multistep-dot {
-        pointer-events: none;
-    }
-
-    .multistep .multistep-step.next a.multistep-dot {
-        pointer-events: all;
-    }
-    
-    
-/* SASS
-$inactiveColor: #f5f5f5;
-$inactiveDotColor: #e0e0e0;
-$activeColor: #fbe8aa;
-$activeDotColor: #fbbd19;
-$stepNameColor: #595959;
-$dotRadius: 16px;
-$barThickness: $dotRadius * .66;
-$stepNameSize: 1.6rem;
-
-.multistep {
-    .multistep-step {
-        padding: 0;
-        position: relative;
-        margin-bottom: 10px;
-
-        .multistep-stepname {
-            margin-bottom: $dotRadius;
-            color: $stepNameColor;
-            font-size: $stepNameSize;
-            white-space: nowrap;
-        }
-
-        .multistep-dot {
-            position: absolute;
-            right: 50%;
-            left: 50%;
-            width: $dotRadius * 2;
-            height: $dotRadius * 2;
-            display: block;
-            margin-top: -$dotRadius;
-            margin-left: -$dotRadius + .5;
-            border-radius: 50%;
-            background: $inactiveColor;
-            &:after {
-                content: ' ';
-                border-radius: 50px;
-                position: absolute;
-                top: $dotRadius / 2;
-                bottom: $dotRadius / 2;
-                left: $dotRadius / 2;
-                right: $dotRadius / 2;
-                background: $inactiveDotColor;
-            }
-        }
-
-        .progress {
-            position: absolute;
-            width: 100%;
-            height: $barThickness;
-            margin-top: -$barThickness / 2;
-            box-shadow: none;
-            border-radius: 0;
-
-            .progress-bar {
-                width: 0px;
-                box-shadow: none;
-                background: $activeColor;
-            }
-        }
-
-        &:first-child > .progress {
-            left: 50%;
-            width: 50%;
-        }
-
-        &:last-child > .progress {
-            width: 50%;
-        }
-
-        &.complete {
-            .multistep-dot {
-                background: $activeColor;
-
-                &:after {
-                    background: $activeDotColor;
-                }
-            }
-
-            .progress > .progress-bar {
-                width: 100%;
-            }
-        }
-
-        &.next:hover {
-            .multistep-dot {
-                background: $activeColor;
-            }
-
-            .multistep-dot:after {
-                background: $activeDotColor;
-            }
-        }
-
-        &.current {
-            .multistep-dot {
-                background: $activeColor;
-
-                &:after {
-                    background: $activeDotColor;
-                }
-            }
-
-            .progress > .progress-bar {
-                width: 50%;
-            }
-
-            &:first-child > .progress > .progress-bar {
-                width: 0%;
-            }
-
-            &:last-child > .progress > .progress-bar {
-                width: 100%;
-            }
-        }
-
-        a.multistep-dot {
-            pointer-events: none;
-        }
-
-        &.next a.multistep-dot {
-            pointer-events: all;
-        }
-    }
-}
-*/    </style>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      <div class="row">
-       
-		
-       <!-- left column -->
-       <div class="offset-md-2 col-md-8">
-              <div class="row multistep">
-                <div class="col-md-3 multistep-step complete">
-                    <div class="text-center multistep-stepname" style="font-size: 16px;">Add to Cart</div>
-                    <div class="progress"><div class="progress-bar"></div></div>
-                    <a href="#" class="multistep-dot"></a>
-                </div>
-
-                <div class="col-md-3 multistep-step complete">
-                    <div class="text-center multistep-stepname" style="font-size: 16px;">Payment</div>
-                    <div class="progress"><div class="progress-bar"></div></div>
-                    <a href="#" class="multistep-dot"></a>
-                </div>
-
-                <div class="col-md-3 multistep-step current">
-                    <div class="text-center multistep-stepname" style="font-size: 16px;">Confimation</div>
-                    <div class="progress"><div class="progress-bar"></div></div>
-                    <a href="#" class="multistep-dot"></a>
-                </div>
-
-                
-            </div>
-</div>
-</div>
-
-        <div class="row" style="margin-top: 30px;">
-       
+        <div class="row">
 		
           <!-- left column -->
-          <div class="offset-md-2 col-md-8">
+          <div class="col-md-12">
 		   <form id="cusDetails" method="post" action="{{route('agent.vouchers.status.change',$voucher->id)}}" >
 			 {{ csrf_field() }}
             <!-- general form elements -->
             <div class="card card-default">
               <div class="card-header">
-                 <h3 class="card-title"><i class="nav-icon fas fa-user" style="color:black"></i> Passenger Details</h3>
-				 <h3 class="card-title" style="float:right">
-          <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$voucher->id)}}" >
-                              Download Invoice <i class="fas fa-download">
-                              </i>
-                             
-                          </a>
-						  </h3>
+                 <h3 class="card-title"><i class="nav-icon fas fa-user" style="color:blueviolet"></i> Passenger Details</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -352,7 +79,7 @@ $stepNameSize: 1.6rem;
 
             <div class="card card-default">
               <div class="card-header">
-                <h3 class="card-title"><i class="nav-icon fas fa-book" style="color:black"></i> Additional Information</h3>
+                <h3 class="card-title"><i class="nav-icon fas fa-book" style="color:blueviolet"></i> Additional Information</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -366,7 +93,7 @@ $stepNameSize: 1.6rem;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-12"><p>{{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
+                    <div class="col-12"><p>{{$activity->title}} - {{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
                     <div class="col-6">
 					<label for="inputName">Pickup Location:</label>
 					{{$ap->pickup_location}}
@@ -401,7 +128,7 @@ $stepNameSize: 1.6rem;
           </div>
           <!--/.col (left) -->
           <!-- right column -->
-          <div class="offset-md-2 col-md-8">
+          <div class="col-md-12">
             <!-- Form Element sizes -->
 			@php
 				$totalGrand =0; 
@@ -524,15 +251,12 @@ $stepNameSize: 1.6rem;
                   <div class="col-md-6 text-right">
                    <h3>AED {{$totalGrand}}</h3>
                   </div>
-				  
                 </div>
-				
               </div>
-			  
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-			
+
             
           </div>
           <!--/.col (right) -->

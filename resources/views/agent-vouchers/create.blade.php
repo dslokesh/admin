@@ -6,36 +6,36 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Voucher Add</h1>
+            <h1>Search</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('vouchers.index') }}">Vouchers</a></li>
-              <li class="breadcrumb-item active">Voucher Add</li>
+              <li class="breadcrumb-item"><a href="{{ route('agent-vouchers.index') }}">Vouchers</a></li>
+              <li class="breadcrumb-item active">Search</li>
             </ol>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+      </div>
+    </section> 
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
-    <form action="{{ route('agent-vouchers.store') }}" method="post" class="form">
+    <section class="content" style="background: url('{{asset('images/booking_banner_1.jpeg')}}') no-repeat; background-size: cover;min-height: 800px;">
+    <form action="{{ route('agent-vouchers.store') }}" method="post" class="form" style="padding-top: 150px;"> 
     {{ csrf_field() }}
     <div class="row">
 	
-        <div class="col-md-12">
-          <div class="card card-primary">
+        <div class="offset-md-2 col-md-8">
+          <div class="card card-primary" style="opacity:0.9">
             <div class="card-header">
-              <h3 class="card-title">Add Voucher</h3>
+              <h3 class="card-title"><strong><img src="{{asset('images/icon.png')}}" style="width: 28px;"> Activities & Tours </strong></h3>
             </div>
             <div class="card-body row">
 
                 <input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ Auth::user()->id }}"/>
                 <input type="hidden" id="agent_id" name="agent_id" value="{{ Auth::user()->id }}"/>
 				
-			  <div class="form-group col-md-6 hide">
+			  <div class="form-group col-md-6 hide"  style="display:none">
                 <label for="inputName">Customer Name: <span class="red">*</span></label>
                 <input type="text" id="customer_name" name="customer_name" value="{{ Auth::user()->name }}" class="form-control"  placeholder="Customer Name" />
 				@if ($errors->has('customer_name'))
@@ -43,14 +43,14 @@
                 @endif
               </div>
 			 
-                <div class="form-group col-md-6 hide">
+                <div class="form-group col-md-6 hide"  style="display:none">
                 <label for="inputName">Customer Mobile: <span class="red">*</span></label>
                 <input type="text" id="customer_mobile" name="customer_mobile" value="{{ Auth::user()->mobile }}" class="form-control"  placeholder="Customer Mobile" />
 				@if ($errors->has('customer_mobile'))
                     <span class="text-danger">{{ $errors->first('customer_mobile') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-6 hide">
+			   <div class="form-group col-md-6 hide"  style="display:none">
                 <label for="inputName">Customer Email:</label>
                 <input type="email" id="customer_email" name="customer_email" value="{{ old('customer_email') }}" class="form-control"  placeholder="Customer Email" />
 				@if ($errors->has('customer_email'))
@@ -58,26 +58,26 @@
                 @endif
               </div>
 			  
-			   <div class="form-group col-md-6 hide">
+			   <div class="form-group col-md-6 hide"  style="display:none">
                 <label for="inputName">Agent Reference No.: <span class="red">*</span></label>
                 <input type="text" id="agent_ref_no" name="agent_ref_no" value="{{ old('agent_ref_no') }}" class="form-control"  placeholder="Agent Reference No." />
 				@if ($errors->has('agent_ref_no'))
                     <span class="text-danger">{{ $errors->first('agent_ref_no') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-6 hide">
+			   <div class="form-group col-md-6 hide"  style="display:none">
                 <label for="inputName">Guest Name: <span class="red">*</span></label>
                 <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name') }}" class="form-control"  placeholder="Guest Name" />
 				@if ($errors->has('guest_name'))
                     <span class="text-danger">{{ $errors->first('guest_name') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-3">
-			  <label for="inputName">Booking For: <span class="red">*</span></label>
+			  <div class="form-group col-md-6">
+			  <label for="inputName">Destination:</label>
              
                 <input type="text" class="form-control" disabled  value="Dubai/Abu Dhabi"/>
               </div>
-			    <div class="form-group col-md-3 hide">
+			    <div class="form-group col-md-3 hide"  style="display:none">
                 <label for="inputName">Country: <span class="red">*</span></label>
                 <select  class="form-control" disabled="disabled">
 				<option value="">--select--</option>
@@ -95,21 +95,21 @@
                 @endif
                 <input type="hidden" id="country_id" name="country_id" value="1"/>
               </div>
-			  <div class="form-group col-md-12 hide">
+			  <div class="form-group col-md-12 hide"  style="display:none">
                 <label for="inputName">Remark:</label>
                 <input type="text" id="remark" name="remark" value="{{ old('remark')}}" class="form-control"  placeholder="Remark" />
 				@if ($errors->has('remark'))
                     <span class="text-danger">{{ $errors->first('remark') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-6 hide">
+			   <div class="form-group col-md-6 hide"  style="display:none">
                 <label for="inputName">Activity: <span class="red">*</span></label>
                 <select name="is_activity" id="is_activity" class="form-control">
                     <option value="1" @if(old('is_activity') ==1) {{'selected="selected"'}} @endif>Yes</option>
 					 
                  </select>
               </div>
-			  <div class="form-group col-md-6 hide">
+			  <div class="form-group col-md-6 hide" style="display:none">
                 <label for="inputName">Hotel: <span class="red">*</span></label>
                 <select name="is_hotel" id="is_hotel" class="form-control">
                     <option value="1" @if(old('is_hotel') ==1) {{'selected="selected"'}} @endif>Yes</option>
@@ -117,7 +117,7 @@
                  </select>
               </div>
 			  <div class="form-group col-md-3">
-                <label for="inputName">Travel Date From: <span class="red">*</span></label>
+                <label for="inputName">Travel Date: <span class="red">*</span></label>
                <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date')?:date('Y-m-d') }}" class="form-control datepickerdiscurdate"  placeholder="Travel Date From" />
 				  @if ($errors->has('travel_from_date'))
                     <span class="text-danger">{{ $errors->first('travel_from_date') }}</span>
@@ -139,7 +139,7 @@
                     <span class="text-danger">{{ $errors->first('nof_night') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-3">
+			   <div class="form-group col-md-3 hide">
                 <label for="inputName">Travel Date To: <span class="red">*</span></label>
                <input type="text" id="travel_to_date" name="travel_to_date" value="{{ old('travel_to_date') }}" class="form-control" readonly placeholder="Travel Date To" />
 				  @if ($errors->has('travel_to_date'))
@@ -245,20 +245,22 @@
                     <span class="text-danger">{{ $errors->first('depature_flight_no') }}</span>
                 @endif
               </div>
+              <div class="form-group col-md-12 mt-5">
+          <a href="{{ route('vouchers.index') }}" class="btn btn-secondary hide">Cancel</a>
+          <button type="submit" name="save_and_hotel" class="btn btn-success float-right hide ml-3">Save & Add Hotel</button>
+		   <button type="submit" name="save_and_activity" class="btn btn-lg btn-success float-right  ml-3" style="width: 200px;">Search </button>
+		   <button type="submit" name="save_and_view" class="btn btn-primary float-right hide">Save</button>
+       
+      </div>
 			 </div>
+      
+        
             <!-- /.card-body -->
           </div>
           <!-- /.card -->
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 mb-3">
-          <a href="{{ route('vouchers.index') }}" class="btn btn-secondary">Cancel</a>
-          <button type="submit" name="save_and_hotel" class="btn btn-success float-right hide ml-3">Save & Add Hotel</button>
-		   <button type="submit" name="save_and_activity" class="btn btn-success float-right  ml-3">Save & Add Activity</button>
-		   <button type="submit" name="save_and_view" class="btn btn-primary float-right">Save</button>
-        </div>
-      </div>
+     
     </form>
 	
 	<!-- Modal -->

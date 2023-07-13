@@ -39,9 +39,79 @@
     <!-- Small boxes (Stat box) -->
     <div class="row"> 
       
-		
-		<div class="col-lg-3 col-6">
+		<div class="col-lg-6 col-6 mb-5">
         Welcome <b> {{auth()->user()->company_name}}</b>.
+		<a href="{{ route('agent-vouchers.create') }}" class="btn btn-sm btn-success">
+                      <i class="fas fa-plus"></i>
+                      Create New Booking
+                  </a> 
+        </div>
+		
+    </div>
+    <!-- /.row --> 
+    <div class="row"> 
+      
+		<div class="col-lg-3 col-6">
+        <!-- small box -->
+			<div class="small-box bg-success">
+				<div class="inner">
+				<h3>40</h3>
+
+				<p>Total Bookings</p>
+				</div>
+				
+				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+			</div>
+        </div>
+		<div class="col-lg-3 col-6">
+        <!-- small box -->
+			<div class="small-box bg-warning">
+				<div class="inner">
+				<h3>20</h3>
+
+				<p>Completed Bookings</p>
+				</div>
+				
+				<a href="{{ route('agents.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+			</div>
+        </div>
+		<div class="col-lg-3 col-6">
+        <!-- small box -->
+			<div class="small-box bg-success">
+				<div class="inner">
+				<h3>20</h3>
+
+				<p>Upcoming Bookings</p>
+				</div>
+				
+				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+			</div>
+        </div>
+        </div>
+        <div class="row"> 
+		<div class="col-lg-3 col-6">
+        <!-- small box -->
+			<div class="small-box bg-success">
+				<div class="inner">
+				<h3>50</h3>
+
+				<p>Activities</p>
+				</div>
+				
+				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+			</div>
+        </div>
+		<div class="col-lg-3 col-6">
+        <!-- small box -->
+			<div class="small-box bg-warning">
+				<div class="inner">
+				<h3>{{$totalHotelRecords}}</h3>
+
+				<p>Hotels</p>
+				</div>
+				
+				<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+			</div>
         </div>
 		
 		

@@ -10,7 +10,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('agent-vouchers.index') }}">Vouchers</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('vouchers.index') }}">Vouchers</a></li>
               <li class="breadcrumb-item active">Voucher Edit</li>
             </ol>
           </div>

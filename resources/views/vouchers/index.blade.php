@@ -66,8 +66,8 @@
 					<th><input type="text" name="code" value="{{request('code')}}" autocomplete="off" class="form-control"  placeholder="Code" /></th>
                     <th><input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  /></th>
-					<th>Customer</th>
-					<th>Country</th>
+					<th></th>
+					<th></th>
 					<th><select name="is_hotel" id="is_hotel" class="form-control">
                     <option value="" @if(request('is_hotel') =='') {{'selected="selected"'}} @endif>Select</option>
                     <option value="1" @if(request('is_hotel') ==1) {{'selected="selected"'}} @endif>Yes</option>

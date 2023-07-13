@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Activities & Tours</h1>
+            <h1>Activities Add To Vouchers(Voucher Code : {{$voucher->code}} )</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Activities & Tours</li>
+              <li class="breadcrumb-item active">Activities</li>
             </ol>
           </div>
         </div>
@@ -26,56 +26,43 @@
         <div class="row">
           <div class="col-12">
 
-              
-            
-              <!-- /.card-header -->
-              <div class="row">
-           
-              <div class="offset-md-1 col-md-10">
-              <div class="col-md-12">
-          <div class="col-md-12">
-          <div class="col-md-12">
-              <div class="card card-default">
-              <!-- form start -->
-              <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
-                <div class="card-body">
-                  <div class="row">
-                      <div class="col-md-12">
-                      <div class="input-group mb-2">
-                        <input type="text" name="name" value="{{ request('name') }}" class="form-control"  placeholder="Filter with Name" />
-                      </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-8">
-                      <div class="input-group mb-2">
-                          <button class="btn btn-info mb-2" type="submit">   <i class="fas fa-search"></i> Search</button>
-                          <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
-                      </div>
-                      </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-                </form>
-                </div>
-                </div>
-                </div>
-                </div>
-
-        <div class="col-md-12">
-        <div class="col-md-12">
-        
-        <div class="offset-md-10 col-md-2 text-right">
-        @if($voucherActivityCount > 0)
-              <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-lg btn-success pull-right">
+            <div class="card">
+              <div class="card-header">
+				<div class="card-tools">
+          @if($voucherActivityCount > 0)
+          <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-sm btn-success">
             <i class="fas fa-shopping-cart"></i>
             Checkout({{$voucherActivityCount}})
-        </a>
+        </a> 
         @endif
-        </div> 
-        </div>
-        </div>
-      
+				 <a href="{{ route('agent-vouchers.index') }}" class="btn btn-sm btn-info">
+                      <i class="fas fa-arrow-left"></i>
+                      Back To Vouchers
+                  </a> 
+                 
+				   </div>
+           
+              </div>
+              <div class="">
+                <div class="col-12 pt-2">
+                <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
+                  <div class="form-row align-items-center">
+            
+                    <div class="col-auto col-md-8">
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend"><div class="input-group-text">Activity Name</div></div>
+                        <input type="text" name="name" value="{{ request('name') }}" class="form-control"  placeholder="Activity Name" />
+                      </div>
+                    </div>
+                   
+                   
+                  <div class="col-auto col-md-4">
+                    <button class="btn btn-info mb-2" type="submit">Filter</button>
+                    <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
+                  </div>
+                </form>
+              </div></div>
+              <!-- /.card-header -->
              <div class="card-body">
              
                   @foreach ($records as $record)
@@ -139,8 +126,6 @@
                   @endforeach
                  
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
-</div>
-</div>
               </div>
               <!-- /.card-body -->
             </div>

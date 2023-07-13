@@ -64,8 +64,12 @@ class AuthController extends Controller
             $credentials['is_active'] = 1;
            // pr($credentials); die;
             if (Auth::attempt($credentials)) {
-                return redirect()->intended('dashboard')
+				if(Auth::user()->role_id == '3'){
+                return redirect('/agent-vouchers/create');
+				}else {
+					 return redirect()->intended('dashboard')
                             ->withSuccess('You have Successfully loggedin.');
+				}
             }else{
                 $credentials = $request->only('email', 'password');
                 if (Auth::attempt($credentials)) {

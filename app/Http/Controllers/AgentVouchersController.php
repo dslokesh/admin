@@ -42,42 +42,10 @@ class AgentVouchersController extends Controller
             $query->where('code', 'like', '%' . $data['code'] . '%');
         }
 		
-		if (isset($data['status']) && !empty($data['status'])) {
-            if ($data['status'] == 1)
-                $query->where('status', 1);
-            if ($data['status'] == 2)
-                $query->where('status', 2);
-			if ($data['status'] == 3)
-                $query->where('status', 3);
-			if ($data['status'] == 4)
-                $query->where('status', 4);
-			if ($data['status'] == 6)
-                $query->where('status', 5);
-			if ($data['status'] == 6)
-                $query->where('status', 6);
-        }
-		
-		/* if (isset($data['is_hotel']) && !empty($data['is_hotel'])) {
-            if ($data['is_hotel'] == 1)
-                $query->where('is_hotel', 1);
-            if ($data['is_hotel'] == 2)
-                $query->where('is_hotel', 0);
-        }
-		
-		if (isset($data['is_flight']) && !empty($data['is_flight'])) {
-            if ($data['is_flight'] == 1)
-                $query->where('is_flight', 1);
-            if ($data['is_flight'] == 2)
-                $query->where('is_flight', 0);
-        }
-		
-		if (isset($data['is_activity']) && !empty($data['is_activity'])) {
-            if ($data['is_activity'] == 1)
-                $query->where('is_activity', 1);
-            if ($data['is_activity'] == 2)
-                $query->where('is_activity', 0);
-        } */
-		
+		$query->where(function ($q) {
+		$q->where('status_main', 4)->orWhere('status_main', 5);
+		});
+       
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		$agetid = '';
 		$agetName = '';
@@ -417,7 +385,7 @@ class AgentVouchersController extends Controller
 		$endDate = $voucher->travel_to_date;
 		
 
-		$activityPrices = ActivityPrices::where('activity_id', $data['act'])->get();
+		$activityPrices = ActivityPrices::where('activity_id', $data['act'])->where('for_backend_only', '0')->get();
 
 		
 		$typeActivities = config("constants.typeActivities"); 
@@ -670,11 +638,16 @@ class AgentVouchersController extends Controller
     {
 		$search  = $request->get('search');
 		$zone  = $request->get('zone');
-		
+		if(!empty($zone)){
         $hotels = Hotel::where('zone_id', $zone)
 					->where('status', 1)
 					->where('name', 'LIKE', '%'. $search. '%')
 					->get();
+		}else{
+			$hotels = Hotel::where('status', 1)
+					->where('name', 'LIKE', '%'. $search. '%')
+					->get();
+		}
 		$response = array();
 		
       foreach($hotels as $hotel){
