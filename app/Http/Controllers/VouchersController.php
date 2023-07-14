@@ -404,7 +404,7 @@ class VouchersController extends Controller
 			//$receipt_no = 'VA-'.date("Y")."-00".$agentAmount->id;
 			$recordUser = AgentAmount::find($agentAmount->id);
 			$recordUser->receipt_no = $code;
-			$recordUser->is_vat = $record->vat_invoice;
+			$recordUser->is_vat_invoice = $record->vat_invoice;
 			$recordUser->save();
 			
 			}else{
@@ -832,7 +832,7 @@ class VouchersController extends Controller
 	
  public function voucherActivityItineraryPdf(Request $request, $vid)
     {
-		exit;
+		
 		if(Auth::user()->role_id == '3'){
 		$voucher = Voucher::where('id',$vid)->where('agent_id',Auth::user()->id)->first();
 		}else{

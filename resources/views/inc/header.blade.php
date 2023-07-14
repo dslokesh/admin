@@ -9,6 +9,13 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">	
 		<!-- Messages Dropdown Menu -->
+		@if(auth()->user()->role_id == '3')
+		<li class="nav-item dropdown">
+		<a class="nav-link" data-toggle="dropdown" href="#">
+				<span class="hidden-xs"><i class="fa fa-wallet" aria-hidden="true"></i> <b>AED {{\Auth::user()->agent_amount_balance}}</b></span>
+			</a>
+		</li> 
+	@endif		
 		<li class="nav-item dropdown">
 			<a class="nav-link" data-toggle="dropdown" href="#">
 				<span class="hidden-xs">{{\Auth::user()->name}} <i class="fa fa-caret-down" aria-hidden="true"></i></span>

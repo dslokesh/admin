@@ -28,7 +28,7 @@ return [
 	1 => 'Draft',
 	2 => 'Create Quotation',
 	3 => 'In Process',
-	4 => 'Confirmed',
+	4 => 'Confirm',
 	5 => 'Vouchered',
 	6 => 'Canceled',
 	],
