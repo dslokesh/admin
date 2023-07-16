@@ -90,6 +90,8 @@
 				 <input type="hidden" id="activity_id" name="activity_id" value="{{ $aid }}"  />
 				 <input type="hidden" id="v_id" name="v_id" value="{{ $vid }}"  />
 				 <input type="hidden" id="activity_vat" name="activity_vat" value="{{ ($activity->vat > 0)?$activity->vat:0 }}"  />
+				 <input type="hidden" id="vat_invoice" name="vat_invoice" value="{{ $voucher->vat_invoice }}"  />
+			
 				<div class="row p-2">
 				<div class="col-lg-12">
 				<h3>Activity Details</h3>
@@ -227,7 +229,8 @@
 						<input type="hidden" value="{{$ap->infant_rate_without_vat}}" id="infPrice{{$kk}}"  name="infPrice[{{ $ap->u_code }}]"    />
 						<span id="price{{$kk}}">0</span>
 						<input type="hidden" id="totalprice{{$kk}}" value="0"  name="totalprice[{{ $ap->u_code }}]"    />
-						</td>
+						
+					</td>
                   </tr>
 				  @endforeach
 				 @endif
@@ -271,7 +274,13 @@
 $(document).on('change', '.priceChange', function(evt) {
 	let inputnumber = $(this).data('inputnumber');
 	var activity_id = $("#activity_id").val();
-	let activity_vat = $("#activity_vat").val();
+	var is_vat_invoice = $("body  #vat_invoice").val();
+	if(is_vat_invoice == 1){
+		var activity_vat = $("#activity_vat").val();
+	} else {
+		var activity_vat = 0;
+	}
+
 	
 	let adult = parseInt($("body #adult"+inputnumber).val());
 	let child = parseInt($("body #child"+inputnumber).val());

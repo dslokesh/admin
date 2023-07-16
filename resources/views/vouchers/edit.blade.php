@@ -147,7 +147,7 @@
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Vat Invoice:</label>
-                <select name="vat_invoice" id="vat_invoice" class="form-control">
+                <select name="vat_invoice" disabled id="vat_invoice" class="form-control">
                     <option value="1" @if($record->vat_invoice ==1) {{'selected="selected"'}} @endif>Yes</option>
 					          <option value="0" @if($record->vat_invoice ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>

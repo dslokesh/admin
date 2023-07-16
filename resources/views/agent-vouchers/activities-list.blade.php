@@ -197,7 +197,12 @@ $(document).on('click', '.loadvari', function(evt) {
   
    let inputnumber = $(this).data('inputnumber');
    var activity_id = $("body  #activity_id").val();
-   let activity_vat = $("body #activity_vat").val();
+   var is_vat_invoice = $("body  #vat_invoice").val();
+	if(is_vat_invoice == 1){
+		var activity_vat = $("#activity_vat").val();
+	} else {
+		var activity_vat = 0;
+	}
   
    let adult = parseInt($("body #adult"+inputnumber).val());
    let child = parseInt($("body #child"+inputnumber).val());

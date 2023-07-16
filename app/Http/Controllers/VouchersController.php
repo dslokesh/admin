@@ -326,7 +326,7 @@ class VouchersController extends Controller
 		$record->travel_from_date = $request->input('travel_from_date');
 		$record->travel_to_date = $request->input('travel_to_date');
 		$record->nof_night = $request->input('nof_night');
-		$record->vat_invoice = $request->input('vat_invoice');
+		//$record->vat_invoice = $request->input('vat_invoice');
 		$record->agent_ref_no = $request->input('agent_ref_no');
 		$record->guest_name = $request->input('guest_name');
 		$record->arrival_flight_no = $request->input('arrival_flight_no');
