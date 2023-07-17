@@ -189,7 +189,7 @@ body
                                     </td>
                                   
                                     <td >
-                                    AED {{number_format($grandWithOutVatTotal,2)}}
+                                    AED {{number_format($subTotal,2)}}
                                     </td>
                                   </tr>
                                   <tr >
@@ -223,7 +223,7 @@ body
                                     </th>
                                    
                                     <th >
-                                    <strong>AED {{number_format($grandWithVatTotal,2)}}</strong> 
+                                    <strong>AED {{number_format($totalAmount,2)}}</strong> 
                                     </th>
                                   </tr>
                                 

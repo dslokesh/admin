@@ -907,7 +907,7 @@ class VouchersController extends Controller
 		
         $dataArray = [];
 		$discountTotal = 0;
-		$subTotal = 0;
+		$grandTotalAmount = 0;
 		
 		if(!empty($voucherActivity)){
 					 foreach($voucherActivity as $kkh => $ap)
@@ -928,7 +928,7 @@ class VouchersController extends Controller
 				'totalprice' => $total,
 				];
 				$discountTotal += $ap->discountPrice;
-				$subTotal+= $total ;
+				$grandTotalAmount+= $total ;
 					 }
 					
 			}
@@ -963,20 +963,31 @@ class VouchersController extends Controller
 				'hotel' => 1,
 				'totalprice' => $netRate,
 				];
-				$subTotal+= $netRate;
+				$grandTotalAmount+= $netRate;
 					 }
 					
 			}
-			$withVatTotalAmount = $subTotal;
-			$vatGrand = '1.05';
-			$grandWithOutVatTotal = ($withVatTotalAmount/$vatGrand) - $discountTotal;
-			$grandWithVatTotal = ($withVatTotalAmount) - $discountTotal;
-			$vatTotal = ($withVatTotalAmount) - $grandWithOutVatTotal;
+			
+			$vat = '1.05';
+			$subTotal = 0;
+			$grandWithVatTotal = 0;
+			$vatTotal =0;
+			if($voucher->vat_invoice == 1){
+				$vatTotal = $grandTotalAmount/$vatGrand;
+				$subTotal = (($grandTotalAmount - $vatTotal) - $discountTotal);
+				$totalAmount = ($subTotal) - $vatTotal;
+			}
+			else
+			{
+				$totalAmount = ($grandTotalAmount) - $discountTotal;
+			}
+			
+			
 			
 			
        
-//return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','grandWithVatTotal','grandWithOutVatTotal','vatTotal'));
-        $pdf = SPDF::loadView('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','grandWithOutVatTotal','grandWithVatTotal','vatTotal'));
+//return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','totalAmount','subTotal','vatTotal'));
+        $pdf = SPDF::loadView('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotal','vatTotal','totalAmount'));
        $pdf->setPaper('A4')->setOrientation('portrait');
         return $pdf->download('Invoice'.$vid.'.pdf');
 		
