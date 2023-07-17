@@ -973,7 +973,7 @@ class VouchersController extends Controller
 			$grandWithVatTotal = 0;
 			$vatTotal =0;
 			if($voucher->vat_invoice == 1){
-				$vatTotal = $grandTotalAmount/$vatGrand;
+				$vatTotal = $grandTotalAmount/$vat;
 				$subTotal = (($grandTotalAmount - $vatTotal) - $discountTotal);
 				$totalAmount = $subTotal + $vatTotal;
 			}
