@@ -374,7 +374,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 </a>
               </li>
 		@endpermission
-		
+		@role(1)
         @php
         $class=''; $active='';
         if($controller == 'TicketController' and in_array($action,array('index','create','edit','show','csvUploadForm'))){
@@ -393,7 +393,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
             </li>
 
 
-		@role(1)
+		
 		@php
 		 
           $class=''; $active='';
