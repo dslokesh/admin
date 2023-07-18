@@ -25,6 +25,7 @@ use App\Http\Controllers\VouchersController;
 use App\Http\Controllers\ReporsController;
 use App\Http\Controllers\AgentAmountController;
 use App\Http\Controllers\AgentVouchersController;
+use App\Http\Controllers\TicketsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,9 @@ Route::get('phpinfo', function () {
 Route::get('users/getUsers', [UsersController::class, "getUsers"])->name('users.getUsers');
 Route::post('state-list', [AjexController::class, "getStateByCountrySelect"])->name('state.list');
 Route::post('city-list', [AjexController::class, "getCityByStateSelect"])->name('city.list');
+
+Route::post('variant-by-activity', [AjexController::class, "getVariantByActivitySelect"])->name('variantByActivity');
+
 Route::group(['middleware' => 'disable_back_btn'], function () {
     Route::group(['middleware' => ['auth']], function () {
         /**
@@ -141,6 +145,11 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('users', UsersController::class);
 		Route::resource('agentamounts', AgentAmountController::class);
 		Route::post('voucher-status-change/{id}', [VouchersController::class, 'statusChangeVoucher'])->name('voucher.status.change');
+		Route::resource('tickets', TicketsController::class);
+		Route::get('tickets-csv-upload-form', [TicketsController::class, 'csvUploadForm'])->name('tickets.csv.upload.form');
+		Route::post('tickets-csv-upload', [TicketsController::class, 'csvUploadPost'])->name('tickets.csv.upload');
+		
+		
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
         Route::post('permissions/save', [PermissionRoleController::class, 'postSave'])->name('permrole.save');
     });

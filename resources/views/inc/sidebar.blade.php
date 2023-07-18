@@ -374,6 +374,25 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 </a>
               </li>
 		@endpermission
+		
+        @php
+        $class=''; $active='';
+        if($controller == 'TicketController' and in_array($action,array('index','create','edit','show','csvUploadForm'))){
+          $class = 'menu-open';
+          $active = 'active';
+        }
+   
+    
+        @endphp 
+		
+     <li class="nav-item ">
+              <a href="{{ route('tickets.index') }}" class="nav-link {{$active}}">
+                 <i class="nav-icon fas fa-ticket"></i>
+                <p>Tickets</p>
+              </a>
+            </li>
+
+
 		@role(1)
 		@php
 		 
