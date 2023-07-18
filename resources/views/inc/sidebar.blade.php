@@ -377,7 +377,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 		@role(1)
         @php
         $class=''; $active='';
-        if($controller == 'TicketController' and in_array($action,array('index','create','edit','show','csvUploadForm'))){
+        if($controller == 'TicketsController' and in_array($action,array('index','create','edit','show','csvUploadForm'))){
           $class = 'menu-open';
           $active = 'active';
         }
