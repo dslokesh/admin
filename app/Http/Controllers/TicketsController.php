@@ -117,7 +117,6 @@ class TicketsController extends Controller
     public function destroy($id)
     {
         $record = Ticket::find($id);
-	
         $record->delete();
         return redirect('tickets')->with('success', 'Ticket Deleted.');
     }

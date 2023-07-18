@@ -26,12 +26,10 @@ class SiteHelpers
 	
 	public function statusColor($val)
     {
-		if($val ==1)
-		{
+		$color ='';
+		if($val ==1) {
 			$color = '<span class="badge bg-success">Active</span>';
-		}
-		else
-		{
+		} else {
 			$color = '<span class="badge bg-danger">Inactive</span>';
 		}
 		
@@ -41,12 +39,10 @@ class SiteHelpers
 	
 	public function statusColorYesNo($val)
     {
-		if($val ==1)
-		{
+		$color = '';
+		if($val ==1) {
 			$color = '<span class="badge bg-success">Yes</span>';
-		}
-		else
-		{
+		} else {
 			$color = '<span class="badge bg-danger">No</span>';
 		}
 		
@@ -87,14 +83,11 @@ class SiteHelpers
     {
 		$zoneArray = [];
 		
-		if($sic_TFRS == 1)
-		{
+		if($sic_TFRS == 1) {
 			$zoneArrayJson = json_decode($activity_zones);
 			
-			if(count($zoneArrayJson) > 0 or !empty($zoneArrayJson))
-			{
-				foreach($zoneArrayJson as $k => $z)
-				{
+			if(count($zoneArrayJson) > 0 or !empty($zoneArrayJson)) {
+				foreach($zoneArrayJson as $k => $z) {
 					$zone = Zone::where('status', 1)->where('id', $z->zone)->orderBy('name', 'ASC')->first();
 					if(!empty($zone))
 					{
@@ -112,6 +105,25 @@ class SiteHelpers
 		}
 		
 		return $zoneArray;
+    }
+	
+	public function getPickupTimeByZone($activity_zones,$zoneId)
+    {
+		$pickup_time = '';
+		
+		if($zoneId > 0){
+			$zoneArrayJson = json_decode($activity_zones);
+			if(count($zoneArrayJson) > 0 or !empty($zoneArrayJson)){
+				foreach($zoneArrayJson as $k => $z){
+					if($zoneId == $z->zone){
+					$pickup_time =   (!empty($z->pickup_time))?$z->pickup_time:'';
+					}
+				}
+			}
+			
+		}
+		
+		return $pickup_time;
     }
 	
 	public function getActivity($activity_id)
@@ -161,28 +173,17 @@ class SiteHelpers
     {
 		$color = '';
 		$voucherStatus = config("constants.voucherStatus");
-		if($val ==1)
-		{
+		if($val ==1){
 			$color = '<span class="badge bg-primary">Draft</span>';
-		}
-		else if($val == 2)
-		{
+		} else if($val == 2) {
 			$color = '<span class="badge bg-secondary">Create Quotation</span>';
-		}
-		else if($val == 3)
-		{
+		} else if($val == 3) {
 			$color = '<span class="badge bg-info">In Process</span>';
-		}
-		else if($val == 4)
-		{
+		} else if($val == 4) {
 			$color = '<span class="badge bg-warning">Confirmed</span>';
-		}
-		else if($val == 5)
-		{
+		} else if($val == 5) {
 			$color = '<span class="badge bg-success">Vouchered</span>';
-		}
-		else if($val == 6)
-		{
+		} else if($val == 6) {
 			$color = '<span class="badge bg-danger">Canceled</span>';
 		}
 		 
@@ -209,17 +210,13 @@ class SiteHelpers
 		$number_of_rooms = 0;
 		$occupancy = 0;
 		
-		
-		if(count($rooms) > 0)
-		{
+		if(count($rooms) > 0) {
 			
-			foreach($rooms as $room)
-			{
+			foreach($rooms as $room) {
 				$room_type.=$room->room_type.',';
 				$number_of_rooms+=1;
 				$occupancy +=$room->nop_s + $room->nop_d;
 			}
-			
 		}
 		
 		$dataArray = [

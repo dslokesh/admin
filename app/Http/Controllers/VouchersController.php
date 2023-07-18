@@ -850,6 +850,7 @@ class VouchersController extends Controller
 		$dataArray = [
 				'adult' => 0,
 				'child' => 0,
+				'infant' => 0,
 				'adultP' => 0,
 				'childP' => 0,
 				'infantP' => 0,
@@ -866,6 +867,7 @@ class VouchersController extends Controller
 					$total = $ap->totalprice;
 				$dataArray['adult'] += $ap->adult;
 				$dataArray['child'] += $ap->child;
+				$dataArray['infant'] += $ap->infant;
 				$dataArray['adultP'] += $ap->adultPrice;
 				$dataArray['childP'] += $ap->childPrice;
 				$dataArray['infantP'] += $ap->infPrice;
@@ -874,7 +876,7 @@ class VouchersController extends Controller
 					
 			}
 			
-        // return view('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
+         //return view('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
         
 		
 

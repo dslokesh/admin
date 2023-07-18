@@ -56,7 +56,7 @@
 					<th>Ticket For</th>
 					<th>Type Of Ticket</th>
                     <th>Created</th>
-                     <th class="hide"></th>
+                    <th></th>
                   </tr>
 				  <tr>
                     <form id="filterForm" method="get" action="{{route('tickets.index')}}" >
@@ -71,7 +71,7 @@
                    <th></th>
                     <th width="10%"><button class="btn btn-info btn-sm" type="submit">Filter</button>
                     <a class="btn btn-default btn-sm" href="{{route('tickets.index')}}">Clear</a></th>
-                   <th class="hide"></th>
+                   <th ></th>
                   </form>
                   </tr>
                   </thead>
@@ -90,11 +90,22 @@
                     <td>{{ $record->type_of_ticket}}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                    
-                     <td class="hide"><a class="btn btn-info btn-sm " href="{{route('cities.edit',$record->id)}}">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              
-                          </a>
+                     <td > <form id="delete-form-{{$record->id}}" method="post" action="{{route('tickets.destroy',$record->id)}}" style="display:none;">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                            </form>
+                            <a class="btn btn-danger btn-sm " href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to delete this?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('delete-form-{{$record->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            "><i class="fas fa-trash"></i></a>
                          </td>
                   </tr>
 				 

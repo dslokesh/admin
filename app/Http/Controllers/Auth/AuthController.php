@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Session;
 use App\Models\User;
 use App\Models\Customer;
+use App\Models\Country;
 use App\Models\Hotel;
 use App\Models\Supplier;
 use App\Models\Activity;
@@ -44,7 +45,8 @@ class AuthController extends Controller
      */
     public function registration()
     {
-        return view('auth.registration');
+		$countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
+        return view('auth.registration', compact('countries'));
     }
       
     /**
@@ -87,19 +89,99 @@ class AuthController extends Controller
      */
     public function postRegistration(Request $request)
     {  
+       
+        $options['allow_img_size'] = 10;
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
-        ],
-        [
-            'password.regex' => "Password contains At least one uppercase, At least one digit and At least it should have 8 characters long"
+           'first_name' => 'required|max:255|sanitizeScripts|alpha',
+            'last_name' => 'required|max:255|sanitizeScripts|alpha',
+            'mobile' => 'required',
+            'address' => 'required',
+			'email' => 'required|max:255|sanitizeScripts|email|unique:users|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+			'password' => 'required|min:8|max:255|sanitizeScripts',
+			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),  
+            'city_id' => 'required',
+            'state_id' => 'required',
+            'country_id' => 'required',
+            'postcode' => 'required',
+			
+        ], [
+            'name.sanitize_scripts' => 'Invalid value entered for Name field.',
+            'country_id.required' => 'The country field is required.',
+            'state_id.required' => 'The state field is required.',
         ]);
+
+
+		$input = $request->all();
+		
+        $record = new User();
+		
+		$destinationPath = public_path('/uploads/users/');
+		if ($request->hasFile('image')) {
+
            
-        $data = $request->all();
-        $check = $this->create($data);
-         
-        return redirect("dashboard")->withSuccess('Great! You have Successfully loggedin');
+			$fileName = $input['image']->getClientOriginalName();
+			$file = request()->file('image');
+			$fileNameArr = explode('.', $fileName);
+			$fileNameExt = end($fileNameArr);
+			$newName = date('His').rand() . time() . '.' . $fileNameExt;
+			
+			$file->move($destinationPath, $newName);
+			
+			//$user_config = json_decode($options['user'],true);
+			
+			$img = Image::make(public_path('/uploads/users/'.$newName));
+						
+            $img->resize(250, 250, function($constraint) {
+				$constraint->aspectRatio();
+			});
+			
+			$img->save(public_path('/uploads/users/thumb/'.$newName));
+
+            $record->image = $newName;
+		}
+		
+        $record->name = $request->input('first_name');
+        $record->lname = $request->input('last_name');
+		
+        $record->mobile = $request->input('mobile');
+		$record->email = $request->input('email');
+		$record->company_name = $request->input('company_name');
+		$record->department = $request->input('department');
+		$record->phone = $request->input('phone_number');
+        $record->address = $request->input('address');
+        $record->postcode = $request->input('postcode');
+        $record->country_id = $request->input('country_id');
+        $record->state_id = $request->input('state_id');
+        $record->city_id = $request->input('city_id');
+        $record->is_active = '0';
+		$record->agent_category = $request->input('agent_category');
+		$record->agent_credit_limit = 0;
+		$record->sales_person = $request->input('sales_person');
+		$record->agent_amount_balance = 0;
+        $record->created_by = '';
+		$record->role_id = 3; 
+        $record->password = bcrypt($request['password']);
+		$record->ticket_only = (!empty($request->input('ticket_only')))?$request->input('ticket_only'):0;
+		$record->sic_transfer = (!empty($request->input('sic_transfer')))?$request->input('sic_transfer'):0;
+		$record->pvt_transfer = (!empty($request->input('pvt_transfer')))?$request->input('pvt_transfer'):0;
+		$record->vat = $request->input('vat');
+        $record->save();
+        $record->attachRole('3');
+		//$code = 'A00'.$record->id;
+		$recordUser = User::find($record->id);
+		//$recordUser->code = $code;
+		$recordUser->save();
+		
+		
+		$userCount = User::where("role_id",3)->count();
+		$codeNumber  = $userCount + 1;
+		$code = 'TA-700'.$codeNumber;
+		$recordUser = User::find($record->id);
+		$recordUser->code = $code;
+		$recordUser->save();
+		
+		
+        return redirect('/')->with('success', 'Your Account has been Created Successfully. When your account verified by admin then you can login.');
     }
     
     /**

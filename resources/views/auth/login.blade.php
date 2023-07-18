@@ -47,6 +47,7 @@
 
       <p class="mb-1">
         <a class="btn btn-link" href="{{route('resetpassword')}}"> {{ __('Forgot Your Password?') }}</a>
+		<a class="btn btn-link " style="display:none" href="{{route('register')}}"> {{ __('Agency SignUp') }}</a>
       </p>
     </div>
 @endsection

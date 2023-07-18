@@ -39,8 +39,8 @@
       <tr>
       	<td>
 			<div style="display: block;">
-				<p style="margin-bottom: 0">Start Date:{{$voucher->travel_from_date}}</p>
-				<p style="margin-top: 5px">End Date:{{$voucher->travel_to_date}}</p>
+				<p style="margin-bottom: 0">Start Date:{{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
+				<p style="margin-top: 5px">End Date:{{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
 			</div>       		
       	</td>
       	<td align="right" colspan="2">
@@ -57,7 +57,16 @@
           	<span style="font-size: 20px;font-weight: 600">Inclusions</span>
           </span>
           	<ul style="padding-left: 20px; margin-bottom: 30px">
+			@if(!empty($voucherActivity))
+			@foreach($voucherActivity as $k => $ap1)
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">{{$ap1->variant_name}}</li>
+			@endforeach
+			@endif
+					
+					
+				@if($voucher->is_flight =='1')
 				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Meet & greet at arrival</li>
+				@endif
 				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Sightseeing in shared vehicle</li>
 				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Pick and Drop at time of arrival/departure</li>
 				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Driver's allowance, Road tax and Fuel charges</li>
@@ -73,9 +82,12 @@
       		<div style="background: #2300c1; border-radius: 30px; border: dashed 3px #f1f1f1; display: flex; align-items: center;">
       			<div style="flex: 0 0 0 0 calc(65% - 40px );background: #ffffffc7;border-radius: 30px;border: dashed 3px #f1f1f1;padding:20px;margin-top:-3px; margin-bottom: -3px; margin-left: -3px">
       				<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Adult : AED {{$dataArray['adultP']}} X {{$dataArray['adult']}}</h6>
+					@if($dataArray['child'] > 0)
       				<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Child : AED {{$dataArray['childP']}} X {{$dataArray['child']}} </h6>
-      				
+					@endif
+      				@if($dataArray['infant'] > 0)
       				<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Infant : AED {{$dataArray['infantP']}}</h6>
+					@endif
       				<p style="font-size: 13px;margin-bottom: 0">Note: All above prices are subject to change without prior notice as per availability, the final date of travel and any changes in taxes.</p>
       			</div>
       			<div style="flex: 0 0  35%; text-align: center;">
@@ -104,8 +116,8 @@
       <tr>
       	<td>
 			<div style="display: block; padding-top: 20px">
-			<p style="margin-bottom: 0">Start Date:{{$voucher->travel_from_date}}</p>
-				<p style="margin-top: 5px">End Date:{{$voucher->travel_to_date}}</p>
+			<p style="margin-bottom: 0">Start Date:{{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
+				<p style="margin-top: 5px">End Date:{{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
 				
 			</div>      		
       	</td>
@@ -165,16 +177,18 @@
 			@foreach($voucherActivity as $k => $ap)
 		@php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
+					$pickup_time = SiteHelpers::getPickupTimeByZone($activity->zones,$ap->transfer_zone);
 					@endphp
       		<div style="background: #ddd; border-radius: 15px">
 	      		<div style="display: flex; background:#dcedf7; padding: 15px; border-radius: 15px">
 	      			<div style="min-width:220px;width: 220px; height: 220px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;">
-	      				<img src="{{asset('images/2.jpg')}}" alt="" style="width:100%;max-width: 100%; height: 100%">
+					<img src="{{asset('uploads/activities/'.$activity->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
+					
 	      			</div>
 	      			<div style="width: 100%;padding-left: 15px">
 	      				<div style="display: flex;">
 	      					<h5 style="margin:0 ">Day {{$k+1}} : {{$activity->title}} - {{$ap->variant_name}}</h5>
-	      					<h5  style="margin-left: auto !important; margin:0">16 June 2023, Sun</h5>
+	      					<h5  style="margin-left: auto !important; margin:0">{{date("d M- Y",strtotime($ap->tour_date))}}</h5>
 	      				</div>
 	      				<p> {!!$activity->description!!}</p>
 	      			</div>
@@ -182,16 +196,11 @@
 	      		<div style="padding: 30px;display: flex;">
 	      			<span>
 			  			<span style="margin:0"><b>Transfer Type </b>: {{$ap->transfer_option}}</span>
-			  			<span style="display: block;padding-top: 6px">Adult : {{$ap->adult}} | Child : {{$ap->child}} | Infant : {{$ap->infant}}</span>
+			  			<span style="display: block;padding-top: 6px">Adult : {{$ap->adult}} @if($ap->child > 0) | Child : {{$ap->child}} @endif @if($ap->infant > 0) | Infant : {{$ap->infant}}@endif</span>
 			  		</span>
 					@if($ap->transfer_option == 'Shared Transfer')
 						<span style="margin-left: auto">
-			  			<p style="margin: 0; font-weight: 600">Pick Up Timings : {{$ap->actual_pickup_time}}</p>
-			  		</span>
-					
-					@elseif($ap->transfer_option == 'Pvt Transfer')
-					<span style="margin-left: auto">
-			  			<p style="margin: 0; font-weight: 600">Pick Up Timings : {{$ap->actual_pickup_time}}</p>
+			  			<p style="margin: 0; font-weight: 600">Pick Up Timings : {{$pickup_time}}</p>
 			  		</span>
 					@endif
 					
