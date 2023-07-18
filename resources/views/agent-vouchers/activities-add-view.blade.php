@@ -114,9 +114,9 @@
 						</td>
 						<td>
 						@php
-						$priceAd = ($ap->adult_rate_without_vat*$ap->adult_min_no_allowed);
+						$priceAd = ($ap->adult_rate_with_vat*$ap->adult_min_no_allowed);
 						$mar = (($priceAd * $markup['ticket_only'])/100);
-						$price = ($priceAd + ($ap->chield_rate_without_vat*$ap->chield_min_no_allowed) + ($ap->infant_rate_without_vat*$ap->infant_min_no_allowed));
+						$price = ($priceAd + ($ap->chield_rate_with_vat*$ap->chield_min_no_allowed) + ($ap->infant_rate_with_vat*$ap->infant_min_no_allowed));
 						
 						$price +=$mar;
 						if($activity->vat > 0){
@@ -125,10 +125,10 @@
 						}
 						
 						@endphp
-						<input type="hidden" value="{{$ap->adult_rate_without_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[{{$ap->u_code}}]"    />
+						<input type="hidden" value="{{$ap->adult_rate_with_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[{{$ap->u_code}}]"    />
 						
-						<input type="hidden" value="{{$ap->chield_rate_without_vat}}" id="childPrice{{$kk}}"  name="childPrice[{{$ap->u_code}}]"    />
-						<input type="hidden" value="{{$ap->infant_rate_without_vat}}" id="infPrice{{$kk}}"  name="infPrice[{{$ap->u_code}}]"    />
+						<input type="hidden" value="{{$ap->chield_rate_with_vat}}" id="childPrice{{$kk}}"  name="childPrice[{{$ap->u_code}}]"    />
+						<input type="hidden" value="{{$ap->infant_rate_with_vat}}" id="infPrice{{$kk}}"  name="infPrice[{{$ap->u_code}}]"    />
 						<span id="price{{$kk}}">0</span>
 						<input type="hidden" id="totalprice{{$kk}}" value="0"  name="totalprice[{{$ap->u_code}}]"    />
 						</td>
