@@ -387,7 +387,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 		
      <li class="nav-item ">
               <a href="{{ route('tickets.index') }}" class="nav-link {{$active}}">
-                 <i class="nav-icon fas fa-ticket"></i>
+                <i class="nav-icon fas fa-ticket-alt"></i>
                 <p>Tickets</p>
               </a>
             </li>
