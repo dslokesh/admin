@@ -168,11 +168,6 @@ class AgentsController extends Controller
 		$record->vat = $request->input('vat');
         $record->save();
         $record->attachRole('3');
-		$code = 'A00'.$record->id;
-		$recordUser = User::find($record->id);
-		$recordUser->code = $code;
-		$recordUser->save();
-		
 		
 		$userCount = User::where("role_id",3)->count();
 		$codeNumber  = $userCount + 1;

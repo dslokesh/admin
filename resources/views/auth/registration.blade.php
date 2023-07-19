@@ -124,51 +124,7 @@
                     <span class="text-danger">{{ $errors->first('postcode') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">TRN No:</label>
-                <input type="text" id="vat" name="vat" value="{{ old('vat') }}" class="form-control"   />
-                @if ($errors->has('vat'))
-                    <span class="text-danger">{{ $errors->first('vat') }}</span>
-                @endif
-              </div>
-			  <div class="form-group col-md-6">
-                <label for="inputName">Ticket Only%:</label>
-                <input type="text" id="ticket_only" name="ticket_only"  value="{{ old('ticket_only')}}" class="form-control"   />
-                @if ($errors->has('ticket_only'))
-                    <span class="text-danger">{{ $errors->first('ticket_only') }}</span>
-                @endif
-              </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">SIC Transfer%:</label>
-                <input type="text" id="sic_transfer" name="sic_transfer"  value="{{ old('sic_transfer') }}" class="form-control"   />
-                @if ($errors->has('sic_transfer'))
-                    <span class="text-danger">{{ $errors->first('sic_transfer') }}</span>
-                @endif
-              </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">PVT Transfer%:</label>
-                <input type="text" id="pvt_transfer" name="pvt_transfer"  value="{{ old('pvt_transfer')}}" class="form-control"   />
-                @if ($errors->has('pvt_transfer'))
-                    <span class="text-danger">{{ $errors->first('pvt_transfer') }}</span>
-                @endif
-              </div>
-			  <div class="form-group col-md-6">
-                <label for="inputName">Agent Category:</label>
-                <input type="text" id="agent_category" name="agent_category"  value="{{ old('agent_category')}}" class="form-control"   />
-                @if ($errors->has('agent_category'))
-                    <span class="text-danger">{{ $errors->first('agent_category') }}</span>
-                @endif
-              </div>
-			 
-			  <div class="form-group col-md-6">
-                <label for="inputName">Sales Person:</label>
-                <input type="text" id="sales_person" name="sales_person"  value="{{ old('sales_person')}}" class="form-control"   />
-                @if ($errors->has('sales_person'))
-                    <span class="text-danger">{{ $errors->first('sales_person') }}</span>
-                @endif
-              </div>
-			  
-			  
+			   
 			  
             </div>
 			

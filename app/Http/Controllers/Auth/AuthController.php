@@ -154,24 +154,17 @@ class AuthController extends Controller
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
         $record->is_active = '0';
-		$record->agent_category = $request->input('agent_category');
 		$record->agent_credit_limit = 0;
-		$record->sales_person = $request->input('sales_person');
 		$record->agent_amount_balance = 0;
         $record->created_by = '';
 		$record->role_id = 3; 
         $record->password = bcrypt($request['password']);
-		$record->ticket_only = (!empty($request->input('ticket_only')))?$request->input('ticket_only'):0;
-		$record->sic_transfer = (!empty($request->input('sic_transfer')))?$request->input('sic_transfer'):0;
-		$record->pvt_transfer = (!empty($request->input('pvt_transfer')))?$request->input('pvt_transfer'):0;
-		$record->vat = $request->input('vat');
+		$record->ticket_only = 0;
+		$record->sic_transfer = 0;
+		$record->pvt_transfer = 0;
+		$record->vat = 0;
         $record->save();
         $record->attachRole('3');
-		//$code = 'A00'.$record->id;
-		$recordUser = User::find($record->id);
-		//$recordUser->code = $code;
-		$recordUser->save();
-		
 		
 		$userCount = User::where("role_id",3)->count();
 		$codeNumber  = $userCount + 1;
