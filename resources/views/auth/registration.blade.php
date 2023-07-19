@@ -54,37 +54,7 @@
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
               </div>
-			  <div class="form-group col-md-6">
-                <label for="inputName">Password: <span class="red">*</span></label>
-                
-                <input type="password" id="password" name="password" value="{{ old('password') }}" class="form-control pass"  placeholder="Password" />
-                @if ($errors->has('password'))
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
-                @endif
-              </div>
-			    <div class="form-group col-md-6">
-                <label for="inputName">Image: <span class="red">*</span></label>
-                <input type="file" id="image" name="image"  class="form-control"  />
-                @if ($errors->has('image'))
-                    <span class="text-danger">{{ $errors->first('image') }}</span>
-                @endif
-				
-              </div>
 			 
-			   <div class="form-group col-md-6">
-                <label for="inputName">Department:</label>
-                <input type="text" id="department" name="department" value="{{ old('department') }}" class="form-control"  placeholder="Department" />
-                @if ($errors->has('department'))
-                    <span class="text-danger">{{ $errors->first('department') }}</span>
-                @endif
-              </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">Phone Number:</label>
-                <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" class="form-control"  placeholder="Phone Number" />
-                @if ($errors->has('phone_number'))
-                    <span class="text-danger">{{ $errors->first('phone_number') }}</span>
-                @endif
-              </div>
                 <div class="form-group col-md-6">
                 <label for="inputName">Address: <span class="red">*</span></label>
                 <input type="text" id="address" name="address" value="{{ old('address') }}" class="form-control"  placeholder="Address" />

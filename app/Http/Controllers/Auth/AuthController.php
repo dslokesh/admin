@@ -92,13 +92,14 @@ class AuthController extends Controller
        
         $options['allow_img_size'] = 10;
         $request->validate([
+			'company_name' => 'required|max:255|sanitizeScripts',
            'first_name' => 'required|max:255|sanitizeScripts|alpha',
             'last_name' => 'required|max:255|sanitizeScripts|alpha',
             'mobile' => 'required',
             'address' => 'required',
 			'email' => 'required|max:255|sanitizeScripts|email|unique:users|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
-			'password' => 'required|min:8|max:255|sanitizeScripts',
-			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),  
+			//'password' => 'required|min:8|max:255|sanitizeScripts',
+			//'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),  
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
@@ -115,7 +116,7 @@ class AuthController extends Controller
 		
         $record = new User();
 		
-		$destinationPath = public_path('/uploads/users/');
+		/* $destinationPath = public_path('/uploads/users/');
 		if ($request->hasFile('image')) {
 
            
@@ -138,7 +139,7 @@ class AuthController extends Controller
 			$img->save(public_path('/uploads/users/thumb/'.$newName));
 
             $record->image = $newName;
-		}
+		} */
 		
         $record->name = $request->input('first_name');
         $record->lname = $request->input('last_name');
@@ -146,8 +147,8 @@ class AuthController extends Controller
         $record->mobile = $request->input('mobile');
 		$record->email = $request->input('email');
 		$record->company_name = $request->input('company_name');
-		$record->department = $request->input('department');
-		$record->phone = $request->input('phone_number');
+		$record->department = '';
+		$record->phone = '';
         $record->address = $request->input('address');
         $record->postcode = $request->input('postcode');
         $record->country_id = $request->input('country_id');
@@ -158,7 +159,7 @@ class AuthController extends Controller
 		$record->agent_amount_balance = 0;
         $record->created_by = '';
 		$record->role_id = 3; 
-        $record->password = bcrypt($request['password']);
+        $record->password = bcrypt('123456');
 		$record->ticket_only = 0;
 		$record->sic_transfer = 0;
 		$record->pvt_transfer = 0;
