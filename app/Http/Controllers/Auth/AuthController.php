@@ -181,7 +181,7 @@ class AuthController extends Controller
 		$recordUser->save();
 		
 		
-        return redirect('/')->with('success', 'Your Account has been Created Successfully. When your account verified by admin then you can login.');
+        return redirect('/')->with('success', 'Your Account has been Created Successfully.');
     }
     
     /**
