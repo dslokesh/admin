@@ -397,7 +397,7 @@
                   <tr>
 					<th>Tour Option</th>
                     <th>Transfer Option</th>
-					<th>Tour Date</th>
+					<th width="10%">Tour Date</th>
 					<th>Adult</th>
                     <th>Child</th>
                     <th>Infant</th>
