@@ -442,7 +442,7 @@
 								<input type="hidden" id="payment_date" name="payment_date"  /> 
                             </form>
 						
-							<a class="btn btn-success float-right mr-3" href="javascript:void(0)" onclick="
+							<a class="btn btn-success float-left mr-3" href="javascript:void(0)" onclick="
                                 if(confirm('You want to generate ticket?'))
                                 {
                                     event.preventDefault();
