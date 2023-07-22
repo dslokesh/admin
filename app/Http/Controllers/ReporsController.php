@@ -244,7 +244,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
 		$s = 0;
-		$query = AgentAmount::where('id','!=', null);
+		$query = AgentAmount::where('is_vat_invoice','=', '0');
 		if(Auth::user()->role_id == '3')
 		{
 			$query->where('agent_id', '=', Auth::user()->id);
@@ -280,6 +280,60 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$agetName = $agentTBA->company_name;
 		}
         return view('reports.agent-ledger-report', compact('records','voucherStatus','agetid','agetName'));
+
+    }
+	
+	/**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function agentLedgerReportWithVat(Request $request)
+    {
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		
+		$s = 0;
+		$query = AgentAmount::where('is_vat_invoice','=', '1');
+		if(Auth::user()->role_id == '3')
+		{
+			$query->where('agent_id', '=', Auth::user()->id);
+		}
+		else
+		{
+			if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+					$query->where('agent_id', '=', $data['agent_id_select']);
+					$s = 1;
+			}
+		}
+		
+		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+			 $query->whereDate('date_of_receipt', '>=', $startDate);
+			 $query->whereDate('date_of_receipt', '<=', $endDate);
+		$s = 1;
+		}
+		
+		
+		
+		if($s == 1){	
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		}
+		else
+		{
+		$records = AgentAmount::where('id','=', null)->orderBy('created_at', 'DESC')->paginate($perPage);	
+		}
+		$agetid = '';
+		$agetName = '';
+		
+		if(old('agent_id')){
+		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
+		$agetid = $agentTBA->id;
+		$agetName = $agentTBA->company_name;
+		}
+        return view('reports.agent-with-vat-ledger-report', compact('records','voucherStatus','agetid','agetName'));
 
     }
    

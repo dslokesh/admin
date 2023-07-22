@@ -24,7 +24,7 @@
         </td>
         <td valign="bottom" colspan="2" align="right" >
 	        <div style="width: 330px; margin-left: auto; font-size: 13px;">
-	        	<img src="{{asset('images/1.png')}}" style="max-width: 120px">    
+	        	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">    
 	        </div>
         </td>
       </tr>
@@ -99,7 +99,7 @@
       </tr>
       <tr>
         <td style="font-size: 20px; font-weight: bold; padding-top: 30px !important; padding: 30px 5px 5px;">
-          <img src="{{asset('images/1.png')}}" alt="" style="max-width: 150px">
+          <img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" alt="" style="max-width: 150px;width: 120px;height: 120px">
         </td>
         <td style=" font-size: 16px;  padding-top: 30px !important; padding: 5px;">
           <div style="margin-left: auto; display: flex;  align-items:center; justify-content: flex-end;">
@@ -107,8 +107,8 @@
       			<img src="{{asset('images/4.png')}}" alt="" style="max-width: 35px">
       		</span>
       		<span style="padding-left: 15px">
-      			<p style="margin-top: 0; margin-bottom:0">info@abatera.com</p>
-      			<p style="margin-bottom: 0; margin-top: 5px">+971 566036693</p>
+      			<p style="margin-top: 0; margin-bottom:0">{{$voucher->agent->email}}</p>
+      			<p style="margin-bottom: 0; margin-top: 5px">{{$voucher->agent->mobile}}</p>
       		</span>
           </div>
         </td>
@@ -213,7 +213,7 @@
       </tr>
       <tr>
       	<td colspan="3" style="padding-top: 90px !important;">
-          <img src="{{asset('images/1.png')}}" alt="" style="max-width: 150px">
+          <img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" alt="" style="max-width: 150px;width: 120px;height: 120px">
         </td>
       </tr>
       <tr>

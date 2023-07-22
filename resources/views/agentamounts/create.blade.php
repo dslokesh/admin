@@ -63,7 +63,7 @@
 					<option value="Credit" @if(old('transaction_type') == 'Credit') {{'selected="selected"'}} @endif >Credit</option>
                  </select>
               </div>
-			   <div class="form-group col-md-6 hide">
+			   <div class="form-group col-md-6">
                 <label for="inputName">Payment Against:</label>
                 <select name="is_vat_invoice" id="is_vat_invoice" class="form-control">
                     <option value="1" @if(old('is_vat_invoice') == '1') {{'selected="selected"'}} @endif>VAT Invoice</option>

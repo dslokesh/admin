@@ -11,7 +11,7 @@
 				 <input type="hidden" id="activity_vat" name="activity_vat" value="{{ ($activity->vat > 0)?$activity->vat:0 }}"  />
 				 <input type="hidden" id="vat_invoice" name="vat_invoice" value="{{ $voucher->vat_invoice }}"  />
 			
-                <table class="table table-bordered">
+				 <table class="table table-stripped table-condensed  table-hover" style="border: solid 0.5px gray;border-radius: 25px !important;">
                   <thead>
 				  @if(!empty($activityPrices))
 					  @foreach($activityPrices as $kk => $ap)
@@ -72,8 +72,8 @@
 						@endif
 						
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[{{$ap->u_code}}]"    />
-					</td>
-					<td class="coltd" style="display:none" >
+						</td>
+					<td class="coltd" style="display:none;border:none;"  >
 							<input type="hidden" id="pickup_location{{$kk}}" value=""  name="pickup_location[{{$ap->u_code}}]" placeholder="Pickup Location" class="form-control"   />
 						</td>
 					<td>

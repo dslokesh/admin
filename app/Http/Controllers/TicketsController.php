@@ -48,63 +48,81 @@ class TicketsController extends Controller
 
     }
 
-    
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+	public function ticketGenerate(Request $request, $id)
     {
+		$voucherActivity = VoucherActivity::find($id);
+		$adult = $voucherActivity->adult;
+		$child = $voucherActivity->child;
+		$counter = 0;
+		for($a = 1; $a<=$adult;$a++){
+		$ticketA = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '>=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
+		
+			if(!empty($ticketA)){
+				$ticketA->voucher_activity_id = $voucherActivity->id;
+				$ticketA->ticket_generated = 1;
+				$ticketA->voucher_id = $voucherActivity->voucher_id;
+				$ticketA->save();
+				$counter++;
+			}
+			
+		}
+		
+		for($c = 1; $c<=$child;$c++){
+		$ticketC = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '>=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
+			if(!empty($ticketC)){
+				$ticketC->voucher_activity_id = $voucherActivity->id;
+				$ticketC->ticket_generated = 1;
+				$ticketC->voucher_id = $voucherActivity->voucher_id;
+				$ticketC->save();
+				$counter++;
+			}
+		}
+		
+		if($counter > 0){
+			$voucherActivity->ticket_generated = 1;
+			$voucherActivity->save();
+			return redirect()->back()->with('success', 'Ticket has been generated successfully.');	
+		} else {
+		return redirect()->back()->with('error', 'Ticket Not Generate.');
+		}
+    }
+	
+	public function ticketDwnload(Request $request, $id)
+    {
+		$voucherActivity = VoucherActivity::find($id);
+		$ticket = Ticket::where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->first();
+		print_r($ticket);
+		exit;
+		return view('tickets.ticketPdf', compact('voucherActivity','ticket'));
+        
+        //$pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','ticket'));
+       //$pdf->setPaper('A4')->setOrientation('portrait');
+       // return $pdf->download('Ticket'.$voucherActivity->variant_unique_code.'.pdf');
+	}
+    
+    
+    public function create(){
 		//
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    
+    public function store(Request $request){
 		
         //
-		
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Ticket  $Ticket
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ticket $ticket)
-    {
+    public function show(Ticket $ticket){
 		//
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Country  $country
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+   
+    public function edit($id){
        //
-		
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ticket  $Ticket
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
+   
+    public function update(Request $request, $id){
        //
     }
 

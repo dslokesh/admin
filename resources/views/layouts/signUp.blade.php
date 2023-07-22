@@ -20,7 +20,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <span class="h1" style="color:#000">Agency SignUp</span>
+    <img src="{{asset('Abatera_logo.jpg')}}" style="max-width: 120px">
     </div>
     @include('inc.errors-and-messages')
     @yield('content')

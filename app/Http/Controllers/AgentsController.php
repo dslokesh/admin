@@ -14,6 +14,8 @@ use App\Models\AgentAdditionalUser;
 use Illuminate\Http\Request;
 use jeremykenedy\LaravelRoles\Models\Role;
 use jeremykenedy\LaravelRoles\Models\Permission;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterToAgencyMailable;
 use DB;
 use Image;
 use Illuminate\Support\Facades\Hash;
@@ -202,6 +204,13 @@ class AgentsController extends Controller
 			if(!empty($additionalContactInsert)){
 				AgentAdditionalUser::insert($additionalContactInsert);
 			}
+		}
+		
+		if($request->input('status') == '1'){
+				$agentData['name'] =  $recordUser->name;
+				$agentData['company'] =  $recordUser->company_name;
+				$agentData['email'] =  $recordUser->email;
+			 Mail::to($recordUser->email,'Registration Welcome Email')->send(new RegisterToAgencyMailable($agentData)); 
 		}
 		
         return redirect('agents')->with('success', 'Agent Created Successfully.');
@@ -400,6 +409,18 @@ class AgentsController extends Controller
 				AgentAdditionalUser::insert($additionalContactInsert);
 			}
 		}
+		
+		if(empty($record->email_verified_at)){
+			
+				$agentData['name'] =  $record->name;
+				$agentData['company'] =  $record->company_name;
+				$agentData['email'] =  $record->email;
+				$recordUser = User::find($record->id);
+				$recordUser->email_verified_at = now();
+				$recordUser->save();
+			 Mail::to($record->email,'Registration Welcome Email')->send(new RegisterToAgencyMailable($agentData)); 
+		}
+		
 		
         return redirect('agents')->with('success', 'Agent Updated.');
     }

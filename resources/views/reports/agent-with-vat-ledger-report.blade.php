@@ -37,7 +37,7 @@
               <!-- /.card-header -->
               <div class="card-body">
 			  <div class="row">
-            <form id="filterForm" class="form-inline" method="get" action="{{ route('agentLedgerReport') }}" style="width:100%" >
+            <form id="filterForm" class="form-inline" method="get" action="{{ route('agentLedgerReportWithVat') }}" style="width:100%" >
               <div class="form-row" style="width:100%">
 			  @if(Auth::user()->role_id !='3')
 			   <div class="col-auto col-md-3">
@@ -53,13 +53,13 @@
 			  <div class="col-auto col-md-3">
                   <div class="input-group mb-2">
                     <div class="input-group-prepend"><div class="input-group-text">From Date</div></div>
-                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepicker" required placeholder="From Date" />
+                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepicker"  required  placeholder="From Date" />
                   </div>
                 </div>
 				<div class="col-auto col-md-3">
                   <div class="input-group mb-2">
                     <div class="input-group-prepend"><div class="input-group-text">To Date</div></div>
-                    <input type="text" name="to_date" autocomplete ="off" value="{{ request('to_date') }}" required class="form-control datepicker"  placeholder="To Date" />
+                    <input type="text" name="to_date" required autocomplete ="off" value="{{ request('to_date') }}"  class="form-control datepicker"  placeholder="To Date" />
                   </div>
                 </div>
                
@@ -67,7 +67,7 @@
                
               <div class="col-auto col-md-3">
                 <button class="btn btn-info mb-2" type="submit">Filter</button>
-                <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agentLedgerReport') }}">Clear</a>
+                <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agentLedgerReportWithVat') }}">Clear</a>
               </div>
             </form>
           </div>

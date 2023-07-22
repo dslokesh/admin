@@ -141,6 +141,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('soa-report', [ReporsController::class, 'soaReport'])->name('soaReport');
         Route::get('soa-report-export', [ReporsController::class, 'soaReportExcel'])->name('soaReportExcel');
         Route::get('agent-ledger-report', [ReporsController::class, 'agentLedgerReport'])->name('agentLedgerReport');
+		Route::get('agent-ledger-with-vat-report', [ReporsController::class, 'agentLedgerReportWithVat'])->name('agentLedgerReportWithVat');
         
         Route::resource('users', UsersController::class);
 		Route::resource('agentamounts', AgentAmountController::class);
@@ -148,7 +149,8 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		Route::resource('tickets', TicketsController::class);
 		Route::get('tickets-csv-upload-form', [TicketsController::class, 'csvUploadForm'])->name('tickets.csv.upload.form');
 		Route::post('tickets-csv-upload', [TicketsController::class, 'csvUploadPost'])->name('tickets.csv.upload');
-		
+		Route::post('tickets-generate/{id}', [TicketsController::class, 'ticketGenerate'])->name('tickets.generate');
+		Route::get('ticket-dwnload/{id}', [TicketsController::class, 'ticketDwnload'])->name('ticket.dwnload');
 		
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
         Route::post('permissions/save', [PermissionRoleController::class, 'postSave'])->name('permrole.save');

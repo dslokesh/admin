@@ -297,7 +297,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			  @permission('agency.voucher.booking') 
         @php
         $class=''; $active='';
-        if($controller == 'AgentVouchersController' and in_array($action,array('index','create','edit','show'))){
+        if($controller == 'AgentVouchersController' and in_array($action,array('index','edit','agentVoucherView'))){
           $class = 'menu-open';
           $active = 'active';
         }
@@ -309,6 +309,21 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               <a href="{{ route('agent-vouchers.index') }}" class="nav-link {{$active}}">
                  <i class="nav-icon fas fa-gift"></i>
                 <p>My Booking</p>
+              </a>
+            </li>
+			@php
+        $class=''; $active='';
+        if($controller == 'AgentVouchersController' and in_array($action,array('create','addActivityList','show'))){
+          $class = 'menu-open';
+          $active = 'active';
+        }
+   
+    
+        @endphp 
+			 <li class="nav-item ">
+              <a href="{{ route('agent-vouchers.create') }}" class="nav-link {{$active}}">
+                 <i class="nav-icon fas fa-file"></i>
+                <p>Book Now</p>
               </a>
             </li>
 @endpermission
@@ -362,12 +377,25 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 		@permission('list.agent ledger') 
 			  @php
           $class=''; $active='';
-          if($controller == 'ReporsController' and in_array($action,array('agentLedgerReport'))){
+          if($controller == 'ReporsController' and in_array($action,array('agentLedgerReportWithVat'))){
             $class = 'menu-open';
             $active = 'active';
           }
           @endphp    
 			   <li class="nav-item">
+                <a href="{{ route('agentLedgerReportWithVat') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-file"></i>
+                  <p>Agent Ledger With Vat</p>
+                </a>
+              </li>
+			  @php
+          $class=''; $active='';
+          if($controller == 'ReporsController' and in_array($action,array('agentLedgerReport'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp  
+			  <li class="nav-item">
                 <a href="{{ route('agentLedgerReport') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-file"></i>
                   <p>Agent Ledger</p>

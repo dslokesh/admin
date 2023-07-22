@@ -126,7 +126,7 @@ class AgentVouchersController extends Controller
         $record = new Voucher();
         $record->agent_id = $request->input('agent_id_select');
 		$record->customer_id = $customer->id;
-		$record->country_id = $request->input('country_id');
+		$record->country_id = '1';
 		$record->is_hotel = $request->input('is_hotel');
 		$record->is_flight = $request->input('is_flight');
 		$record->is_activity = $request->input('is_activity');

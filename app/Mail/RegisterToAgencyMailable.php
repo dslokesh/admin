@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class RegisterToTechnicianAdminMailable extends Mailable
+class RegisterToAgencyMailable extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
@@ -30,8 +30,8 @@ class RegisterToTechnicianAdminMailable extends Mailable
     {
 
         $technician_details = (array)$this->data;
-		$this->subject("New Technician Registered");
+		$this->subject("Registration Email");
 
-        return $this->markdown('emails.TechnicianRegistrationEmailToAdmin', compact('technician_details'));
+        return $this->markdown('emails.AgencyRegistrationEmail', compact('technician_details'));
     }
 }

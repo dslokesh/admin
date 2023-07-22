@@ -14,9 +14,6 @@
     <div class="row">
         <div class="col-md-12">
           <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Add Agent</h3>
-            </div>
             <div class="card-body row">
 			 <div class="form-group col-md-6">
                 <label for="inputName">Company Name:</label>
@@ -42,14 +39,14 @@
 			  
                 <div class="form-group col-md-6">
                 <label for="inputName">Mobile: <span class="red">*</span></label>
-                <input type="text" id="mobile" name="mobile" value="{{ old('mobile') }}" class="form-control"  placeholder="Mobile" />
+                <input type="text" id="mobile" name="mobile" required value="{{ old('mobile') }}" class="form-control"  placeholder="Mobile" />
                 @if ($errors->has('mobile'))
                     <span class="text-danger">{{ $errors->first('mobile') }}</span>
                 @endif
               </div>
 			   <div class="form-group col-md-6">
-                <label for="inputName">Email:</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control"  placeholder="Email" />
+                <label for="inputName">Email: <span class="red">*</span></label>
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required class="form-control"  placeholder="Email" />
                 @if ($errors->has('email'))
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
@@ -57,7 +54,7 @@
 			 
                 <div class="form-group col-md-6">
                 <label for="inputName">Address: <span class="red">*</span></label>
-                <input type="text" id="address" name="address" value="{{ old('address') }}" class="form-control"  placeholder="Address" />
+                <input type="text" id="address" name="address" value="{{ old('address') }}" class="form-control" required placeholder="Address" />
                 @if ($errors->has('address'))
                     <span class="text-danger">{{ $errors->first('address') }}</span>
                 @endif
@@ -104,9 +101,17 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 pt-3">
-          <a href="{{ route('login') }}" class="btn btn-secondary">Login</a>
-          <button type="submit" class="btn btn-success float-right">Sign Up</button>
+        <div class="col-6 pt-3">
+          
+          <button type="submit" class="btn btn-lg btn-success float-right">Sign Up</button>
+
+        
+        </div>
+        <div class="col-6 pt-3">
+          
+       
+
+          <a href="{{ route('login') }}" class="btn btn-lg btn-info  float-right">Back</a>
         </div>
       </div>
     </form>

@@ -65,7 +65,7 @@
         <div class="col-md-12">
         <div class="col-md-12">
         
-        <div class="offset-md-10 col-md-2 text-right">
+        <div class="offset-md-9 col-md-3 text-right">
         @if($voucherActivityCount > 0)
               <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-lg btn-success pull-right">
             <i class="fas fa-shopping-cart"></i>

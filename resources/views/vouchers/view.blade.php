@@ -404,6 +404,7 @@
                     <th>Infant</th>
 					<th>Net Discount</th>
 					<th>Total Amount</th>
+					<th>Ticket</th>
 					<th></th>
                   </tr>
 				 
@@ -432,8 +433,36 @@
                     <td>{{$ap->infant}}</td>
 					<td>{{$ap->discountPrice}}</td>
 					<td>{{$ap->totalprice}}</td>
-					<td>
 					
+					<td style="width:11%">
+						@if(($voucher->status_main == 5) and ($ap->ticket_generated == '0'))
+						<form id="tickets-generate-form-{{$ap->id}}" method="post" action="{{route('tickets.generate',$ap->id)}}" style="display:none;">
+                                {{csrf_field()}}
+								<input type="hidden" id="statusv" value="2" name="statusv"  /> 
+								<input type="hidden" id="payment_date" name="payment_date"  /> 
+                            </form>
+						
+							<a class="btn btn-success float-right mr-3" href="javascript:void(0)" onclick="
+                                if(confirm('You want to generate ticket?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('tickets-generate-form-{{$ap->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">Generate</a>
+							@elseif($ap->ticket_generated == '1')
+							<a class="btn btn-success float-left mr-3" href="{{route('ticket.dwnload',$ap->id)}}" ><i class="fas fa-download"></i></a>
+							@endif
+							@if(($ap->ticket_generated == '1') and ($ap->ticket_downloaded == '0'))
+							<a class="btn btn-danger float-left" href="javascript:void(0)" ><i class="fa fa-times"></i> Cancel</a>
+							@endif
+							
+							</td>
+					<td>
 						   <form id="delete-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.delete',$ap->id)}}" style="display:none;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}

@@ -45,7 +45,7 @@
 					
                     <th>Agency</th>
 					<th>Customer</th>
-					<th>Country</th>
+					<th class="hide">Country</th>
 				
 					<th class="hide">Activity</th>
                     <th>Status</th>
@@ -68,7 +68,7 @@
 					<input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />@endif</th>
 					<th></th>
-					<th></th>
+					<th class="hide"></th>
 				
 				
 					<th class="hide"></th>
@@ -90,7 +90,7 @@
 				  <td>{{ ($record->code)}}</td>
                     <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ ($record->guest_name)?$record->guest_name:''}}</td>
-					<td>{{ ($record->countr)?$record->country->name:''}}</td>
+					<td class="hide">{{ ($record->country)?$record->country->name:''}}</td>
 					
 					   <td class="hide">{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
                      <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>

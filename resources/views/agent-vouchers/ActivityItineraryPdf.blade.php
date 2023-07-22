@@ -30,7 +30,7 @@
       </tr>
       <tr>
         <td colspan="3" style="">
-          <div style=" padding: 20px 40px">
+          <div style=" padding: 10px 40px">
           	<img src="{{asset('images/2.jpg')}}" style="width: 100%;border-radius: 30px">
           </div>
         </td>
@@ -57,20 +57,21 @@
           	<span style="font-size: 20px;font-weight: 600">Inclusions</span>
           </span>
           	<ul style="padding-left: 20px; margin-bottom: 30px">
-				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Meet & greet at arrival</li>
-				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Sightseeing in shared vehicle</li>
-				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Pick and Drop at time of arrival/departure</li>
-				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Driver's allowance, Road tax and Fuel charges</li>
-				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Breakfast</li>
-				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">124th Floor Burj Khalifa Visit</li>
-				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Dubai city tour</li>
+			  @if(!empty($voucherActivity))
+			@foreach($voucherActivity as $k => $ap)
+		@php
+					$activity = SiteHelpers::getActivity($ap->activity_id);
+					@endphp
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">{{$ap->variant_name}}</li>
+				@endforeach
+			@endif
           	</ul>
           </div>
         </td>
       </tr>
       <tr>
       	<td colspan="3">
-      		<div style="background: #2300c1; border-radius: 30px; border: dashed 3px #f1f1f1; display: flex; align-items: center;">
+      		<div style="background: #7EC8E3; border-radius: 30px; border: dashed 3px #f1f1f1; display: flex; align-items: center;">
       			<div style="flex: 0 0 0 0 calc(65% - 40px );background: #ffffffc7;border-radius: 30px;border: dashed 3px #f1f1f1;padding:20px;margin-top:-3px; margin-bottom: -3px; margin-left: -3px">
       				<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Adult : AED {{$dataArray['adultP']}} X {{$dataArray['adult']}}</h6>
       				<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Child : AED {{$dataArray['childP']}} X {{$dataArray['child']}} </h6>

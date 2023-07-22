@@ -16,7 +16,6 @@
     </section>
     <!-- /.content-header -->
 
-  
     <style type="text/css">
     /* Multistep */
 /* See below for SASS (allows you easily set dot radius and progress bar thickness and adjusts everything else! */
@@ -70,7 +69,7 @@
         .multistep .multistep-step .progress .progress-bar {
             width: 0px;
             box-shadow: none;
-            background: #fbe8aa;
+            background: #808080;
         }
 
     .multistep .multistep-step:first-child > .progress {
@@ -83,11 +82,11 @@
     }
 
     .multistep .multistep-step.complete .multistep-dot {
-        background: #fbe8aa;
+        background: #808080;
     }
 
         .multistep .multistep-step.complete .multistep-dot:after {
-            background: #808080;
+            /*  /* background: #fbbd19; */ */
         }
 
     .multistep .multistep-step.complete .progress > .progress-bar {
@@ -95,19 +94,19 @@
     }
 
     .multistep .multistep-step.next:hover .multistep-dot {
-        background: #fbe8aa;
+        background: #808080;
     }
 
         .multistep .multistep-step.next:hover .multistep-dot:after {
-            background: #808080;
+             /* background: #fbbd19; */
         }
 
     .multistep .multistep-step.current .multistep-dot {
-        background: #fbe8aa;
+        background: #808080;
     }
 
         .multistep .multistep-step.current .multistep-dot:after {
-            background: #808080;
+             /* background: #fbbd19; */
         }
 
     .multistep .multistep-step.current .progress > .progress-bar {
@@ -134,7 +133,7 @@
 /* SASS
 $inactiveColor: #f5f5f5;
 $inactiveDotColor: #e0e0e0;
-$activeColor: #fbe8aa;
+$activeColor: #808080;
 $activeDotColor: #fbbd19;
 $stepNameColor: #595959;
 $dotRadius: 16px;
