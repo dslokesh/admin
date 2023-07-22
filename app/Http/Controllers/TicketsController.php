@@ -94,7 +94,10 @@ class TicketsController extends Controller
 		$ticket = Ticket::where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->first();
 		
 		//return view('tickets.ticketPdf', compact('voucherActivity','ticket','voucher'));
-        
+        $voucherActivity->ticket_downloaded = 1;
+		$voucherActivity->save();
+		$ticket->ticket_downloaded = 1;
+		$ticket->save();
         $pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','ticket','voucher'));
        $pdf->setPaper('A4')->setOrientation('portrait');
         return $pdf->download('Ticket'.$voucherActivity->variant_unique_code.'.pdf');
