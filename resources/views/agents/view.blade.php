@@ -114,7 +114,7 @@
                
 			  <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Sales Person:</label>
-                {{$agent->sales_person}}%
+                {{$agent->sales_person}}
               </div>
              
               <div class="form-group col-lg-6 mb-3">
