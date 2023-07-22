@@ -217,7 +217,8 @@ class UsersController extends Controller
             'role_id' => 'required',
             'email' => 'required|max:255|email|sanitizeScripts|unique:users|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
            // 'password' => 'required|min:6|max:255|sanitizeScripts',
-            'password' => 'required|min:8|max:255|sanitizeScripts|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
+            'password' => 'required|min:6|max:255|sanitizeScripts',
+           // 'password' => 'required|min:8|max:255|sanitizeScripts|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
             //'c_password' => 'required|same:password',
         ],
         [
@@ -366,7 +367,7 @@ class UsersController extends Controller
 
         if(!empty($request->input('password'))){
             request()->validate([
-                'password' => 'required|alpha_num|between:6,20|confirmed',
+                'password' => 'required|between:6,20|confirmed',
             ]);
 			
             $user->password = bcrypt(trim($request->input('password')));

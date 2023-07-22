@@ -340,7 +340,7 @@ class AgentsController extends Controller
 		
 		 if(!empty($request->input('password'))){
             request()->validate([
-                'password' => 'required|alpha_num|between:6,20|confirmed',
+                'password' => 'required|confirmed',
             ]);
             $record->password = bcrypt(trim($request->input('password')));
         }
