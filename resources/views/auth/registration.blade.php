@@ -91,7 +91,13 @@
                     <span class="text-danger">{{ $errors->first('postcode') }}</span>
                 @endif
               </div>
-			   
+              <div class="form-group col-md-6">
+                <label for="inputName">Referred By:</label>
+                <input type="text" id="sales_person" name="sales_person" value="{{ old('sales_person') }}" class="form-control"   />
+                @if ($errors->has('sales_person'))
+                    <span class="text-danger">{{ $errors->first('sales_person') }}</span>
+                @endif
+              </div>
 			  
             </div>
 			

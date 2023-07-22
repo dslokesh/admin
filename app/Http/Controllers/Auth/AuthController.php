@@ -155,6 +155,7 @@ class AuthController extends Controller
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
+        $record->sales_person = $request->input('sales_person');
         $record->is_active = '0';
 		$record->agent_credit_limit = 0;
 		$record->agent_amount_balance = 0;
@@ -179,7 +180,7 @@ class AuthController extends Controller
         $agentData['company'] =  $recordUser->company_name;
 		$agentData['email'] =  $recordUser->email;
         $emails = [$admin->email];
-        Mail::to($emails,'New Agency Registered.')->send(new RegisterToAgencyAdminMailable($agentData));
+        //Mail::to($emails,'New Agency Registered.')->send(new RegisterToAgencyAdminMailable($agentData));
 		
         return redirect('/')->with('success', 'Your Account has been Created Successfully.');
     }

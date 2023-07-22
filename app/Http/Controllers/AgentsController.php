@@ -210,7 +210,7 @@ class AgentsController extends Controller
 				$agentData['name'] =  $recordUser->name;
 				$agentData['company'] =  $recordUser->company_name;
 				$agentData['email'] =  $recordUser->email;
-			 Mail::to($recordUser->email,'Registration Welcome Email')->send(new RegisterToAgencyMailable($agentData)); 
+			 //Mail::to($recordUser->email,'Registration Welcome Email')->send(new RegisterToAgencyMailable($agentData)); 
 		}
 		
         return redirect('agents')->with('success', 'Agent Created Successfully.');
@@ -417,8 +417,8 @@ class AgentsController extends Controller
 				$agentData['email'] =  $record->email;
 				$recordUser = User::find($record->id);
 				$recordUser->email_verified_at = now();
-				$recordUser->save();
-			 Mail::to($record->email,'Registration Welcome Email')->send(new RegisterToAgencyMailable($agentData)); 
+				//$recordUser->save();
+			 //Mail::to($record->email,'Registration Welcome Email')->send(new RegisterToAgencyMailable($agentData)); 
 		}
 		
 		
