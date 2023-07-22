@@ -404,7 +404,7 @@
                     <th>Infant</th>
 					<th>Net Discount</th>
 					<th>Total Amount</th>
-					<th>Ticket</th>
+					<th width="15%">Ticket</th>
 					<th></th>
                   </tr>
 				 
