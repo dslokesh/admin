@@ -104,26 +104,51 @@ body
                     </tr>
                     <tr>
                         <td align="left" valign="top">
+						 <h3>Ticket Details</h3>
                             <table class="table table-condensed table-striped" cellspacing="0" cellpadding="10px">
                                 <thead>
+								
                                   <tr >
                                     <th >
-                                      Service 
+                                      Guest Name 
                                     </th>
                                     <th >
-                                      Service Date
+									{{(empty($voucher->guest_name))?$voucher->agent->name:$voucher->guest_name}}
                                     </th>
-                                   
+                                   </tr>
+								   <tr >
                                     <th >
-                                      No. of Pax(s)
-                                    </th>
-                                    <th >
-                                      Agent Ref
+                                       Service Date
                                     </th>
                                     <th >
-                                      Amount (In AED)
+									{{ $voucherActivity->tour_date ? date(config('app.date_format'),strtotime($voucherActivity->tour_date)) : null }}
                                     </th>
-                                  </tr>
+                                   </tr>
+								   <tr >
+                                    <th >
+                                      Timing
+                                    </th>
+                                    <th >
+                                    
+                                    </th>
+									 </tr>
+									 <tr>
+                                    <th >
+                                      Confirmation Id
+                                    </th>
+                                    <th >
+                                    {{ $ticket->ticket_no}}
+                                    </th>
+									 </tr>
+									  <tr >
+                                    <th >
+                                       Valid Until
+                                    </th>
+                                    <th >
+                                     {{ $ticket->valid_till ? date(config('app.date_format'),strtotime($ticket->valid_till)) : null }}
+                                    </th>
+									 </tr>
+								  
                                 </thead>
                                
                     <tr>
@@ -131,72 +156,40 @@ body
                     </tr>
                   </table>
                 </td>
+				<td align="left" valign="top">
+				<h3>&nbsp;</h3>
+				<img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|1&chl={{$ticket->ticket_no}}" width="200" style="max-width: 200px; display: block !important; width: 200px; height: 200px;margin:-7px" alt="logo-top" border="0" hspace="0" vspace="0" height="auto"></td>
               </tr>
             </table>
           </td>
         </tr><!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
+        <!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
         <tr>
-          <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
+          <td align="left" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
             <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
               <tr style="border-top: 2px solid #000;">
                 <td valign="top">
-                  <table width="100%" border="0" cellspacing="0" cellpadding="10" align="center" class="full-width" style="max-width: 100%; margin: 0px auto;">
-                  <tr>
-                      <td colspan="3" valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
-                    </tr>
-                
-                  <tr>
-                      <td valign="top" style="border-right:solid 1px #000;">
-                      <h3>Bank Details</h3>
-                      <strong>ABATERA TOURISM LLC</strong><br/>
-Account -0033488116001  <br/> IBAN - AE530400000033488116001
-Corresponding Bank (USD) : <br/>BANK OF NEW YORK,NEW YORK, U.S.A<br/>
-SWIFT CODE (AED) : NRAKAEAK<br/> | Swift Code(USD) : IRVTUS3N<br/>
-Branch Name: Bur Dubai Branch
-                      </td> 
-                      <td valign="top"  style="border-right:solid 1px #000;">
-                      <h3>&nbsp;</h3>
-                      
-                      <strong>ABATERA TOURISM LLC</strong><br/>
-Account -1001303922 <br/> IBAN -  AE870230000001001303922<br/>
-SWIFT CODE(AED) : CBDUAEAD<br/>
-Branch Name: Immigration Branch
-                        </td>
-                        <td valign="top">
-                        <h3>&nbsp;</h3>
-                      
-                        <strong>ABATERA TOURISM LLC</strong><br/>
-Account – 9622223261<br/>
-IBAN - AE850860000009622223261s<br/>
-SWIFT CODE(AED) : WIOBAEADXXX
-                        </td>
-                   </tr>
-                   
-                       
-                    <tr>
-                      <td colspan="3" valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr><!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
-        <tr>
-          <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
-            <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
-              <tr style="border-top: 2px solid #000;">
-                <td valign="top">
+				
                   <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="full-width" style="max-width: 100%; margin: 0px auto;">
                     <tr>
                       <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse; border-top: 2px solid #000!important;"></td>
                     </tr>
                     <tr>
                        
-                        <td align="center" valign="middle">
-						
-						
-                          <p>System generated invoice no signature is required.</p>
+                        <td align="left" valign="left">
+						 <h3>Terms And Conditions</h3>
+						<ul style="padding-left: 20px; margin-bottom: 30px">
+				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">After the confirmation of the booking below conditions are applicable</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Transfer options are made available for the Tour if the With Transfer option is been selected at the time of Booking.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">All entrance tickets are non - refundable.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Any amendments to the tour date have to be informed to the agent via email.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Amendment(s) are subject to the Cancellation policy.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Agent reserves the right to reject/cancel the amendment request from you.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Any entry tickets for any show/event/ museum/ amusement park or whatsoever are Non- Cancellable & cannot be refunded under any circumstances. There will be no refund for unused or partially used services.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">There is certain waiting time for the Guests to Pick up. If in case the Guests fail to turn on time it will be a No Show and there would be No Refund or Rescheduling. Refer to individual Tour Voucher for pickup time, Cancellation policy.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Pick Up time advised are tentative and the exact timings will be notified a day prior.</li>
+<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Shared Transfers waiting time is 5 minutes and Private transfers waiting time is 15 minutes</li>
+          	</ul>
                          
                          </td>
                     </tr>

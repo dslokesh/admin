@@ -90,14 +90,14 @@ class TicketsController extends Controller
 	public function ticketDwnload(Request $request, $id)
     {
 		$voucherActivity = VoucherActivity::find($id);
+		$voucher = Voucher::where('id',$voucherActivity->voucher_id)->first();;
 		$ticket = Ticket::where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->first();
-		print_r($ticket);
-		exit;
-		return view('tickets.ticketPdf', compact('voucherActivity','ticket'));
+		
+		//return view('tickets.ticketPdf', compact('voucherActivity','ticket','voucher'));
         
-        //$pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','ticket'));
-       //$pdf->setPaper('A4')->setOrientation('portrait');
-       // return $pdf->download('Ticket'.$voucherActivity->variant_unique_code.'.pdf');
+        $pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','ticket','voucher'));
+       $pdf->setPaper('A4')->setOrientation('portrait');
+        return $pdf->download('Ticket'.$voucherActivity->variant_unique_code.'.pdf');
 	}
     
     
