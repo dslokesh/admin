@@ -58,7 +58,7 @@ body
                     <tr>
                         <td align="left" valign="top" width="136" style="width: 136px;">
                          
-                            <img src="https://www.abateratourism.com/templates/shaper_travel/images/styles/style4/logo.png" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+                            <img src={{asset('uploads/users/thumb/'.$voucher->agent->image)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
                             <h3>Abatera Tourism LLC</h3>
                         </td>
                         <td  align="center" valign="middle" > <h1>

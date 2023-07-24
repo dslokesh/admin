@@ -53,7 +53,21 @@ class TicketsController extends Controller
 		$voucherActivity = VoucherActivity::find($id);
 		$adult = $voucherActivity->adult;
 		$child = $voucherActivity->child;
+		$totalTicket = $adult+$child;
 		$counter = 0;
+
+		for($c = 1; $c<=$totalTicket;$c++){
+			$ticketB = Ticket::where('ticket_for','Both')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '>=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
+				if(!empty($ticketC)){
+					$ticketC->voucher_activity_id = $voucherActivity->id;
+					$ticketC->ticket_generated = 1;
+					$ticketC->voucher_id = $voucherActivity->voucher_id;
+					$ticketC->save();
+					$counter++;
+				}
+		}
+
+		if($counter == 0){
 		for($a = 1; $a<=$adult;$a++){
 		$ticketA = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '>=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
 		
@@ -78,6 +92,7 @@ class TicketsController extends Controller
 			}
 		}
 		
+	}
 		if($counter > 0){
 			$voucherActivity->ticket_generated = 1;
 			$voucherActivity->save();
@@ -231,6 +246,9 @@ class TicketsController extends Controller
 
 				$ticket_no = addslashes(trim(ucwords(strtolower($ticket_no))));
 				$serial_number = addslashes(trim(ucwords(strtolower($serial_number))));
+				if(empty($importData[2]) OR empty($importData[3])){
+					return redirect()->back()->withInput()->with('error', 'The from date and till date  is required. Date format is DD-MM-YYYY');
+				}
 				$valid_from = date("Y-m-d",strtotime($importData[2]));
 				$valid_till = date("Y-m-d",strtotime($importData[3]));
 				$data[] = [
@@ -245,6 +263,7 @@ class TicketsController extends Controller
 				];
 				
 				}
+				
 				/* return response()->json([
 				'message' => "$j records successfully uploaded"
 				]); */

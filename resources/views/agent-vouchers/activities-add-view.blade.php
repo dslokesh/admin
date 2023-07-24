@@ -125,10 +125,22 @@
 						}
 						
 						@endphp
-						<input type="hidden" value="{{$ap->adult_rate_with_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[{{$ap->u_code}}]"    />
+
+						@if($voucher->vat_invoice == '1')
+						<input type="hidden" value="{{$ap->adult_rate_without_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[{{ $ap->u_code }}]"    />
+
+						<input type="hidden" value="{{$ap->chield_rate_without_vat}}" id="childPrice{{$kk}}"  name="childPrice[{{ $ap->u_code }}]"    />
+						<input type="hidden" value="{{$ap->infant_rate_without_vat}}" id="infPrice{{$kk}}"  name="infPrice[{{ $ap->u_code }}]"    />
+
+						@else 
+
+						<input type="hidden" value="{{$ap->adult_rate_with_vat}}" id="adultPrice{{$kk}}"  name="adultPrice[{{ $ap->u_code }}]"    />
+
+						<input type="hidden" value="{{$ap->chield_rate_with_vat}}" id="childPrice{{$kk}}"  name="childPrice[{{ $ap->u_code }}]"    />
+						<input type="hidden" value="{{$ap->infant_rate_with_vat}}" id="infPrice{{$kk}}"  name="infPrice[{{ $ap->u_code }}]"    />
+						@endif
+
 						
-						<input type="hidden" value="{{$ap->chield_rate_with_vat}}" id="childPrice{{$kk}}"  name="childPrice[{{$ap->u_code}}]"    />
-						<input type="hidden" value="{{$ap->infant_rate_with_vat}}" id="infPrice{{$kk}}"  name="infPrice[{{$ap->u_code}}]"    />
 						<span id="price{{$kk}}">0</span>
 						<input type="hidden" id="totalprice{{$kk}}" value="0"  name="totalprice[{{$ap->u_code}}]"    />
 						</td>

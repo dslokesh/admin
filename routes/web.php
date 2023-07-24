@@ -26,7 +26,7 @@ use App\Http\Controllers\ReporsController;
 use App\Http\Controllers\AgentAmountController;
 use App\Http\Controllers\AgentVouchersController;
 use App\Http\Controllers\TicketsController;
-
+use App\Http\Controllers\PagesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,6 +76,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('change-password', [AuthController::class, 'changepassword'])->name('change-password');
         Route::post('profile/save/{id?}', [AuthController::class, 'saveProfile'])->name('profile.save');
 
+        Route::resource('pages', PagesController::class);
         Route::resource('modules', ModulesController::class);
         Route::resource('roles', RolesController::class);
         Route::resource('countries', CountryController::class);
