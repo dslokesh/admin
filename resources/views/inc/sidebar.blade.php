@@ -295,6 +295,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			  @endpermission
 			  @permission('agency.voucher.booking') 
+			  @if(auth()->user()->role_id == '3')
         @php
         $class=''; $active='';
         if($controller == 'AgentVouchersController' and in_array($action,array('index','edit','agentVoucherView'))){
@@ -326,6 +327,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 <p>Book Now</p>
               </a>
             </li>
+			@endif
 @endpermission
 	 @permission('list.agentamount') 
 			   @php
