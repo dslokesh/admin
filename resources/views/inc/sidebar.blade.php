@@ -295,7 +295,8 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			  @endpermission
 			  @permission('agency.voucher.booking') 
-			  @if(auth()->user()->role_id == '3')
+
+        @if(auth()->user()->role_id == '3')
         @php
         $class=''; $active='';
         if($controller == 'AgentVouchersController' and in_array($action,array('index','edit','agentVoucherView'))){
@@ -328,6 +329,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </a>
             </li>
 			@endif
+
 @endpermission
 	 @permission('list.agentamount') 
 			   @php
@@ -422,7 +424,21 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </a>
             </li>
 
-
+            @php
+		 
+            $class=''; $active='';
+            if($controller == 'PagesController' and in_array($action,array('index','create','edit'))){
+              $class = 'menu-open';
+              $active = 'active';
+            }
+            @endphp          
+           
+                <li class="nav-item">
+                  <a href="{{ route('pages.index') }}" class="nav-link {{$active}}">
+                    <i class="nav-icon fas fa-list"></i>
+                    <p>Content Settings</p>
+                  </a>
+                </li>
 		
 		@php
 		 
