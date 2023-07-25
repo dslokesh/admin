@@ -177,7 +177,7 @@
 			@foreach($voucherActivity as $k => $ap)
 		@php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
-					$pickup_time = 0;
+					$pickup_time = SiteHelpers::getPickupTimeByZone($activity->zones,$ap->transfer_zone);
 					@endphp
       		<div style="background: #ddd; border-radius: 15px">
 	      		<div style="display: flex; background:#dcedf7; padding: 15px; border-radius: 15px">

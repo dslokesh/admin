@@ -120,11 +120,13 @@
 						  </td>
 						   <td>
 					 @if($record->is_activity == 1)
+						 @if($record->status_main == 5)
 					 <a class="btn btn-info btn-sm" href="{{route('voucherActivityItineraryPdf',$record->id)}}">
                               <i class="fas fa-download">
                               </i>
                              
                           </a>
+						  @endif
 						  @endif
 						  </td>
                      <td>
