@@ -18,7 +18,7 @@
         <td>
         	<div style="width: 220px;">
         		<span style="display: block;font-size: 28px;">
-        		<b>{{$voucher->guest_name}}</b> Trip to
+        		<b>{{($voucher->guest_name)?$voucher->guest_name:''}}</b> Trip to
         		<span style="display:block;font-size: 66px;font-weight: bold;color: #1732bb;font-family: initial;">Dubai</span>
         	</div>
         </td>
@@ -182,8 +182,9 @@
       		<div style="background: #ddd; border-radius: 15px">
 	      		<div style="display: flex; background:#dcedf7; padding: 15px; border-radius: 15px">
 	      			<div style="min-width:220px;width: 220px; height: 220px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;">
+					@if(!empty($activity->image)
 					<img src="{{asset('uploads/activities/'.$activity->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
-					
+					@endif
 	      			</div>
 	      			<div style="width: 100%;padding-left: 15px">
 	      				<div style="display: flex;">
