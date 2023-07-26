@@ -700,8 +700,8 @@ class VouchersController extends Controller
 		$endDate = $voucher->travel_to_date;
 		
 
-		$activityPrices = ActivityPrices::where('activity_id', $aid)->get();
-//->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->get();
+		$activityPrices = ActivityPrices::where('activity_id', $aid)
+->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->get();
 
 		
 		$typeActivities = config("constants.typeActivities"); 
@@ -975,7 +975,8 @@ class VouchersController extends Controller
 			$grandWithVatTotal = 0;
 			$vatTotal =0;
 			if($voucher->vat_invoice == 1){
-				$vatTotal = $grandTotalAmount/$vat;
+				$vt = $grandTotalAmount/$vat;
+				$vatTotal = (($grandTotalAmount - $vt));
 				$subTotal = (($grandTotalAmount - $vatTotal) - $discountTotal);
 				$totalAmount = $subTotal + $vatTotal;
 			}

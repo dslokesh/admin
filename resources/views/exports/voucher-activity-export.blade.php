@@ -12,6 +12,8 @@
 					<th>SERVICE</th>
 					<th>NAME</th>
 					<th>GUEST'S CONTACT</th>
+					<th>TRANSFER SUPPLIER REF NO.</th>
+					<th>TICKET SUPPLIER REF NO.</th>
 					<th>PICKUP LOCATION</th>
 					<th>DROPOFF LOCATION</th>
                     <th>A</th>
@@ -42,6 +44,8 @@
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
 					<td>{{($record->voucher->customer)?$record->voucher->customer->name:''}}</td>
 					<td>{{($record->voucher->customer)?$record->voucher->customer->mobile:''}}</td>
+					<td>{{$record->transfer_supp_ref_no}}</td>
+					<td>{{$record->ticket_supp_ref_no}}</td>
 					<td>{{$record->pickup_location}}</td>
 					<td>{{$record->dropoff_location}}</td>
                     <td>{{$record->adult}}</td>

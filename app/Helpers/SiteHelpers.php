@@ -228,6 +228,14 @@ class SiteHelpers
 		return $dataArray;
     }
 	
+	function format_minutes_to_hours($totalMinutes)
+    {
+        $hours = floor($totalMinutes / 60);
+        $minutes = $totalMinutes % 60;
+        
+        return sprintf("%02d:%02d", $hours, $minutes). ' Hour(s)';
+    }
+	
 	
 	
 }

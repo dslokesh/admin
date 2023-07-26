@@ -98,6 +98,8 @@
 					<th>SERVICE</th>
 					<th>NAME</th>
 					<th>GUEST'S CONTACT</th>
+					<th>TRANSFER SUPPLIER REF NO.</th>
+					<th>TICKET SUPPLIER REF NO.</th>
 					<th>PICKUP LOCATION</th>
 					<th>DROPOFF LOCATION</th>
                     <th>A</th>
@@ -128,6 +130,8 @@
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
 					<td>{{($record->voucher->customer)?$record->voucher->customer->name:''}}</td>
 					<td>{{($record->voucher->customer)?$record->voucher->customer->mobile:''}}</td>
+					<td><input type="text" class="form-control inputsave" id="transfer_supp_ref_no{{$record->id}}" data-name="transfer_supp_ref_no"  data-id="{{$record->id}}" value="{{$record->transfer_supp_ref_no}}" /></td>
+					<td><input type="text" class="form-control inputsave" id="ticket_supp_ref_no{{$record->id}}" data-name="ticket_supp_ref_no"  data-id="{{$record->id}}" value="{{$record->ticket_supp_ref_no}}" /></td>
 					<td><input type="hidden" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  />{{$record->pickup_location}}</td>
 					<td><input type="text" class="form-control inputsave" id="dropoff_location{{$record->id}}" data-name="dropoff_location"  data-id="{{$record->id}}" value="{{$record->dropoff_location}}" /></td>
                     <td>{{$record->adult}}</td>

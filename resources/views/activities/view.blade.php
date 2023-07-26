@@ -259,12 +259,16 @@
 			  
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Slot Duration:</label>
-               {{ $pdata->slot_duration }}
+				{{SiteHelpers::format_minutes_to_hours($pdata->slot_duration)}}
+				
+
+               
               </div>
 			  
 			   <div class="col-lg-6 mb-3">
                 <label for="inputName">Activity Duration:</label>
-               {{ $pdata->activity_duration }}
+				{{SiteHelpers::format_minutes_to_hours($pdata->activity_duration)}}
+				
               </div>
                
 			    <div class="col-lg-6 mb-3">
@@ -343,8 +347,13 @@
                   </tr>
 				   <tr>
                     <td>Ticket Only</td>
-					<td>{{ $pdata->booking_window_valueto }}</td>
-                    <td>{{ $pdata->cancellation_value_to }}</td>
+					<td>
+		{{SiteHelpers::format_minutes_to_hours($pdata->booking_window_valueto)}}
+					</td>
+                    <td>
+					{{SiteHelpers::format_minutes_to_hours($pdata->cancellation_value_to)}}
+					
+					</td>
                   </tr>
 				  @if($activity->sic_TFRS==1)
 				  <tr>
@@ -353,8 +362,13 @@
 					@endif
 					
                     <td>Ticket with SIC TFR</td>
-					<td>{{ $pdata->booking_window_valueSIC }}</td>
-                    <td>{{ $pdata->cancellation_valueSIC }}</td>
+					<td>
+					{{SiteHelpers::format_minutes_to_hours($pdata->booking_window_valueSIC)}}
+					
+					</td>
+                    <td>
+			{{SiteHelpers::format_minutes_to_hours($pdata->cancellation_valueSIC)}}
+					</td>
                   </tr>
 				   @if($activity->pvt_TFRS==1)
 				  <tr>
@@ -362,8 +376,12 @@
 					<tr style="display:none">
 					@endif
                     <td>Ticket with PVT TFR</td>
-					<td>{{ $pdata->booking_window_valuePVT }}</td>
-                    <td>{{ $pdata->cancellation_valuePVT }}</td>
+					<td>
+		{{SiteHelpers::format_minutes_to_hours($pdata->booking_window_valuePVT)}}
+					</td>
+                    <td>
+			{{SiteHelpers::format_minutes_to_hours($pdata->cancellation_valuePVT)}}
+					</td>
                   </tr>
 				  </table>
               </div>

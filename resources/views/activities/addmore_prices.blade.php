@@ -36,7 +36,7 @@
               </div>
 			  <div class="form-group col-md-3">
 			  
-                <label for="inputName">Start Time: <span class="red">*</span></label>
+                <label for="inputName">Start Time (In 24 hrs): <span class="red">*</span></label>
                 <input type="text" id="start_time{{$rowCount}}" name="start_time[]"  class="form-control timepicker"  placeholder="Start Time" required />
                 @if ($errors->has('start _time'))
                     <span class="text-danger">{{ $errors->first('start _time') }}</span>
@@ -44,7 +44,7 @@
               </div>
                 
 				 <div class="form-group col-md-3">
-                <label for="inputName">End Time: <span class="red">*</span></label>
+                <label for="inputName">End Time (In 24 hrs): <span class="red">*</span></label>
                 <input type="text" id="end_time{{$rowCount}}" name="end_time[]"  class="form-control timepicker"  placeholder="End Time"  />
                 @if ($errors->has('end_time'))
                     <span class="text-danger">{{ $errors->first('end_time') }}</span>
@@ -139,8 +139,8 @@
                   <thead>
                   <tr>
                     <th>Variant</th>
-					<th>Booking Window Value</th>
-					<th>Cancellation Value</th>
+					<th>Booking Window Value (In Minutes)</th>
+					<th>Cancellation Value (In Minutes)</th>
                    
                   </tr>
 				   <tr>

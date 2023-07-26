@@ -202,7 +202,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 	 @permission('list.activity')
 			   @php
           $class=''; $active='';
-          if($controller == 'ActivitiesController' and in_array($action,array('index','create','edit','show'))){
+          if($controller == 'ActivitiesController' and in_array($action,array('index','create','edit','show','editPriceForm','createPriceForm'))){
             $class = 'menu-open';
             $active = 'active';
           }

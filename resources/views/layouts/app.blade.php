@@ -127,6 +127,14 @@ $('.timepicker').datetimepicker({
  
 
 </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SJ447SD9MG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SJ447SD9MG');
+</script>
 @yield('scripts')
 </body>
 </html>
