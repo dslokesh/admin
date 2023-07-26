@@ -14,6 +14,7 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use Illuminate\Http\Request;
+use App\Mail\RegisterToAgencyMailable;
 use Image;
 use DB;
 use Carbon\Carbon;
@@ -245,8 +246,17 @@ class UsersController extends Controller
         $user->save();
         $user->attachRole($request->input('role_id'));
        
-           // Mail::to($data['email'],'Login details')->send(new sendRegisterToUserMailable($data)); 
-        
+      
+				$password = $request->input('password');
+				$agentData['name'] =  $user->name;
+				$agentData['company'] =  $user->company_name;
+				$agentData['email'] =  $user->email;
+				$agentData['password'] =  $password;
+				$recordUser = User::find($user->id);
+				$recordUser->email_verified_at = now();
+				$recordUser->save(); 
+				Mail::to($user->email,'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
+			
        
             return redirect('users')->with('success','Users Created Successfully.');
         
@@ -365,13 +375,7 @@ class UsersController extends Controller
             $user->image = $newName;
 		}
 
-        if(!empty($request->input('password'))){
-            request()->validate([
-                'password' => 'required|between:6,20|confirmed',
-            ]);
-			
-            $user->password = bcrypt(trim($request->input('password')));
-        }
+       
         $user->name = $request->input('first_name');
         $user->lname = $request->input('last_name');
         $user->country_id = $request->input('country_id');

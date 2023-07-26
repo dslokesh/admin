@@ -48,6 +48,7 @@
                     <th>Company</th>
                     <th>City</th>
                     <th>Status</th>
+					<th>Password</th>
                     <th>Created</th>
                     <th>Updated</th>
 					<th width="17%"></th>
@@ -74,7 +75,8 @@
                  </select></th>
 					<th></th>
                     <th></th>
-                  
+					
+                  <th></th>
                     <th><button class="btn btn-info btn-sm" type="submit">Filter</button>
                     <a class="btn btn-default btn-sm" href="{{route('agents.index')}}">Clear</a></th>
                     
@@ -92,9 +94,28 @@
                     <td>{{ $record->company_name}}</td>
                     <td>{{ ($record->city)?$record->city->name:''}}</td>
                      <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
+					  <td>
+					  
+                          <form id="resetpsw-form-{{$record->id}}" method="post" action="{{route('passwordResetAdmin',$record->id)}}" style="display:none;">
+                                {{csrf_field()}}
+                               <input type="hidden" name="agent" value="user">
+                            </form>
+                            <a class="btn btn-warning btn-sm " href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to reset password this user?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('resetpsw-form-{{$record->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">Reset <i class="fas fa-key"></i></a>
+						    </td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
-					 
+					
                      <td>
 					  <a class="btn btn-info btn-sm"  href="{{route('agents.markup.activity',$record->id)}}">
                               Markup

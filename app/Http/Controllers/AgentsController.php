@@ -100,7 +100,7 @@ class AgentsController extends Controller
             'mobile' => 'required',
             'address' => 'required',
 			'email' => 'required|max:255|sanitizeScripts|email|unique:users|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
-			'password' => 'required|min:8|max:255|sanitizeScripts',
+			'password' => 'required|min:6|max:255|sanitizeScripts',
 			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),  
             'city_id' => 'required',
             'state_id' => 'required',
@@ -163,7 +163,7 @@ class AgentsController extends Controller
 		$record->agent_amount_balance = (!empty($request->input('agent_credit_limit')))?$request->input('agent_credit_limit'):0;
         $record->created_by = Auth::user()->id;
 		$record->role_id = 3; 
-        $record->password = bcrypt($request['password']);
+        $record->password = bcrypt($request->input('password'));
 		$record->ticket_only = (!empty($request->input('ticket_only')))?$request->input('ticket_only'):0;
 		$record->sic_transfer = (!empty($request->input('sic_transfer')))?$request->input('sic_transfer'):0;
 		$record->pvt_transfer = (!empty($request->input('pvt_transfer')))?$request->input('pvt_transfer'):0;
@@ -207,10 +207,16 @@ class AgentsController extends Controller
 		}
 		
 		if($request->input('status') == '1'){
+				$password = $request->input('password');
 				$agentData['name'] =  $recordUser->name;
 				$agentData['company'] =  $recordUser->company_name;
 				$agentData['email'] =  $recordUser->email;
-			 //Mail::to($recordUser->email,'Registration Welcome Email')->send(new RegisterToAgencyMailable($agentData)); 
+				$agentData['password'] =  $password;
+				$recordUser = User::find($record->id);
+				$recordUser->email_verified_at = now();
+				$recordUser->save(); 
+				Mail::to($record->email,'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
+				
 		}
 		
         return redirect('agents')->with('success', 'Agent Created Successfully.');
@@ -417,12 +423,35 @@ class AgentsController extends Controller
 				$agentData['email'] =  $record->email;
 				$recordUser = User::find($record->id);
 				$recordUser->email_verified_at = now();
-				//$recordUser->save();
-			 //Mail::to($record->email,'Registration Welcome Email')->send(new RegisterToAgencyMailable($agentData)); 
+				$recordUser->save();
 		}
 		
 		
         return redirect('agents')->with('success', 'Agent Updated.');
+    }
+	
+	public function passwordResetAdmin(Request $request, $id)
+    {
+		
+		$input = $request->all();
+		$password = '123456';
+        $record = User::find($id);
+		//dd($record);
+        $record->password = bcrypt($password);
+		$record->updated_by = Auth::user()->id;
+        $record->save();
+		$agentData['name'] =  $record->name;
+		$agentData['company'] =  $record->company_name;
+		$agentData['email'] =  $record->email;
+		$agentData['password'] =  $password;
+		
+		Mail::to($record->email,'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
+		if($input['user'] == 'agent'){
+        return redirect('agents')->with('success', 'Password Reset Successfully.');
+		}
+		elseif($input['user'] == 'user'){
+			 return redirect('users')->with('success', 'Password Reset Successfully.');
+		}
     }
 
     /**

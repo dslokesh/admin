@@ -9,6 +9,7 @@ use App\Mail\sendForgotPasswordToUserMailable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterToAgencyAdminMailable;
+use App\Mail\sendRegisterToUserMailable;
 use Illuminate\Support\Str;
 use Session;
 use App\Models\User;
@@ -179,8 +180,11 @@ class AuthController extends Controller
 		$agentData['name'] =  $recordUser->name;
         $agentData['company'] =  $recordUser->company_name;
 		$agentData['email'] =  $recordUser->email;
+		$userEmail =  $recordUser->email;
         $emails = [$admin->email];
-        //Mail::to($emails,'New Agency Registered.')->send(new RegisterToAgencyAdminMailable($agentData));
+		Mail::to($userEmail,'Greetings from Abaterab2b!')->send(new sendRegisterToUserMailable($agentData));
+		
+        Mail::to($emails,'New Agency Registered.')->send(new RegisterToAgencyAdminMailable($agentData));
 		
         return redirect('/')->with('success', 'Your Account has been Created Successfully.');
     }

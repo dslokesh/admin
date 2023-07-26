@@ -92,6 +92,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('suppliers-markup-price/{id?}', [SuppliersController::class, 'markupPriceList'])->name('suppliers.markup.price');
         Route::post('suppliers-markup-price-save', [SuppliersController::class, 'markupPriceSave'])->name('suppliers.markup.price.save');
         Route::resource('agents', AgentsController::class);
+		Route::post('passwordResetAdmin/{id?}', [AgentsController::class, 'passwordResetAdmin'])->name('passwordResetAdmin');
         Route::get('agents-markup-activity/{id?}', [AgentsController::class, 'priceMarkupActivityList'])->name('agents.markup.activity');
         Route::post('agents-markup-activity-save', [AgentsController::class, 'priceMarkupActivitySave'])->name('agents.markup.activity.save');
         Route::get('agents-markup-price/{id?}', [AgentsController::class, 'markupPriceList'])->name('agents.markup.price');

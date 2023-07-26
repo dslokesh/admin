@@ -30,8 +30,8 @@ class RegisterToAgencyMailable extends Mailable
     {
 
         $technician_details = (array)$this->data;
-		$this->subject("Registration Email");
+		$this->subject("Abaterab2b Login Details.");
 
-        return $this->markdown('emails.AgencyRegistrationEmail', compact('technician_details'));
+        return $this->markdown('emails.AgencyRegistrationStatusResetPassword', compact('technician_details'));
     }
 }
