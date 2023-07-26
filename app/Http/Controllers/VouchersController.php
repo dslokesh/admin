@@ -163,9 +163,9 @@ class VouchersController extends Controller
 		}
 		else
 		{
-			$customer->name = $request->input('customer_name');
-			$customer->email = $request->input('customer_email');
-			$customer->save();
+			//$customer->name = $request->input('customer_name');
+			//$customer->email = $request->input('customer_email');
+			//$customer->save();
 		}
 			
 		
@@ -303,9 +303,9 @@ class VouchersController extends Controller
 		}
 		else
 		{
-			$customer->name = $request->input('customer_name');
-			$customer->email = $request->input('customer_email');
-			$customer->save();
+			//$customer->name = $request->input('customer_name');
+			//$customer->email = $request->input('customer_email');
+			//$customer->save();
 		}
 		
         $record = Voucher::find($id);
