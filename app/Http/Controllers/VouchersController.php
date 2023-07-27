@@ -508,6 +508,10 @@ class VouchersController extends Controller
         if (isset($data['city_id']) && !empty($data['city_id'])) {
             $query->where('city_id', $data['city_id']);
         }
+		
+		if (isset($data['zone_id']) && !empty($data['zone_id'])) {
+            $query->where('zone_id', $data['zone_id']);
+        }
        
         $query->where('status', 1);
           
@@ -518,8 +522,8 @@ class VouchersController extends Controller
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
         $hotelcategories = HotelCategory::where('status', 1)->orderBy('name', 'ASC')->get();
 		$voucher = Voucher::find($vid);
-		
-        return view('vouchers.hotels', compact('records', 'countries', 'states', 'cities', 'hotelcategories','vid','voucher'));
+		$zones = Zone::where('status', 1)->orderBy('name', 'ASC')->get();
+        return view('vouchers.hotels', compact('records', 'countries', 'states', 'cities', 'hotelcategories','vid','voucher','zones'));
     }
 	
 	

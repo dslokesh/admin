@@ -46,6 +46,7 @@
                     <th>Mobile</th>
                     <th>Category</th>
                     <th>Address</th>
+					 <th>Zone</th>
                     <th>Country</th>
                     <th>State</th>
                     <th>City</th>
@@ -57,8 +58,14 @@
 					 <th></th>
                     <th><input type="text" name="name" value="{{request('name')}}" class="form-control"  placeholder="Name" /></th>
                     <th></th>
+					 <th></th>
                     <th></th>
-                    <th></th>
+                    <th><select name="zone_id" id="zone_id" class="form-control">
+					 <option value="">--select--</option>
+				@foreach($zones as $zone)
+                    <option value="{{$zone->id}}" @if(request('zone_id') == $zone->id) {{'selected="selected"'}} @endif>{{$zone->name}}</option>
+				@endforeach
+                 </select></th>
                      <th>
 					 <select name="country_id" id="country_id" class="form-control">
 					 <option value="">--select--</option>
@@ -101,6 +108,7 @@
                     <td>{{ $record->mobile}}</td>
                     <td>{{ ($record->hotelcategory)?$record->hotelcategory->name:''}}</td>
                     <td>{{ $record->address}}</td>
+					<td>{{ ($record->zone)?$record->zone->name:''}}</td>
                     <td>{{ ($record->country)?$record->country->name:''}}</td>
 					<td>{{ ($record->state)?$record->state->name:''}}</td>
 					<td>{{ ($record->city)?$record->city->name:''}}</td>

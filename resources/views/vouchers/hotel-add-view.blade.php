@@ -133,7 +133,7 @@
 						
 						<option value="">--Select--</option>
 						@foreach($tourDateArray as $dt)
-						<option value="{{$dt}}">{{$dt}}</option>
+						<option value="{{$dt}}" @if($dt==$voucher->travel_from_date) selected @endif>{{$dt}}</option>
 						@endforeach
 						
 						</select>
@@ -146,7 +146,7 @@
 						
 						<option value="">--Select--</option>
 						@foreach($tourDateArray as $dt2)
-						<option value="{{$dt2}}">{{$dt2}}</option>
+						<option value="{{$dt2}}" @if($dt2==$voucher->travel_to_date) selected @endif>{{$dt2}}</option>
 						@endforeach
 						
 						</select>
