@@ -98,7 +98,7 @@
 					  
                           <form id="resetpsw-form-{{$record->id}}" method="post" action="{{route('passwordResetAdmin',$record->id)}}" style="display:none;">
                                 {{csrf_field()}}
-                               <input type="hidden" name="user" value="user">
+                               <input type="hidden" name="user" value="agent">
                             </form>
                             <a class="btn btn-warning btn-sm " href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to reset password this user?'))
