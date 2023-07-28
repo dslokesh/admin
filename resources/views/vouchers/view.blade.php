@@ -8,466 +8,485 @@
           <div class="col-sm-6">
             <h1>Voucher Details</h1>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('vouchers.index') }}">Vouchers</a></li>
-              <li class="breadcrumb-item active">Voucher Details</li>
-            </ol>
-          </div>
+          
         </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content-header -->
 
+  
+
     <!-- Main content -->
     <section class="content">
+      <div class="container-fluid">
+      <!-- <div class="row">
+      <div class="offset-md-1 col-md-6">
+      <div class="row">
+            <div class="col-12 col-sm-4">
+            <div class="info-box bg-success">
+            <div class="info-box-content">
+            <span class="info-box-number text-center text-muted mb-0" style="color: #fff!important;">1</span>
+            <span class="into-box-text text-center text-muted " style="color: #fff!important;">Add to Cart</span>
+            </div>
+            </div>
+            </div>
+            <div class="col-12 col-sm-4">
+            <div class="info-box bg-light">
+            <div class="info-box-content">
+            <span class="info-box-text text-center text-muted">Payment</span>
+            </div>
+            </div>
+            </div>
+            <div class="col-12 col-sm-4">
+            <div class="info-box bg-light">
+            <div class="info-box-content">
+            <span class="info-box-text text-center text-muted">Print Voucher</span>
+            </div>
+            </div>
+            </div>
+            </div>
+      </div> 
+</div> --> <style type="text/css">
+    /* Multistep */
+/* See below for SASS (allows you easily set dot radius and progress bar thickness and adjusts everything else! */
+.multistep .multistep-step {
+    padding: 0;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+    .multistep .multistep-step .multistep-stepname {
+        margin-bottom: 16px;
+        color: #595959;
+        font-size: 1.6rem;
+        white-space: nowrap;
+    }
+
+    .multistep .multistep-step .multistep-dot {
+        position: absolute;
+        right: 50%;
+        left: 50%;
+        width: 32px;
+        height: 32px;
+        display: block;
+        margin-top: -16px;
+        margin-left: -15.5px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        /* Inner Dot */
+    }
+
+        .multistep .multistep-step .multistep-dot:after {
+            content: ' ';
+            border-radius: 50px;
+            position: absolute;
+            top: 8px;
+            bottom: 8px;
+            left: 8px;
+            right: 8px;
+            background: #e0e0e0;
+        }
+
+    .multistep .multistep-step .progress {
+        position: absolute;
+        width: 100%;
+        height: 10.56px;
+        margin-top: -5.28px;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+        .multistep .multistep-step .progress .progress-bar {
+            width: 0px;
+            box-shadow: none;
+            background: #808080;
+        }
+
+    .multistep .multistep-step:first-child > .progress {
+        left: 50%;
+        width: 50%;
+    }
+
+    .multistep .multistep-step:last-child > .progress {
+        width: 50%;
+    }
+
+    .multistep .multistep-step.complete .multistep-dot {
+        background: #808080;
+    }
+
+        .multistep .multistep-step.complete .multistep-dot:after {
+            /*  /* background: #fbbd19; */ */
+        }
+
+    .multistep .multistep-step.complete .progress > .progress-bar {
+        width: 100%;
+    }
+
+    .multistep .multistep-step.next:hover .multistep-dot {
+        background: #808080;
+    }
+
+        .multistep .multistep-step.next:hover .multistep-dot:after {
+             /* background: #fbbd19; */
+        }
+
+    .multistep .multistep-step.current .multistep-dot {
+        background: #808080;
+    }
+
+        .multistep .multistep-step.current .multistep-dot:after {
+             /* background: #fbbd19; */
+        }
+
+    .multistep .multistep-step.current .progress > .progress-bar {
+        width: 50%;
+    }
+
+    .multistep .multistep-step.current:first-child > .progress > .progress-bar {
+        width: 0%;
+    }
+
+    .multistep .multistep-step.current:last-child > .progress > .progress-bar {
+        width: 100%;
+    }
+
+    .multistep .multistep-step a.multistep-dot {
+        pointer-events: none;
+    }
+
+    .multistep .multistep-step.next a.multistep-dot {
+        pointer-events: all;
+    }
     
-        <div class="col-md-12">
-		<div class="card card-primary card-outline card-tabs">
-		<div class="card card-primary card-outline card-tabs">
-			<div class="card-header p-0 pt-1 border-bottom-0">
-			<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
-			<li class="nav-item">
-			<a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Voucher Details</a>
-			</li>
-			@if($voucher->is_hotel == 1)
-			<li class="nav-item">
-			<a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Hotel Details</a>
-			</li>
-			@endif
-			@if($voucher->is_activity == 1)
-			<li class="nav-item">
-			<a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Activity Details</a>
-			</li>
-		@endif
-			</ul>
-			</div>
-		 </div>
-       
-	   
-	   <div class="card-body">
-		<div class="tab-content" id="custom-tabs-three-tabContent">
-			<div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
-			<header class="profile-header">
-				
-				<div class="profile-content">
-					<div class="row">
-					<div class="col-lg-12">
-				<h5>Voucher Details</h5>
-				</div>
-				
-               <div class="col-lg-6 mb-3">
-                <label for="inputName">Agency Name:</label>
-				@if(isset($voucher->agent))
-               {{ $voucher->agent->company_name }} </br>
-			   <b>Code:</b>{{$voucher->agent->code}} <b> Email:</b>{{$voucher->agent->email}} <b>Mobile No:</b>{{$voucher->agent->mobile}} <b>Address:</b>{{$voucher->agent->address. " ".$voucher->agent->postcode;}}
-			   
-			   @endif
-              </div>
-			 
-			      <div class="col-lg-6 mb-3">
-                <label for="inputName">Customer Name:</label>
-				@if(isset($voucher->customer))
-                {{ $voucher->name }} </br>
-				<b>Email:</b>{{$voucher->customer->email}} <b>Mobile No:</b>{{$voucher->customer->mobile}} <b>Address:</b>{{$voucher->customer->address. " ".$voucher->customer->zip_code;}}
-				@endif
-              </div>
-			  <div class="form-group col-lg-6 mb-3">
-                <label for="inputName">Agent Reference No.:</label>
-                {{ $voucher->agent_ref_no }}
-              </div>
-			  <div class="form-group col-lg-6 mb-3">
-                <label for="inputName">Guest Name:</label>
-                {{ $voucher->guest_name }}
-              </div>
-			   <div class="form-group col-lg-6 mb-3">
-                <label for="inputName">Voucher Code:</label>
-                {{ $voucher->code }}
-              </div>
-			  <div class="form-group col-lg-6 mb-3">
-                <label for="inputName">Country:</label>
-                {{($voucher->country)?$voucher->country->name:''}}
-              </div>
-			   <div class="form-group col-lg-6 mb-3">
-                <label for="inputName">Remark:</label>
-                {{ $voucher->remark }}
-              </div>
-			  <div class="form-group col-lg-6 mb-3">
-                <label for="inputName">Vat Invoice:</label>
-				{!! SiteHelpers::statusColorYesNo($voucher->vat_invoice) !!}
-              </div>
-              
-			  
-			    <div class="form-group col-lg-6 mb-3">
-			        <label for="inputName">Voucher Status:</label>
-					{!! SiteHelpers::voucherStatus($voucher->status_main) !!}
-              </div>
-			  
-              <div class="col-lg-6 mb-3">
-                <label for="inputName">Travel Date From:</label>
-				{{ $voucher->travel_from_date ? date(config('app.date_format'),strtotime($voucher->travel_from_date)) : null }}
-              </div>
-			  <div class="col-lg-6 mb-3">
-                <label for="inputName">Number Of Night:</label>
-				{{ $voucher->nof_night  }}
-              </div>
-			   <div class="col-lg-6 mb-3">
-                <label for="inputName">Travel Date To:</label>
-				{{ $voucher->travel_to_date ? date(config('app.date_format'),strtotime($voucher->travel_to_date)) : null }}
-              </div>
-            
-			  @if($voucher->is_flight == 1)
-			  <div class="col-lg-3 mb-3">
-                <label for="inputName">Arrival Airline:</label>
-                {{ ($voucher->arrivalairline)?$voucher->arrivalairline->name:'' }}
-              </div>
-			  <div class="col-lg-2 mb-3">
-                <label for="inputName">Arrival Date:</label>
-				{{ $voucher->arrival_date ? date(config('app.date_format'),strtotime($voucher->arrival_date)) : null }}
-              </div>
-			 
-			  <div class="col-lg-3 mb-3">
-                <label for="inputName">Arrival Airport:</label>
-                {{ $voucher->arrival_airport }}
-              </div>
-			   <div class="col-lg-2 mb-3">
-                <label for="inputName">Arrival Terminal:</label>
-                {{ $voucher->arrival_terminal }}
-              </div>
-			 <div class="col-lg-2 mb-3">
-                <label for="inputName">Arrival Flight No:</label>
-                {{ $voucher->arrival_flight_no }}
-              </div>
-			 
-			  <div class="col-lg-3 mb-3">
-                <label for="inputName">Depature Airline:</label>
-				 {{ ($voucher->depatureairline)?$voucher->depatureairline->name:'' }}
-              </div>
-			  <div class="col-lg-2 mb-3">
-                <label for="inputName">Depature Date:</label>
-				{{ $voucher->depature_date ? date(config('app.date_format'),strtotime($voucher->depature_date)) : null }}
-              </div>
-			 
-			  <div class="col-lg-3 mb-3">
-                <label for="inputName">Depature Airport:</label>
-                {{ $voucher->depature_airport }}
-              </div>
-			   <div class="col-lg-2 mb-3">
-                <label for="inputName">Depature Terminal:</label>
-                {{ $voucher->depature_terminal }}
-              </div>
-			  <div class="col-lg-2 mb-3">
-                <label for="inputName">Depature Flight No:</label>
-                {{ $voucher->depature_flight_no }}
-              </div>
-			  @endif
-               
-            
-          </div>
-		  
-				<div class="row">
-        <div class="col-12">
-		@if(($voucher->status_main < 5))
-		<form id="cancel-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
-                                {{csrf_field()}}
-								<input type="hidden" id="statusv" value="6" name="statusv"  /> 
-								<input type="hidden" id="payment_date" name="payment_date"  /> 
-                            </form>
-						
-							<a class="btn btn-secondary" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to cancel this voucher?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('cancel-form').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            ">Cancel</a>
-			@endif
-		  @if($voucher->status_main == 1)
-           <form id="status-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
-                                {{csrf_field()}}
-								<input type="hidden" id="statusv" value="2" name="statusv"  /> 
-								<input type="hidden" id="payment_date" name="payment_date"  /> 
-                            </form>
-						
-							<a class="btn btn-success float-right mr-3" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to change  status this?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('status-form').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            ">Create Quotation</a>
-                            
-						@endif
-						
-						@if($voucher->status_main == 2)
-					
-           <form id="status-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}" style="display:none;">
-                                {{csrf_field()}}
-								<input type="hidden" id="statusv" value="3" name="statusv"  /> 
-								<input type="hidden" id="payment_date" name="payment_date"  /> 
-                            </form>
-						
-							<a class="btn btn-success float-right mr-3" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to change  status this?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('status-form').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            ">In Process</a>
-                            
-						@endif
-						
-					@if($voucher->status_main < 4)
-					
-				<a class="btn btn-success float-right statusBtnChange mr-3" href="javascript:void(0)" data-status="4">Confirmed</a>
-				<a class="btn btn-info  float-right statusBtnChange mr-3" href="javascript:void(0)" data-status="5">Vouchered</a>
-				@endif
-				
-				@if($voucher->status_main == 4)
-					
-				<a class="btn btn-success float-right statusBtnChange" href="javascript:void(0)" data-status="5">Vouchered</a>
-				@endif
-						
+    
+/* SASS
+$inactiveColor: #f5f5f5;
+$inactiveDotColor: #e0e0e0;
+$activeColor: #808080;
+$activeDotColor: #fbbd19;
+$stepNameColor: #595959;
+$dotRadius: 16px;
+$barThickness: $dotRadius * .66;
+$stepNameSize: 1.6rem;
+
+.multistep {
+    .multistep-step {
+        padding: 0;
+        position: relative;
+        margin-bottom: 10px;
+
+        .multistep-stepname {
+            margin-bottom: $dotRadius;
+            color: $stepNameColor;
+            font-size: $stepNameSize;
+            white-space: nowrap;
+        }
+
+        .multistep-dot {
+            position: absolute;
+            right: 50%;
+            left: 50%;
+            width: $dotRadius * 2;
+            height: $dotRadius * 2;
+            display: block;
+            margin-top: -$dotRadius;
+            margin-left: -$dotRadius + .5;
+            border-radius: 50%;
+            background: $inactiveColor;
+            &:after {
+                content: ' ';
+                border-radius: 50px;
+                position: absolute;
+                top: $dotRadius / 2;
+                bottom: $dotRadius / 2;
+                left: $dotRadius / 2;
+                right: $dotRadius / 2;
+                background: $inactiveDotColor;
+            }
+        }
+
+        .progress {
+            position: absolute;
+            width: 100%;
+            height: $barThickness;
+            margin-top: -$barThickness / 2;
+            box-shadow: none;
+            border-radius: 0;
+
+            .progress-bar {
+                width: 0px;
+                box-shadow: none;
+                background: $activeColor;
+            }
+        }
+
+        &:first-child > .progress {
+            left: 50%;
+            width: 50%;
+        }
+
+        &:last-child > .progress {
+            width: 50%;
+        }
+
+        &.complete {
+            .multistep-dot {
+                background: $activeColor;
+
+                &:after {
+                    background: $activeDotColor;
+                }
+            }
+
+            .progress > .progress-bar {
+                width: 100%;
+            }
+        }
+
+        &.next:hover {
+            .multistep-dot {
+                background: $activeColor;
+            }
+
+            .multistep-dot:after {
+                background: $activeDotColor;
+            }
+        }
+
+        &.current {
+            .multistep-dot {
+                background: $activeColor;
+
+                &:after {
+                    background: $activeDotColor;
+                }
+            }
+
+            .progress > .progress-bar {
+                width: 50%;
+            }
+
+            &:first-child > .progress > .progress-bar {
+                width: 0%;
+            }
+
+            &:last-child > .progress > .progress-bar {
+                width: 100%;
+            }
+        }
+
+        a.multistep-dot {
+            pointer-events: none;
+        }
+
+        &.next a.multistep-dot {
+            pointer-events: all;
+        }
+    }
+}
+*/    </style>
+<div class="row multistep">
+        <div class="col-md-3 multistep-step complete">
+            <div class="text-center multistep-stepname" style="font-size: 16px;">Add to Cart</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="#" class="multistep-dot"></a>
         </div>
-      </div>
-				</div>
-         
-				</header>
-			
-			</div>
-			
-			<div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-			<div class="row p-2">
-			<div class="col-lg-12">
-				<h5>Hotel Details</h5>
-				
-				</div>
-				</div>
-			@if(!empty($voucherHotel) && $voucher->is_hotel == 1)
-				@foreach($voucherHotel as $vh)
-			 <div id="hDetailsDiv" class="bg-row ">
-			 
-				 <div class="row p-2">
-				
-				<div class="form-group col-md-12 mt-3">
-				<form id="delete-form-{{$vh->id}}" method="post" action="{{route('voucher.hotel.delete',$vh->id)}}" style="display:none;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                            </form>
-                            <a class="btn btn-danger btn-sm float-right" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to delete this hotel and details?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('delete-form-{{$vh->id}}').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            ">Remove <i class="fas fa-trash"></i></a>
-							
-			
-			</div>
-				<div class="col-md-12">
-                <table class="table table-bordered">
-                  <thead>
-				   <tr>
-				   <th>Image</th>
-				   <th>Hotel Name</th>
-				   <th>Check In Date</th>
-				   <th>Check Out Date</th>
-				   </tr>
-				   </thead>
-				   <tbody>
-				   <tr>
-				   <td width="10%"> @if(!empty($vh->hotel->image))<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}" width="100px" />@endif </td>
-				   <td>{{$vh->hotel->name}}</td>
-				   <td>{{$vh->check_in_date}}</td>
-				   <td>{{$vh->check_out_date}}</td>
-				   </tr>
-				   </tbody>
-				  </table>
-				</div>
-				 @php
-				 $hotelData = json_decode($vh->hotel_other_details);
-				
-				 @endphp
-				  </div>
-				  @foreach($hotelData as $k => $hd)
-				<div class="row p-2">
-			 <div class="col-lg-12">
-				<h5><b>Room Details : {{$k+1}}</b></h5>
-				</div>
-			  <div class="col-md-12">
-                <table class="table table-bordered">
-                  <thead>
-				   <tr>
-                    <th>Room Type</th>
-					<th>
-					{{$hd->room_type}}</th>
-					<th colspan="4"></th>
-                  </tr>
-				   <tr>
-                    <th>Number of Rooms</th>
-					<th >{{$hd->nom_of_room}}</th>
-					<th colspan="4"></th>
-                  </tr>
-                  <tr>
-					<th></th>
-                    <th>Single</th>
-					<th>Double</th>
-					<th>Extra Bed</th>
-                    <th>CWB</th>
-                    <th>CNB</th>
-                  </tr>
-				   <tr>
-                    <th>Number of Pax</th>
-					<td>{{$hd->nop_s}}</td>
-					<td>{{$hd->nop_d}}</td>
-					<td>{{$hd->nop_eb}}</td>
-					<td>{{$hd->nop_cwb}}</td>
-					<td>{{$hd->nop_cnb}}</td>
-                  </tr>
-				   <tr>
-                    <th>Net Rate</th>
-					<td>{{$hd->nr_s}}</td>
-					<td>{{$hd->nr_d}}</td>
-					<td>{{$hd->nr_eb}}</td>
-					<td>{{$hd->nr_cwb}}</td>
-					<td>{{$hd->nr_cnb}}</td>
-                  </tr>
-					<tr>
-                    <th>Per Pax to be autocalculated</th>
-					<td>{{$hd->ppa_s}}</td>
-					<td>{{$hd->ppa_d}}</td>
-					<td>{{$hd->ppa_eb}}</td>
-					<td>{{$hd->ppa_cwb}}</td>
-					<td>{{$hd->ppa_cnb}}</td>
-                  </tr>
-				  <tr>
-                    <th>Mark Up in </th>
-					<td>{{$hd->markup_p_s}}%</td>
-					<td>{{$hd->markup_p_d}}%</td>
-					<td>{{$hd->markup_p_eb}}%</td>
-					<td>{{$hd->markup_p_cwb}}%</td>
-					<td>{{$hd->markup_p_cnb}}%</td>
-                  </tr>
-				  <tr>
-                    <th>Mark up Value</th>
-					<td>{{$hd->markup_v_s}}</td>
-					<td>{{$hd->markup_v_d}}</td>
-					<td>{{$hd->markup_v_eb}}</td>
-					<td>{{$hd->markup_v_cwb}}</td>
-					<td>{{$hd->markup_v_cnb}}</td>
-                  </tr>
-				 
-				  </table>
+
+        <div class="col-md-3 multistep-step current">
+            <div class="text-center multistep-stepname" style="font-size: 16px;">Payment</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="#" class="multistep-dot"></a>
+        </div>
+
+        <div class="col-md-3 multistep-step next">
+            <div class="text-center multistep-stepname" style="font-size: 16px;">Voucher</div>
+            <div class="progress"><div class="progress-bar"></div></div>
+            <a href="#" class="multistep-dot"></a>
+        </div>
+
+        
+    </div>
+        <div class="row" style="margin-top: 30px;">
+		
+          <!-- left column -->
+          <div class="offset-md-1 col-md-6">
+		   <form id="cusDetails" method="post" action="{{route('agent.vouchers.status.change',$voucher->id)}}" >
+			 {{ csrf_field() }}
+            <!-- general form elements -->
+            <div class="card card-default">
+              <div class="card-header">
+                 <h3 class="card-title"><i class="nav-icon fas fa-user" style="color:black"></i> Passenger Details</h3>
               </div>
-			 </div>	
-			 @endforeach
-			 </div>	
-			  @endforeach
-			  @endif
-			
-			</div>
-			<div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+              <!-- /.card-header -->
+              <!-- form start -->
+            
+                <div class="card-body">
+                  <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-2">
+                      <select class="form-control">
+                        <option>Mr.</option>
+                        <option>Mrs.</option>
+                        <option>Miss</option>
+                      </select>
+                    </div>
+                    <div class="col-5">
+                      <input type="text" name="fname"  class="form-control" placeholder="First Name" required>
+                    </div>
+                    <div class="col-5">
+                      <input type="text" name="lname"  class="form-control" placeholder="Last Name" required>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-4">
+                      <input type="text" readonly value="{{$voucher->agent->email}}" class="form-control" placeholder="Email ID">
+                    </div>
+                    <div class="col-4">
+                      <input type="text" readonly value="{{$voucher->agent->mobile }}" class="form-control" placeholder="Mobile No.">
+                    </div>
+                    <div class="col-4">
+                      <input type="text" name="agent_ref_no" class="form-control" placeholder="Agent Reference No.">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-12">
+                      <textarea type="text" class="form-control" style="resize:none;" name="remark" placeholder="Remark" rows="5"></textarea>
+                    </div>
+                   
+                  </div>
+                </div>
+                <!-- /.card-body -->
+				
+               
+            </div>
+            <!-- /.card -->
+			@php
+					$ii = 0;
+					@endphp
 			@if(!empty($voucherActivity) && $voucher->is_activity == 1)
-				<div class="row p-2">
-			 
-			  <div class="col-md-12">
-                <table class="table table-bordered">
-                  <thead>
-				  
-                  <tr>
-					<th>Tour Option</th>
-                    <th>Transfer Option</th>
-					<th width="10%">Tour Date</th>
-					<th>Adult</th>
-                    <th>Child</th>
-                    <th>Infant</th>
-					<th>Net Discount</th>
-					<th>Total Amount</th>
-					<th width="15%">Ticket</th>
-					<th></th>
-                  </tr>
-				  @if(!empty($voucherActivity))
+				@foreach($voucherActivity as $ap)
+				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
+				  @php
+					$ii = 1;
+					@endphp
+				@endif
+					@endforeach
+			
+            <div class="card card-default {{($ii=='0')?'hide':''}}">
+              <div class="card-header">
+                <h3 class="card-title"><i class="nav-icon fas fa-book" style="color:black"></i> Additional Information</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+            
+                <div class="card-body">
+					@if(!empty($voucherActivity))
 					  @foreach($voucherActivity as $ap)
-					@php
+				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
+				  @php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					@endphp
-				   <tr>
-                    <td>{{$activity->title}} - {{$ap->variant_name}} - {{$ap->variant_code}}</td>
-					<td>{{$ap->transfer_option}}
-					@if($ap->transfer_option == 'Shared Transfer')
-						@php
-					$zone = SiteHelpers::getZoneName($ap->transfer_zone);
+                  <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-12"><p>{{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
+                    <div class="col-6">
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
+					
+                     
+                    </div>
+                    <div class="col-6">
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+                    </div>
+                  </div>
+				   @endif
+				  @endforeach
+                 @endif
+				  
+                </div>
+				@endif
+                <!-- /.card-body -->
+
+               
+            </div>
+			
+            <!-- /.card -->
+
+            <div class="card card-default">
+              <div class="card-header">
+               <h3 class="card-title"><i class="nav-icon fas fa-credit-card" style="color:black"></i>  Payment Options</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+            
+                <div class="card-body">
+                  <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-12">
+                      <input type="radio" checked name="payment"  /> Credit Limit (AED {{($voucher->agent->agent_amount_balance)?$voucher->agent->agent_amount_balance:0}})
+                    </div>
+                   
+                  </div>
+                  <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-12">
+                      <input type="radio" disabled name="payment"  /> Credit Card / Debit Card
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+               
+            </div>
+            <!-- /.card -->
+ <!-- general form elements -->
+ <div class="card card-default">
+  
+   
+
+    <div class="card-footer">
+      <div class="row" style="margin-bottom: 5px;">
+        <div class="col-md-8 text-left">
+          <input type="checkbox" name="tearmcsk" required id="tearmcsk" /> By clicking Pay Now you agree that you have read ad understood our Terms and Conditions
+		  <br><label id="tearmcsk_message" for="tearmcsk" class="error hide" >This field is required.</label>
+        </div>
+        <div class="col-4 text-right">
+			<button type="submit" name="btn_hold" class="btn btn-primary">Hold</button>
+            <button type="submit" name="btn_paynow" class="btn btn-success">Pay Now</button>
+        </div>
+      </div>
+    </div>
+
+</div>
+<!-- /.card -->
+
+            <!-- Horizontal Form -->
+            
+            <!-- /.card -->
+</form>
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-4" >
+            <!-- Form Element sizes -->
+			@php
+				$totalGrand =0; 
+			  @endphp
+			  @if(!empty($voucherActivity) && $voucher->is_activity == 1)
+					@if(!empty($voucherActivity))
+					  @foreach($voucherActivity as $ap)
+				  @php
+					$activity = SiteHelpers::getActivity($ap->activity_id);
 					@endphp
-						- <b>Zone :</b> {{$zone->name}}
-					@endif
-					
-					@if($ap->transfer_option == 'Shared Transfer')
-					- <b>Pickup Location :</b> {{$ap->pickup_location}}
-					@elseif($ap->transfer_option == 'Pvt Transfer')
-					- <b>Pickup Location :</b> {{$ap->pickup_location}}
-					@endif
-					</td>
-					<td>{{$ap->tour_date}}</td>
-					<td>{{$ap->adult}}</td>
-                    <td>{{$ap->child}}</td>
-                    <td>{{$ap->infant}}</td>
-					<td>{{$ap->discountPrice}}</td>
-					<td>{{$ap->totalprice}}</td>
-					
-					<td style="width:11%">
-						@if(($voucher->status_main == 5) and ($ap->ticket_generated == '0'))
-						<form id="tickets-generate-form-{{$ap->id}}" method="post" action="{{route('tickets.generate',$ap->id)}}" style="display:none;">
-                                {{csrf_field()}}
-								<input type="hidden" id="statusv" value="2" name="statusv"  /> 
-								<input type="hidden" id="payment_date" name="payment_date"  /> 
-                            </form>
-						
-							<a class="btn btn-success float-left mr-3" href="javascript:void(0)" onclick="
-                                if(confirm('You want to generate ticket?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('tickets-generate-form-{{$ap->id}}').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            ">Generate</a>
-							@elseif($ap->ticket_generated == '1')
-							<a class="btn btn-success float-left mr-3" href="{{route('ticket.dwnload',$ap->id)}}" ><i class="fas fa-download"></i></a>
-							@endif
-							@if(($ap->ticket_generated == '1') and ($ap->ticket_downloaded == '0'))
-							<a class="btn btn-danger float-left" href="javascript:void(0)" ><i class="fa fa-times"></i> Cancel</a>
-							@endif
-							
-							</td>
-					<td>
-						   <form id="delete-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.delete',$ap->id)}}" style="display:none;">
+            <div class="card card-default">
+              <div class="card-header">
+                <div class="row">
+				<div class="col-md-8 text-left">
+                    <h3 class="card-title">
+                      <strong> {{$activity->title}}</strong></h3>
+                  </div>
+				<div class="col-md-4 text-right">
+                    <form id="delete-form-{{$ap->id}}" method="post" action="{{route('agent.voucher.activity.delete',$ap->id)}}" style="display:none;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
-                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="
+                            <a class="btn-danger btn-sm" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to delete this?'))
                                 {
                                     event.preventDefault();
@@ -479,115 +498,198 @@
                                 }
                             
                             "><i class="fas fa-trash"></i></a>
-                         </td>
-                  </tr>
-				  @endforeach
-				 @endif
-				  </table>
+                    
+                  </div>
+				   </div>
               </div>
-			 </div>	
-		@endif
-			</div>
-
-		</div>
-</div>
-
-      </div>
-  <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog" data-backdrop="static">
-  <div class="modal-dialog">
- <form id="status-form" method="post" action="{{route('voucher.status.change',$voucher->id)}}">
- {{csrf_field()}}
-			<input type="hidden" id="statusv" value="" name="statusv"  /> 
-			
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header"> Payment Date
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-      
-    <div class="row">
-        <div class="col-md-12">
-          <div class="card-primary">
-          <div id="message"></div>
-		  <div id="errors"></div>
-            <div class="card-body row">
-                <div class="form-group col-md-12">
-                <label for="inputName">Payment Date: <span class="red">*</span></label>
-                <input type="text" id="payment_date" name="payment_date" value="{{ old('name') }}" class="form-control datepicker" required  placeholder="Payment Date" autocomplete ="off" />
-                    <span class="text-danger" id="err_name"></span>
+              <div class="card-body">
+			  
+			  <div class="">
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-md-5 text-left">
+                      <strong>Tour Option</strong>
+                    </div>
+                    <div class="col-md-7 text-right">
+                      {{$ap->variant_name}}
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Date</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   {{$ap->tour_date}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Transfer Type</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   {{$ap->transfer_option}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Pickup Timing</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   {{$ap->actual_pickup_time}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Pax</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   {{$ap->adult}} Adult {{$ap->child}} Child
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Amount Incl. VAT</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   AED {{$ap->totalprice}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Total</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   AED {{$ap->totalprice}}
+                  </div>
+                </div>
+				</div>
+				
               </div>
-			
+              <!-- /.card-body -->
             </div>
-			
-            <!-- /.card-body -->
+            <!-- /.card -->
+@php
+					$totalGrand += $ap->totalprice; 
+				  @endphp
+				 @endforeach
+                 @endif
+				  @endif
+            <div class="card card-default">
+              <div class="card-header">
+                <h3 class="card-title"><strong>Total Payment</strong></h3>
+              </div>
+              <div class="card-body">
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-6 text-left">
+                    <strong>Amount Incl. VAT</strong>
+                  </div>
+                  <div class="col-md-6 text-right">
+                   AED {{$totalGrand}}
+                  </div>
+                </div>
+               <!-- <div class="row" style="margin-bottom: 15px;">
+                  <div class="col-md-6 text-left">
+                    <strong>Handling charges (2%)</strong>
+                  </div>
+                  <div class="col-md-6 text-right">
+                   AED 2.30
+                  </div>
+                </div> -->
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-6 text-left">
+                    <h5>Final Amount</h5>
+                  </div>
+                  <div class="col-md-6 text-right">
+                   <h5>AED {{$totalGrand}}</h5>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
           </div>
-          <!-- /.card -->
+          <!--/.col (right) -->
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <button type="bu" class="btn btn-success float-right" id="btnSaveData">Save</button>
-        </div>
-      </div>
-    
-      </div>
-     
-    </div>
- </form>
-  </div>
-</div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
     </section>
+  
     <!-- /.content -->
 @endsection
 
 
 
 @section('scripts')
+<script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js
+"></script>
+
+
+
+
 <script type="text/javascript">
   $(function(){
-	   $(".statusBtnChange").on('click', function(event) {
+$('#cusDetails').validate({});
+
+	 $(document).on('change', '.inputsave', function(evt) {
 		
-	  var status  = $(this).data('status');
-	  
-	$('body #statusv').val(status);
-		$('#myModal').modal("show");
-		$("body").find('#payment_date').datepicker({
-                weekStart: 1,
-                daysOfWeekHighlighted: "6,0",
-                autoclose: true,
-                todayHighlight: true,
-                dateFormat: 'yyyy-mm-dd',
-				onSelect: function(){
-            var selected2 = $(this).datepicker("getDate");
-			var dateObject2 = new Date(selected2);
-			var formattedDate2 = $.datepicker.formatDate("yy-mm-dd", dateObject2);
-			$('body #payment_date').val(formattedDate2);
-        }
+		$("#loader-overlay").show();
+		$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
-				if(confirm('Are you sure, You want to change status this?'))
-				{
-				event.preventDefault();
-				//document.getElementById('status-form').submit();
-				}
-				else
-				{
-				event.preventDefault();
-				}
-	}); 
-			$("#btnSaveData").on('click', function(event) {
-				
-				if($("body #payment_date").val() == '')
-				{
-					confirm('Payment date required');
-					return false;
-				}
-				else
-				{
-					document.getElementById('status-form').submit();
-				}
-	}); 
+		$.ajax({
+            url: "{{route('voucherReportSave')}}",
+            type: 'POST',
+            dataType: "json",
+            data: {
+               id: $(this).data('id'),
+			   inputname: $(this).data('name'),
+			   val: $(this).val()
+            },
+            success: function( data ) {
+               //console.log( data );
+			  $("#loader-overlay").hide();
+            }
+          });
+	 }); 
+
+	 var path = "{{ route('auto.hotel') }}";
+	 var inputElement = $(this); // Store reference to the input element
+
+	 $(".autocom").each(function() {
+    var inputElement = $(this);
+    inputElement.autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: path,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    search: request.term,
+                    zone: inputElement.attr('data-zone')
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        select: function(event, ui) {
+            $('#pickup_location' + inputElement.data('id')).val(ui.item.label);
+            return false;
+        },
+        change: function(event, ui) {
+            if (ui.item == null) {
+                $('#pickup_location' + inputElement.data('id')).val('');
+            }
+        }
+    });
+});
+
+
 	});
+	
+
 </script>
 @endsection

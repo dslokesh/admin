@@ -202,7 +202,7 @@ class VouchersController extends Controller
 		
 		$recordUser->save();
 		
-		/* if ($request->has('save_and_hotel')) {
+		if ($request->has('save_and_hotel')) {
 			if($record->is_hotel == 1){
 			return redirect()->route('voucher.add.hotels',$record->id)->with('success', 'Voucher Created Successfully.');
 			}
@@ -210,18 +210,18 @@ class VouchersController extends Controller
 			{
 				return redirect()->route('vouchers.index')->with('error', 'If select hotel yes than you can add hotel.');
 			}
-		} */
-		//if ($request->has('save_and_activity')) {
+		}
+		if ($request->has('save_and_activity')) {
 			if($record->is_activity == 1){
 			return redirect()->route('voucher.add.activity',$record->id)->with('success', 'Voucher Created Successfully.');
 			}
 			else
 			{
-				return redirect()->route('vouchers.index')->with('error', 'If select activity yes than you can add activity.');
+				return redirect()->route('vouchers.index')->with('error', 'If select hotel yes than you can add hotel.');
 			}
-		/* } else {
+		} else {
         return redirect()->route('vouchers.index')->with('success', 'Voucher Created Successfully.');
-		} */
+		}
 		
     }
 
@@ -689,31 +689,10 @@ class VouchersController extends Controller
        
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		//dd($records);
-		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
-        return view('vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount'));
+		
+        return view('vouchers.activities-list', compact('records','typeActivities','vid','voucher'));
 		
        
-    }
-	
-	public function getActivityVariant(Request $request)
-    {
-		$data = $request->all();
-		$aid = $data['act'];
-		$vid = $data['vid'];
-		$query = Activity::where('id', $data['act']);
-		$activity = $query->where('status', 1)->first();
-		$voucher = Voucher::find($data['vid']);
-		$startDate = $voucher->travel_from_date;
-		$endDate = $voucher->travel_to_date;
-		
-			
-			$activityPrices = ActivityPrices::where('activity_id', $data['act'])->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')->get();
-
-		$typeActivities = config("constants.typeActivities"); 
-		$returnHTML = view('agent-vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'))->render();
-		
-		return response()->json(array('success' => true, 'html'=>$returnHTML));	
-			
     }
 	
 	public function addActivityView($aid,$vid)

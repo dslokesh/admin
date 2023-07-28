@@ -83,14 +83,14 @@
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid From: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_from1" name="rate_valid_from[]" value="{{ old('rate_valid_from') }}" class="form-control datepicker"  placeholder="Rate Valid From" required="required" />
+                <input type="text" id="rate_valid_from1" name="rate_valid_from[]" value="{{ old('rate_valid_from') }}" class="form-control datepicker"  placeholder="Rate Valid From" autocomplete="off" required="required" />
                 @if ($errors->has('rate_valid_from'))
                     <span class="text-danger">{{ $errors->first('rate_valid_from') }}</span>
                 @endif
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Rate Valid To: <span class="red">*</span></label>
-                <input type="text" id="rate_valid_to1" name="rate_valid_to[]" value="{{ old('rate_valid_to') }}" class="form-control datepicker"  placeholder="Rate Valid To" required="required"  />
+                <input type="text" id="rate_valid_to1" name="rate_valid_to[]" value="{{ old('rate_valid_to') }}" class="form-control datepicker"  placeholder="Rate Valid To" autocomplete="off" required="required"  />
                 @if ($errors->has('rate_valid_to'))
                     <span class="text-danger">{{ $errors->first('rate_valid_to') }}</span>
                 @endif
@@ -240,14 +240,34 @@
     success: function(response) {
         // Append the content to the DOM
 		
-			$('.card-body').append(response.html);
-				$('.datepicker').datepicker({
-				weekStart: 1,
-				daysOfWeekHighlighted: "6,0",
-				autoclose: true,
-				todayHighlight: true,
-				format: 'yyyy-mm-dd'
-			});
+			$('.card-body').append(response.html).find('#rate_valid_from'+rowCount).datepicker({
+                weekStart: 1,
+                daysOfWeekHighlighted: "6,0",
+                autoclose: true,
+                todayHighlight: true,
+                dateFormat: 'yyyy-mm-dd',
+				onSelect: function(){
+            var selected = $(this).datepicker("getDate");
+			var dateObject = new Date(selected);
+			var formattedDate = $.datepicker.formatDate("yy-mm-dd", dateObject);
+			$('body #rate_valid_from'+rowCount).val(formattedDate);
+        }
+            });
+			
+			$('.card-body').find('#rate_valid_to'+rowCount).datepicker({
+                weekStart: 1,
+                daysOfWeekHighlighted: "6,0",
+                autoclose: true,
+                todayHighlight: true,
+                dateFormat: 'yyyy-mm-dd',
+				onSelect: function(){
+            var selected2 = $(this).datepicker("getDate");
+			var dateObject2 = new Date(selected2);
+			var formattedDate2 = $.datepicker.formatDate("yy-mm-dd", dateObject2);
+			$('body #rate_valid_to'+rowCount).val(formattedDate2);
+        }
+            });
+			
 			$('.timepicker').datetimepicker({
 				format: 'hh:mm a'
 			});
