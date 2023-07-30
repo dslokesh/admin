@@ -28,7 +28,7 @@
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
-	<img src="{{ asset(''uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+	<img src="{{ asset('uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
 	@endif
 
 	        	    
@@ -110,7 +110,7 @@
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
-	<img src="{{ asset(''uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+	<img src="{{ asset('uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
 	@endif
 
 
@@ -153,7 +153,7 @@
 	<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
-	<img src="{{ asset(''uploads/hotels/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+	<img src="{{ asset('uploads/hotels/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
 	@endif
 	
       				
@@ -208,7 +208,7 @@
 			<img src="{{asset('uploads/activities/'.$activity->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
 			@else
 			{{-- Code to show a placeholder or alternate image --}}
-			<img src="{{ asset(''uploads/activities/thumb/no-image.png') }}" alt="" style="width:100%;max-width: 100%; height: 100%"  alt="no-image">
+			<img src="{{ asset('uploads/activities/thumb/no-image.png') }}" alt="" style="width:100%;max-width: 100%; height: 100%"  alt="no-image">
 
 			@endif
 	      			</div>
@@ -240,7 +240,12 @@
       </tr>
       <tr>
       	<td colspan="3" style="padding-top: 90px !important;">
-          <img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" alt="" style="max-width: 150px;width: 120px;height: 120px">
+        @if(Storage::disk('public')->exists('uploads/users/thumb/'.$voucher->agent->image))
+	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
+	@else
+	{{-- Code to show a placeholder or alternate image --}}
+	<img src="{{ asset('uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+	@endif
         </td>
       </tr>
       <tr>
