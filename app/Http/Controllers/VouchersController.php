@@ -235,9 +235,35 @@ class VouchersController extends Controller
     {
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
 		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
-	
+		if($voucher->status_main  > 4)
+		{
+			return redirect()->route('voucherView',$voucher->id);
+		}
 		$voucherStatus = config("constants.voucherStatus");
-        return view('vouchers.view', compact('voucher','voucherHotel','voucherActivity','voucherStatus'));
+	
+		$name = explode(' ',$voucher->guest_name);
+		
+		$fname = '';
+		$lname = '';
+		if(!empty($name)){
+			$fname = trim($name[0]);
+			unset($name[0]);
+			$lname = trim(implode(' ', $name));
+		}
+
+        return view('vouchers.view', compact('voucher','voucherHotel','voucherActivity','voucherStatus','fname','lname'));
+    }
+
+	public function voucherView($vid)
+    {
+		$voucher =  Voucher::where('id',$vid)->first();
+		if (empty($voucher)) {
+            return abort(404); //record not found
+        }
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
+		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
+		$voucherStatus = config("constants.voucherStatus");
+        return view('vouchers.bookedview', compact('voucher','voucherActivity','voucherStatus','voucherHotel'));
     }
 
     /**
@@ -366,12 +392,14 @@ class VouchersController extends Controller
 	public function statusChangeVoucher(Request $request,$id)
     {
 		$data = $request->all();
-		$record = Voucher::find($id);
-		if($data['statusv'] == 5)
-		{
+		
+		$record = Voucher::where('id',$id)->first();
+		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
+		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
 		if(!empty($agent))
 		{
+			
 			
 			$agentAmountBalance = $agent->agent_amount_balance;
 			
@@ -384,10 +412,15 @@ class VouchersController extends Controller
 			}else{
 			$code = 'WVIN-100'.$record->id;
 			}
+			
+			$record->booking_date = date("Y-m-d");
+			$record->guest_name = $data['fname'].' '.$data['lname'];
+			$record->agent_ref_no = $data['agent_ref_no'];
+			$record->remark = $data['remark'];
 			$record->invoice_number = $code;
 			$record->updated_by = Auth::user()->id;
 			$record->status_main = 5;
-			$record->payment_date = $data['payment_date'];
+			$record->payment_date = $paymentDate;
 			$record->save();
 			$agent->agent_amount_balance -= $record->total_activity_amount;
 			$agent->save();
@@ -401,36 +434,58 @@ class VouchersController extends Controller
 			$agentAmount->created_by = Auth::user()->id;
 			$agentAmount->updated_by = Auth::user()->id;
 			$agentAmount->save();
-			//$receipt_no = 'VA-'.date("Y")."-00".$agentAmount->id;
 			$recordUser = AgentAmount::find($agentAmount->id);
 			$recordUser->receipt_no = $code;
 			$recordUser->is_vat_invoice = $record->vat_invoice;
-			$recordUser->save();
+			$recordUser->save(); 
 			
 			}else{
 				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');
 			}
 			
-		}else{
-				 return redirect()->back()->with('error', 'Agency  Name not found this voucher. Please select agent first.');
+		}
+		else{
+				 return redirect()->back()->with('error', 'Agency  Name not found this voucher.');
 			}
 		
-		}else if($data['statusv'] == 4)
-		{
+		}
+		else if ($request->has('btn_hold')) {
 			$record->booking_date = date("Y-m-d");
-			$record->status_main = 4;
-			$record->payment_date = $data['payment_date'];
+			$record->guest_name = $data['fname'].' '.$data['lname'];
+			$record->agent_ref_no = $data['agent_ref_no'];
+			$record->remark = $data['remark'];
 			$record->updated_by = Auth::user()->id;
+			$record->status_main = 4;
+			$record->payment_date = $paymentDate;
 			$record->save();
 		}
-		else
-		{
-			$record->status_main = $data['statusv'];
-			$record->payment_date = $data['payment_date'];
+		else if ($request->has('btn_quotation')) {
+			$record->guest_name = $data['fname'].' '.$data['lname'];
+			$record->agent_ref_no = $data['agent_ref_no'];
+			$record->remark = $data['remark'];
+			$record->updated_by = Auth::user()->id;
+			$record->status_main = 2;
+			$record->payment_date = $paymentDate;
+			$record->save();
+		}
+		else if ($request->has('btn_process')) {
+			$record->guest_name = $data['fname'].' '.$data['lname'];
+			$record->agent_ref_no = $data['agent_ref_no'];
+			$record->remark = $data['remark'];
+			$record->updated_by = Auth::user()->id;
+			$record->status_main = 3;
+			$record->payment_date = $paymentDate;
 			$record->save();
 		}
 		
-        return redirect()->back()->with('success', 'Status Change Successfully.');
+		
+		if($record->status_main > 3){
+			return redirect()->route('voucherView',$record->id)->with('success', 'Voucher Created Successfully.');
+		}
+		else{
+			return redirect()->route('vouchers.index')->with('success', 'Voucher Created Successfully.');
+		}
+        
     }
 	
 	public function autocompleteAgent(Request $request)
@@ -493,7 +548,10 @@ class VouchersController extends Controller
     public function addHotelsList(Request $request,$vid)
     {
         $data = $request->all();
-		
+		$voucher = Voucher::find($vid);
+		if($voucher->is_hotel == '0'){
+			return redirect()->back()->with('error', 'If select hotel yes than you can add hotel.');
+		}
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
         $query = Hotel::with(['country', 'state', 'city', 'hotelcategory']);
         if (isset($data['name']) && !empty($data['name'])) {
@@ -521,7 +579,7 @@ class VouchersController extends Controller
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
         $hotelcategories = HotelCategory::where('status', 1)->orderBy('name', 'ASC')->get();
-		$voucher = Voucher::find($vid);
+		
 		$zones = Zone::where('status', 1)->orderBy('name', 'ASC')->get();
         return view('vouchers.hotels', compact('records', 'countries', 'states', 'cities', 'hotelcategories','vid','voucher','zones'));
     }
@@ -680,15 +738,19 @@ class VouchersController extends Controller
 		$typeActivities = config("constants.typeActivities"); 
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucher = Voucher::find($vid);
-		
+		if($voucher->status_main  == '5')
+		{
+			return redirect()->route('voucherView',$voucher->id)->with('error', 'You can not add more activity. your voucher already vouchered.');
+		}
         $query = Activity::with('prices')->where('status',1)->where('is_price',1);
-	
+		
         if (isset($data['name']) && !empty($data['name'])) {
             $query->where('title', 'like', '%' . $data['name'] . '%');
         }
        
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		//dd($records);
+		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
         return view('vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount'));
 		

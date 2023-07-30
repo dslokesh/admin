@@ -65,13 +65,20 @@
         <div class="col-md-12">
         <div class="col-md-12">
         
-        <div class="offset-md-9 col-md-3 text-right">
+        <div class="offset-md-7 col-md-5 text-right">
+          @if($voucher->is_hotel == '1')
+          <a href="{{ route('voucher.add.hotels',$voucher->id) }}" class="btn btn-lg btn-success btn-sm pull-left">
+            <i class="fas fa-hotel"></i>
+            Add Hotels
+        </a>
+        @endif
         @if($voucherActivityCount > 0)
-              <a href="{{ route('vouchers.show',$voucher->id) }}" class="btn btn-lg btn-success pull-right">
+              <a href="{{ route('vouchers.show',$voucher->id) }}" class="btn btn-lg btn-success btn-sm pull-right">
             <i class="fas fa-shopping-cart"></i>
             Checkout({{$voucherActivityCount}})
         </a>
         @endif
+
         </div> 
         </div>
         </div>

@@ -311,7 +311,7 @@ $stepNameSize: 1.6rem;
 		
           <!-- left column -->
           <div class="offset-md-1 col-md-6">
-		   <form id="cusDetails" method="post" action="{{route('agent.vouchers.status.change',$voucher->id)}}" >
+		   <form id="cusDetails" method="post" action="{{route('voucher.status.change',$voucher->id)}}" >
 			 {{ csrf_field() }}
             <!-- general form elements -->
             <div class="card card-default">
@@ -331,10 +331,10 @@ $stepNameSize: 1.6rem;
                       </select>
                     </div>
                     <div class="col-5">
-                      <input type="text" name="fname"  class="form-control" placeholder="First Name" required>
+                      <input type="text" name="fname" value="{{$fname}}" class="form-control" placeholder="First Name" required>
                     </div>
                     <div class="col-5">
-                      <input type="text" name="lname"  class="form-control" placeholder="Last Name" required>
+                      <input type="text" name="lname" value="{{$lname}}" class="form-control" placeholder="Last Name" required>
                     </div>
                   </div>
                   <div class="row" style="margin-bottom: 15px;">
@@ -345,12 +345,12 @@ $stepNameSize: 1.6rem;
                       <input type="text" readonly value="{{$voucher->agent->mobile }}" class="form-control" placeholder="Mobile No.">
                     </div>
                     <div class="col-4">
-                      <input type="text" name="agent_ref_no" class="form-control" placeholder="Agent Reference No.">
+                      <input type="text" name="agent_ref_no" value="{{$voucher->agent_ref_no}}" class="form-control" placeholder="Agent Reference No.">
                     </div>
                   </div>
                   <div class="row" style="margin-bottom: 5px;">
                     <div class="col-12">
-                      <textarea type="text" class="form-control" style="resize:none;" name="remark" placeholder="Remark" rows="5"></textarea>
+                      <textarea type="text" class="form-control" style="resize:none;" name="remark" placeholder="Remark" rows="5">{{$voucher->remark}}</textarea>
                     </div>
                    
                   </div>
@@ -442,13 +442,23 @@ $stepNameSize: 1.6rem;
 
     <div class="card-footer">
       <div class="row" style="margin-bottom: 5px;">
-        <div class="col-md-8 text-left">
+        <div class="col-md-12 text-left">
           <input type="checkbox" name="tearmcsk" required id="tearmcsk" /> By clicking Pay Now you agree that you have read ad understood our Terms and Conditions
 		  <br><label id="tearmcsk_message" for="tearmcsk" class="error hide" >This field is required.</label>
         </div>
-        <div class="col-4 text-right">
-			<button type="submit" name="btn_hold" class="btn btn-primary">Hold</button>
+        <div class="col-12 text-right">
+          @if($voucher->status_main < 2)
+            <button type="submit" name="btn_quotation" class="btn btn-primary">Create Quotation</button>
+            @endif
+            @if($voucher->status_main < 3)
+            <button type="submit" name="btn_process" class="btn btn-info">In Process</button>
+            @endif
+            @if($voucher->status_main < 4)
+            <button type="submit" name="btn_hold" class="btn btn-primary">Hold</button>
+            @endif
+            @if($voucher->status_main < 5 )
             <button type="submit" name="btn_paynow" class="btn btn-success">Pay Now</button>
+            @endif
         </div>
       </div>
     </div>
@@ -573,6 +583,121 @@ $stepNameSize: 1.6rem;
 				 @endforeach
                  @endif
 				  @endif
+         <!-- /.startteldiv-->
+          @if(!empty($voucherHotel) && $voucher->is_hotel == 1)
+					@if(!empty($voucherHotel))
+					  @foreach($voucherHotel as $vh)
+            @php
+            $room = SiteHelpers::hotelRoomsDetails($vh->hotel_other_details)
+            @endphp
+            <div class="card card-default">
+              <div class="card-header">
+                <div class="row">
+				<div class="col-md-8 text-left">
+                    <h3 class="card-title">
+                      <strong> {{$vh->hotel->name}}</strong></h3>
+                  </div>
+				<div class="col-md-4 text-right">
+                    <form id="delete-form-hotel-{{$vh->id}}" method="post" action="{{route('voucher.hotel.delete',$vh->id)}}" style="display:none;">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                            </form>
+                            <a class="btn-danger btn-sm" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to delete this?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('delete-form-hotel-{{$vh->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            "><i class="fas fa-trash"></i></a>
+                    
+                  </div>
+				   </div>
+              </div>
+              <div class="card-body">
+			  
+			  <div class="">
+          <div class="row" style="margin-bottom: 5px;">
+            <div class="col-md-5 text-left">
+              <strong>Hotel Category</strong>
+            </div>
+            <div class="col-md-7 text-right">
+              {{$vh->hotel->hotelcategory->name}}
+            </div>
+        </div>
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-md-5 text-left">
+                      <strong>Check In</strong>
+                    </div>
+                    <div class="col-md-7 text-right">
+                      {{$vh->check_in_date}}
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Check Out</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   {{$vh->check_out_date}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Room Type</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                    {{$room['room_type']}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Number of Rooms</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                    {{$room['number_of_rooms']}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Occupancy</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                    {{$room['occupancy']}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Amount Incl. VAT</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   AED {{$room['price']}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Total</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   AED {{$room['price']}}
+                  </div>
+                </div>
+				</div>
+				
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+@php
+					$totalGrand += $room['price']; 
+				  @endphp
+				 @endforeach
+                 @endif
+				  @endif
+           <!-- /.endhoteldiv-->
             <div class="card card-default">
               <div class="card-header">
                 <h3 class="card-title"><strong>Total Payment</strong></h3>

@@ -130,14 +130,22 @@
 						  @endif
 						  </td>
                      <td>
-					 @if($record->status_main > 3)
+					 @if($record->status_main == '4')
 					 
-					 <a class="btn btn-info btn-sm" href="{{route('agentVoucherView',$record->id)}}">
+					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.show',$record->id)}}">
                               <i class="fas fa-eye">
                               </i>
                               
                           </a>
 					@endif
+          @if($record->status_main > 4)
+					 
+          <a class="btn btn-info btn-sm" href="{{route('agentVoucherView',$record->id)}}">
+                             <i class="fas fa-eye">
+                             </i>
+                             
+                         </a>
+         @endif
 					 <a class="btn btn-info btn-sm hide" href="{{route('agent-vouchers.edit',$record->id)}}">
                               <i class="fas fa-pencil-alt">
                               </i>

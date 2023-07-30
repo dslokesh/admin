@@ -183,15 +183,23 @@ class AgentVouchersController extends Controller
 		if (empty($voucher)) {
             return abort(404); //record not found
         }
-		if($voucher->status_main  > 3)
+		if($voucher->status_main  > 4)
 		{
 			return redirect()->route('agentVoucherView',$voucher->id);
 		}
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
 		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
-	
+		$name = explode(' ',$voucher->guest_name);
+		
+		$fname = '';
+		$lname = '';
+		if(!empty($name)){
+			$fname = trim($name[0]);
+			unset($name[0]);
+			$lname = trim(implode(' ', $name));
+		}
 		$voucherStatus = config("constants.voucherStatus");
-        return view('agent-vouchers.view', compact('voucher','voucherHotel','voucherActivity','voucherStatus'));
+        return view('agent-vouchers.view', compact('voucher','voucherHotel','voucherActivity','voucherStatus','fname','lname'));
     }
 
     /**
@@ -363,10 +371,16 @@ class AgentVouchersController extends Controller
 		$typeActivities = config("constants.typeActivities"); 
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucher = Voucher::find($vid);
-		if($voucher->status_main  > 3)
+		
+		if($voucher->status_main  == '4')
 		{
-			return redirect()->route('agentVoucherView',$voucher->id);
+			return redirect()->route('agent-vouchers.show',$voucher->id)->with('error', 'You can not add more activity. your voucher already confirmed.');
 		}
+		if($voucher->status_main  == '5')
+		{
+			return redirect()->route('agentVoucherView',$voucher->id)->with('error', 'You can not add more activity. your voucher already vouchered.');
+		}
+		
         $query = Activity::with('prices')->where('status',1)->where('is_price',1);
 	
         if (isset($data['name']) && !empty($data['name'])) {
