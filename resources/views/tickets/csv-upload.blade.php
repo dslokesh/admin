@@ -79,8 +79,16 @@
                     <span class="text-danger">{{ $errors->first('activity_variant') }}</span>
                 @endif
               </div>
+			  <div class="form-group col-md-12">
+                <label for="inputName">Terms And Conditions: <span class="red">*</span></label>
+				
+                <textarea placeholder="Terms And Conditions" name="terms_and_conditions" required cols="50" rows="10" id="content" class="form-control box-size text-editor">{{ old('terms_and_conditions') }}</textarea>
+                @if ($errors->has('terms_and_conditions'))
+                    <span class="text-danger">{{ $errors->first('terms_and_conditions') }}</span>
+                @endif
+              </div>
                </div>
-			   <div class="form-group col-md-6">
+			   <div class="form-group col-md-12">
                 <label for="inputName">CSV File : <span class="red">*</span></label>
                 <input type="file" id="uploaded_file_csv" required name="uploaded_file_csv"  class="form-control"  />
                 @if ($errors->has('uploaded_file_csv'))

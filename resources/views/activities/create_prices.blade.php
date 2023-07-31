@@ -240,32 +240,46 @@
     success: function(response) {
         // Append the content to the DOM
 		
-			$('.card-body').append(response.html).find('#rate_valid_from'+rowCount).datepicker({
-                weekStart: 1,
-                daysOfWeekHighlighted: "6,0",
-                autoclose: true,
-                todayHighlight: true,
-                dateFormat: 'yyyy-mm-dd',
-				onSelect: function(){
-            var selected = $(this).datepicker("getDate");
-			var dateObject = new Date(selected);
-			var formattedDate = $.datepicker.formatDate("yy-mm-dd", dateObject);
-			$('body #rate_valid_from'+rowCount).val(formattedDate);
-        }
-            });
+			$('.card-body').append(response.html).find('#rate_valid_from' + rowCount).datepicker({
+			weekStart: 1,
+			daysOfWeekHighlighted: "6,0",
+			autoclose: true,
+			todayHighlight: true,
+			dateFormat: 'yy-mm-dd',
+			onChangeMonthYear: function (year, month, inst) {
+				var currentDate = $(this).datepicker('getDate');
+				if (currentDate !== null) {
+					var currentYear = currentDate.getFullYear();
+					if (currentYear < 1000) {
+						currentDate.setFullYear(currentYear + 2000);
+						$(this).datepicker('setDate', currentDate);
+					}
+				}
+			},
+			onSelect: function (dateText) {
+				$('body #rate_valid_from' + rowCount).val(dateText);
+			}
+		});
 			
 			$('.card-body').find('#rate_valid_to'+rowCount).datepicker({
-                weekStart: 1,
-                daysOfWeekHighlighted: "6,0",
-                autoclose: true,
-                todayHighlight: true,
-                dateFormat: 'yyyy-mm-dd',
-				onSelect: function(){
-            var selected2 = $(this).datepicker("getDate");
-			var dateObject2 = new Date(selected2);
-			var formattedDate2 = $.datepicker.formatDate("yy-mm-dd", dateObject2);
-			$('body #rate_valid_to'+rowCount).val(formattedDate2);
-        }
+				weekStart: 1,
+				daysOfWeekHighlighted: "6,0",
+				autoclose: true,
+				todayHighlight: true,
+				dateFormat: 'yy-mm-dd',
+				onChangeMonthYear: function (year, month, inst) {
+				var currentDate2 = $(this).datepicker('getDate');
+					if (currentDate2 !== null) {
+							var currentYear = currentDate2.getFullYear();
+							if (currentYear < 1000) {
+							currentDate2.setFullYear(currentYear + 2000);
+							$(this).datepicker('setDate', currentDate2);
+						}
+					}
+				},
+				onSelect: function (dateText2) {
+					$('body #rate_valid_to' + rowCount).val(dateText2);
+				}
             });
 			
 			$('.timepicker').datetimepicker({

@@ -225,6 +225,21 @@
                   <img src="{{asset('uploads/activities/thumb/'.$record->image)}}" style="width:100px; height:100px;margin-top:-6px" class="cimage" />
                 </div>
 				@endif
+				
+				<div class="form-group col-md-9">
+                  <label for="brand_logo">Brand Logo </label>
+                  <input type="file" class="form-control" name="brand_logo" accept="image/x-png,image/gif,image/jpeg">
+                  @if ($errors->has('brand_logo'))
+                      <span class="text-danger">{{ $errors->first('brand_logo') }}</span>
+                  @endif
+                
+              </div>
+			  @if(!empty($record->brand_logo))
+                <div class="col-md-2">
+                  <img src="{{asset('uploads/activities/thumb/'.$record->brand_logo)}}" style="width:100px; height:100px;margin-top:-6px" class="cimage" />
+                </div>
+				@endif
+				
 			  
 			  <div class="form-group col-md-12">
                   <label for="featured_image">Images</label>

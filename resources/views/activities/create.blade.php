@@ -204,7 +204,14 @@
                       <span class="text-danger">{{ $errors->first('featured_image') }}</span>
                   @endif
                 </div>
-			
+			<!--form-group-->
+              <div class="form-group col-md-12">
+                  <label for="featured_image">Brand Logo</label>
+                  <input type="file" class="form-control" name="brand_logo" accept="image/x-png,image/gif,image/jpeg">
+                  @if ($errors->has('brand_logo'))
+                      <span class="text-danger">{{ $errors->first('brand_logo') }}</span>
+                  @endif
+                </div>
 			   <div class="form-group col-md-12">
                   <label for="featured_image">Images</label>
                   <div class="control-group">

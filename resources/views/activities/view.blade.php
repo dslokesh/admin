@@ -73,6 +73,14 @@
                 <label for="inputName">Entry Type:</label>
                {{ $activity->entry_type }}
               </div>
+			   <div class="col-lg-6 mb-3">
+                <label for="inputName">Brand Logo:</label>
+                @if(!empty($activity->brand_logo))
+               
+                  <img src="{{asset('uploads/activities/thumb/'.$activity->brand_logo)}}"  class="cimage" style="width:100px" />
+                
+				@endif
+              </div>
 			  
 			  
 			  <div class="col-lg-6 mb-3">

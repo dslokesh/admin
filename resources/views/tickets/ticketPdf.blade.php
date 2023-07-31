@@ -180,18 +180,7 @@ body
                        
                         <td align="left" valign="left">
 						 <h3>Terms And Conditions</h3>
-						<ul style="padding-left: 20px; margin-bottom: 30px">
-				<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">After the confirmation of the booking below conditions are applicable</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Transfer options are made available for the Tour if the With Transfer option is been selected at the time of Booking.</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">All entrance tickets are non - refundable.</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Any amendments to the tour date have to be informed to the agent via email.</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Amendment(s) are subject to the Cancellation policy.</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Agent reserves the right to reject/cancel the amendment request from you.</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Any entry tickets for any show/event/ museum/ amusement park or whatsoever are Non- Cancellable & cannot be refunded under any circumstances. There will be no refund for unused or partially used services.</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">There is certain waiting time for the Guests to Pick up. If in case the Guests fail to turn on time it will be a No Show and there would be No Refund or Rescheduling. Refer to individual Tour Voucher for pickup time, Cancellation policy.</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Pick Up time advised are tentative and the exact timings will be notified a day prior.</li>
-<li style="font-size: 16px; font-weight: 500;line-height: 1.8;">Shared Transfers waiting time is 5 minutes and Private transfers waiting time is 15 minutes</li>
-          	</ul>
+						<p>{{ $ticket->terms_and_conditions}}</p>
                          
                          </td>
                     </tr>

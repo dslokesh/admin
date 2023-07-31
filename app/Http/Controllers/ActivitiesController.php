@@ -80,11 +80,13 @@ class ActivitiesController extends Controller
 			'entry_type' => 'required',
 			'code' => 'required',
 			'featured_image' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
+			'brand_logo' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
 			'image.*' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
         ], [
             'title.sanitize_scripts' => 'Invalid value entered for title field.',
 			'image.*.max' => 'The image must not be greater than '. $options['allow_img_size'] .' MB.',
 			'featured_image.max' => 'The featured image must not be greater than '.$options['allow_img_size'].' MB.',
+			'brand_logo.max' => 'The brand logo must not be greater than '.$options['allow_img_size'].' MB.',
 			'image.*.image' => 'The image must be an image.',
         ]);
 
@@ -133,6 +135,11 @@ class ActivitiesController extends Controller
 		{
 			$record->zones = '';
 		}
+		
+		if($request->hasfile('brand_logo')){
+            $image = $request->file('brand_logo');
+			$record->brand_logo = $this->uploadImages($image);
+        }
 		
 		if($request->hasfile('featured_image')){
             $image = $request->file('featured_image');
@@ -279,9 +286,11 @@ class ActivitiesController extends Controller
 			'entry_type' => 'required',
 			'code' => 'required',
 			'featured_image' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
+			'brand_logo' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
 			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),
         ], [
 		'featured_image.max' => 'The featured image must not be greater than '.$options['allow_img_size'].' MB.',
+		'brand_logo.max' => 'The brand logo must not be greater than '.$options['allow_img_size'].' MB.',
             'title.sanitize_scripts' => 'Invalid value entered for title field.',
         ]);
 
@@ -296,6 +305,17 @@ class ActivitiesController extends Controller
 			
 			$record->image = $this->uploadImages($image,$old);
         }
+		
+		if($request->hasfile('brand_logo')){
+            $brand_logoimage = $request->file('brand_logo');
+			$old = '';
+			if($record->brand_logo != 'no-image.png'){
+				$old = $record->brand_logo;
+			}
+			
+			$record->brand_logo = $this->uploadImages($brand_logoimage,$old);
+        }
+		
 		$allday = ($request->input('AllDay'))?$request->input('AllDay'):'';
 		$weekdays = ($request->input('day'))?$request->input('day'):[];
 		
