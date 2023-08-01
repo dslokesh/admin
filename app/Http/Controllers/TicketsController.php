@@ -117,7 +117,7 @@ class TicketsController extends Controller
 		$voucher = Voucher::where('id',$voucherActivity->voucher_id)->first();;
 		$tickets = Ticket::where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->where('voucher_activity_id',$voucherActivity->id)->where('ticket_generated','1')->get();
 		
-		return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
+		//return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
         $voucherActivity->ticket_downloaded = 1;
 		$voucherActivity->save();
 		foreach($tickets as $ticket){
