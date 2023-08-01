@@ -17,13 +17,11 @@ use App\Models\AgentPriceMarkup;
 use App\Models\Zone;
 use App\Models\TransferData;
 use App\Models\Activity;
+use App\Models\Ticket;
 
 class SiteHelpers
 {
     
-    
-   
-	
 	public function statusColor($val)
     {
 		$color ='';
@@ -239,5 +237,11 @@ class SiteHelpers
     }
 	
 	
+	public function getTicketCountByCode($code)
+    {
+		
+		$ticketCount = Ticket::where('activity_variant', $code)->count();
+		return $ticketCount;
+    }
 	
 }

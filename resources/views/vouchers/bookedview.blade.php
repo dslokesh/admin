@@ -410,16 +410,43 @@ $stepNameSize: 1.6rem;
 					  @foreach($voucherActivity as $ap)
 				  @php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
+					$ticketCount = SiteHelpers::getTicketCountByCode($ap->variant_unique_code);
 					@endphp
             <div class="card card-default">
               <div class="card-header">
                 <div class="row">
 				<div class="col-md-8 text-left">
                     <h3 class="card-title">
-                      <strong> {{$activity->title}}</strong></h3>
+                      <strong> {{$activity->title}}-{{$ap->variant_unique_code}} -{{$activity->id}}</strong></h3>
                   </div>
-				<div class="col-md-4 text-right">
-                   
+				<div class="col-md-4 text-right pl-5">
+				@if(($ap->ticket_generated == '1') and ($ap->ticket_downloaded == '0'))
+							<a class="btn btn-danger float-right btn-sm ml-2" href="javascript:void(0)" ><i class="fa fa-times"></i> Cancel Ticket</a>
+							@endif
+                    @if(($voucher->status_main == 5) and ($ap->ticket_generated == '0') and ($ticketCount > '0'))
+						<form id="tickets-generate-form-{{$ap->id}}" method="post" action="{{route('tickets.generate',$ap->id)}}" style="display:none;">
+                                {{csrf_field()}}
+								<input type="hidden" id="statusv" value="2" name="statusv"  /> 
+								<input type="hidden" id="payment_date" name="payment_date"  /> 
+                            </form>
+						
+							<a class="btn btn-success float-right mr-3 btn-sm" href="javascript:void(0)" onclick="
+                                if(confirm('You want to generate ticket?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('tickets-generate-form-{{$ap->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            ">Ticket Generate</a>
+							
+							@elseif($ap->ticket_generated == '1')
+							<a class="btn btn-success float-right  btn-sm" href="{{route('ticket.dwnload',$ap->id)}}" ><i class="fas fa-download"></i> Ticket</a>
+							@endif
+							
                     
                   </div>
 				   </div>

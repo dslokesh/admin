@@ -46,6 +46,7 @@ body
 </head>
   <body  style=" width:100%; height:100%;">
       <table id="mainStructure" class="full-width" width="800" align="center" border="0" cellspacing="0" cellpadding="0" style="background-color: #efefef; max-width: 800px;   margin: 0px auto;"><!--START LAYOUT-2 ( LOGO / MENU )-->
+	  
         <tr>
           <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
             <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
@@ -93,6 +94,7 @@ body
             </table>
           </td>
         </tr><!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
+		@foreach($tickets as $ticket)
         <tr>
           <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
             <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
@@ -193,6 +195,11 @@ body
             </table>
           </td>
         </tr><!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
+		@endforeach
       </table>
+	  </td>
+        </tr>
+		
+		</table>
     </body>
 </html>

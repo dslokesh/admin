@@ -57,19 +57,19 @@ class TicketsController extends Controller
 		$counter = 0;
 
 		for($c = 1; $c<=$totalTicket;$c++){
-			$ticketB = Ticket::where('ticket_for','Both')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '>=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
-				if(!empty($ticketC)){
-					$ticketC->voucher_activity_id = $voucherActivity->id;
-					$ticketC->ticket_generated = 1;
-					$ticketC->voucher_id = $voucherActivity->voucher_id;
-					$ticketC->save();
+			$ticketB = Ticket::where('ticket_for','Both')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
+				if(!empty($ticketB)){
+					$ticketB->voucher_activity_id = $voucherActivity->id;
+					$ticketB->ticket_generated = 1;
+					$ticketB->voucher_id = $voucherActivity->voucher_id;
+					$ticketB->save();
 					$counter++;
 				}
 		}
 
 		if($counter == 0){
 		for($a = 1; $a<=$adult;$a++){
-		$ticketA = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '>=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
+		$ticketA = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
 		
 			if(!empty($ticketA)){
 				$ticketA->voucher_activity_id = $voucherActivity->id;
@@ -82,7 +82,7 @@ class TicketsController extends Controller
 		}
 		
 		for($c = 1; $c<=$child;$c++){
-		$ticketC = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '>=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
+		$ticketC = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
 			if(!empty($ticketC)){
 				$ticketC->voucher_activity_id = $voucherActivity->id;
 				$ticketC->ticket_generated = 1;
@@ -106,14 +106,16 @@ class TicketsController extends Controller
     {
 		$voucherActivity = VoucherActivity::find($id);
 		$voucher = Voucher::where('id',$voucherActivity->voucher_id)->first();;
-		$ticket = Ticket::where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->first();
+		$tickets = Ticket::where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->where('voucher_activity_id',$voucherActivity->id)->where('ticket_generated','1')->get();
 		
-		return view('tickets.ticketPdf', compact('voucherActivity','ticket','voucher'));
+		//return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
         $voucherActivity->ticket_downloaded = 1;
 		$voucherActivity->save();
+		foreach($tickets as $ticket){
 		$ticket->ticket_downloaded = 1;
 		$ticket->save();
-        $pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','ticket','voucher'));
+		}
+        $pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
        $pdf->setPaper('A4')->setOrientation('portrait');
         return $pdf->download('Ticket'.$voucherActivity->variant_unique_code.'.pdf');
 	}
