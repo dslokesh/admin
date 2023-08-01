@@ -572,6 +572,9 @@ class AgentVouchersController extends Controller
 		$data = $request->all();
 		
 		$record = Voucher::where('id',$id)->where('agent_id',Auth::user()->id)->first();
+		if (empty($record)) {
+            return abort(404); //record not found
+        }
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);

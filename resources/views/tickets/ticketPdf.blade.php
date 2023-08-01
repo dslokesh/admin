@@ -160,8 +160,7 @@ body
                 </td>
 				<td align="left" valign="top">
 				<h3>&nbsp;</h3>
-				<img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|1&chl={{$ticket->ticket_no}}" width="200" style="max-width: 200px; display: block !important; width: 200px; height: 200px;margin:-7px" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
-				<span style="margin-left: 54px;font-size:20px">{{ $ticket->ticket_no}}</span>
+				
 				</td>
               </tr>
             </table>
