@@ -65,7 +65,9 @@
 				<option value="">--select--</option>
                    <option value="Ticket Only" @if(old('entry_type') =='Ticket Only') {{'selected="selected"'}} @endif>Ticket Only</option>
 					<option value="Tour" @if(old('entry_type') == 'Tour') {{'selected="selected"'}} @endif >Tour</option>
-				
+          <option value="Tour" @if(old('entry_type') == 'Arrival') {{'selected="selected"'}} @endif >Arrival</option>
+          <option value="Tour" @if(old('entry_type') == 'Departure') {{'selected="selected"'}} @endif >Departure</option>
+          <option value="Tour" @if(old('entry_type') == 'Interhotel') {{'selected="selected"'}} @endif >Interhotel</option>
                  </select>
 				 @if ($errors->has('entry_type'))
                     <span class="text-danger">{{ $errors->first('entry_type') }}</span>
