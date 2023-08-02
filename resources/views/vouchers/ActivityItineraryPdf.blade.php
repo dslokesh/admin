@@ -106,7 +106,7 @@
       </tr>
       <tr>
         <td style="font-size: 20px; font-weight: bold; padding-top: 30px !important; padding: 30px 5px 5px;">
-			@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)))
+		@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)))
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
@@ -149,7 +149,7 @@
 			@foreach($voucherHotel as $vh)
       		<div style="padding-top: 30px;display: flex;">
       			<div style="min-width:220px;width: 220px; height: 220px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;">
-					@if(file_exists(public_path('uploads/hotels/thumb/'.$vh->hotel->image)))
+	@if(file_exists(public_path('uploads/hotels/'.$vh->hotel->image)))
 	<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
