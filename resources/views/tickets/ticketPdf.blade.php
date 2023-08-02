@@ -58,11 +58,11 @@ body
                     </tr>
                     <tr>
                         <td align="left" valign="top" width="136" style="width: 136px;">
-                          @if(Storage::disk('public')->exists('uploads/users/thumb/'.$voucher->agent->image))
-                          <img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+                          @if(Storage::disk('public')->exists('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo))
+                          <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
                           @else
                           {{-- Code to show a placeholder or alternate image --}}
-                          <img src="{{ asset('uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+                          <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
                           @endif
                            
                             <h3>Abatera Tourism LLC</h3>
@@ -188,7 +188,12 @@ body
                         <td align="left" valign="left">
 						 <h3>Terms And Conditions</h3>
 						<p>{{ $ticket->terms_and_conditions}}</p>
-                         
+            @if(Storage::disk('public')->exists('uploads/activities/thumb/'.$voucherActivity->activity->featured_image))
+            <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->featured_image)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+            @else
+            {{-- Code to show a placeholder or alternate image --}}
+            <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+            @endif        
                          </td>
                     </tr>
                     <tr>
