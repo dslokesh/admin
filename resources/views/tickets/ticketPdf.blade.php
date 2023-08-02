@@ -188,8 +188,8 @@ body
                         <td align="left" valign="left">
 						 <h3>Terms And Conditions</h3>
 						<p>{{ $ticket->terms_and_conditions}}</p>
-            @if(Storage::disk('public')->exists('uploads/activities/thumb/'.$voucherActivity->activity->featured_image))
-            <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->featured_image)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+            @if(Storage::disk('public')->exists('uploads/activities/'.$voucherActivity->activity->image))
+            <img src="{{asset('uploads/activities/'.$voucherActivity->activity->image)}}"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
             @else
             {{-- Code to show a placeholder or alternate image --}}
             <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
