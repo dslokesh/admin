@@ -189,7 +189,7 @@ body
 						 <h3>Terms And Conditions</h3>
 						<p>{{ $ticket->terms_and_conditions}}</p>
             {{dd('uploads/activities/'.$voucherActivity->activity->image);}}
-            @if(Storage::disk('public')->exists('uploads/activities/'.$voucherActivity->activity->image))
+            @if(public_path()->exists('uploads/activities/'.$voucherActivity->activity->image))
             <img src="{{asset('uploads/activities/'.$voucherActivity->activity->image)}}"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
             @else
             {{-- Code to show a placeholder or alternate image --}}
