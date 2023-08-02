@@ -24,7 +24,7 @@
         </td>
         <td valign="bottom" colspan="2" align="right" >
 	        <div style="width: 330px; margin-left: auto; font-size: 13px;">
-		@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)))
+				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
@@ -106,7 +106,7 @@
       </tr>
       <tr>
         <td style="font-size: 20px; font-weight: bold; padding-top: 30px !important; padding: 30px 5px 5px;">
-		@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)))
+	@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
@@ -240,7 +240,7 @@
       </tr>
       <tr>
       	<td colspan="3" style="padding-top: 90px !important;">
-	@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)))
+			@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
