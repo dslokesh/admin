@@ -190,7 +190,7 @@ body
 						<p>{{ $ticket->terms_and_conditions}}</p>
           
             @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->image)))
-            <img src="{{asset('uploads/activities/'.$voucherActivity->activity->image)}}" style="width: auto;height: 120px"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+            <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->image)}}" style="width: auto;height: 120px"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
             @else
             {{-- Code to show a placeholder or alternate image --}}
             <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
