@@ -908,9 +908,11 @@ class VouchersController extends Controller
 		
 		
 		if ($request->has('save_and_continue')) {
-         return redirect()->route('voucher.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
+			return redirect()->back()->with('success', 'Activity added Successfully.');
+         //return redirect()->route('voucher.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
 		} else {
-        return redirect('vouchers')->with('success', 'Activity Added Successfully.');
+			return redirect()->back()->with('success', 'Activity added Successfully.');
+        //return redirect('vouchers')->with('success', 'Activity Added Successfully.');
 		}
 	}
 		
