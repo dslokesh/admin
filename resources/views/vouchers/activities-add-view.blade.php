@@ -108,7 +108,6 @@
 						<input type="hidden" value="{{$markup['sic_transfer']}}" id="markup_p_sic_transfer{{$kk}}"  name="markup_p_sic_transfer[{{$ap->u_code}}]"    />
 						
 						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[{{$ap->u_code}}]"    />
-						
 						<td>
 						<input type="text" id="discount{{$kk}}" value="0"  name="discount[{{$ap->u_code}}]" disabled="disabled" data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
 						</td>
