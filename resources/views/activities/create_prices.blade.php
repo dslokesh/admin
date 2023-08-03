@@ -326,7 +326,10 @@ $(document).on('keypress', '.onlynumbr_text', function(evt) {
 });
 
 $(document).on('change', '.vatCal', function(evt) {
-	let vat = parseFloat("{{$activity->vat}}")/100;
+	var vat = parseFloat("{{$activity->vat}}")/100;
+	if(isNaN(taxAmount)){
+		vat = 0;
+	}
 	let inputvale = parseFloat($(this).val());
 	if(inputvale == null || isNaN(inputvale))
 	{
@@ -334,10 +337,12 @@ $(document).on('change', '.vatCal', function(evt) {
 		$(this).val(0);
 	}
 	let taxvalu = parseFloat(1 + vat);
-	let taxAmount = parseFloat(inputvale / taxvalu);
+	var taxAmount = parseFloat(inputvale / taxvalu);
 	let withVatInputId = $(this).data('withvatinputid');
-	//alert(withVatInputId);
+	
+	if(!isNaN(taxAmount)){
 	$("body #"+withVatInputId).val(taxAmount.toFixed(2));
+	}
 	
 });
 $(document).on('change', 'body .notNull', function(evt) {

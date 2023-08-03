@@ -45,47 +45,7 @@
 			   <div class="form-group col-md-12" id="agent_details">
 			   <b>Code:</b>{{$record->agent->code}} <b> Email:</b>{{$record->agent->email}} <b>Mobile No:</b>{{$record->agent->mobile}} <b>Address:</b>{{$record->agent->address. " ".$record->agent->postcode;}}
 			   </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">Customer Name: <span class="red">*</span></label>
-                <input type="text" id="customer_name" name="customer_name" value="{{ old('customer_name')?: $customer->name }}" class="form-control"  placeholder="Customer Name" />
-				@if ($errors->has('customer_name'))
-                    <span class="text-danger">{{ $errors->first('customer_name') }}</span>
-                @endif
-              </div>
-			 
-                <div class="form-group col-md-6">
-                <label for="inputName">Customer Mobile: <span class="red">*</span></label>
-                <input type="text" id="customer_mobile" name="customer_mobile" value="{{ old('customer_mobile')?: $customer->mobile }}" class="form-control"  placeholder="Customer Mobile" />
-				@if ($errors->has('customer_mobile'))
-                    <span class="text-danger">{{ $errors->first('customer_mobile') }}</span>
-                @endif
-              </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">Customer Email:</label>
-                <input type="email" id="customer_email" name="customer_email" value="{{ old('customer_email')?: $customer->email }}" class="form-control"  placeholder="Customer Email" />
-				@if ($errors->has('customer_email'))
-                    <span class="text-danger">{{ $errors->first('customer_email') }}</span>
-                @endif
-              </div>
-			  <div class="form-group col-md-6">
-                <label for="inputName">Agent Reference No.: <span class="red">*</span></label>
-                <input type="text" id="agent_ref_no" name="agent_ref_no" value="{{ old('agent_ref_no')?: $record->agent_ref_no }}" class="form-control"  placeholder="Agent Reference No." />
-				@if ($errors->has('agent_ref_no'))
-                    <span class="text-danger">{{ $errors->first('agent_ref_no') }}</span>
-                @endif
-              </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">Guest Name: <span class="red">*</span></label>
-				@if(empty($record->guest_name))
-                <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name')?: $record->guest_name }}" class="form-control"  placeholder="Guest Name" />
-				@else
-					 <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name')?: $customer->name }}" class="form-control"  placeholder="Guest Name" />
-				@endif
-				
-				@if ($errors->has('guest_name'))
-                    <span class="text-danger">{{ $errors->first('guest_name') }}</span>
-                @endif
-              </div>
+			   
 			  <div class="form-group col-md-6">
 			  <label for="inputName">Country: <span class="red">*</span></label>
                 <select name="country_id" id="country_id" class="form-control">
@@ -98,21 +58,15 @@
                     <span class="text-danger">{{ $errors->first('country_id') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-12">
-                <label for="inputName">Remark:</label>
-                <input type="text" id="remark" name="remark" value="{{ old('remark')?: $record->remark }}" class="form-control"  placeholder="Remark" />
-				@if ($errors->has('remark'))
-                    <span class="text-danger">{{ $errors->first('remark') }}</span>
-                @endif
-              </div>
-			  <div class="form-group col-md-6">
+			  
+			  <div class="form-group col-md-3">
                 <label for="inputName">Hotel: <span class="red">*</span></label>
                 <select name="is_hotel" id="is_hotel" class="form-control">
                     <option value="1" @if($record->is_hotel ==1) {{'selected="selected"'}} @endif>Yes</option>
 					  <option value="0" @if($record->is_hotel ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			    <div class="form-group col-md-6">
+			    <div class="form-group col-md-3">
                 <label for="inputName">Activity: <span class="red">*</span></label>
                 <select name="is_activity" id="is_activity" class="form-control">
                     <option value="1" @if($record->is_activity ==1) {{'selected="selected"'}} @endif>Yes</option>
@@ -156,7 +110,7 @@
                 @endif
               </div>
 			   
-			   <div class="form-group col-md-12">
+			   <div class="form-group col-md-12 hide">
                 <label for="inputName">Flight: <span class="red">*</span></label>
                 <select name="is_flight" id="is_flight" class="form-control">
                     <option value="1" @if($record->is_flight ==1) {{'selected="selected"'}} @endif>Yes</option>

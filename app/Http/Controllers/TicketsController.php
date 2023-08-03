@@ -259,12 +259,13 @@ class TicketsController extends Controller
 				$ticket_no = addslashes(trim(ucwords(strtolower($ticket_no))));
 				$serial_number = addslashes(trim(ucwords(strtolower($serial_number))));
 				
-				if(empty($importData[2]) OR empty($importData[3])){
-					return redirect()->back()->withInput()->with('error', 'The from date and till date  is required. Date format is DD-MM-YYYY');
-				}
-				
 				$valid_f = str_replace('/', '-', $importData[2]);
 				$valid_t = str_replace('/', '-', $importData[3]);
+				
+				if(empty($valid_f) OR empty($valid_t)){
+					return redirect()->back()->withInput()->with('error', 'The from date and till date  is required.');
+				}
+				
 				$valid_from = date("Y-m-d",strtotime($valid_f));
 				$valid_till = date("Y-m-d",strtotime($valid_t));
 				

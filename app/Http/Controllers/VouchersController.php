@@ -135,10 +135,10 @@ class VouchersController extends Controller
 			'country_id'=>'required',
 			'travel_from_date'=>'required',
 			'nof_night'=>'required',
-			'customer_name'=>'required',
-			'customer_mobile'=>'required',
-			'arrival_airlines_id' => 'required_if:is_flight,==,1',
-			'arrival_date' => 'required_if:is_flight,==,1',
+			//'customer_name'=>'required',
+			//'customer_mobile'=>'required',
+			//'arrival_airlines_id' => 'required_if:is_flight,==,1',
+			//'arrival_date' => 'required_if:is_flight,==,1',
         ], [
 			'arrival_airlines_id.required_if' => 'The airlines id field is required.',
 			'arrival_date.required_if' => 'The arrival date field is required .',
@@ -151,7 +151,8 @@ class VouchersController extends Controller
 		
 		$arrival_date = $request->input('arrival_date'); // get the value of the date input
 		$depature_date = $request->input('depature_date'); // get the value of the date input
-		$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
+		$agent = User::find($request->input('agent_id_select'));
+		$customer = Customer::where('mobile',$agent->mobile)->first();
 		
 		if(empty($customer))
 		{
@@ -211,17 +212,14 @@ class VouchersController extends Controller
 				return redirect()->route('vouchers.index')->with('error', 'If select hotel yes than you can add hotel.');
 			}
 		} */
-		//if ($request->has('save_and_activity')) {
-			if($record->is_activity == 1){
+			if($record->is_hotel == 1){
+			return redirect()->route('voucher.add.hotels',$record->id)->with('success', 'Voucher Created Successfully.');
+			} elseif($record->is_activity == 1){
 			return redirect()->route('voucher.add.activity',$record->id)->with('success', 'Voucher Created Successfully.');
-			}
-			else
-			{
+			} else {
 				return redirect()->route('vouchers.index')->with('error', 'If select activity yes than you can add activity.');
 			}
-		/* } else {
-        return redirect()->route('vouchers.index')->with('success', 'Voucher Created Successfully.');
-		} */
+		
 		
     }
 
@@ -301,11 +299,11 @@ class VouchersController extends Controller
             'agent_id'=>'required',
 			'country_id'=>'required',
 			'travel_from_date'=>'required',
-			'customer_name'=>'required',
-			'customer_mobile'=>'required',
+			//'customer_name'=>'required',
+			//'customer_mobile'=>'required',
 			'nof_night'=>'required',
-			'arrival_airlines_id' => 'required_if:is_flight,==,1',
-			'arrival_date' => 'required_if:is_flight,==,1',
+			//'arrival_airlines_id' => 'required_if:is_flight,==,1',
+			//'arrival_date' => 'required_if:is_flight,==,1',
         ], [
 			'arrival_airlines_id.required_if' => 'The airlines id field is required.',
 			'arrival_date.required_if' => 'The arrival date field is required .',
@@ -317,7 +315,8 @@ class VouchersController extends Controller
 
 		$arrival_date = $request->input('arrival_date'); // get the value of the date input
 		$depature_date = $request->input('depature_date'); // get the value of the date input
-		$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
+		$agent = User::find($request->input('agent_id_select'));
+		$customer = Customer::where('mobile',$agent->mobile)->first();
 		
 		if(empty($customer))
 		{
