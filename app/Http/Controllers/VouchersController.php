@@ -780,7 +780,7 @@ class VouchersController extends Controller
 			$activityPrices = ActivityPrices::where('activity_id', $data['act'])->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')->get();
 
 		$typeActivities = config("constants.typeActivities"); 
-		$returnHTML = view('agent-vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'))->render();
+		$returnHTML = view('vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'))->render();
 		
 		return response()->json(array('success' => true, 'html'=>$returnHTML));	
 			
