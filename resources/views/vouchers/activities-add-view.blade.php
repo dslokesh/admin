@@ -24,7 +24,7 @@
                     <th>Child({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</th>
                     <th>Infant (Below {{$ap->chield_start_age}} Yrs)</th>
 				
-					<th class="hide">Net Discount</th>
+					<th>Net Discount</th>
 					<th>Total Amount</th>
                   </tr>
 				  @endif
@@ -109,7 +109,7 @@
 						
 						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[{{$ap->u_code}}]"    />
 						
-						<td class="hide">
+						<td>
 						<input type="text" id="discount{{$kk}}" value="0"  name="discount[{{$ap->u_code}}]" disabled="disabled" data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
 						</td>
 						<td>
