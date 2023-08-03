@@ -109,7 +109,7 @@
 						
 						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[{{$ap->u_code}}]"    />
 						<td>
-						<input type="text" id="discount{{$kk}}" value="0"  name="discount[{{$ap->u_code}}]" disabled="disabled" data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
+						<input type="text" id="discount{{$kka}}" value="0"  name="discount[{{$ap->u_code}}]" disabled="disabled" data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
 						</td>
 						<td>
 						@php
