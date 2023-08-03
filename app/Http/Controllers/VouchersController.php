@@ -394,6 +394,15 @@ class VouchersController extends Controller
 		$data = $request->all();
 		
 		$record = Voucher::where('id',$id)->first();
+		if (empty($record)) {
+            return abort(404); //record not found
+        }
+
+		$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->count();
+		if($voucherActivity == 0){
+			return redirect()->back()->with('error', 'Please add activity this booking.');
+	   }
+	   
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);

@@ -24,7 +24,7 @@
         </td>
         <td valign="bottom" colspan="2" align="right" >
 	        <div style="width: 330px; margin-left: auto; font-size: 13px;">
-	@if(Storage::disk('public')->exists('uploads/users/thumb/'.$voucher->agent->image))
+				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
@@ -106,7 +106,7 @@
       </tr>
       <tr>
         <td style="font-size: 20px; font-weight: bold; padding-top: 30px !important; padding: 30px 5px 5px;">
-			@if(Storage::disk('public')->exists('uploads/users/thumb/'.$voucher->agent->image))
+	@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
@@ -149,7 +149,7 @@
 			@foreach($voucherHotel as $vh)
       		<div style="padding-top: 30px;display: flex;">
       			<div style="min-width:220px;width: 220px; height: 220px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;">
-				@if(Storage::disk('public')->exists('uploads/hotels/thumb/'.$vh->hotel->image))
+	@if(file_exists(public_path('uploads/hotels/'.$vh->hotel->image))  && !empty($vh->hotel->image))
 	<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}
@@ -204,7 +204,7 @@
       		<div style="background: #ddd; border-radius: 15px">
 	      		<div style="display: flex; background:#dcedf7; padding: 15px; border-radius: 15px">
 	      			<div style="min-width:220px;width: 220px; height: 220px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;">
-			@if(Storage::disk('public')->exists('uploads/activities/'.$activity->image))
+			@if(file_exists(public_path('uploads/activities/'.$activity->image)) && !empty($activity->image))
 			<img src="{{asset('uploads/activities/'.$activity->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
 			@else
 			{{-- Code to show a placeholder or alternate image --}}
@@ -240,7 +240,7 @@
       </tr>
       <tr>
       	<td colspan="3" style="padding-top: 90px !important;">
-        @if(Storage::disk('public')->exists('uploads/users/thumb/'.$voucher->agent->image))
+			@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
 	<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 	@else
 	{{-- Code to show a placeholder or alternate image --}}

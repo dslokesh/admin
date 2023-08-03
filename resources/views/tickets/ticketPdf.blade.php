@@ -46,7 +46,7 @@ body
 </head>
   <body  style=" width:100%; height:100%;">
       <table id="mainStructure" class="full-width" width="800" align="center" border="0" cellspacing="0" cellpadding="0" style="background-color: #efefef; max-width: 800px;   margin: 0px auto;"><!--START LAYOUT-2 ( LOGO / MENU )-->
-	  
+       
         <tr>
           <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
             <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
@@ -58,8 +58,13 @@ body
                     </tr>
                     <tr>
                         <td align="left" valign="top" width="136" style="width: 136px;">
-                         
-                            <img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+                          @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->brand_logo)) && !empty($voucherActivity->activity->brand_logo))
+                          <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+                          @else
+                          {{-- Code to show a placeholder or alternate image --}}
+                          <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+                          @endif
+                           
                             <h3>Abatera Tourism LLC</h3>
                         </td>
                         <td  align="center" valign="middle" > <h1>
@@ -183,7 +188,13 @@ body
                         <td align="left" valign="left">
 						 <h3>Terms And Conditions</h3>
 						<p>{{ $ticket->terms_and_conditions}}</p>
-                         
+          
+            @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->image)) && !empty($voucherActivity->activity->image))
+            <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->image)}}" style="width: auto;height: 120px"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+            @else
+            {{-- Code to show a placeholder or alternate image --}}
+            <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+            @endif        
                          </td>
                     </tr>
                     <tr>
