@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
 use Illuminate\Support\Facades\Response;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Log;
 use DB;
 use SiteHelpers;
 use Carbon\Carbon;
@@ -208,7 +209,8 @@ class TicketsController extends Controller
 		
 			$file = $request->file('uploaded_file_csv');
 			if ($file) {
-				$filename = $file->getClientOriginalName();
+				$f = $file->getClientOriginalName();
+				$filename = time().$f;
 				$extension = $file->getClientOriginalExtension(); //Get extension of uploaded file
 				$tempPath = $file->getRealPath();
 				$fileSize = $file->getSize(); //Get size of uploaded file in bytes
@@ -220,17 +222,33 @@ class TicketsController extends Controller
 					return redirect()->back()->withInput()->with('error', 'Invalid file extension.');
 				}
 				//Where uploaded file will be stored on the server 
-				$location = 'uploads'; //Created an "uploads" folder for that
+				$location = 'uploads/csv'; //Created an "uploads" folder for that
 				// Upload file
 				$file->move($location, $filename);
 				// In case the uploaded file path is to be stored in the database 
-				$filepath = public_path($location . "/" . $filename);
+				$filepath = public_path($location . "/" .$filename);
 				// Reading file
 				$file = fopen($filepath, "r");
 				$importData_arr = array(); // Read through the file and store the contents as an array
 				$i = 0;
 				//Read the contents of the uploaded file 
 				while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+					$dateStr = $filedata[2];
+					$dateStr2 = $filedata[3];
+
+                // Custom function to parse dates with single-digit day values
+                $date = $this->parseDate($dateStr);
+                $date2 = $this->parseDate($dateStr2);
+
+                // Check if parsing was successful before assigning the formatted dates
+				
+                if ($date && $date2) {
+                    $filedata[2] = $date->format('Y-m-d');
+                    $filedata[3] = $date2->format('Y-m-d');
+                } else {
+                    Log::error("Error parsing dates '{$dateStr}' or '{$dateStr2}'");
+                }
+				
 				$num = count($filedata);
 				// Skip first row (Remove below comment if you want to skip the first row)
 				if ($i == 0) {
@@ -255,20 +273,23 @@ class TicketsController extends Controller
 				$serial_number = str_replace("'", "\'", $importData[1]);
 				$serial_number = str_replace('"', "'+String.fromCharCode(34)+'", $importData[1]);
 				
-
+				
 				$ticket_no = addslashes(trim(ucwords(strtolower($ticket_no))));
 				$serial_number = addslashes(trim(ucwords(strtolower($serial_number))));
 				
-				$valid_f = str_replace('/', '-', $importData[2]);
-				$valid_t = str_replace('/', '-', $importData[3]);
 				
-				if(empty($valid_f) OR empty($valid_t)){
-					return redirect()->back()->withInput()->with('error', 'The from date and till date  is required.');
+				
+				
+				
+				$valid_from = (isset($importData[2]))?$importData[2]:'';
+				$valid_till = (isset($importData[3]))?$importData[3]:'';
+
+				//echo "<pre>";
+				//print_r($importData);
+				//exit;
+				if(empty($valid_from) OR empty($valid_till)){
+					//return redirect()->back()->withInput()->with('error', 'The from date and till date  is required.');
 				}
-				
-				$valid_from = date("Y-m-d",strtotime($valid_f));
-				$valid_till = date("Y-m-d",strtotime($valid_t));
-				
 				$data[] = [
 					'ticket_for' => $ticket_for,	
 					'type_of_ticket' => $type_of_ticket,	
@@ -287,8 +308,7 @@ class TicketsController extends Controller
 				'message' => "$j records successfully uploaded"
 				]); */
 				
-				//print_r($data);
-				//exit;
+				
 				if(count($data) > 0){
 					Ticket::insert($data);
 				}
@@ -305,6 +325,29 @@ class TicketsController extends Controller
 		
 		
     }
+	
+	 private function parseDate($dateStr)
+    {
+        // Array of date formats to support
+        $dateFormats = [
+            'd/m/Y', // Format: dd/mm/yyyy
+            'm/d/Y', // Format: mm/dd/yyyy
+			'Y/m/d', // Format: yyyy/mm/dd
+            'Y-m-d', // Format: yyyy-mm-dd
+			'd-m-Y', // Format: dd-mm-yyyy
+			'm-d-Y', // Format: mm-dd-yyyy
+        ];
+
+        foreach ($dateFormats as $dateFormat) {
+            $parsedDate = \DateTime::createFromFormat($dateFormat, $dateStr);
+            if ($parsedDate !== false) {
+                return Carbon::instance($parsedDate);
+            }
+        }
+
+        return null;
+    }
+
 	
 	public function checkUploadedFileProperties($extension, $fileSize)
 	{

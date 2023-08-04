@@ -122,6 +122,7 @@
     <!-- /.content -->
 @endsection
 @section('scripts')
+@include('inc.ckeditor')
 	<script type="text/javascript">
  $(document).ready(function(){
 	var activity_id = "{{old('activity_id')}}";
