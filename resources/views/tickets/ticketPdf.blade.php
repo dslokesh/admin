@@ -209,9 +209,7 @@ body
       </table>
 	  </td>
         </tr>
-        <tr>
-          <td style="page-break-after:always"></td>
-        </tr>
+      
         @endforeach
 		</table>
     </body>
