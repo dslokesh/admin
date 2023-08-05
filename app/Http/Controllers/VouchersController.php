@@ -637,6 +637,7 @@ class VouchersController extends Controller
 	
 		$room_type = $request->input('room_type');
 		$nom_of_room = $request->input('nom_of_room');
+		$mealplan = $request->input('mealplan');
 		
 		$nop_s = $request->input('nop_s');
 		$nop_d = $request->input('nop_d');
@@ -675,6 +676,7 @@ class VouchersController extends Controller
 			$data[] = [
 					'room_type' => $v,
                     'nom_of_room' => $nom_of_room[$k],
+					'mealplan' => $mealplan[$k],
 					'nop_s' => $nop_s[$k],
                     'nop_d' => $nop_d[$k],
 					'nop_eb' => $nop_eb[$k],
@@ -1095,5 +1097,15 @@ class VouchersController extends Controller
 	
 	return \Response::make($content,200, $headers);
     }
-	
+
+	public function voucherHotelInputSave(Request $request)
+    {
+		$data = $request->all();
+		
+		$record = VoucherHotel::find($data['id']);
+        $record->{$data['inputname']} = $data['val'];
+        $record->save();
+		$response[] = array("status"=>1);
+        return response()->json($response);
+	}
 }

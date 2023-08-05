@@ -348,8 +348,19 @@ $stepNameSize: 1.6rem;
                
             </div>
             <!-- /.card -->
-
-            <div class="card card-default">
+@if(!empty($voucherActivity) && $voucher->is_activity == 1)
+	@php
+					$ii = 0;
+					@endphp
+				@foreach($voucherActivity as $ap)
+				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
+				  @php
+					$ii = 1;
+					@endphp
+				@endif
+					@endforeach
+					
+            <div class="card card-default {{($ii=='0')?'hide':''}}">
               <div class="card-header">
                 <h3 class="card-title"><i class="nav-icon fas fa-book" style="color:black"></i> Additional Information</h3>
               </div>
@@ -357,32 +368,42 @@ $stepNameSize: 1.6rem;
               <!-- form start -->
             
                 <div class="card-body">
-				@if(!empty($voucherActivity) && $voucher->is_activity == 1)
+				
 					@if(!empty($voucherActivity))
 					  @foreach($voucherActivity as $ap)
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
-				 
+				  @php
+					$activity = SiteHelpers::getActivity($ap->activity_id);
+          $pickup_locationPlaceholder = 'Pickup Location';
+          $remarkPlaceholder = 'Remark';
+          if($activity->entry_type=='Arrival'){
+            $pickup_locationPlaceholder = 'DropOff Location';
+          }
+          if($activity->entry_type=='Interhotel'){
+            $remarkPlaceholder = 'DropOff Location';
+          }
+					@endphp
                   <div class="row" style="margin-bottom: 15px;">
                     <div class="col-12"><p>{{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
                     <div class="col-6">
-					<label for="inputName">Pickup Location:</label>
+					<label for="inputName">{{$pickup_locationPlaceholder}}:</label>
 					{{$ap->pickup_location}}
                      
                     </div>
                     <div class="col-6">
-					<label for="inputName">Remark:</label>
+					<label for="inputName">{{$remarkPlaceholder}}:</label>
 					{{$ap->remark}}
                     </div>
                   </div>
 				   @endif
 				  @endforeach
                  @endif
-				  @endif
+				 
                 </div>
                 <!-- /.card-body -->
 
                
-            </div>
+            </div> @endif
             <!-- /.card -->
 
            

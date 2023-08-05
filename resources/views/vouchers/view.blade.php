@@ -385,16 +385,24 @@ $stepNameSize: 1.6rem;
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
 				  @php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
+          $pickup_locationPlaceholder = 'Pickup Location';
+          $remarkPlaceholder = 'Remark';
+          if($activity->entry_type=='Arrival'){
+            $pickup_locationPlaceholder = 'DropOff Location';
+          }
+          if($activity->entry_type=='Interhotel'){
+            $remarkPlaceholder = 'DropOff Location';
+          }
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
                     <div class="col-12"><p>{{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
                     <div class="col-6">
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="{{$pickup_locationPlaceholder}}" required />
 					
                      
                     </div>
                     <div class="col-6">
-					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="{{$remarkPlaceholder }}" />
                     </div>
                   </div>
 				   @endif
@@ -409,7 +417,40 @@ $stepNameSize: 1.6rem;
             </div>
 			
             <!-- /.card -->
-
+            
+        @if(!empty($voucherHotel) && $voucher->is_hotel == 1)
+        
+              <div class="card card-default ">
+                <div class="card-header">
+                  <h3 class="card-title"><i class="nav-icon fas fa-book" style="color:black"></i> Additional Information Hotel</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+              
+                  <div class="card-body">
+            @if(!empty($voucherHotel))
+              @foreach($voucherHotel as $vah)
+           
+                    <div class="row" style="margin-bottom: 15px;">
+                      <div class="col-12"><p>{{$vah->hotel->name}} - {{$vah->hotel->hotelcategory->name}}</p></div>
+                      <div class="col-12">
+            <input type="text" class="form-control inputsavehotel" id="confirmation_number{{$vah->id}}" name="confirmation_number[]" data-name="confirmation_number"  data-id="{{$vah->id}}" value="{{$vah->confirmation_number}}" placeholder="Confirmation number" required />
+                       
+                      </div>
+                     
+                    </div>
+            
+            @endforeach
+                   @endif
+            
+                  </div>
+         
+                  <!-- /.card-body -->
+  
+                 
+              </div>
+              @endif
+              <!-- /.card -->
             <div class="card card-default">
               <div class="card-header">
                <h3 class="card-title"><i class="nav-icon fas fa-credit-card" style="color:black"></i>  Payment Options</h3>
@@ -671,6 +712,14 @@ $stepNameSize: 1.6rem;
                 </div>
                 <div class="row" style="margin-bottom: 5px;">
                   <div class="col-md-5 text-left">
+                    <strong>Meal Plan</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                    {{$room['mealplan']}}
+                  </div>
+                </div>
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
                     <strong>Amount Incl. VAT</strong>
                   </div>
                   <div class="col-md-7 text-right">
@@ -766,6 +815,30 @@ $('#cusDetails').validate({});
             });
 		$.ajax({
             url: "{{route('voucherReportSave')}}",
+            type: 'POST',
+            dataType: "json",
+            data: {
+               id: $(this).data('id'),
+			   inputname: $(this).data('name'),
+			   val: $(this).val()
+            },
+            success: function( data ) {
+               //console.log( data );
+			  $("#loader-overlay").hide();
+            }
+          });
+	 }); 
+
+   $(document).on('change', '.inputsavehotel', function(evt) {
+		
+		$("#loader-overlay").show();
+		$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+		$.ajax({
+            url: "{{route('voucherHotelInputSave')}}",
             type: 'POST',
             dataType: "json",
             data: {

@@ -129,6 +129,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('voucher-report', [ReporsController::class, 'voucherReport'])->name('voucherReport');
         Route::get('voucher-report-export', [ReporsController::class, 'voucherReportExport'])->name('voucherReportExport');
         Route::post('voucher-report-save', [ReporsController::class, 'voucherReportSave'])->name('voucherReportSave');
+        Route::post('voucher-hotel-input-save', [VouchersController::class, 'voucherHotelInputSave'])->name('voucherHotelInputSave');
 
         Route::resource('agent-vouchers', AgentVouchersController::class);
         Route::get('agent-add-activity-vouchers/{vid?}', [AgentVouchersController::class, 'addActivityList'])->name('agent-vouchers.add.activity');

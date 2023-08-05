@@ -43,16 +43,10 @@
                   <tr>
 					<th>Code</th>
                     <th>Agency</th>
-					<th>Customer</th>
-					<th>Country</th>
-					<th>Hotel</th>
-					<th>Flight</th>
-					<th>Activity</th>
                     <th>Status</th>
+                    <th>Travel Date</th>
                     <th>Created</th>
-                    <th>Updated</th>
 					<th>Hotels</th>
-					
 					<th width="7%">Activities</th>
 					<th>Invoice</th>
 					<th>Itinerary</th>
@@ -66,23 +60,8 @@
 					<th><input type="text" name="code" value="{{request('code')}}" autocomplete="off" class="form-control"  placeholder="Code" /></th>
                     <th><input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  /></th>
-					<th></th>
-					<th></th>
-					<th><select name="is_hotel" id="is_hotel" class="form-control">
-                    <option value="" @if(request('is_hotel') =='') {{'selected="selected"'}} @endif>Select</option>
-                    <option value="1" @if(request('is_hotel') ==1) {{'selected="selected"'}} @endif>Yes</option>
-					          <option value="2" @if(request('is_hotel') ==2) {{'selected="selected"'}} @endif >No</option>
-                 </select></th>
-					<th><select name="is_flight" id="is_flight" class="form-control">
-                    <option value="" @if(request('is_flight') =='') {{'selected="selected"'}} @endif>Select</option>
-                    <option value="1" @if(request('is_flight') ==1) {{'selected="selected"'}} @endif>Yes</option>
-					          <option value="2" @if(request('is_flight') ==2) {{'selected="selected"'}} @endif >No</option>
-                 </select></th>
-					<th><select name="is_activity" id="is_activity" class="form-control">
-                    <option value="" @if(request('is_activity') =='') {{'selected="selected"'}} @endif>Select</option>
-                    <option value="1" @if(request('is_activity') ==1) {{'selected="selected"'}} @endif>Yes</option>
-					          <option value="2" @if(request('is_activity') ==2) {{'selected="selected"'}} @endif >No</option>
-                 </select></th>
+					
+					
                     <th><select name="status" id="status" class="form-control">
                     <option value="" @if(request('status') =='') {{'selected="selected"'}} @endif>Select</option>
                     <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Draft</option>
@@ -93,10 +72,9 @@
 					 <option value="6" @if(request('status') ==6) {{'selected="selected"'}} @endif >Canceled</option>
 					
                  </select></th>
+                    <th width="17%"></th>
                     <th></th>
-                    <th></th>
-					<th></th>
-					
+					<th width="7%"></th>
 					<th ></th>
 					<th></th>
 					<th></th>
@@ -109,22 +87,19 @@
                   <tr>
 				  <td>{{ ($record->code)}}</td>
                     <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
-					<td>{{ ($record->customer)?$record->customer->name:''}}</td>
-					<td>{{ ($record->countr)?$record->country->name:''}}</td>
-					 <td>{!! SiteHelpers::statusColorYesNo($record->is_hotel) !!}</td>
-					  <td>{!! SiteHelpers::statusColorYesNo($record->is_flight) !!}</td>
-					   <td>{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
                      <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>
+					   <td>{{ $record->travel_from_date ? date(config('app.date_format'),strtotime($record->travel_from_date)) : null }} <b>To</b> {{ $record->travel_to_date ? date(config('app.date_format'),strtotime($record->travel_to_date)) : null }}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
-                    <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
-
+                  
 					 <td>
 					 @if($record->is_hotel == 1)
+						 @if($record->status_main < 4)
 					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.hotels',$record->id)}}">
                               <i class="fas fa-plus">
-                              </i>
+                              </i> {{(SiteHelpers::voucherHotelCount($record->id) > 0)?'('.SiteHelpers::voucherHotelCount($record->id).')':''}}
                              
                           </a>
+						   @endif
 						  @endif
 						  </td>
 						   
@@ -133,7 +108,7 @@
 						 @if($record->status_main < 4)
 					 <a class="btn btn-info btn-sm" href="{{route('voucher.add.activity',$record->id)}}">
                               <i class="fas fa-plus">
-                              </i>
+                              </i> {{(SiteHelpers::voucherActivityCount($record->id) > 0)?'('.SiteHelpers::voucherActivityCount($record->id).')':''}}
                              
                           </a>
 						  @endif
@@ -160,7 +135,13 @@
 						  @endif
 						  </td>
                      <td>
-					 <a class="btn btn-info btn-sm" href="{{route('vouchers.show',$record->id)}}">
+					  @if($record->status_main < 5)
+					  <a class="btn btn-info btn-sm" title="Checkout" href="{{route('vouchers.show',$record->id)}}">
+                               <i class="fas fa-shopping-cart">
+                              </i> 
+                          </a>
+						  @endif
+					 <a class="btn btn-info btn-sm" href="{{route('voucherView',$record->id)}}">
                               <i class="fas fa-eye">
                               </i>
                               

@@ -383,18 +383,26 @@ $stepNameSize: 1.6rem;
 					@if(!empty($voucherActivity))
 					  @foreach($voucherActivity as $ap)
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
-				  @php
+				 @php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
+          $pickup_locationPlaceholder = 'Pickup Location';
+          $remarkPlaceholder = 'Remark';
+          if($activity->entry_type=='Arrival'){
+            $pickup_locationPlaceholder = 'DropOff Location';
+          }
+          if($activity->entry_type=='Interhotel'){
+            $remarkPlaceholder = 'DropOff Location';
+          }
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
                     <div class="col-12"><p>{{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
                     <div class="col-6">
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="{{$pickup_locationPlaceholder}}" required />
 					
                      
                     </div>
                     <div class="col-6">
-					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="{{$remarkPlaceholder}}" />
                     </div>
                   </div>
 				   @endif

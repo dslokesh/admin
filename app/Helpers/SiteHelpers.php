@@ -7,11 +7,8 @@ use DB;
 use Carbon\Carbon;
 use Auth;
 use App\Models\User;
-use App\Models\UserProjectRelation;
-use App\Models\UserProductRelation;
-use App\Models\Certificate;
-use App\Models\Gallery;
-use App\Models\TeamId;
+use App\Models\VoucherActivity;
+use App\Models\VoucherHotel;
 use App\Models\ActivityPrices;
 use App\Models\AgentPriceMarkup;
 use App\Models\Zone;
@@ -214,6 +211,7 @@ class SiteHelpers
 				$room_type.=$room->room_type.',';
 				$number_of_rooms+=1;
 				$occupancy +=$room->nop_s + $room->nop_d;
+				$mealplan =(!empty($room->mealplan))?$room->mealplan:'';
 				$price +=$room->nr_s + $room->nr_d + $room->nr_eb + $room->nr_cwb + $room->nr_cnb;
 			}
 		}
@@ -222,6 +220,7 @@ class SiteHelpers
 		'room_type' => rtrim($room_type, ','),
 		'number_of_rooms' => $number_of_rooms,
 		'occupancy' => $occupancy,
+		'mealplan' => $mealplan,
 		'price' => $price,
 		];
 		
@@ -242,6 +241,22 @@ class SiteHelpers
 		
 		$ticketCount = Ticket::where('activity_variant', $code)->count();
 		return $ticketCount;
+    }
+
+	public function voucherActivityCount($vid)
+    {
+		
+		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->count();
+		
+		return $voucherActivity;
+    }
+
+	public function voucherHotelCount($vid)
+    {
+		
+		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->count();
+		
+		return $voucherHotel;
     }
 	
 }

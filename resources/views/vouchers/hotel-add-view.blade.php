@@ -177,6 +177,21 @@
 					<th ><input type="text" id="nom_of_room1" required name="nom_of_room[]"  class="form-control onlynumbr"   /></th>
 					<th colspan="4"></th>
                   </tr>
+				  <tr>
+                    <th>Meal Plan</th>
+					<th >
+						<select name="mealplan[]" id="mealplan1" class="form-control" required  >
+						
+							<option value="">--Select--</option>
+							<option value="Room Only">Room Only</option>
+							<option value="Breakfast">Breakfast</option>
+							<option value="Breakfast and Lunch or Dinner">Breakfast and Lunch or Dinner</option>
+							<option value="MAP">MAP</option>
+							<option value="All Meals">All Meals</option>
+							</select>
+						</th>
+					<th colspan="4"></th>
+                  </tr>
                   <tr>
 					<th></th>
                     <th>Single</th>
@@ -220,7 +235,7 @@
 				   <tr>
                     <th>Mark up Value</th>
 					<td><input type="text" id="markup_v_s1"  name="markup_v_s[]" value="0"  class="form-control onlynumbrf " readonly data-inputnumber="1"  /></td>
-					<td><input type="text" id="markup_v_d1"  name="markup_v_d[]" value="0"  class="form-control onlynumbrf " readonly data-inputnumber="1" value="0"  /></td>
+					<td><input type="text" id="markup_v_d1"  name="markup_v_d[]" value="0"  class="form-control onlynumbrf " readonly data-inputnumber="1"   /></td>
 					<td><input type="text" id="markup_v_eb1"  name="markup_v_eb[]"  class="form-control onlynumbrf" readonly data-inputnumber="1" value="0"  /></td>
                     <td><input type="text" id="markup_v_cwb1" name="markup_v_cwb[]"  class="form-control onlynumbrf" readonly data-inputnumber="1" value="0"  /></td>
                     <td><input type="text" id="markup_v_cnb1"  name="markup_v_cnb[]"  class="form-control onlynumbrf" readonly data-inputnumber="1" value="0"  /></td>

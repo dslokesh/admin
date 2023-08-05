@@ -389,9 +389,10 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			   <li class="nav-item">
                 <a href="{{ route('agentLedgerReportWithVat') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-file"></i>
-                  <p>Agent Ledger With Vat</p>
+                  <p>Agent Ledger</p>
                 </a>
               </li>
+			  @role(1)
 			  @php
           $class=''; $active='';
           if($controller == 'ReporsController' and in_array($action,array('agentLedgerReport'))){
@@ -402,9 +403,10 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			  <li class="nav-item">
                 <a href="{{ route('agentLedgerReport') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-file"></i>
-                  <p>Agent Ledger</p>
+                  <p>Agent Ledger  Without Vat</p>
                 </a>
               </li>
+			 @endrole 
 		@endpermission
 		@role(1)
         @php

@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Agent Ledger</h1>
+            <h1>Agent Ledger  Without Vat</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Agent Ledger</li>
+              <li class="breadcrumb-item active">Agent Ledger  Without Vat</li>
             </ol>
           </div>
         </div>
