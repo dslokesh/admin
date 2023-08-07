@@ -387,11 +387,13 @@ $stepNameSize: 1.6rem;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
           $pickup_locationPlaceholder = 'Pickup Location';
           $remarkPlaceholder = 'Remark';
+		  $remarkAuto = '';
           if($activity->entry_type=='Arrival'){
             $pickup_locationPlaceholder = 'DropOff Location';
           }
           if($activity->entry_type=='Interhotel'){
             $remarkPlaceholder = 'DropOff Location';
+			$remarkAuto = 'autocomRemark';
           }
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
@@ -402,7 +404,7 @@ $stepNameSize: 1.6rem;
                      
                     </div>
                     <div class="col-6">
-					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="{{$remarkPlaceholder}}" />
+					<input type="text" class="form-control inputsave {{$remarkAuto}}" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="{{$remarkPlaceholder}}" />
                     </div>
                   </div>
 				   @endif
@@ -699,7 +701,34 @@ $('#cusDetails').validate({});
     });
 });
 
-
+$(".autocomRemark").each(function() {
+    var inputElement = $(this);
+    inputElement.autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: path,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    search: request.term,
+                    zone: inputElement.attr('data-zone')
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        select: function(event, ui) {
+            $('#remark' + inputElement.data('id')).val(ui.item.label);
+            return false;
+        },
+        change: function(event, ui) {
+            if (ui.item == null) {
+                $('#remark' + inputElement.data('id')).val('');
+            }
+        }
+    });
+});
 	});
 	
 

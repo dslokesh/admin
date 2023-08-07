@@ -99,12 +99,12 @@
             <div class="col-md-6">
               <h2 class="card-title" style="color: #000"><strong>{{$record->title}}</strong></h2>
               <br/> <br/>
-              <ul class="list-unstyled">
+              <ul class="list-unstyled" style="margin-top: 70px;">
                 <li>
                   <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle"></i> Instant Confirmation</a>
                 </li>
                 <li>
-                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle "></i> Free Cancellation 24 hrs. Piror </a>
+                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle "></i> Free Cancellation 24 hrs. Prior </a>
                 </li>
                
                 

@@ -13,144 +13,93 @@ body
 {
   font-size: 10pt;
 }
-.table
-{
-	border-collapse:collapse!important;
-	width: 100%;
-  
+.col-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
 }
-.table th
-{
-	background-color: #ddd;
-  font-weight: bold;
-  word-wrap: break-word;
-}
-.table td
-{
-	
-}
-.table td,.table th
-{
-	text-align: left;
-}
-.table-bordered th,.table-bordered td
-{
-	border:1px solid #000!important;
-}
-.table-borderless th,.table-borderless td
-{
-	border:none!important;
-}
-.table-striped>thead>tr:nth-of-type(odd){background-color:#f9f9f9}
 </style>
 </head>
   <body  style=" width:100%; height:100%;">
-      <table id="mainStructure" class="full-width" width="800" align="center" border="0" cellspacing="0" cellpadding="0" style="background-color: #efefef; max-width: 800px;   margin: 0px auto;"><!--START LAYOUT-2 ( LOGO / MENU )-->
-        @foreach($tickets as $ticket)
-        <tr>
-          <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
-            <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
-              <tr>
-                <td valign="top">
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="full-width" style="max-width: 100%; margin: 0px auto;">
-                    <tr>
-                      <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
-                    </tr>
-                    <tr>
-                        <td align="left" valign="top" width="136" style="width: 136px;">
-                          @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->brand_logo)) && !empty($voucherActivity->activity->brand_logo))
-                          <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
-                          @else
-                          {{-- Code to show a placeholder or alternate image --}}
-                          <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
-                          @endif
-                           
-                        </td>
-                        <td  align="center" valign="middle" > <h1>
-						
-						</h1></td>
-                    </tr>
-                    <tr>
-                      <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr><!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
-        <tr>
-          <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
-            <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
-              <tr style="border-top: 2px solid #000;">
-                <td valign="top">
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="full-width" style="max-width: 100%; margin: 0px auto;">
-                    <tr>
-                      <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse; border-top: 2px solid #000!important;"></td>
-                    </tr>
-                   
-                    <tr>
-                      <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr><!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
-	
-        <tr>
-          <td align="center" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
-            <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
-              <tr style="border-top: 2px solid #000;">
-                <td valign="top">
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="full-width" style="max-width: 100%; margin: 0px auto;">
-                    <tr>
-                      <td valign="top"  height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse; "></td>
-                    </tr>
-                    <tr>
-                        <td align="left" valign="top">
-						 <h3>Ticket Details</h3>
-                            <table class="table table-condensed table-striped" cellspacing="0" cellpadding="10px">
+  @foreach($tickets as $ticket)
+
+  <div class="width:100%; padding: 10px 0px;">
+            <div style="width: 30%;float: left;">
+                @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->brand_logo)) && !empty($voucherActivity->activity->brand_logo))
+                  <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+                  @else
+                  {{-- Code to show a placeholder or alternate image --}}
+                  <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+                  @endif
+            </div>
+            <div style="width: 60%;float: right;background-color: #ddd;padding: 5px;">
+               <h3>This your E-Tickets</h3>
+               <p>This ticket is non-refundable, non-transferable and Voild if altered</p>
+            </div>
+             
+          </div>
+          <div style="clear:both; width: 100%;height: 10px;border-bottom: 2px #000 solid;">&nbsp;</div>
+      <div style="width: 100%;margin-top: 10px;">
+          
+          <div style="width:100%; padding: 10px 0px;">
+             <div style="width: 60%;float: left;background-color: #ddd;text-align:center;">
+<h3>Ticket Details</h3>
+                            <table class="table table-condensed table-striped" cellspacing="0" cellpadding="5px">
                                 <thead>
 								
                                   <tr >
-                                    <th >
+                                    <th style="text-align: left;">
                                       Guest Name 
                                     </th>
-                                    <th >
+                                    <th style="text-align: left;">
 									{{(empty($voucher->guest_name))?$voucher->agent->name:$voucher->guest_name}}
                                     </th>
                                    </tr>
+								    <tr >
+									<th style="text-align: left;">
+                                       Ticket For
+                                    </th>
+                                    <th style="text-align: left;">
+									{{ $ticket->ticket_for }}
+                                    </th>
+                                   </tr>
+								    <tr >
+								<th style="text-align: left;">
+                                       Service Name
+                                    </th>
+                                    <th style="text-align: left;">
+									{{ $voucherActivity->variant_name }}
+                                    </th>
+                                   </tr>
 								   <tr >
-                                    <th >
+									<th style="text-align: left;">
                                        Service Date
                                     </th>
-                                    <th >
+                                    <th style="text-align: left;">
 									{{ $voucherActivity->tour_date ? date(config('app.date_format'),strtotime($voucherActivity->tour_date)) : null }}
                                     </th>
                                    </tr>
 								   <tr >
-                                    <th >
+                   <th style="text-align: left;">
                                       Timing
                                     </th>
-                                    <th >
+                                    <th style="text-align: left;">
                                     
                                     </th>
 									 </tr>
 									 <tr>
-                                    <th >
+                   <th style="text-align: left;">
                                       Confirmation Id
                                     </th>
-                                    <th >
+                                    <th style="text-align: left;">
                                     {{ $voucher->code}}
                                     </th>
 									 </tr>
 									  <tr >
-                                    <th >
+                    <th style="text-align: left;">
                                        Valid Until
                                     </th>
-                                    <th >
+                                    <th style="text-align: left;">
                                      {{ $ticket->valid_till ? date(config('app.date_format'),strtotime($ticket->valid_till)) : null }}
                                     </th>
 									 </tr>
@@ -158,59 +107,28 @@ body
                                 </thead>
                                
                     <tr>
-                      <td valign="top" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
+                    
                     </tr>
                   </table>
-                </td>
-				<td align="left" valign="top">
-				<h3>&nbsp;</h3>
-				<img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|1&chl={{$ticket->ticket_no}}" width="200" style="max-width: 200px; display: block !important; width: 200px; height: 200px;margin:-7px" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
-				<span style="margin-left: 54px;font-size:20px">{{ $ticket->ticket_no}}</span>
-				</td>
-              </tr>
-            </table>
-          </td>
-        </tr><!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
-        <!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
-        <tr>
-          <td align="left" valign="top" style="background-color: #ffffff;" bgcolor="#ffffff">  
-            <table width="760" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: #ffffff; max-width: 760px; margin: 0px auto;">
-              <tr style="border-top: 2px solid #000;">
-                <td valign="top">
-				
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="full-width" style="max-width: 100%; margin: 0px auto;">
-                    <tr>
-                      <td valign="top" colspan="2" height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse; border-top: 2px solid #000!important;"></td>
-                    </tr>
-                    <tr>
-                       
-                        <td align="left" valign="left">
-						 <h3>Terms And Conditions</h3>
-						<p>{!! $ticket->terms_and_conditions !!}</p>
+             </div>
+             <div style="width: 30%;float: right;text-align: center;">
+<img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|1&chl={{$ticket->ticket_no}}" width="150" style="max-width: 150px; display: block !important; width: 150px; height: 150px;margin: 0px auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+				{{ $ticket->ticket_no}}
+             </div>
+          </div>
+      </div>
+      <div style="clear:both; width: 100%;height: 10px;border-bottom: 2px #000 solid;">&nbsp;</div>
+      <div style="width: 100%;margin-top:10px;text-align:justify;">
+      @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->image)) && !empty($voucherActivity->activity->image))
+            <img src="{{asset('uploads/activities/'.$voucherActivity->activity->image)}}"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto" style="max-width: 100%;width: 100%;height: auto;max-height: 250px;">
+           
+            @endif   
+      <h3>Terms And Conditions</h3>
+						<p style="font-size: 9px;">{!! $ticket->terms_and_conditions !!}</p>
           
-            @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->image)) && !empty($voucherActivity->activity->image))
-            <img src="{{asset('uploads/activities/'.$voucherActivity->activity->image)}}"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto" style="max-width: 150px;width: 120px;height: 120px">
-            @else
-            {{-- Code to show a placeholder or alternate image --}}
-            <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
-            @endif        
-                         </td>
-                    </tr>
-                    <tr>
-                      <td valign="top"  height="11" style="height: 11px; font-size: 0px; line-height: 0; border-collapse: collapse;"></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr><!--END LAYOUT-2 ( LOGO / MENU )--><!--START LAYOUT-13 ( 2-COL TEXT / BG )  -->
-		
-      </table>
-	  </td>
-        </tr>
-      
-        @endforeach
-		</table>
+              
+      </div>
+      @endforeach
+     
     </body>
 </html>
