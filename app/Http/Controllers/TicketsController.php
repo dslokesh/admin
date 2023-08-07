@@ -62,40 +62,52 @@ class TicketsController extends Controller
 			for($c = 1; $c<=$totalTicket;$c++){
 				$ticketB = Ticket::where('ticket_for','Both')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
 					if(!empty($ticketB)){
+						if($counter != $totalTicket)
+						{
 						$ticketB->voucher_activity_id = $voucherActivity->id;
 						$ticketB->ticket_generated = 1;
 						$ticketB->voucher_id = $voucherActivity->voucher_id;
 						$ticketB->save();
 						$counter++;
+						}
 					}
 			}
-	
-			if($counter == 0){
-			for($a = 1; $a<=$adult;$a++){
-			$ticketA = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
-			
-				if(!empty($ticketA)){
-					$ticketA->voucher_activity_id = $voucherActivity->id;
-					$ticketA->ticket_generated = 1;
-					$ticketA->voucher_id = $voucherActivity->voucher_id;
-					$ticketA->save();
-					$counter++;
-				}
+		
+			if($counter != $totalTicket)
+			{
+				for($a = 1; $a<=$adult;$a++){
+				$ticketA = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
 				
-			}
-			
-			for($c = 1; $c<=$child;$c++){
-			$ticketC = Ticket::where('ticket_for','Adult')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
-				if(!empty($ticketC)){
-					$ticketC->voucher_activity_id = $voucherActivity->id;
-					$ticketC->ticket_generated = 1;
-					$ticketC->voucher_id = $voucherActivity->voucher_id;
-					$ticketC->save();
-					$counter++;
+					if(!empty($ticketA)){
+						if($counter != $totalTicket)
+						{
+						$ticketA->voucher_activity_id = $voucherActivity->id;
+						$ticketA->ticket_generated = 1;
+						$ticketA->voucher_id = $voucherActivity->voucher_id;
+						$ticketA->save();
+						$counter++;
+						}
+					}
 				}
 			}
 			
+			if($counter != $totalTicket)
+			{
+				for($c = 1; $c<=$child;$c++){
+				$ticketC = Ticket::where('ticket_for','Child')->where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->first();
+					if(!empty($ticketC)){
+						if($counter != $totalTicket)
+						{
+							$ticketC->voucher_activity_id = $voucherActivity->id;
+							$ticketC->ticket_generated = 1;
+							$ticketC->voucher_id = $voucherActivity->voucher_id;
+							$ticketC->save();
+							$counter++;
+						}
+					}
+				}
 			}
+			
 			if($counter > 0){
 				$voucherActivity->ticket_generated = 1;
 				$voucherActivity->save();

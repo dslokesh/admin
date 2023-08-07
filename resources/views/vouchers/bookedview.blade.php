@@ -473,7 +473,7 @@ $stepNameSize: 1.6rem;
                 <div class="row">
 				<div class="col-md-8 text-left">
                     <h3 class="card-title">
-                      <strong> {{$activity->title}}-{{$ap->variant_unique_code}} -{{$activity->id}}</strong></h3>
+                      <strong> {{$activity->title}}</strong></h3>
                   </div>
 				<div class="col-md-4 text-right pl-5">
 				@if(($ap->ticket_generated == '1') and ($ap->ticket_downloaded == '0'))
