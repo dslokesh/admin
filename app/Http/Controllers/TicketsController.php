@@ -41,7 +41,7 @@ class TicketsController extends Controller
         }if (isset($data['valid_till']) && !empty($data['valid_till'])) {
             $query->whereDate('valid_till', '<=',$data['valid_till']);
         }
-        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+        $records = $query->where('ticket_generated','0')->orderBy('created_at', 'DESC')->paginate($perPage);
 		$agetid = '';
 		$agetName = '';
 		
@@ -54,57 +54,53 @@ class TicketsController extends Controller
 		$voucherActivity = VoucherActivity::find($id);
 		$adult = $voucherActivity->adult;
 		$child = $voucherActivity->child;
-		$totalTicket = $adult+$child;
-		$counter = 0;
+		$totalTicketNeed = $adult+$child;
+		$countTotalTicketNeed = $totalTicketNeed;
 		$ticketQuery = Ticket::where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date);
 		
 		$totalTickets =$ticketQuery->get();
 		$totalTicketCount =$totalTickets->count();
-		
-		if($totalTicketCount >= $totalTicket)
+		$tcArray = [];
+		if($totalTicketCount >= $totalTicketNeed)
 		{
 			
 			foreach($totalTickets as $ticket){
 				
 				if(($ticket->ticket_for == 'Adult') && ($adult > 0)){
-					
-						$ticket->voucher_activity_id = $voucherActivity->id;
-						$ticket->ticket_generated = 1;
-						$ticket->voucher_id = $voucherActivity->voucher_id;
-						//$ticket->save();
+						$tcArray[$ticket->id] = $ticket->id;
 						$adult--;
-						$totalTicket--;
+						$totalTicketNeed--;
 						
 				}
 				if(($ticket->ticket_for == 'Child') && ($child > 0)){
 					
-					
-						$ticket->voucher_activity_id = $voucherActivity->id;
-						$ticket->ticket_generated = 1;
-						$ticket->voucher_id = $voucherActivity->voucher_id;
-						//$ticket->save();
+						$tcArray[$ticket->id] = $ticket->id;
 						$child--;
-						$totalTicket--;
+						$totalTicketNeed--;
 					
-				}if(($ticket->ticket_for == 'Both') && ($totalTicket > 0)){
+				}if(($ticket->ticket_for == 'Both') && ($totalTicketNeed > 0)){
 					
-						$ticket->voucher_activity_id = $voucherActivity->id;
-						$ticket->ticket_generated = 1;
-						$ticket->voucher_id = $voucherActivity->voucher_id;
-						//$ticket->save();
-						$totalTicket--;
+						$tcArray[$ticket->id] = $ticket->id;
+						$totalTicketNeed--;
 				}
 				
 				
-		
-				
 			}
-			if($totalTicket == 0){
+			
+			if(($totalTicketNeed == 0) && (count($tcArray) == $countTotalTicketNeed)){
+				foreach($tcArray as $ta){
+					$tc = Ticket::find($ta);
+					$tc->voucher_activity_id = $voucherActivity->id;
+					$tc->ticket_generated = 1;
+					$tc->voucher_id = $voucherActivity->voucher_id;
+					$tc->save();
+				}
+				
 				$voucherActivity->ticket_generated = 1;
-				//$voucherActivity->save();
+				$voucherActivity->save();
 				return redirect()->back()->with('success', 'Ticket has been generated successfully.');	
 			} else {
-			return redirect()->back()->with('error', 'Ticket Not Generate.');
+			return redirect()->back()->with('error', 'Total Ticket Not Available.');
 			}	
 					
 			} else{
@@ -120,7 +116,7 @@ class TicketsController extends Controller
 		$voucher = Voucher::where('id',$voucherActivity->voucher_id)->first();;
 		$tickets = Ticket::where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->where('voucher_activity_id',$voucherActivity->id)->where('ticket_generated','1')->get();
 		//dd($voucherActivity->activity);
-		return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
+		//return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
         $voucherActivity->ticket_downloaded = 1;
 		$voucherActivity->save();
 		foreach($tickets as $ticket){
