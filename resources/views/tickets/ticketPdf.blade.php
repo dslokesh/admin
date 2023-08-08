@@ -32,9 +32,9 @@ body
                   <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 200px;width: 200px;height: 150px" alt="no-image">
                   @endif
             </div>
-            <div style="width: 60%;float: right;background-color: #ddd;padding: 5px;">
-               <h3>This your Tickets</h3>
-               <p>This ticket is non-refundable, non-transferable and Voild if altered</p>
+            <div style="width: 60%;float: right;padding: 5px;">
+               <h3>This your E-Ticket.</h3>
+               <p>This ticket is non refundable , non transferable and Void if altered.</p>
             </div>
              
           </div>
@@ -42,54 +42,58 @@ body
       <div style="width: 100%;margin-top: 10px;">
           
           <div style="width:100%; padding: 10px 0px;">
-             <div style="width: 70%;float: left;background-color: #ddd;text-align:center;">
-<h3>{{$voucherActivity->activity->title}} - {{ $voucherActivity->variant_name }}</h3>
+             <div style="width: 70%;float: left;background-color: #A3B6C6;text-align:center;">
                             <table class="table table-condensed table-striped" cellspacing="0" cellpadding="3px">
                                 <thead>
-								
-                                  <tr >
-                                    <th style="text-align: left;">
-                                      Guest Name 
+								 <tr >
+                                    <th style="text-align: left;width:200px">
+                                      Tour Name
                                     </th>
-                                    <th style="text-align: left;">
-									{{(empty($voucher->guest_name))?$voucher->agent->name:$voucher->guest_name}}
+                                    <th style="text-align: left;width:60%">
+									: {{ $voucherActivity->variant_name }}
                                     </th>
                                    </tr>
-								    <tr >
-									<th style="text-align: left;">
-                                       Ticket Type
+                                  <tr >
+                                    <th style="text-align: left;width:200px">
+                                      Guest Name
                                     </th>
-                                    <th style="text-align: left;">
-									{{ $ticket->ticket_for }}
+                                   <th style="text-align: left;width:60%">
+									: {{(empty($voucher->guest_name))?$voucher->agent->name:$voucher->guest_name}}
                                     </th>
                                    </tr>
 								   
 								   <tr >
-									<th style="text-align: left;">
-                                       Service Date
+									<th style="text-align: left;width:200px">
+                                       Travel Date
                                     </th>
-                                    <th style="text-align: left;">
-									{{ $voucherActivity->tour_date ? date(config('app.date_format'),strtotime($voucherActivity->tour_date)) : null }}
+                                    <th style="text-align: left;width:60%">
+									: {{ $voucherActivity->tour_date ? date(config('app.date_format'),strtotime($voucherActivity->tour_date)) : null }}
                                     </th>
                                    </tr>
-								  
-									 <tr>
-                   <th style="text-align: left;">
-                                      Confirmation Id
+									  <tr >
+                   <th style="text-align: left;width:200px">
+                                       Timings
                                     </th>
-                                    <th style="text-align: left;">
-                                    {{ $voucher->code}}
+                                    <th style="text-align: left;width:60%">
+                                    
                                     </th>
 									 </tr>
 									  <tr >
-                    <th style="text-align: left;">
-                                       Valid Until
+                    <th style="text-align: left;width:200px">
+                                       Validity
                                     </th>
-                                    <th style="text-align: left;">
-                                     {{ $ticket->valid_till ? date(config('app.date_format'),strtotime($ticket->valid_till)) : null }}
+                                    <th style="text-align: left;width:60%">
+                                     : {{ $ticket->valid_till ? date(config('app.date_format'),strtotime($ticket->valid_till)) : null }}
                                     </th>
 									 </tr>
-								  
+								   <tr>
+								<th style="text-align: left;width:200px">
+                                      Confirmation Id 
+                                    </th>
+                                    <th style="text-align: left;width:60%">
+                                    : {{ $voucher->code}}
+                                    </th>
+									 </tr>
                                 </thead>
                                
                     <tr>
@@ -99,7 +103,7 @@ body
              </div>
              <div style="width: 28%;float: right;text-align: center;">
 <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|1&chl={{$ticket->ticket_no}}" width="150" style="max-width: 150px; display: block !important; width: 150px; height: 150px;margin: 0px auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
-				{{ $ticket->ticket_no}}
+				
              </div>
           </div>
       </div>
