@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Tickets</h1>
+            <h1>Generated Tickets</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Tickets</li>
+              <li class="breadcrumb-item active">Generated Tickets</li>
             </ol>
           </div>
         </div>
@@ -28,16 +28,10 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Tickets</h3>
+                <h3 class="card-title">Generated Tickets</h3>
 				<div class="card-tools">
-				 <a href="{{ route('tickets.create') }}" class="btn btn-sm btn-info hide">
-                      <i class="fas fa-plus"></i>
-                      Create
-                  </a> 
-				  <a href="{{ route('tickets.csv.upload.form') }}" class="btn btn-sm btn-info">
-                      <i class="fas fa-upload"></i>
-                      Upload Data From CSV
-                  </a> 
+				
+				 
 				   </div>
               </div>
               <!-- /.card-header -->
@@ -50,16 +44,16 @@
 					<th>Serial Number</th>
 					<th>Valid From</th>
 					<th>Valid Till</th>
-					
 					<th>Activity</th>
                     <th>Variant</th>
 					<th>Ticket For</th>
 					<th>Type Of Ticket</th>
+					<th>Voucher Code</th>
+					<th>Agency</th>
                     <th width="17%">Created</th>
-                    <th></th>
                   </tr>
 				  <tr>
-                    <form id="filterForm" method="get" action="{{route('tickets.index')}}" >
+                    <form id="filterForm" method="get" action="{{route('tickets.generated.tickets')}}" >
 					 <th></th>
                     <th><input type="text" name="ticket_no" value="{{request('ticket_no')}}" class="form-control"  placeholder="Ticket Number" autocomplete="off" /></th>
                      <th><input type="text" name="serial_number" value="{{request('serial_number')}}" class="form-control"  placeholder="Serial Number" autocomplete="off" /></th>
@@ -69,9 +63,11 @@
                     <th></th>
 					 <th></th>
                    <th></th>
+				    <th></th>
+                   <th></th>
                     <th width="10%"><button class="btn btn-info btn-sm" type="submit">Filter</button>
-                    <a class="btn btn-default btn-sm" href="{{route('tickets.index')}}">Clear</a></th>
-                   <th ></th>
+                    <a class="btn btn-default btn-sm" href="{{route('tickets.generated.tickets')}}">Clear</a></th>
+                  
                   </form>
                   </tr>
                   </thead>
@@ -88,25 +84,11 @@
                     <td>{{ ($record->voucheractivity)?$record->voucheractivity->variant_name:''}}</td>
 					<td>{{ $record->ticket_for}}</td>
                     <td>{{ $record->type_of_ticket}}</td>
+					<td>{{ ($record->voucher)?$record->voucher->code:''}}</td>
+                    <td>{{ ($record->voucher)?$record->voucher->agent->company_name:''}}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                    
-                     <td > <form id="delete-form-{{$record->id}}" method="post" action="{{route('tickets.destroy',$record->id)}}" style="display:none;">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                            </form>
-                            <a class="btn btn-danger btn-sm " href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to delete this?'))
-                                {
-                                    event.preventDefault();
-                                    document.getElementById('delete-form-{{$record->id}}').submit();
-                                }
-                                else
-                                {
-                                    event.preventDefault();
-                                }
-                            
-                            "><i class="fas fa-trash"></i></a>
-                         </td>
+                    
                   </tr>
 				 
                   @endforeach

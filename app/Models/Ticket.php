@@ -18,4 +18,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(ActivityPrices::class,'activity_variant','u_code');
     }
+	
+	public function voucher()
+    {
+        return $this->belongsTo(Voucher::class,'voucher_id','id');
+    }
 }

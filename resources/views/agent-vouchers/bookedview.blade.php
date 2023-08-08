@@ -467,9 +467,7 @@ $stepNameSize: 1.6rem;
                       <strong> {{$activity->title}}</strong></h3>
                   </div>
                   <div class="col-md-4 text-right pl-5">
-                    @if(($ap->ticket_generated == '1') and ($ap->ticket_downloaded == '0'))
-                          <a class="btn btn-danger float-right btn-sm ml-2" href="javascript:void(0)" ><i class="fa fa-times"></i> Cancel Ticket</a>
-                          @endif
+                   
                                 @if(($voucher->status_main == 5) and ($ap->ticket_generated == '0') and ($ticketCount > '0'))
                         <form id="tickets-generate-form-{{$ap->id}}" method="post" action="{{route('tickets.generate',$ap->id)}}" style="display:none;">
                                             {{csrf_field()}}
@@ -478,7 +476,7 @@ $stepNameSize: 1.6rem;
                                         </form>
                         
                           <a class="btn btn-success float-right mr-3 btn-sm" href="javascript:void(0)" onclick="
-                                            if(confirm('You want to generate ticket?'))
+                                            if(confirm('You want to download ticket?'))
                                             {
                                                 event.preventDefault();
                                                 document.getElementById('tickets-generate-form-{{$ap->id}}').submit();
@@ -488,7 +486,7 @@ $stepNameSize: 1.6rem;
                                                 event.preventDefault();
                                             }
                                         
-                                        ">Ticket Generate</a>
+                                        "><i class="fas fa-download"></i> Ticket</a>
                           
                           @elseif($ap->ticket_generated == '1')
                           <a class="btn btn-success float-right  btn-sm" href="{{route('ticket.dwnload',$ap->id)}}" ><i class="fas fa-download"></i> Ticket</a>

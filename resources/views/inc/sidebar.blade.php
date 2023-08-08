@@ -425,6 +425,21 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 <p>Tickets</p>
               </a>
             </li>
+			@php
+        $class=''; $active='';
+        if($controller == 'TicketsController' and in_array($action,array('generatedTickets'))){
+          $class = 'menu-open';
+          $active = 'active';
+        }
+   
+    
+        @endphp 
+			  <li class="nav-item ">
+              <a href="{{ route('tickets.generated.tickets') }}" class="nav-link {{$active}}">
+                <i class="nav-icon fas fa-ticket-alt"></i>
+                <p>Generated Tickets</p>
+              </a>
+            </li>
 
             @php
 		 

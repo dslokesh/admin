@@ -48,6 +48,28 @@ class TicketsController extends Controller
         return view('tickets.index', compact('records'));
 
     }
+	
+	public function generatedTickets(Request $request)
+    {
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$data = $request->all();
+		$query = Ticket::where('id','!=', null);
+		if (isset($data['ticket_no']) && !empty($data['ticket_no'])) {
+            $query->where('ticket_no', $data['ticket_no']);
+        } if (isset($data['serial_number']) && !empty($data['serial_number'])) {
+             $query->where('serial_number', $data['serial_number']);
+        }if (isset($data['valid_from']) && !empty($data['valid_from'])) {
+            $query->whereDate('valid_from', '>=',$data['valid_from']);
+        }if (isset($data['valid_till']) && !empty($data['valid_till'])) {
+            $query->whereDate('valid_till', '<=',$data['valid_till']);
+        }
+        $records = $query->where('ticket_generated','1')->orderBy('created_at', 'DESC')->paginate($perPage);
+		$agetid = '';
+		$agetName = '';
+		
+        return view('tickets.generated-tickets-list', compact('records'));
+
+    }
 
 	public function ticketGenerate(Request $request, $id)
     {
@@ -98,7 +120,7 @@ class TicketsController extends Controller
 				
 				$voucherActivity->ticket_generated = 1;
 				$voucherActivity->save();
-				return redirect()->back()->with('success', 'Ticket has been generated successfully.');	
+				return redirect()->route('ticket.dwnload',$voucherActivity->id);	
 			} else {
 			return redirect()->back()->with('error', 'Total Ticket Not Available.');
 			}	
