@@ -26,14 +26,14 @@ body
   <div class="width:100%; padding: 10px 0px;">
             <div style="width: 30%;float: left;">
                 @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->brand_logo)) && !empty($voucherActivity->activity->brand_logo))
-                  <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo)}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+                  <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo)}}" style="max-width: 200px; display: block !important; width: 200px; height: 150px;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
                   @else
                   {{-- Code to show a placeholder or alternate image --}}
-                  <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+                  <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 200px;width: 200px;height: 150px" alt="no-image">
                   @endif
             </div>
             <div style="width: 60%;float: right;background-color: #ddd;padding: 5px;">
-               <h3>This your E-Tickets</h3>
+               <h3>This your Tickets</h3>
                <p>This ticket is non-refundable, non-transferable and Voild if altered</p>
             </div>
              
@@ -42,9 +42,9 @@ body
       <div style="width: 100%;margin-top: 10px;">
           
           <div style="width:100%; padding: 10px 0px;">
-             <div style="width: 60%;float: left;background-color: #ddd;text-align:center;">
-<h3>Ticket Details</h3>
-                            <table class="table table-condensed table-striped" cellspacing="0" cellpadding="5px">
+             <div style="width: 70%;float: left;background-color: #ddd;text-align:center;">
+<h3>{{$voucherActivity->activity->title}} - {{ $voucherActivity->variant_name }}</h3>
+                            <table class="table table-condensed table-striped" cellspacing="0" cellpadding="3px">
                                 <thead>
 								
                                   <tr >
@@ -57,20 +57,13 @@ body
                                    </tr>
 								    <tr >
 									<th style="text-align: left;">
-                                       Ticket For
+                                       Ticket Type
                                     </th>
                                     <th style="text-align: left;">
 									{{ $ticket->ticket_for }}
                                     </th>
                                    </tr>
-								    <tr >
-								<th style="text-align: left;">
-                                       Service Name
-                                    </th>
-                                    <th style="text-align: left;">
-									{{ $voucherActivity->variant_name }}
-                                    </th>
-                                   </tr>
+								   
 								   <tr >
 									<th style="text-align: left;">
                                        Service Date
@@ -79,14 +72,7 @@ body
 									{{ $voucherActivity->tour_date ? date(config('app.date_format'),strtotime($voucherActivity->tour_date)) : null }}
                                     </th>
                                    </tr>
-								   <tr >
-                   <th style="text-align: left;">
-                                      Timing
-                                    </th>
-                                    <th style="text-align: left;">
-                                    
-                                    </th>
-									 </tr>
+								  
 									 <tr>
                    <th style="text-align: left;">
                                       Confirmation Id
@@ -111,7 +97,7 @@ body
                     </tr>
                   </table>
              </div>
-             <div style="width: 30%;float: right;text-align: center;">
+             <div style="width: 28%;float: right;text-align: center;">
 <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|1&chl={{$ticket->ticket_no}}" width="150" style="max-width: 150px; display: block !important; width: 150px; height: 150px;margin: 0px auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
 				{{ $ticket->ticket_no}}
              </div>
