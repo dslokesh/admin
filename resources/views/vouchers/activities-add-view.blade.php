@@ -89,7 +89,9 @@
 					<td><select name="adult[{{$ap->u_code}}]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" disabled="disabled">
 						<option value="">0</option>
 						@for($a=$ap->adult_min_no_allowed; $a<=$ap->adult_max_no_allowed; $a++)
+						@if($ap->adult_min_no_allowed > 0)
 						<option value="{{$a}}">{{$a}}</option>
+						@endif
 						@endfor
 						</select></td>
                     <td><select name="child[{{$ap->u_code}}]" id="child{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">

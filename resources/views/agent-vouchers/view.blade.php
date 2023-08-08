@@ -385,27 +385,40 @@ $stepNameSize: 1.6rem;
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
 				 @php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
-          $pickup_locationPlaceholder = 'Pickup Location';
-          $remarkPlaceholder = 'Remark';
-		  $remarkAuto = '';
-          if($activity->entry_type=='Arrival'){
-            $pickup_locationPlaceholder = 'DropOff Location';
-          }
-          if($activity->entry_type=='Interhotel'){
-            $remarkPlaceholder = 'DropOff Location';
-			$remarkAuto = 'autocomRemark';
-          }
+         
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-12"><p>{{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
+                    <div class="col-12"><p><strong>{{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
+					@if($activity->entry_type=='Arrival')
+						<div class="col-6">
+						<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location" />
+						</div>
+					<div class="col-6">
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+                    </div>
+					@elseif($activity->entry_type=='Interhotel')
+		  
                     <div class="col-6">
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="{{$pickup_locationPlaceholder}}" required />
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
 					
                      
                     </div>
-                    <div class="col-6">
-					<input type="text" class="form-control inputsave {{$remarkAuto}}" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="{{$remarkPlaceholder}}" />
+					 <div class="col-6">
+					<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location" />
                     </div>
+		  
+                    <div class="col-12 pt-3">
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+                    </div>
+					@else
+						<div class="col-6">
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
+					  </div>
+					 <div class="col-6">
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+                    </div>
+                     
+					@endif
                   </div>
 				   @endif
 				  @endforeach
@@ -701,7 +714,7 @@ $('#cusDetails').validate({});
     });
 });
 
-$(".autocomRemark").each(function() {
+$(".autodropoff_location").each(function() {
     var inputElement = $(this);
     inputElement.autocomplete({
         source: function(request, response) {
@@ -719,12 +732,12 @@ $(".autocomRemark").each(function() {
             });
         },
         select: function(event, ui) {
-            $('#remark' + inputElement.data('id')).val(ui.item.label);
+            $('#dropoff_location' + inputElement.data('id')).val(ui.item.label);
             return false;
         },
         change: function(event, ui) {
             if (ui.item == null) {
-                $('#remark' + inputElement.data('id')).val('');
+                $('#dropoff_location' + inputElement.data('id')).val('');
             }
         }
     });

@@ -374,26 +374,46 @@ $stepNameSize: 1.6rem;
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
 				  @php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
-          $pickup_locationPlaceholder = 'Pickup Location';
-          $remarkPlaceholder = 'Remark';
-          if($activity->entry_type=='Arrival'){
-            $pickup_locationPlaceholder = 'DropOff Location';
-          }
-          if($activity->entry_type=='Interhotel'){
-            $remarkPlaceholder = 'DropOff Location';
-          }
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-12"><p>{{$ap->variant_name}} : {{$ap->transfer_option}}</p></div>
+                    <div class="col-12"><p><strong>{{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
+					@if($activity->entry_type=='Arrival')
                     <div class="col-6">
-					<label for="inputName">{{$pickup_locationPlaceholder}}:</label>
+					<label for="inputName">Dropoff Location:</label>
+					{{$ap->dropoff_location}}
+                     
+                    </div>
+                    <div class="col-6">
+					<label for="inputName">Remark:</label>
+					{{$ap->remark}}
+                    </div>
+					@elseif($activity->entry_type=='Interhotel')
+					<div class="col-6">
+					<label for="inputName">Pickup Location:</label>
+					{{$ap->pickup_location}}
+                     
+                    </div>
+					 <div class="col-6">
+					<label for="inputName">Dropoff Location:</label>
+					{{$ap->dropoff_location}}
+                     
+                    </div>
+                    <div class="col-12 pt-3">
+					<label for="inputName">Remark:</label>
+					{{$ap->remark}}
+                    </div>
+					@else
+					<div class="col-6">
+					<label for="inputName">Pickup Location:</label>
 					{{$ap->pickup_location}}
                      
                     </div>
                     <div class="col-6">
-					<label for="inputName">{{$remarkPlaceholder}}:</label>
+					<label for="inputName">Remark:</label>
 					{{$ap->remark}}
                     </div>
+					@endif
+					
                   </div>
 				   @endif
 				  @endforeach
