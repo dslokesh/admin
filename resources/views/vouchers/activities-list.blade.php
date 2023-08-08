@@ -37,7 +37,7 @@
           <div class="col-md-12">
               <div class="card card-default">
               <!-- form start -->
-              <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
+              <form id="filterForm" class="form-inline" method="get" action="{{ route('voucher.add.activity',$vid) }}" >
                 <div class="card-body">
                   <div class="row">
                       <div class="col-md-12">
@@ -50,7 +50,7 @@
                       <div class="col-md-8">
                       <div class="input-group mb-2">
                           <button class="btn btn-info mb-2" type="submit">   <i class="fas fa-search"></i> Search</button>
-                          <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
+                          <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('voucher.add.activity',$vid) }}">Clear</a>
                       </div>
                       </div>
                   </div>
