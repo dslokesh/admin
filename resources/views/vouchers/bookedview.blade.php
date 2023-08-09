@@ -370,13 +370,17 @@ $stepNameSize: 1.6rem;
                 <div class="card-body">
 			
 					@if(!empty($voucherActivity))
+						 @php
+					$c=0;
+					@endphp
 					  @foreach($voucherActivity as $ap)
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
 				  @php
+			  $c++;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-12"><p><strong>{{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
+                    <div class="col-12"><p><strong>{{$c}}. {{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
 					@if($activity->entry_type=='Arrival')
                     <div class="col-6">
 					<label for="inputName">Dropoff Location:</label>
@@ -387,6 +391,44 @@ $stepNameSize: 1.6rem;
 					<label for="inputName">Remark:</label>
 					{{$ap->remark}}
                     </div>
+					<div class="row">
+					
+					  <div class="col-12 pt-3 pb-1"><h3 class="card-title"><i class="nav-icon fas fa-plane" style="color:black"></i> Arrival Airline Details</h3></div>
+					<div class="form-group col-md-4 ">
+                <label for="inputName">Arrival Airline:</label>
+				{{$ap->airlines_name}}
+				
+              </div>
+			  <div class="form-group col-md-4 ">
+                <label for="inputName">Arrival Date:</label>
+				{{$ap->arrival_depature_date}}
+                 
+				 
+              </div>
+			   <div class="form-group col-md-4 ">
+                <label for="inputName">Arrival Time:</label>
+                {{$ap->arrival_depature_time}}
+				 
+              </div>
+			   <div class="form-group col-md-4 ">
+                <label for="inputName">Arrival Airport:</label>
+				{{$ap->airport}}
+                 
+              </div>
+			   <div class="form-group col-md-4 ">
+                <label for="inputName">Arrival Terminal:</label>
+				{{$ap->airport_terminal}}
+				
+                
+				
+              </div>
+			  <div class="form-group col-md-4 ">
+                <label for="inputName">Arrival Flight No:</label>
+				{{$ap->flight_no}}
+                
+              </div>
+                    </div>
+					
 					@elseif($activity->entry_type=='Interhotel')
 					<div class="col-6">
 					<label for="inputName">Pickup Location:</label>
@@ -412,6 +454,47 @@ $stepNameSize: 1.6rem;
 					<label for="inputName">Remark:</label>
 					{{$ap->remark}}
                     </div>
+					
+					 @if($activity->entry_type=='Departure')
+					<div class="row">
+					
+					  <div class="col-12 pt-3 pb-1"><h3 class="card-title"><i class="nav-icon fas fa-plane" style="color:black"></i> Depature Airline Details</h3></div>
+					<div class="form-group col-md-4 ">
+                <label for="inputName">Depature Airline:</label>
+				{{$ap->airlines_name}}
+				
+              </div>
+			  <div class="form-group col-md-4 ">
+                <label for="inputName">Depature Date:</label>
+				{{$ap->arrival_depature_date}}
+                 
+				 
+              </div>
+			   <div class="form-group col-md-4 ">
+                <label for="inputName">Depature Time:</label>
+                {{$ap->arrival_depature_time}}
+				 
+              </div>
+			   <div class="form-group col-md-4 ">
+                <label for="inputName">Depature Airport:</label>
+				{{$ap->airport}}
+                 
+              </div>
+			   <div class="form-group col-md-4 ">
+                <label for="inputName">Depature Terminal:</label>
+				{{$ap->airport_terminal}}
+				
+                
+				
+              </div>
+			  <div class="form-group col-md-4 ">
+                <label for="inputName">Depature Flight No:</label>
+				{{$ap->flight_no}}
+                
+              </div>
+                    </div>
+					@endif
+					
 					@endif
 					
                   </div>

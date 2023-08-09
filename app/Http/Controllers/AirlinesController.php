@@ -186,4 +186,19 @@ class AirlinesController extends Controller
         return redirect('airlines')->with('success', 'Airline Deleted.');
     }
 	
+	public function autocompleteAirline(Request $request)
+    {
+		$search  = $request->get('search');
+		$airlines = Airline::where('status', 1)
+					->where('name', 'LIKE', '%'. $search. '%')
+					->paginate(20);
+		$response = array();
+		
+      foreach($airlines as $airline){
+         $response[] = array("value"=>$airline->name,"label"=>$airline->name);
+      }
+	
+        return response()->json($response);
+    }
+	
 }

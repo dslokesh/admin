@@ -85,6 +85,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('hotelcategories', HotelCategoryController::class);
         Route::resource('hotels', HotelController::class);
         Route::resource('airlines', AirlinesController::class);
+		Route::get('auto-airline', [AirlinesController::class, 'autocompleteAirline'])->name('auto.airline');
         Route::resource('customers', CustomersController::class);
         Route::resource('suppliers', SuppliersController::class);
         Route::get('suppliers-markup-activity/{id?}', [SuppliersController::class, 'priceMarkupActivityList'])->name('suppliers.markup.activity');
