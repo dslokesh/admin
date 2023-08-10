@@ -858,59 +858,9 @@ $stepNameSize: 1.6rem;
 
 
 <script type="text/javascript">
-function airlineSave(id,name,val){
-$("#loader-overlay").show();
-		$.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-		$.ajax({
-            url: "{{route('voucherReportSave')}}",
-            type: 'POST',
-            dataType: "json",
-            data: {
-               id: id,
-			   inputname: name,
-			   val: val
-            },
-            success: function( data ) {
-               //console.log( data );
-			  $("#loader-overlay").hide();
-            }
-          });
-}	  
+ 
   $(function(){
-	  var pathAirline = "{{ route('auto.airline') }}";
-$(".airlineAuto").each(function() {
-    var inputElement = $(this);
-    inputElement.autocomplete({
-        source: function(request, response) {
-            $.ajax({
-                url: pathAirline,
-                type: 'GET',
-                dataType: "json",
-                data: {
-                    search: request.term,
-                },
-                success: function(data) {
-                    response(data);
-                }
-            });
-        },
-        select: function(event, ui) {
-            $(this).val(ui.item.label);
-			airlineSave(inputElement.attr('data-id'),inputElement.attr('data-name'),ui.item.label);
-            return false;
-        },
-        change: function(event, ui) {
-            if (ui.item == null) {
-                $(this).val('');
-				airlineSave(inputElement.attr('data-id'),inputElement.attr('data-name'),'');
-            }
-        }
-    });
-});
+	
 
 $('#cusDetails').validate({});
 
@@ -1013,12 +963,12 @@ $('#cusDetails').validate({});
             });
         },
         select: function(event, ui) {
-            $('#dropoff_location' + inputElement.data('id')).val(ui.item.label);
+            $(this).val(ui.item.label);
             return false;
         },
         change: function(event, ui) {
             if (ui.item == null) {
-                $('#dropoff_location' + inputElement.data('id')).val('');
+               $(this).val('');
             }
         }
     });

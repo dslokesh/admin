@@ -366,35 +366,46 @@ $stepNameSize: 1.6rem;
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-            
-                <div class="card-body">
-				
+              <div class="card-body">
+			
 					@if(!empty($voucherActivity))
+						 @php
+					$c=0;
+					@endphp
 					  @foreach($voucherActivity as $ap)
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
 				  @php
+			  $c++;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
-          $pickup_locationPlaceholder = 'Pickup Location';
-          $remarkPlaceholder = 'Remark';
-          if($activity->entry_type=='Arrival'){
-            $pickup_locationPlaceholder = 'DropOff Location';
-          }
-          if($activity->entry_type=='Interhotel'){
-            $remarkPlaceholder = 'DropOff Location';
-          }
 					@endphp
-                 <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-12"><p><strong>{{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
+                  <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-12"><p><strong>{{$c}}. {{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
 					@if($activity->entry_type=='Arrival')
                     <div class="col-6">
 					<label for="inputName">Dropoff Location:</label>
 					{{$ap->dropoff_location}}
                      
                     </div>
+					 <div class="col-6">
+					<label for="inputName">Passenger Name:</label>
+					{{$ap->passenger_name}}
+                     
+                    </div>
+					<div class="col-6">
+					<label for="inputName">Arrival Time:</label>
+					{{$ap->actual_pickup_time}}
+                     
+                    </div>
+					<div class="col-6">
+					<label for="inputName">Flight Details:</label>
+					{{$ap->flight_no}}
+                     
+                    </div>
                     <div class="col-6">
 					<label for="inputName">Remark:</label>
 					{{$ap->remark}}
                     </div>
+				
 					@elseif($activity->entry_type=='Interhotel')
 					<div class="col-6">
 					<label for="inputName">Pickup Location:</label>
@@ -404,6 +415,32 @@ $stepNameSize: 1.6rem;
 					 <div class="col-6">
 					<label for="inputName">Dropoff Location:</label>
 					{{$ap->dropoff_location}}
+                     
+                    </div>
+					<div class="col-6">
+					<label for="inputName">Pickup Time:</label>
+					{{$ap->actual_pickup_time}}
+                     
+                    </div>
+                    <div class="col-12 pt-3">
+					<label for="inputName">Remark:</label>
+					{{$ap->remark}}
+                    </div>
+					@elseif($activity->entry_type=='Departure')
+					<div class="col-6">
+					<label for="inputName">Pickup Location:</label>
+					{{$ap->pickup_location}}
+                     
+                    </div>
+					
+					<div class="col-6">
+					<label for="inputName">Pickup Time:</label>
+					{{$ap->actual_pickup_time}}
+                     
+                    </div>
+					<div class="col-6">
+					<label for="inputName">Flight Details:</label>
+					{{$ap->flight_no}}
                      
                     </div>
                     <div class="col-12 pt-3">
@@ -416,10 +453,23 @@ $stepNameSize: 1.6rem;
 					{{$ap->pickup_location}}
                      
                     </div>
+					
+					 
+					@if(($activity->sic_TFRS=='1') && ($activity->pick_up_required=='1'))
+					<div class="col-6">
+					<label for="inputName">Pickup Time:</label>
+					{{$ap->actual_pickup_time}}
+                     
+                    </div>
+					
+					@endif
+					
                     <div class="col-6">
 					<label for="inputName">Remark:</label>
 					{{$ap->remark}}
                     </div>
+					
+					
 					@endif
 					
                   </div>

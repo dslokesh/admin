@@ -19,34 +19,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      <!-- <div class="row">
-      <div class="offset-md-1 col-md-6">
-      <div class="row">
-            <div class="col-12 col-sm-4">
-            <div class="info-box bg-success">
-            <div class="info-box-content">
-            <span class="info-box-number text-center text-muted mb-0" style="color: #fff!important;">1</span>
-            <span class="into-box-text text-center text-muted " style="color: #fff!important;">Add to Cart</span>
-            </div>
-            </div>
-            </div>
-            <div class="col-12 col-sm-4">
-            <div class="info-box bg-light">
-            <div class="info-box-content">
-            <span class="info-box-text text-center text-muted">Payment</span>
-            </div>
-            </div>
-            </div>
-            <div class="col-12 col-sm-4">
-            <div class="info-box bg-light">
-            <div class="info-box-content">
-            <span class="info-box-text text-center text-muted">Print Voucher</span>
-            </div>
-            </div>
-            </div>
-            </div>
-      </div> 
-</div> --> <style type="text/css">
+      <style type="text/css">
     /* Multistep */
 /* See below for SASS (allows you easily set dot radius and progress bar thickness and adjusts everything else! */
 .multistep .multistep-step {
@@ -381,43 +354,111 @@ $stepNameSize: 1.6rem;
             
                 <div class="card-body">
 					@if(!empty($voucherActivity))
+						 @php
+					$c=0;
+					@endphp
 					  @foreach($voucherActivity as $ap)
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
-				 @php
+				  @php
+					$c++;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
-         
+          
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-12"><p><strong>{{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
+                    <div class="col-12"><p><strong>{{$c}}. {{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
 					@if($activity->entry_type=='Arrival')
-						<div class="col-6">
+						<div class="form-group col-md-6">
+						<label for="inputName">Dropoff Location:</label>
 						<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location" />
 						</div>
-					<div class="col-6">
+					
+					
+					<div class="form-group col-md-6 ">
+                <label for="inputName">Passenger Name:</label>
+				<input type="text" class="form-control inputsave" id="passenger_name{{$ap->id}}" data-name="passenger_name"  data-id="{{$ap->id}}" value="{{$ap->passenger_name}}"  placeholder="Passenger Name" />
+				
+              </div>
+			 
+			   <div class="form-group col-md-6 ">
+                <label for="inputName">Arrival Time:</label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+				 
+              </div>
+			 
+			  
+			  <div class="form-group col-md-6 ">
+                <label for="inputName">Flight Details:</label>
+                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Arrival Flight Details" data-id="{{$ap->id}}" data-name="flight_no" />
+				
+              </div>
+                    
+					<div class="form-group col-md-12">
+					<label for="inputName">Remark:</label>
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
+					
 					@elseif($activity->entry_type=='Interhotel')
 		  
-                    <div class="col-6">
+                    <div class="form-group col-md-6">
+						<label for="inputName">Pickup Location:</label>
 					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
 					
                      
                     </div>
-					 <div class="col-6">
+					 <div class="form-group col-md-6">
+						<label for="inputName">Dropoff Location:</label>
 					<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location" />
                     </div>
+					 <div class="form-group col-md-6 ">
+                <label for="inputName">Pickup Time:</label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+				 
+              </div>
+                    <div class="form-group col-md-6">
+					<label for="inputName">Remark:</label>
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+                    </div>
+					@elseif($activity->entry_type=='Departure')
 		  
-                    <div class="col-12 pt-3">
+                    <div class="form-group col-md-6">
+						<label for="inputName">Pickup Location:</label>
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
+					
+                     
+                    </div>
+					
+					 <div class="form-group col-md-6 ">
+                <label for="inputName">Pickup Time:</label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+				 
+              </div>
+			  <div class="form-group col-md-6 ">
+                <label for="inputName">Flight Details:</label>
+                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Departure Flight Details" data-id="{{$ap->id}}" data-name="flight_no" />
+				
+              </div>
+                    <div class="form-group col-md-6">
+					<label for="inputName">Remark:</label>
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
 					@else
-						<div class="col-6">
+						<div class="form-group col-md-6">
+						<label for="inputName">Pickup Location:</label>
 					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
 					  </div>
-					 <div class="col-6">
+					
+                     @if(($activity->sic_TFRS=='1') && ($activity->pick_up_required=='1'))
+					<div class="form-group col-md-6 ">
+                <label for="inputName">Pickup Time:</label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Pickup Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+				 
+              </div>
+                    @endif
+					<div class="form-group col-md-6">
+					<label for="inputName">Remark:</label>
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
-                     
+					
 					@endif
                   </div>
 				   @endif
@@ -682,10 +723,10 @@ $('#cusDetails').validate({});
           });
 	 }); 
 
-	 var path = "{{ route('auto.hotel') }}";
+ var path = "{{ route('auto.hotel') }}";
 	 var inputElement = $(this); // Store reference to the input element
-
-	 $(".autocom").each(function() {
+	 
+ $(".autocom").each(function() {
     var inputElement = $(this);
     inputElement.autocomplete({
         source: function(request, response) {
@@ -703,12 +744,13 @@ $('#cusDetails').validate({});
             });
         },
         select: function(event, ui) {
-            $('#pickup_location' + inputElement.data('id')).val(ui.item.label);
+			
+            $(this).val(ui.item.label);
             return false;
         },
         change: function(event, ui) {
             if (ui.item == null) {
-                $('#pickup_location' + inputElement.data('id')).val('');
+                $(this).val('');
             }
         }
     });
@@ -732,12 +774,12 @@ $(".autodropoff_location").each(function() {
             });
         },
         select: function(event, ui) {
-            $('#dropoff_location' + inputElement.data('id')).val(ui.item.label);
+            $(this).val(ui.item.label);
             return false;
         },
         change: function(event, ui) {
             if (ui.item == null) {
-                $('#dropoff_location' + inputElement.data('id')).val('');
+               $(this).val('');
             }
         }
     });
