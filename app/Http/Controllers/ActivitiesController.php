@@ -157,11 +157,14 @@ class ActivitiesController extends Controller
 		$record->is_opendated = $request->input('is_opendated');
 		$record->valid_till = ($request->input('is_opendated')==1)?$request->input('valid_till'):'';
 		$record->pvt_TFRS = $request->input('pvt_TFRS');
+		$record->pvt_TFRS_text = $request->input('pvt_TFRS_text');
+		$record->pick_up_required = $request->input('pick_up_required');
 		$record->transfer_plan = ($request->input('pvt_TFRS')==1)?$request->input('transfer_plan'):0;
 		$record->inclusion = $request->input('inclusion');
 		$record->exclusion = $request->input('exclusion');
 		$record->description = $request->input('description');
 		$record->cancellation_policy = $request->input('cancellation_policy');
+		$record->booking_policy = $request->input('booking_policy');
         $record->status = $request->input('status');
 		$record->created_by = Auth::user()->id;
 		$record->save();
@@ -372,10 +375,13 @@ class ActivitiesController extends Controller
 		$record->valid_till = ($request->input('is_opendated')==1)?$request->input('valid_till'):'';
 		$record->pvt_TFRS = $request->input('pvt_TFRS');
 		$record->transfer_plan = ($request->input('pvt_TFRS')==1)?$request->input('transfer_plan'):0;
+		$record->pvt_TFRS_text = $request->input('pvt_TFRS_text');
+		$record->pick_up_required = $request->input('pick_up_required');
 		$record->inclusion = $request->input('inclusion');
 		$record->exclusion = $request->input('exclusion');
 		$record->description = $request->input('description');
 		$record->cancellation_policy = $request->input('cancellation_policy');
+		$record->booking_policy = $request->input('booking_policy');
         $record->status = $request->input('status');
 		$record->updated_by = Auth::user()->id;
         $record->save();

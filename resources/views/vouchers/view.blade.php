@@ -367,104 +367,98 @@ $stepNameSize: 1.6rem;
                   <div class="row" style="margin-bottom: 15px;">
                     <div class="col-12"><p><strong>{{$c}}. {{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
 					@if($activity->entry_type=='Arrival')
-						<div class="col-6">
+						<div class="form-group col-md-6">
+						<label for="inputName">Dropoff Location:</label>
 						<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location" />
 						</div>
-					<div class="col-6">
+					
+					
+					<div class="form-group col-md-6 ">
+                <label for="inputName">Passenger Name:</label>
+				<input type="text" class="form-control inputsave" id="passenger_name{{$ap->id}}" data-name="passenger_name"  data-id="{{$ap->id}}" value="{{$ap->passenger_name}}"  placeholder="Passenger Name" />
+				
+              </div>
+			 
+			   <div class="form-group col-md-6 ">
+                <label for="inputName">Arrival Time:</label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+				 
+              </div>
+			 
+			  
+			  <div class="form-group col-md-6 ">
+                <label for="inputName">Flight Details:</label>
+                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Arrival Flight Details" data-id="{{$ap->id}}" data-name="flight_no" />
+				
+              </div>
+                    
+					<div class="form-group col-md-12">
+					<label for="inputName">Remark:</label>
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
-					<div class="row">
 					
-					  <div class="col-12 pt-3 pb-1"><h3 class="card-title"><i class="nav-icon fas fa-plane" style="color:black"></i> Arrival Airline Details</h3></div>
-					<div class="form-group col-md-4 ">
-                <label for="inputName">Arrival Airline:</label>
-				<input type="text" class="form-control airlineAuto" id="airlines_name{{$ap->id}}" data-name="airlines_name"  data-id="{{$ap->id}}" value="{{$ap->airlines_name}}"  placeholder="Arrival Airline" />
-				
-              </div>
-			  <div class="form-group col-md-4 ">
-                <label for="inputName">Arrival Date:</label>
-                 <input type="text" id="arrival_depature_date{{$ap->id}}"  value="{{$ap->arrival_depature_date}}" class="form-control datepicker inputsave"  placeholder="Arrival Date"  data-name="arrival_depature_date"  data-id="{{$ap->id}}"  />
-				 
-              </div>
-			   <div class="form-group col-md-4 ">
-                <label for="inputName">Arrival Time:</label>
-                 <input type="text" id="arrival_depature_time{{$ap->id}}" value="{{$ap->arrival_depature_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="arrival_depature_time" />
-				 
-              </div>
-			   <div class="form-group col-md-4 ">
-                <label for="inputName">Arrival Airport:</label>
-                 <input type="text" id="airport{{$ap->id}}"  value="{{$ap->airport}}" class="form-control inputsave"  placeholder="Arrival Airport" data-id="{{$ap->id}}" data-name="airport" />
-				
-              </div>
-			   <div class="form-group col-md-4 ">
-                <label for="inputName">Arrival Terminal:</label>
-                 <input type="text" id="airport_terminal{{$ap->id}}"  value="{{$ap->airport_terminal}}" class="form-control inputsave"  placeholder="Arrival Terminal" data-id="{{$ap->id}}" data-name="airport_terminal" />
-				
-              </div>
-			  <div class="form-group col-md-4 ">
-                <label for="inputName">Arrival Flight No:</label>
-                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Arrival Flight No" data-id="{{$ap->id}}" data-name="flight_no" />
-				
-              </div>
-                    </div>
 					@elseif($activity->entry_type=='Interhotel')
 		  
-                    <div class="col-6">
+                    <div class="form-group col-md-6">
+						<label for="inputName">Pickup Location:</label>
 					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
 					
                      
                     </div>
-					 <div class="col-6">
+					 <div class="form-group col-md-6">
+						<label for="inputName">Dropoff Location:</label>
 					<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location" />
                     </div>
+					 <div class="form-group col-md-6 ">
+                <label for="inputName">Pickup Time:</label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+				 
+              </div>
+                    <div class="form-group col-md-6">
+					<label for="inputName">Remark:</label>
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+                    </div>
+					@elseif($activity->entry_type=='Departure')
 		  
-                    <div class="col-12 pt-3">
+                    <div class="form-group col-md-6">
+						<label for="inputName">Pickup Location:</label>
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
+					
+                     
+                    </div>
+					
+					 <div class="form-group col-md-6 ">
+                <label for="inputName">Pickup Time:</label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+				 
+              </div>
+			  <div class="form-group col-md-6 ">
+                <label for="inputName">Flight Details:</label>
+                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Departure Flight Details" data-id="{{$ap->id}}" data-name="flight_no" />
+				
+              </div>
+                    <div class="form-group col-md-6">
+					<label for="inputName">Remark:</label>
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
 					@else
-						<div class="col-6">
+						<div class="form-group col-md-6">
+						<label for="inputName">Pickup Location:</label>
 					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" name="pickup_location[]" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
 					  </div>
-					 <div class="col-6">
+					
+                     @if(($activity->sic_TFRS=='1') && ($activity->pick_up_required=='1'))
+					<div class="form-group col-md-6 ">
+                <label for="inputName">Pickup Time:</label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Pickup Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+				 
+              </div>
+                    @endif
+					<div class="form-group col-md-6">
+					<label for="inputName">Remark:</label>
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
-                     @if($activity->entry_type=='Departure')
-					 <div class="row">
 					
-					  <div class="col-12 pt-3 pb-1"><h3 class="card-title"><i class="nav-icon fas fa-plane" style="color:black"></i> Depature Airline Details</h3></div>
-					<div class="form-group col-md-4 ">
-                <label for="inputName">Depature Airline:</label>
-				<input type="text" class="form-control airlineAuto" id="airlines_name{{$ap->id}}" data-name="airlines_name"  data-id="{{$ap->id}}" value="{{$ap->airlines_name}}"  placeholder="Depature Airline" />
-				
-				 
-              </div>
-			  <div class="form-group col-md-4 ">
-                <label for="inputName">Depature Date:</label>
-                 <input type="text" id="arrival_depature_date{{$ap->id}}"  value="{{$ap->arrival_depature_date}}" class="form-control datepicker inputsave"  placeholder="Depature Date"  data-name="arrival_depature_date"  data-id="{{$ap->id}}"  />
-				 
-              </div>
-			   <div class="form-group col-md-4 ">
-                <label for="inputName">Depature Time:</label>
-                 <input type="text" id="arrival_depature_time{{$ap->id}}"  value="{{$ap->arrival_depature_time}}" class="form-control inputsave"  placeholder="Depature Time" data-id="{{$ap->id}}" data-name="arrival_depature_time" />
-				 
-              </div>
-			   <div class="form-group col-md-4 ">
-                <label for="inputName">Depature Airport:</label>
-                 <input type="text" id="airport{{$ap->id}}"  value="{{$ap->airport}}" class="form-control inputsave"  placeholder="Depature Airport" data-id="{{$ap->id}}" data-name="airport" />
-				
-              </div>
-			   <div class="form-group col-md-4 ">
-                <label for="inputName">Depature Terminal:</label>
-                 <input type="text" id="airport_terminal{{$ap->id}}"  value="{{$ap->airport_terminal}}" class="form-control inputsave"  placeholder="Depature Terminal" data-id="{{$ap->id}}" data-name="airport_terminal" />
-				
-              </div>
-			  <div class="form-group col-md-4 ">
-                <label for="inputName">Depature Flight No:</label>
-                 <input type="text" id="flight_no{{$ap->id}}"  value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Depature Flight No" data-id="{{$ap->id}}" data-name="flight_no" />
-				
-              </div>
-                    </div>
-					 @endif
 					@endif
                   </div>
 				   @endif
@@ -989,12 +983,13 @@ $('#cusDetails').validate({});
             });
         },
         select: function(event, ui) {
-            $('#pickup_location' + inputElement.data('id')).val(ui.item.label);
+			
+            $(this).val(ui.item.label);
             return false;
         },
         change: function(event, ui) {
             if (ui.item == null) {
-                $('#pickup_location' + inputElement.data('id')).val('');
+                $(this).val('');
             }
         }
     });

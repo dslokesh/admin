@@ -112,6 +112,10 @@
                 <label for="inputName">Transfer Plan:</label>
                {{ (!empty($activity->transfer))?$activity->transfer->name:'' }}
               </div>
+			   <div class="col-lg-6 mb-3">
+                <label for="inputName">Pvt TFRS Text:</label>
+               {{ (!empty($activity->pvt_TFRS_text))?$activity->pvt_TFRS_text:'' }}
+              </div>
 			  @endif
 			  
 			   <div class="col-lg-6 mb-3">
@@ -141,11 +145,15 @@
                 <label for="inputName">Important Information:</label>
                 {!!$activity->exclusion!!}
               </div>
-			  
+			  <div class="form-group col-lg-12 mb-3">
+                <label for="inputName">Booking Policy:</label>
+                {!!$activity->booking_policy!!}
+              </div>
 			   <div class="form-group col-lg-12 mb-3">
                 <label for="inputName">Cancellation Policy:</label>
                 {!!$activity->cancellation_policy!!}
               </div>
+			   
               <div class="form-group col-lg-6 mb-3">
 			        <label for="inputName">Status:</label>
 					{!! SiteHelpers::statusColor($activity->status) !!}
@@ -160,6 +168,10 @@
 				</header>
 			</div>
 			@if($activity->sic_TFRS)
+				 <div class="col-lg-6 mb-3">
+                <label for="inputName">Pick Up Time Required ?:</label>
+				{!! SiteHelpers::statusColor($activity->pick_up_required) !!}
+              </div>
 			<div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
 			 <div class="col-lg-12 mb-3">
 				<h4>Transfer Plan</h4>

@@ -108,7 +108,7 @@
 					          <option value="0" @if(old('pvt_TFRS') ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			   <div class="form-group col-md-4" id="transfer_plan_div">
+			   <div class="form-group col-md-4 transfer_plan_div" id="transfer_plan_div1">
                 <label for="inputName">Transfer Plan: <span class="red">*</span></label>
                 <select name="transfer_plan" id="transfer_plan" class="form-control">
 				<option value="">--select--</option>
@@ -119,6 +119,10 @@
 				 @if ($errors->has('transfer_plan'))
                     <span class="text-danger">{{ $errors->first('transfer_plan') }}</span>
                 @endif
+              </div>
+			  <div class="form-group col-md-4 transfer_plan_div" id="transfer_plan_div2">
+                <label for="inputName">Pvt TFRS Text: <span class="red">*</span></label>
+                <textarea placeholder="Pvt TFRS Text" name="pvt_TFRS_text" cols="50" rows="1"  class="form-control box-size">{{ old('pvt_TFRS_text') }}</textarea>
               </div>
 			    <div class="form-group col-md-12">
                 <label for="inputName">Black Out/Sold Out Date(separate By Comma YYYY-MM-DD): <span class="red">*</span></label>
@@ -166,12 +170,20 @@
 			</div>
 			<div class="form-group col-md-6">
                 <label for="inputName">SIC TFRS: <span class="red">*</span></label>
-                <select name="sic_TFRS" id="sic_TFRS" class="form-control">
+                <select name="sic_TFRS" id="sic_TFRS" class="form-control" >
                     <option value="1" @if(old('sic_TFRS') ==1) {{'selected="selected"'}} @endif>Yes</option>
 					          <option value="0" @if(old('sic_TFRS') ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			<div class="form-group col-md-6" id="zones_div">
+			   <div class="form-group col-md-6 zones_div">
+                <label for="inputName">Pick Up Time Required ?: <span class="red">*</span></label>
+                <select name="pick_up_required" id="pick_up_required" class="form-control">
+                    <option value="1" @if(old('pick_up_required') ==1) {{'selected="selected"'}} @endif>Yes</option>
+					          <option value="0" @if(old('pick_up_required') ==0) {{'selected="selected"'}} @endif >No</option>
+                 </select>
+              </div>
+			  
+			<div class="form-group col-md-6 zones_div" id="zones_div">
                 <label for="inputName"></label>
 				<table id="myTable" class="table">
 					  <tr>
@@ -250,6 +262,14 @@
                 @endif
               </div>
 			   <div class="form-group col-md-12">
+                <label for="inputName">Booking Policy: </label>
+				
+                <textarea placeholder="Booking Policy" name="booking_policy" cols="50" rows="5" id="booking_policy" class="form-control box-size">{{ old('booking_policy') }}</textarea>
+                @if ($errors->has('booking_policy'))
+                    <span class="text-danger">{{ $errors->first('booking_policy') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-12">
                 <label for="inputName">Cancellation Policy: </label>
 				
                 <textarea placeholder="Cancellation Policy" name="cancellation_policy" cols="50" rows="10" id="cancellation_policy" class="form-control box-size short-text-editor3">{{ old('cancellation_policy') }}</textarea>
@@ -257,6 +277,7 @@
                     <span class="text-danger">{{ $errors->first('cancellation_policy') }}</span>
                 @endif
               </div>
+			 
 			  
 			 <div class="form-group col-md-12">
                 <label for="inputName">Status: <span class="red">*</span></label>
@@ -299,11 +320,11 @@
   }
   if($('#pvt_TFRS').find(":selected").val() == 0)
   {
-	   $('#transfer_plan_div').hide();
+	   $('.transfer_plan_div').hide();
   }
   if($('#sic_TFRS').find(":selected").val() == 0)
   {
-	   $('#zones_div').hide();
+	   $('.zones_div').hide();
   }
  
   
@@ -325,12 +346,12 @@
   $('#pvt_TFRS').on('change', function() {
     // If the checkbox is checked, show the text input
     if ($(this).val()==1) {
-      $('#transfer_plan_div').show();
+      $('.transfer_plan_div').show();
 	  $('#transfer_plan').prop('required', true);
     } else {
       // Otherwise, hide the text input
 	  $('#transfer_plan').prop('required', false);
-      $('#transfer_plan_div').hide();
+      $('.transfer_plan_div').hide();
     }
   });
   
@@ -349,14 +370,14 @@
   $('#sic_TFRS').on('change', function() {
     // If the checkbox is checked, show the text input
     if ($(this).val()==1) {
-      $('#zones_div').show();
+      $('.zones_div').show();
 	  $('#zones').prop('required', true);
 	  $('#zone_val').prop('required', true);
     } else {
       // Otherwise, hide the text input
 	  $('#zones').prop('required', false);
 	  $('#zone_val').prop('required', false);
-      $('#zones_div').hide();
+      $('.zones_div').hide();
     }
   });
   
