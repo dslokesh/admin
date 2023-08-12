@@ -62,6 +62,8 @@ Route::get('phpinfo', function () {
 Route::get('users/getUsers', [UsersController::class, "getUsers"])->name('users.getUsers');
 Route::post('state-list', [AjexController::class, "getStateByCountrySelect"])->name('state.list');
 Route::post('city-list', [AjexController::class, "getCityByStateSelect"])->name('city.list');
+Route::get('privacy-policy', [AuthController::class, "privacyPolicy"])->name('privacyPolicy');
+Route::get('terms-and-conditions', [AuthController::class, "termsAndConditions"])->name('termsAndConditions');
 
 Route::post('variant-by-activity', [AjexController::class, "getVariantByActivitySelect"])->name('variantByActivity');
 

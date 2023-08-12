@@ -21,7 +21,7 @@ class PagesController extends Controller
     public function index()
     {	
 		//Show all categories from the database and return to view
-        $pages = Page::orderBy('title', 'asc')->get();
+        $pages = Page::get();
 		
         return view('pages.index',compact('pages'));
 
@@ -56,7 +56,6 @@ class PagesController extends Controller
 		$validator = Validator::make($request->all(), [
             'page_content' => [
                 'required',
-                'max:255'
             ],
             
         ]);

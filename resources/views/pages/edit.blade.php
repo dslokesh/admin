@@ -40,7 +40,7 @@
               </div>
 			  <div class="form-group col-md-12">
                 <label for="inputName">Content: <span class="red">*</span></label>
-                <textarea name="page_content" class="form-control" placeholder="Content">{{$page->page_content}}</textarea>
+                <textarea name="page_content" id="content" class="form-control text-editor" placeholder="Content">{{$page->page_content}}</textarea>
                 @if ($errors->has('page_content'))
                 <span class="text-danger">{{ $errors->first('page_content') }}</span>
             @endif
@@ -61,4 +61,7 @@
     </form>
     </section>
     <!-- /.content -->
+@endsection
+@section('scripts')
+@include('inc.ckeditor')
 @endsection

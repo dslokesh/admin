@@ -312,10 +312,10 @@ $stepNameSize: 1.6rem;
                   </div>
                   <div class="row" style="margin-bottom: 15px;">
                     <div class="col-4">
-                      <input type="text" readonly value="{{$voucher->agent->email}}" class="form-control" placeholder="Email ID">
+                      <input type="text" name="customer_email" value="{{($voucher->customer_id > 0)?$voucher->customer->email:$voucher->agent->email}}" class="form-control" placeholder="Email ID">
                     </div>
                     <div class="col-4">
-                      <input type="text" readonly value="{{$voucher->agent->mobile }}" class="form-control" placeholder="Mobile No.">
+                      <input type="text" name="customer_mobile" value="{{($voucher->customer_id > 0)?$voucher->customer->mobile:$voucher->agent->email}}" class="form-control" placeholder="Mobile No.">
                     </div>
                     <div class="col-4">
                       <input type="text" name="agent_ref_no"  value="{{$voucher->agent_ref_no}}" class="form-control" placeholder="Agent Reference No.">

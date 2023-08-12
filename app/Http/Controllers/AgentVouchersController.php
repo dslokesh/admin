@@ -32,35 +32,61 @@ class AgentVouchersController extends Controller
     {
 		 $perPage = config("constants.ADMIN_PAGE_LIMIT");
 		 $data = $request->all();
-		$query = Voucher::where('id','!=', null)->where("agent_id",Auth::user()->id);
-		
-		/* if (isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
-            $query->where('agent_id', $data['agent_id_select']);
-        } */
-		
-		if (isset($data['code']) && !empty($data['code'])) {
-            $query->where('code', 'like', '%' . $data['code'] . '%');
-        }
-		
-		if (isset($data['customer']) && !empty($data['customer'])) {
-            $query->where('guest_name', 'like', '%' . $data['customer'] . '%');
-        }
-		
-		$query->where(function ($q) {
+		$query = VoucherActivity::whereHas('voucher', function($q){
+    $q->where('agent_id', '>=', Auth::user()->id);
+	$q->where(function ($q) {
 		$q->where('status_main', 4)->orWhere('status_main', 5);
 		});
+});
+		
+		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
+			
+			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
+				 $q->where('booking_date', '>=', $startDate);
+				 $q->where('booking_date', '<=', $endDate);
+				});
+		
+				}
+				}
+			}
+		 if(isset($data['vcode']) && !empty($data['reference'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('agent_ref_no', '=', $data['reference']);
+			});
+		}
+		
+		 if(isset($data['vcode']) && !empty($data['vcode'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('code', '=', $data['vcode']);
+			});
+		}
+		 if(isset($data['activity_name']) && !empty($data['activity_name'])) {
+			$query->whereHas('activity', function($q)  use($data){
+				$q->where('title', 'like', '%' . $data['activity_name'] . '%');
+			});
+		}
+		if(isset($data['customer']) && !empty($data['customer'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('guest_name', 'like', '%' . $data['customer'] . '%');
+			});
+		}
+		
        
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		$agetid = '';
 		$agetName = '';
 		
-		if(old('agent_id')){
-		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
-		$agetid = $agentTBA->id;
-		$agetName = $agentTBA->company_name;
-		}
 		
-        return view('agent-vouchers.index', compact('records','agetid','agetName'));
+		
+        return view('agent-vouchers.index', compact('records'));
 
     }
 
@@ -586,6 +612,18 @@ class AgentVouchersController extends Controller
 			return redirect()->back()->with('error', 'Please add activity this booking.');
 	   }
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
+		$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
+		if(empty($customer))
+		{
+			$customer = new Customer();
+			$customer->name = $data['fname'].' '.$data['lname'];
+			$customer->mobile = $request->input('customer_mobile');
+			$customer->email = $request->input('customer_email');
+			$customer->save();
+		}
+		
+		$record->customer_id = $customer->id;
+
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
 		if(!empty($agent))
@@ -641,6 +679,7 @@ class AgentVouchersController extends Controller
 		
 		}
 		else if ($request->has('btn_hold')) {
+		
 			$record->booking_date = date("Y-m-d");
 			$record->guest_name = $data['fname'].' '.$data['lname'];
 			$record->agent_ref_no = $data['agent_ref_no'];

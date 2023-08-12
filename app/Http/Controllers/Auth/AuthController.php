@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterToAgencyAdminMailable;
 use App\Mail\sendRegisterToUserMailable;
 use Illuminate\Support\Str;
+use App\Models\Page;
 use Session;
 use App\Models\User;
 use App\Models\Customer;
@@ -270,11 +271,11 @@ class AuthController extends Controller
 						return $fail(__('The old password is incorrect.'));
 					}
 					}],
-            'password'=>'required|min:8|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
-			'confirmPassword' => 'required_with:password|same:password|min:8'
+            'password'=>'required|min:6',
+			'confirmPassword' => 'required_with:password|same:password|min:6'
         ],
         [
-            'password.regex' => "Password contains At least one uppercase, At least one digit and At least it should have 8 characters long"
+            'password.regex' => "Password contains At least one uppercase, At least one digit and At least it should have 6 characters long"
         ]
         );
 				
@@ -332,6 +333,7 @@ class AuthController extends Controller
 			//Mail::to($data['email'],'Password details')
 					 //->send(new sendForgotPasswordToUserMailable($admin_details[0], $new_password));
             //die;
+          
             Mail::to($data['email'],'Password Reset Link')->send(new sendForgotPasswordToUserMailable($admin_details[0], $token));         
 			
             return redirect()->route('resetpassword')->with('success', 'Success! password reset link has been sent to your email.');
@@ -368,8 +370,8 @@ class AuthController extends Controller
     public function updatePassword(Request $request) {
         $this->validate($request, [
             'email' => 'required',
-            'password' => 'required|min:8|regex:/^(?=.*\d)(?=.*[A-Z])[\w\W]{8,}$/',
-            'confirm_password' => 'required|same:password|min:8'
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|same:password|min:6'
         ],
         [
             'password.regex' => "Password contains At least one uppercase, At least one digit and At least it should have 8 characters long"
@@ -382,15 +384,27 @@ class AuthController extends Controller
             $user['remember_token'] = '';
             $user['password'] = Hash::make($request->password);
             $user->save();
-            if($user->roles[0]->id == '3'){
-                return redirect()->route('thankyou')->with('success', 'Success! password has been changed. Please login from the app.');
-            }else{
+            //if(Auth::user()->role_id == '3'){
                 return redirect()->route('login')->with('success', 'Success! password has been changed.');
-            }
+                //return redirect()->route('thankyou')->with('success', 'Success! password has been changed. Please login from the app.');
+           // }else{
+                //return redirect()->route('login')->with('success', 'Success! password has been changed.');
+            //}
             
         }
         return redirect()->route('forgot-password')->with('failed', 'Failed! something went wrong');
     }
 
 
+    public function privacyPolicy()
+    { 
+        $page = Page::find(4);
+        return view('auth.privacyPolicy',compact('page'));
+    }
+
+    public function termsAndConditions()
+    { 
+        $page = Page::find(5);
+        return view('auth.termsAndConditions',compact('page'));
+    }
 }

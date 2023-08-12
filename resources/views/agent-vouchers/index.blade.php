@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Vouchers</h1>
+            <h1>Bookings</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Vouchers</li>
+              <li class="breadcrumb-item active">Bookings</li>
             </ol>
           </div>
         </div>
@@ -28,7 +28,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Vouchers</h3>
+                <h3 class="card-title">Bookings</h3>
 				<div class="card-tools">
 				 <a href="{{ route('agent-vouchers.create') }}" class="btn btn-sm btn-info">
                       <i class="fas fa-plus"></i>
@@ -38,70 +38,116 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+			  <div class="row">
+            <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.index') }}" >
+              <div class="form-row align-items-center">
+			   <div class="col-auto col-md-3">
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">Search Result</div>
+                  </div>
+                 <select name="booking_type" id="booking_type" class="form-control">
+                    <option value = "1">Booking Date</option>
+					<option value = "2">Travel Date</option>
+					<!--<option value = "3">Deadline Date</option>-->
+                 </select>
+                </div>
+              </div>
+			  <div class="col-auto col-md-3">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend"><div class="input-group-text">From Date</div></div>
+                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepicker"  placeholder="From Date" />
+                  </div>
+                </div>
+				<div class="col-auto col-md-3">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend"><div class="input-group-text">To Date</div></div>
+                    <input type="text" name="to_date" value="{{ request('to_date') }}" class="form-control datepicker" autocomplete ="off"  placeholder="To Date" />
+                  </div>
+                </div>
+                <div class="col-auto col-md-3">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend"><div class="input-group-text">Agent Reference</div></div>
+                    <input type="text" name="reference" value="{{ request('reference') }}" class="form-control"  placeholder="Agent Reference Number" />
+                  </div>
+                </div>
+				 <div class="col-auto col-md-3">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend"><div class="input-group-text">Booking Number</div></div>
+                    <input type="text" name="vcode" value="{{ request('vcode') }}" class="form-control"  placeholder="Booking Number" />
+                  </div>
+                </div>
+                <div class="col-auto col-md-3">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend"><div class="input-group-text">Service Name</div></div>
+                    <input type="text" name="activity_name" value="{{ request('activity_name') }}" class="form-control"  placeholder="Service Name" />
+                  </div>
+                </div>
+                <div class="col-auto col-md-3">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend"><div class="input-group-text">Customer</div></div>
+                    <input type="text" name="customer" value="{{ request('customer') }}" class="form-control"  placeholder="Customer" />
+                  </div>
+                </div>
+				
+              <div class="col-auto col-md-2">
+                <button class="btn btn-info mb-2" type="submit">Filter</button>
+                <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agent-vouchers.index') }}">Clear</a>
+              </div>
+            </form>
+          </div>
+        </div>
+		 </div>
+			  <div class="col-md-12" style="overflow-x:auto">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+				    <th>Service Type</th>
 					<th>Booking Number</th>
-					
-                    <th class="hide">Agency</th>
+					<th>Service Name</th>
+					<th>Agent Reference Number</th>
 					<th>Customer</th>
-					<th class="hide">Country</th>
-				
-					<th class="hide">Activity</th>
+					<th>Adult</th>
+					<th>Child</th>
+					<th>Infant</th>
+					<th>Booking Date</th>
+					<th>Travel Date</th>
+					<th>Cancellation DeadLine</th>
                     <th>Status</th>
-                    <th>Created</th>
-                    <th>Updated</th>
-					
-					<th width="7%" class="hide">Activities</th>
+                    <th>Payment Type</th>
 					<th>Invoice</th>
-					<th class="hide">Itinerary</th>
                     <th width="12%"></th>
                   </tr>
 				  
                   </thead>
                   <tbody>
-				   <form id="filterForm" method="get" action="{{route('agent-vouchers.index')}}" >
-				   <tr>
-					<th><input type="text" name="code" value="{{request('code')}}" autocomplete="off" class="form-control"  placeholder="Booking Number" /></th>
-                    <th class="hide">
-					 @if(Auth::user()->role_id !='3')
-					<input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
-					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />@endif</th>
-					<th><input type="text" name="customer" value="{{request('customer')}}" autocomplete="off" class="form-control"  placeholder="Customer" /></th>
-					<th class="hide"></th>
-				
-				
-					<th class="hide"></th>
-                    <th></th>
-                    <th></th>
-                   
-					<th></th>
-					
-					<th class="hide"></th>
-					<th></th>
-					<th class="hide"></th>
-                    <th width="12%"><button class="btn btn-info btn-sm" type="submit">Filter</button>
-                    <a class="btn btn-default btn-sm" href="{{route('vouchers.index')}}">Clear</a></th>
-					 </form>
-                  </tr>
+				   
+                 
                   @foreach ($records as $record)
-				  
                   <tr>
-				  <td>{{ ($record->code)}}</td>
-                    <td class="hide">{{ ($record->agent)?$record->agent->company_name:''}}</td>
-					<td>{{ ($record->guest_name)?$record->guest_name:''}}</td>
-					<td class="hide">{{ ($record->country)?$record->country->name:''}}</td>
-					
-					   <td class="hide">{!! SiteHelpers::statusColorYesNo($record->is_activity) !!}</td>
-                     <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>
-                    <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
-                    <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
+				  <td>{{ ($record->activity->entry_type)}}</td>
+				   <td>{{ ($record->voucher->code)}}</td>
+				   <td>{{ ($record->activity->title)}}</td>
+				   <td>{{ ($record->voucher->agent_ref_no)}}</td>
+					<td>{{ ($record->voucher->guest_name)?$record->voucher->guest_name:''}}</td>
+					<td>{{ ($record->adult)}}</td>
+					<td>{{ ($record->child)}}</td>
+					<td>{{ ($record->infant)}}</td>
+					<td>
+					{{ $record->voucher->booking_date ? date(config('app.date_format'),strtotime($record->voucher->booking_date)) : null }}
+</td>
+					<td>
+					{{ $record->tour_date ? date(config('app.date_format'),strtotime($record->tour_date)) : null }}
+					</td>
+					<td>24:00 Hour(s)</td>
+                    <td>{!! SiteHelpers::voucherStatus($record->voucher->status_main) !!}</td>
+                   <td>{{ ($record->voucher->status_main==5)?'Credit Limit':''}}</td>
 
 					
 					 <td class="hide">
-					 @if($record->is_activity == 1)
-						 @if($record->status_main < 4)
-					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.add.activity',$record->id)}}">
+					 @if($record->voucher->is_activity == 1)
+						 @if($record->voucher->status_main < 4)
+					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.add.activity',$record->voucher->id)}}">
                               <i class="fas fa-plus">
                               </i>
                              
@@ -110,8 +156,8 @@
 						  @endif
 						  </td>
 						  <td class="hide">
-						   @if(($record->status_main == 4) OR ($record->status_main == 5))
-					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}" >
+						   @if(($record->voucher->status_main == 4) OR ($record->voucher->status_main == 5))
+					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->voucher->id)}}" >
                               <i class="fas fa-download">
                               </i>
                              
@@ -119,9 +165,9 @@
 						  @endif
 						  </td>
 						   <td>
-					 @if($record->is_activity == 1)
-						 @if($record->status_main > 1)
-					 <a class="btn btn-info btn-sm" href="{{route('voucherActivityItineraryPdf',$record->id)}}">
+					 @if($record->voucher->is_activity == 1)
+						 @if($record->voucher->status_main > 1)
+					 <a class="btn btn-info btn-sm" href="{{route('voucherActivityItineraryPdf',$record->voucher->id)}}">
                               <i class="fas fa-download">
                               </i>
                              
@@ -130,28 +176,28 @@
 						  @endif
 						  </td>
                      <td>
-					 @if($record->status_main == '4')
+					 @if($record->voucher->status_main == '4')
 					 
-					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.show',$record->id)}}">
+					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.show',$record->voucher->id)}}">
                               <i class="fas fa-eye">
                               </i>
                               
                           </a>
 					@endif
-          @if($record->status_main > 4)
+          @if($record->voucher->status_main > 4)
 					 
-          <a class="btn btn-info btn-sm" href="{{route('agentVoucherView',$record->id)}}">
+          <a class="btn btn-info btn-sm" href="{{route('agentVoucherView',$record->voucher->id)}}">
                              <i class="fas fa-eye">
                              </i>
                              
                          </a>
          @endif
-					 <a class="btn btn-info btn-sm hide" href="{{route('agent-vouchers.edit',$record->id)}}">
+					 <a class="btn btn-info btn-sm hide" href="{{route('agent-vouchers.edit',$record->voucher->id)}}">
                               <i class="fas fa-pencil-alt">
                               </i>
                               
                           </a>
-						   <form id="delete-form-{{$record->id}}" method="post" action="{{route('agent-vouchers.destroy',$record->id)}}" style="display:none;">
+						   <form id="delete-form-{{$record->voucher->id}}" method="post" action="{{route('agent-vouchers.destroy',$record->voucher->id)}}" style="display:none;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
@@ -159,7 +205,7 @@
                                 if(confirm('Are you sure, You want to delete this?'))
                                 {
                                     event.preventDefault();
-                                    document.getElementById('delete-form-{{$record->id}}').submit();
+                                    document.getElementById('delete-form-{{$record->voucher->id}}').submit();
                                 }
                                 else
                                 {
@@ -174,7 +220,7 @@
                   </tbody>
                  
                 </table>
-				
+				</div>
 				<div class="pagination pull-right mt-3"> {!! $records->links() !!} </div> 
               </div>
               <!-- /.card-body -->

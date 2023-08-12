@@ -47,7 +47,11 @@
 
       <p class="mb-1">
         <a class="btn btn-link" href="{{route('resetpassword')}}"> {{ __('Forgot Your Password?') }}</a>
-		<a class="btn btn-link " href="{{route('register')}}"> {{ __('Agency SignUp') }}</a>
+		<a class="btn btn-link float-right" href="{{route('register')}}"> {{ __('Agency SignUp') }}</a>
+      </p>
+	  <p class="mb-1">
+        <a class="btn btn-link" target="_blank" href="{{route('privacyPolicy')}}"> {{ __('Privacy Policy') }}</a>
+		<a class="btn btn-link float-right" target="_blank"  href="{{route('termsAndConditions')}}"> {{ __('Terms and Conditions') }}</a>
       </p>
     </div>
 @endsection

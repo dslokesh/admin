@@ -51,7 +51,7 @@
 				  
                   <tr>
                     <td>{{$page->title}}</td>
-                    <td>{{$page->page_content}}</td>
+                    <td>{!!$page->page_content!!}</td>
                     <td>{{ $page->updated_at ? date(config('app.date_format'),strtotime($page->updated_at)) : null }}</td>
 					 
                      <td>

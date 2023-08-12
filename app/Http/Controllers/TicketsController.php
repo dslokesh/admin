@@ -122,11 +122,11 @@ class TicketsController extends Controller
 				$voucherActivity->save();
 				return redirect()->route('ticket.dwnload',$voucherActivity->id);	
 			} else {
-			return redirect()->back()->with('error', 'Total Ticket Not Available.');
+			return redirect()->back()->with('error', 'API Connection Timeout. Kindly contact Customer Service.');
 			}	
 					
 			} else{
-			return redirect()->back()->with('error', 'Total Ticket Not Available.');
+			return redirect()->back()->with('error', 'API Connection Timeout. Kindly contact Customer Service.');
 		}
 		
 		
