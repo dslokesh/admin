@@ -77,7 +77,7 @@ class AuthController extends Controller
             }else{
                 $credentials = $request->only('email', 'password');
                 if (Auth::attempt($credentials)) {
-                    return redirect()->route('login')->with('error', 'Oops! Your account is inactive.');
+                    return redirect()->route('login')->with('error', 'Your account inactive. We request you kindly contact your account manager or customer support.');
                 }
             }
 

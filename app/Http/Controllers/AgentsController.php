@@ -20,6 +20,7 @@ use DB;
 use Image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AgentsController extends Controller
 {
@@ -434,9 +435,9 @@ class AgentsController extends Controller
     {
 		
 		$input = $request->all();
-		$password = '123456';
+		$password = Str::random(10);
         $record = User::find($id);
-		//dd($record);
+		
         $record->password = bcrypt($password);
 		$record->updated_by = Auth::user()->id;
         $record->save();
@@ -444,6 +445,7 @@ class AgentsController extends Controller
 		$agentData['company'] =  $record->company_name;
 		$agentData['email'] =  $record->email;
 		$agentData['password'] =  $password;
+		//dd($agentData);
 		
 		Mail::to($record->email,'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
 		if($input['user'] == 'agent'){

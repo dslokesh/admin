@@ -475,7 +475,8 @@ $stepNameSize: 1.6rem;
             <!-- /.card -->
             
         @if(!empty($voucherHotel) && $voucher->is_hotel == 1)
-        
+
+         @if($voucherHotel->count() > 0)
               <div class="card card-default ">
                 <div class="card-header">
                   <h3 class="card-title"><i class="nav-icon fas fa-book" style="color:black"></i> Additional Information Hotel</h3>
@@ -484,7 +485,7 @@ $stepNameSize: 1.6rem;
                 <!-- form start -->
               
                   <div class="card-body">
-            @if(!empty($voucherHotel))
+           
               @foreach($voucherHotel as $vah)
            
                     <div class="row" style="margin-bottom: 15px;">
@@ -497,7 +498,7 @@ $stepNameSize: 1.6rem;
                     </div>
             
             @endforeach
-                   @endif
+                   
             
                   </div>
          
@@ -505,6 +506,7 @@ $stepNameSize: 1.6rem;
   
                  
               </div>
+			  @endif
               @endif
               <!-- /.card -->
             <div class="card card-default">

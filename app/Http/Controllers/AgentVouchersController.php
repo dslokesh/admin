@@ -42,6 +42,10 @@ class AgentVouchersController extends Controller
             $query->where('code', 'like', '%' . $data['code'] . '%');
         }
 		
+		if (isset($data['customer']) && !empty($data['customer'])) {
+            $query->where('guest_name', 'like', '%' . $data['customer'] . '%');
+        }
+		
 		$query->where(function ($q) {
 		$q->where('status_main', 4)->orWhere('status_main', 5);
 		});

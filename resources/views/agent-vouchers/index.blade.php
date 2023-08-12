@@ -41,9 +41,9 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-					<th>Code</th>
+					<th>Booking Number</th>
 					
-                    <th>Agency</th>
+                    <th class="hide">Agency</th>
 					<th>Customer</th>
 					<th class="hide">Country</th>
 				
@@ -54,7 +54,7 @@
 					
 					<th width="7%" class="hide">Activities</th>
 					<th>Invoice</th>
-					<th>Itinerary</th>
+					<th class="hide">Itinerary</th>
                     <th width="12%"></th>
                   </tr>
 				  
@@ -62,12 +62,12 @@
                   <tbody>
 				   <form id="filterForm" method="get" action="{{route('agent-vouchers.index')}}" >
 				   <tr>
-					<th><input type="text" name="code" value="{{request('code')}}" autocomplete="off" class="form-control"  placeholder="Code" /></th>
-                    <th>
+					<th><input type="text" name="code" value="{{request('code')}}" autocomplete="off" class="form-control"  placeholder="Booking Number" /></th>
+                    <th class="hide">
 					 @if(Auth::user()->role_id !='3')
 					<input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />@endif</th>
-					<th></th>
+					<th><input type="text" name="customer" value="{{request('customer')}}" autocomplete="off" class="form-control"  placeholder="Customer" /></th>
 					<th class="hide"></th>
 				
 				
@@ -79,7 +79,7 @@
 					
 					<th class="hide"></th>
 					<th></th>
-					<th></th>
+					<th class="hide"></th>
                     <th width="12%"><button class="btn btn-info btn-sm" type="submit">Filter</button>
                     <a class="btn btn-default btn-sm" href="{{route('vouchers.index')}}">Clear</a></th>
 					 </form>
@@ -88,7 +88,7 @@
 				  
                   <tr>
 				  <td>{{ ($record->code)}}</td>
-                    <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
+                    <td class="hide">{{ ($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ ($record->guest_name)?$record->guest_name:''}}</td>
 					<td class="hide">{{ ($record->country)?$record->country->name:''}}</td>
 					
@@ -109,8 +109,8 @@
 						  @endif
 						  @endif
 						  </td>
-						  <td>
-						   @if($record->status_main == 5)
+						  <td class="hide">
+						   @if(($record->status_main == 4) OR ($record->status_main == 5))
 					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}" >
                               <i class="fas fa-download">
                               </i>
