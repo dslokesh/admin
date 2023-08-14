@@ -261,9 +261,8 @@ class SiteHelpers
 	
 	public function checkPermissionMethod($p)
     {
-		$user = Auth::user();
-		$role = $user->role;
 		$user = auth()->user();
+		$role = $user->role;
 		$permission = $user->hasPermission($p, $role);
 		if(!empty($permission)){
 			return 1;
