@@ -259,4 +259,18 @@ class SiteHelpers
 		return $voucherHotel;
     }
 	
+	public function checkPermissionMethod($p)
+    {
+		$user = Auth::user();
+		$role = $user->role;
+		$user = auth()->user();
+		$permission = $user->hasPermission($p, $role);
+		if(!empty($permission)){
+			return 1;
+		} else {
+			return abort(403, 'Unauthorized');;
+		}
+		
+    }
+	
 }
