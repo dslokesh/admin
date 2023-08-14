@@ -327,7 +327,7 @@ $(document).on('keypress', '.onlynumbr_text', function(evt) {
 
 $(document).on('change', '.vatCal', function(evt) {
 	var vat = parseFloat("{{$activity->vat}}")/100;
-	if(isNaN(taxAmount)){
+	if(isNaN(vat)){
 		vat = 0;
 	}
 	let inputvale = parseFloat($(this).val());

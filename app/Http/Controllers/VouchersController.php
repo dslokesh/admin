@@ -29,6 +29,16 @@ use App\Models\AgentAmount;
 
 class VouchersController extends Controller
 {
+	/* public function __construct()
+    {
+		$user = auth()->user();
+		if ($user && $user->hasPermissionTo('list.voucher')) {
+			// 
+		} else {
+			//abort(403, 'Unauthorized');
+		}
+    }
+	 */
     /**
      * Display a listing of the resource.
      *
@@ -105,6 +115,7 @@ class VouchersController extends Controller
      */
     public function create()
     {
+		
 		$countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$airlines = Airline::where('status', 1)->orderBy('name', 'ASC')->get();
 		if(old('customer_id_select')){
