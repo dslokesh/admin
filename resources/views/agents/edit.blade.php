@@ -202,7 +202,9 @@
                 <label for="inputName"> Agent Crrent Credit Limit (Amount):</label>
                <br/>{{ $record->agent_credit_limit}}
 			   <br/>
+			   @permission('list.credit.limit') 
                 <a href="javascript:;" id="c_limit_btn" class="btn btn-secondary btn-sm">Change Limit</a>
+				@endpermission
 				<div id="credit_limit_div" class="hide">
 				<div class="row">
 			   <div class="form-group col-md-4">
@@ -280,6 +282,7 @@
 
 @section('scripts')
  @include('inc.citystatecountryjs')
+  @permission('list.credit.limit') 
  <script>
  $(document).ready(function() {
 	 $("#c_limit_btn").click(function() {
@@ -299,6 +302,11 @@
 		 }
 		 
 	 });
+	 });
+	 </script>
+	 @endpermission
+	 <script>
+	  $(document).ready(function() {
   // add row with input fields when "Add Row" button is clicked
   $("#addRowBtn").click(function() {
     // create new row
