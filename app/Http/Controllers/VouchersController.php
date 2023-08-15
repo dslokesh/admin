@@ -44,7 +44,7 @@ class VouchersController extends Controller
     public function index(Request $request)
     {
 		
-		//$this->checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
 		
 		 $perPage = config("constants.ADMIN_PAGE_LIMIT");
 		 $data = $request->all();
@@ -115,7 +115,7 @@ class VouchersController extends Controller
      */
     public function create()
     {
-		//SiteHelpers::checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
 		$countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$airlines = Airline::where('status', 1)->orderBy('name', 'ASC')->get();
 		if(old('customer_id_select')){
@@ -242,7 +242,7 @@ class VouchersController extends Controller
      */
     public function show(Voucher $voucher)
     {
-		//SiteHelpers::checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
 		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
 		if($voucher->status_main  > 4)
@@ -284,7 +284,7 @@ class VouchersController extends Controller
      */
     public function edit($id)
     {
-		//SiteHelpers::checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
         $record = Voucher::find($id);
 		$countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$airlines = Airline::where('status', 1)->orderBy('name', 'ASC')->get();
@@ -393,7 +393,7 @@ class VouchersController extends Controller
      */
     public function destroy($id)
     {
-		//SiteHelpers::checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
         $record = Voucher::find($id);
 		$voucherHotel = VoucherHotel::where('voucher_id',$id)->delete();
 		$voucherActivity = VoucherActivity::where('voucher_id',$id)->delete();
@@ -404,7 +404,7 @@ class VouchersController extends Controller
 	
 	public function statusChangeVoucher(Request $request,$id)
     {
-		//SiteHelpers::checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
 		$data = $request->all();
 		
 		$record = Voucher::where('id',$id)->first();
@@ -570,7 +570,7 @@ class VouchersController extends Controller
      */
     public function addHotelsList(Request $request,$vid)
     {
-		//SiteHelpers::checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
         $data = $request->all();
 		$voucher = Voucher::find($vid);
 		if($voucher->is_hotel == '0'){
@@ -617,7 +617,7 @@ class VouchersController extends Controller
      */
     public function addHotelsView($hid,$vid)
     {
-		//SiteHelpers::checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
 		$query = Hotel::with(['country', 'state', 'city', 'hotelcategory']);
 		$query->where('id', $hid);
 		$hotel = $query->where('status', 1)->first();
@@ -761,7 +761,7 @@ class VouchersController extends Controller
      */
     public function addActivityList(Request $request,$vid)
     {
-		//SiteHelpers::checkPermissionMethod('list.voucher');
+		$this->checkPermissionMethod('list.voucher');
        $data = $request->all();
 		$typeActivities = config("constants.typeActivities"); 
         $perPage = config("constants.ADMIN_PAGE_LIMIT");

@@ -17,6 +17,7 @@ class AirlinesController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.airline');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$query = Airline::where('id','!=', null);
@@ -42,6 +43,7 @@ class AirlinesController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.airline');
         return view('airlines.create');
     }
 
@@ -110,6 +112,7 @@ class AirlinesController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.airline');
         $record = Airline::find($id);
         return view('airlines.edit')->with('record',$record);
     }

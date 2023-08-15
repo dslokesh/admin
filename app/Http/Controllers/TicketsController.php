@@ -29,6 +29,7 @@ class TicketsController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.ticket');
 		 $perPage = config("constants.ADMIN_PAGE_LIMIT");
 		 $data = $request->all();
 		$query = Ticket::where('id','!=', null);
@@ -51,6 +52,7 @@ class TicketsController extends Controller
 	
 	public function generatedTickets(Request $request)
     {
+		$this->checkPermissionMethod('list.ticket');
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$data = $request->all();
 		$query = Ticket::where('id','!=', null);
@@ -73,6 +75,7 @@ class TicketsController extends Controller
 
 	public function ticketGenerate(Request $request, $id)
     {
+		
 		$voucherActivity = VoucherActivity::find($id);
 		$adult = $voucherActivity->adult;
 		$child = $voucherActivity->child;
@@ -191,6 +194,7 @@ class TicketsController extends Controller
 	
 	public function csvUploadForm()
     {
+		$this->checkPermissionMethod('list.ticket');
 		$activities = Activity::where('status', 1)->orderBy('title', 'ASC')->get();
 		return view('tickets.csv-upload',  compact('activities'));
     }

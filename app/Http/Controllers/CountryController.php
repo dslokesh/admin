@@ -14,6 +14,7 @@ class CountryController extends Controller
      */
     public function index()
     {
+		$this->checkPermissionMethod('list.countries');
         $records = Country::orderBy('created_at', 'DESC')->get();
 		
         return view('countries.index', compact('records'));
@@ -28,6 +29,7 @@ class CountryController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.countries');
         return view('countries.create');
     }
 
@@ -72,6 +74,7 @@ class CountryController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.countries');
         $record = Country::find($id);
         return view('countries.edit')->with('record',$record);
     }

@@ -16,6 +16,7 @@ class CityController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.city');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$query = City::with('country','state');
@@ -55,6 +56,7 @@ class CityController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.city');
 		 $countries = Country::where('status',1)->orderBy('name', 'ASC')->get();
         return view('cities.create',compact('countries'));
     }
@@ -111,6 +113,7 @@ class CityController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.city');
         $record = City::find($id);
 		$countries = Country::where('status',1)->orderBy('name', 'ASC')->get();
 		$states = State::where('status',1)->orderBy('name', 'ASC')->get();

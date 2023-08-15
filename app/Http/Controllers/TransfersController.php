@@ -15,6 +15,7 @@ class TransfersController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.transfer');
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$data = $request->all();
 		$query = Transfer::where('id','!=',null);
@@ -46,6 +47,7 @@ class TransfersController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.transfer');
         return view('transfers.create');
     }
 
@@ -106,6 +108,7 @@ class TransfersController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.transfer');
         $record = Transfer::with('transferdata')->find($id);
         return view('transfers.edit')->with('record',$record);
     }

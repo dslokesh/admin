@@ -31,6 +31,7 @@ class AgentsController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.agent');
         $data = $request->all();
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
         $query = User::with(['country', 'state', 'city']);
@@ -81,6 +82,7 @@ class AgentsController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.agent');
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         return view('agents.create', compact('countries'));
     }
@@ -231,6 +233,7 @@ class AgentsController extends Controller
      */
     public function show(User $agent)
     {
+		$this->checkPermissionMethod('list.agent');
 		$activity_ids = explode(",",$agent->activity_id);
 		
 		$variants = [];
@@ -269,6 +272,7 @@ class AgentsController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.agent');
         $record = User::find($id);
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
@@ -471,6 +475,7 @@ class AgentsController extends Controller
 	
 	public function priceMarkupActivityList($id)
     {
+		$this->checkPermissionMethod('list.agent');
 		$agentId = $id;
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
         $records = Activity::where('status', 1)->where('is_price', 1)->orderBy('title', 'ASC')->paginate($perPage);
@@ -512,6 +517,7 @@ class AgentsController extends Controller
 	
 	public function markupPriceList($id)
     {
+		$this->checkPermissionMethod('list.agent');
 		$agentId = $id;
 		$agent = User::find($agentId);
 		$activity_ids = explode(",",$agent->activity_id);

@@ -14,6 +14,7 @@ class ZonesController extends Controller
      */
     public function index()
     {
+		$this->checkPermissionMethod('list.zone');
         $records = Zone::orderBy('created_at', 'DESC')->get();
 		
         return view('zones.index', compact('records'));
@@ -28,6 +29,7 @@ class ZonesController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.zone');
         return view('zones.create');
     }
 
@@ -72,6 +74,7 @@ class ZonesController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.zone');
         $record = Zone::find($id);
         return view('zones.edit')->with('record',$record);
     }

@@ -24,6 +24,7 @@ class SuppliersController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.supplier');
         $data = $request->all();
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
         $query = Supplier::with(['country', 'state', 'city']);
@@ -58,6 +59,7 @@ class SuppliersController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.supplier');
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         return view('suppliers.create', compact('countries'));
     }
@@ -144,6 +146,7 @@ class SuppliersController extends Controller
      */
     public function show(Supplier $supplier)
     {
+		$this->checkPermissionMethod('list.supplier');
 		$activity_ids = explode(",",$supplier->activity_id);
 		
 		$variants = [];
@@ -181,6 +184,7 @@ class SuppliersController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.supplier');
         $record = Supplier::find($id);
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
@@ -279,6 +283,7 @@ class SuppliersController extends Controller
 	
 	public function priceMarkupActivityList($id)
     {
+		$this->checkPermissionMethod('list.supplier');
 		$supplierId = $id;
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
         $records = Activity::where('status', 1)->where('is_price', 1)->orderBy('title', 'ASC')->paginate($perPage);
@@ -320,6 +325,7 @@ class SuppliersController extends Controller
 	
 	public function markupPriceList($id)
     {
+		$this->checkPermissionMethod('list.supplier');
 		$supplierId = $id;
 		$supplier = Supplier::find($supplierId);
 		$activity_ids = explode(",",$supplier->activity_id);

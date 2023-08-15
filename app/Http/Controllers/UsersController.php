@@ -29,8 +29,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
 
-       
-
+		$this->checkPermissionMethod('list.subadmin');
         $data = $request->all();
         $user = Auth::user();
         $query = User::where('role_id', '2');
@@ -196,6 +195,7 @@ class UsersController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.subadmin');
         $hashed_random_password = Str::random( 12 );
         $roles = Role::where('id', '!=' , '1')->orderBy('name', 'ASC')->get();
         //pr($roles); die;
@@ -264,6 +264,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
+		$this->checkPermissionMethod('list.subadmin');
         $ppes = [];
         $certificates = [];
         $project = [];
@@ -289,7 +290,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        
+        $this->checkPermissionMethod('list.subadmin');
         $roles = Role::where('id', '!=' , '1')->orderBy('name', 'ASC')->get();
         $user = User::find($id);
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();

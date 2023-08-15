@@ -14,12 +14,17 @@ class Controller extends BaseController
     {
 		$user = auth()->user();
 		$role = $user->role;
+		if($user->role_id == '1'){
+			return 1;
+		}else { 
 		$permission = $user->hasPermission($p, $role);
 		if(!empty($permission)){
 			return 1;
 		} else {
 			return abort(403, 'Unauthorized');;
 		}
+		}
+		
 		
     }
 }

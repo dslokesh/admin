@@ -378,7 +378,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 </a>
               </li>
 	@endpermission
-		@permission('list.agent ledger') 
+		@permission('list.agent.ledger') 
 			  @php
           $class=''; $active='';
           if($controller == 'ReporsController' and in_array($action,array('agentLedgerReportWithVat'))){

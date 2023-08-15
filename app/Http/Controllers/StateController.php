@@ -15,6 +15,7 @@ class StateController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.state');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$query = State::with('country');
@@ -45,6 +46,7 @@ class StateController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.state');
 		 $countries = Country::where('status',1)->orderBy('name', 'ASC')->get();
         return view('states.create',compact('countries'));
     }
@@ -57,6 +59,7 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
+		
         $request->validate([
             'name'=>'required|max:255|sanitizeScripts',
 			'country_id'=>'required'
@@ -98,6 +101,7 @@ class StateController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.state');
         $record = State::find($id);
 		$countries = Country::where('status',1)->orderBy('name', 'ASC')->get();
         return view('states.edit')->with('record',$record)->with('countries',$countries);

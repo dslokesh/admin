@@ -18,6 +18,7 @@ class AgentAmountController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.agentamount');
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$data = $request->all();
 		$query = AgentAmount::with('agent')->where('transaction_from',1);
@@ -59,7 +60,7 @@ class AgentAmountController extends Controller
      */
     public function create()
     {
-		
+		$this->checkPermissionMethod('list.agentamount');
         return view('agentamounts.create');
     }
 

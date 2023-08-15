@@ -14,6 +14,7 @@ class VehiclesController extends Controller
      */
     public function index()
     {
+		$this->checkPermissionMethod('list.vehicle');
         $records = Vehicle::orderBy('created_at', 'DESC')->get();
 		
         return view('vehicles.index', compact('records'));
@@ -28,6 +29,7 @@ class VehiclesController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.vehicle');
         return view('vehicles.create');
     }
 
@@ -73,6 +75,7 @@ class VehiclesController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.vehicle');
         $record = Vehicle::find($id);
         return view('vehicles.edit')->with('record',$record);
     }

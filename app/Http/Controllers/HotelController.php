@@ -21,6 +21,7 @@ class HotelController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.hotel');
         $data = $request->all();
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
         $query = Hotel::with(['country', 'state', 'city', 'hotelcategory']);
@@ -67,6 +68,7 @@ class HotelController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.hotel');
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$zones = Zone::where('status', 1)->orderBy('name', 'ASC')->get();
         $hotelcategories = HotelCategory::where('status', 1)->orderBy('name', 'ASC')->get();
@@ -159,6 +161,7 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
+		$this->checkPermissionMethod('list.hotel');
        return view('hotels.view', compact('hotel'));
     }
 
@@ -170,6 +173,7 @@ class HotelController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.hotel');
         $record = Hotel::find($id);
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
 		$zones = Zone::where('status', 1)->orderBy('name', 'ASC')->get();

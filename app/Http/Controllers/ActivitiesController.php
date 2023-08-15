@@ -23,6 +23,7 @@ class ActivitiesController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.activity');
         $data = $request->all();
 		$typeActivities = config("constants.typeActivities"); 
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
@@ -58,6 +59,7 @@ class ActivitiesController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.activity');
 		$typeActivities = config("constants.typeActivities"); 
 		$transfers = Transfer::where('status', 1)->orderBy('name', 'ASC')->get();
 		$zones = Zone::where('status', 1)->orderBy('name', 'ASC')->get();
@@ -202,6 +204,7 @@ class ActivitiesController extends Controller
      */
     public function show(Activity $activity)
     {
+		$this->checkPermissionMethod('list.activity');
 		$typeActivities = config("constants.typeActivities"); 
 		$activity = $activity::with('transfer')->where('id',$activity->id)->first();
 		$zoneArray = [];
@@ -237,6 +240,7 @@ class ActivitiesController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.activity');
         $record = Activity::find($id);
 		$typeActivities = config("constants.typeActivities"); 
 		$transfers = Transfer::where('status', 1)->orderBy('name', 'ASC')->get();
@@ -281,6 +285,7 @@ class ActivitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
+		
 		$options['allow_img_size'] = 10;
         $request->validate([
             'title' => 'required|max:255|sanitizeScripts',
@@ -424,6 +429,7 @@ class ActivitiesController extends Controller
      */
     public function createPriceForm($id)
     {
+		$this->checkPermissionMethod('list.activity');
 		$activity = Activity::find($id);
         return view('activities.create_prices',compact('activity'));
     }
@@ -432,6 +438,7 @@ class ActivitiesController extends Controller
 	
     public function editPriceForm($id)
     {
+		$this->checkPermissionMethod('list.activity');
 		$activity = Activity::find($id);
 		$priceData = ActivityPrices::where('activity_id',$id)->get();
 		

@@ -32,6 +32,7 @@ class ReporsController extends Controller
      */
     public function voucherReport(Request $request)
     {
+		$this->checkPermissionMethod('list.logisticreport');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
@@ -76,6 +77,7 @@ class ReporsController extends Controller
 	
 	public function voucherReportExport(Request $request)
     {
+		$this->checkPermissionMethod('list.logisticreport');
         $data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$query = VoucherActivity::with(["voucher",'activity','voucher.customer','supplierticket','suppliertransfer'])->where('id','!=', null);
@@ -134,6 +136,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
      */
     public function soaReport(Request $request)
     {
+		$this->checkPermissionMethod('list.accountsreceivables');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
@@ -185,6 +188,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 	
 	 public function soaReportExcel(Request $request)
     {
+		$this->checkPermissionMethod('list.accountsreceivables');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
@@ -240,6 +244,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
      */
     public function agentLedgerReport(Request $request)
     {
+		//$this->checkPermissionMethod('list.agent.ledger');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
@@ -290,6 +295,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
      */
     public function agentLedgerReportWithVat(Request $request)
     {
+		$this->checkPermissionMethod('list.agent.ledger');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");

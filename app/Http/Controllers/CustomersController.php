@@ -18,6 +18,7 @@ class CustomersController extends Controller
      */
     public function index(Request $request)
     {
+		$this->checkPermissionMethod('list.customer');
         $data = $request->all();
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
         $query = Customer::with(['country', 'state', 'city']);
@@ -57,6 +58,7 @@ class CustomersController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.customer');
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         return view('customers.create', compact('countries'));
     }
@@ -131,6 +133,7 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.customer');
         $record = Customer::find($id);
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();

@@ -14,6 +14,7 @@ class HotelCategoryController extends Controller
      */
     public function index()
     {
+		$this->checkPermissionMethod('list.hotlecat');
         $records = HotelCategory::orderBy('created_at', 'DESC')->get();
 		
         return view('hotelcategories.index', compact('records'));
@@ -28,6 +29,7 @@ class HotelCategoryController extends Controller
      */
     public function create()
     {
+		$this->checkPermissionMethod('list.hotlecat');
         return view('hotelcategories.create');
     }
 
@@ -72,6 +74,7 @@ class HotelCategoryController extends Controller
      */
     public function edit($id)
     {
+		$this->checkPermissionMethod('list.hotlecat');
         $record = HotelCategory::find($id);
         return view('hotelcategories.edit')->with('record',$record);
     }
