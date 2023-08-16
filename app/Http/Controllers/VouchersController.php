@@ -418,6 +418,18 @@ class VouchersController extends Controller
 	   }
 	   
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
+		$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
+		if(empty($customer))
+		{
+			$customer = new Customer();
+			$customer->name = $data['fname'].' '.$data['lname'];
+			$customer->mobile = $request->input('customer_mobile');
+			$customer->email = $request->input('customer_email');
+			$customer->save();
+		}
+		
+		$record->customer_id = $customer->id;
+		
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
 		if(!empty($agent))
@@ -921,7 +933,7 @@ class VouchersController extends Controller
 		{
 			VoucherActivity::insert($data);
 			$voucher = Voucher::find($voucher_id);
-			$voucher->total_activity_amount = $total_activity_amount;
+			$voucher->total_activity_amount += $total_activity_amount;
 			$voucher->save();
 		}
 

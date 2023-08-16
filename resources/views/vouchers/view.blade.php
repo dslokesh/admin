@@ -312,10 +312,10 @@ $stepNameSize: 1.6rem;
                   </div>
                   <div class="row" style="margin-bottom: 15px;">
                     <div class="col-4">
-                      <input type="text" readonly value="{{$voucher->agent->email}}" class="form-control" placeholder="Email ID">
+                      <input type="text" name="customer_email" value="{{($voucher->customer_id > 0)?$voucher->customer->email:$voucher->agent->email}}" class="form-control" placeholder="Email ID">
                     </div>
                     <div class="col-4">
-                      <input type="text" readonly value="{{$voucher->agent->mobile }}" class="form-control" placeholder="Mobile No.">
+                     <input type="text" name="customer_mobile" value="{{($voucher->customer_id > 0)?$voucher->customer->mobile:$voucher->agent->email}}" class="form-control" placeholder="Mobile No.">
                     </div>
                     <div class="col-4">
                       <input type="text" name="agent_ref_no" value="{{$voucher->agent_ref_no}}" class="form-control" placeholder="Agent Reference No.">
@@ -453,7 +453,7 @@ $stepNameSize: 1.6rem;
 					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}"  data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
 					  </div>
 					
-                     @if(($activity->sic_TFRS=='1') && ($activity->pick_up_required=='1'))
+                     @if(($activity->pvt_TFRS=='1') && ($activity->pick_up_required=='1'))
 					<div class="form-group col-md-6 ">
                 <label for="inputName">Pickup Time:</label>
                  <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Pickup Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />

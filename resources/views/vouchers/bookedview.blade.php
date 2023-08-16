@@ -456,7 +456,7 @@ $stepNameSize: 1.6rem;
                     </div>
 					
 					 
-					@if(($activity->sic_TFRS=='1') && ($activity->pick_up_required=='1'))
+					@if(($activity->pvt_TFRS=='1') && ($activity->pick_up_required=='1'))
 					<div class="col-6">
 					<label for="inputName">Pickup Time:</label>
 					{{$ap->actual_pickup_time}}

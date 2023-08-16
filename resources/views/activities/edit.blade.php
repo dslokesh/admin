@@ -118,9 +118,12 @@
                     <span class="text-danger">{{ $errors->first('transfer_plan') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-4 transfer_plan_div" id="transfer_plan_div2">
-                <label for="inputName">Pvt TFRS Text: <span class="red">*</span></label>
-                <textarea placeholder="Pvt TFRS Text" name="pvt_TFRS_text" cols="50" rows="1"  class="form-control box-size">{{ old('pvt_TFRS_text') }}</textarea>
+			  <div class="form-group col-md-4 transfer_plan_div">
+                <label for="inputName">Pick Up Time Required ?: <span class="red">*</span></label>
+                <select name="pick_up_required" id="pick_up_required" class="form-control">
+                    <option value="1" @if($record->pick_up_required ==1) {{'selected="selected"'}} @endif>Yes</option>
+					          <option value="0" @if($record->pick_up_required ==0) {{'selected="selected"'}} @endif >No</option>
+                 </select>
               </div>
 			    <div class="form-group col-md-12">
                 <label for="inputName">Black Out/Sold Out Date(separate By Comma YYYY-MM-DD): <span class="red">*</span></label>
@@ -173,13 +176,11 @@
 					<option value="0" @if($record->sic_TFRS ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			  <div class="form-group col-md-6 zones_div">
-                <label for="inputName">Pick Up Time Required ?: <span class="red">*</span></label>
-                <select name="pick_up_required" id="pick_up_required" class="form-control">
-                    <option value="1" @if($record->pick_up_required ==1) {{'selected="selected"'}} @endif>Yes</option>
-					          <option value="0" @if($record->pick_up_required ==0) {{'selected="selected"'}} @endif >No</option>
-                 </select>
+			   <div class="form-group col-md-6 zones_div">
+                <label for="inputName">Sic TFRS Text: <span class="red">*</span></label>
+                <textarea placeholder="Pvt TFRS Text" name="sic_TFRS_text" cols="50" rows="1"  class="form-control box-size">{{ $record->sic_TFRS_text }}</textarea>
               </div>
+			 
 			<div class="form-group col-md-6 zones_div" id="zones_div">
                 <label for="inputName"></label>
 				<table id="myTable" class="table">

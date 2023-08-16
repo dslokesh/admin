@@ -113,8 +113,8 @@
                {{ (!empty($activity->transfer))?$activity->transfer->name:'' }}
               </div>
 			   <div class="col-lg-6 mb-3">
-                <label for="inputName">Pvt TFRS Text:</label>
-               {{ (!empty($activity->pvt_TFRS_text))?$activity->pvt_TFRS_text:'' }}
+                <label for="inputName">Pick Up Time Required ?:</label>
+				{!! SiteHelpers::statusColor($activity->pick_up_required) !!}
               </div>
 			  @endif
 			  
@@ -169,9 +169,10 @@
 			</div>
 			@if($activity->sic_TFRS)
 				 <div class="col-lg-6 mb-3">
-                <label for="inputName">Pick Up Time Required ?:</label>
-				{!! SiteHelpers::statusColor($activity->pick_up_required) !!}
+                <label for="inputName">Sic TFRS Text:</label>
+               {{ (!empty($activity->sic_TFRS_text))?$activity->sic_TFRS_text:'' }}
               </div>
+				
 			<div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
 			 <div class="col-lg-12 mb-3">
 				<h4>Transfer Plan</h4>

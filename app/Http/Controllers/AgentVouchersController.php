@@ -546,7 +546,7 @@ class AgentVouchersController extends Controller
 			
 			VoucherActivity::insert($data);
 			$voucher = Voucher::find($voucher_id);
-			$voucher->total_activity_amount = $total_activity_amount;
+			$voucher->total_activity_amount += $total_activity_amount;
 			$voucher->save();
 			
 		}

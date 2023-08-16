@@ -32,7 +32,7 @@ class UsersController extends Controller
 		$this->checkPermissionMethod('list.subadmin');
         $data = $request->all();
         $user = Auth::user();
-        $query = User::where('role_id', '2');
+        $query = User::where('role_id','!=', '1')->where('role_id','!=', '3');
         $query->select('users.*');
         
         if(isset($data['user_name']) && !empty($data['user_name']))
@@ -197,7 +197,7 @@ class UsersController extends Controller
     {
 		$this->checkPermissionMethod('list.subadmin');
         $hashed_random_password = Str::random( 12 );
-        $roles = Role::where('id', '!=' , '1')->orderBy('name', 'ASC')->get();
+        $roles = Role::where('id', '!=' , '1')->where('id', '!=' , '3')->orderBy('name', 'ASC')->get();
         //pr($roles); die;
         return view('users.create', compact('roles','hashed_random_password'));
     }
@@ -291,12 +291,11 @@ class UsersController extends Controller
     public function edit($id)
     {
         $this->checkPermissionMethod('list.subadmin');
-        $roles = Role::where('id', '!=' , '1')->orderBy('name', 'ASC')->get();
         $user = User::find($id);
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
-       
+        $roles = Role::where('id', '!=' , '1')->where('id', '!=' , '3')->orderBy('name', 'ASC')->get();
         //pr($user);
 		if(Auth::user()->id == $id)
 		{
@@ -326,6 +325,7 @@ class UsersController extends Controller
                 'last_name' => 'required|max:255|sanitizeScripts|alpha',
 				'city_id' => 'required',
 				'state_id' => 'required',
+				'role_id' => 'required',
 				'country_id' => 'required',
                 'postcode' => 'nullable|max:20|sanitizeScripts',
                 'email'=>'required|max:255|sanitizeScripts|email|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix|unique:users,email,' .$id,
@@ -376,7 +376,7 @@ class UsersController extends Controller
             $user->image = $newName;
 		}
 
-       
+        $user->role_id = $request->input('role_id'); 
         $user->name = $request->input('first_name');
         $user->lname = $request->input('last_name');
         $user->country_id = $request->input('country_id');

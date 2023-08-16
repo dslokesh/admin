@@ -30,7 +30,20 @@
             <div class="card-header">
               <h3 class="card-title">Edit User</h3>
             </div>
+		
             <div class="card-body row">
+				<div class="form-group col-md-6">
+                <label for="inputName">Role: <span class="red">*</span></label>
+                <select name="role_id" id="role_id" class="form-control">
+                    <option value = "">-Select Role-</option>
+                    @foreach($roles as $role)
+                      <option value="{{ $role->id }}" @if($role->id == $user->role_id) selected="selected" @endif >{{ $role->name }}</option>
+                    @endforeach
+                 </select>
+                @if ($errors->has('role_id'))
+                    <span class="text-danger">{{ $errors->first('role_id') }}</span>
+                @endif
+              </div>
               <div class="form-group col-md-6">
                 <label for="inputName ">First Name: <span class="red">*</span></label>
                 <input type="text" id="first_name" name="first_name" value="{{ old('first_name') ?: $user->name }}" class="form-control"  placeholder="First Name" />
