@@ -418,17 +418,17 @@ class VouchersController extends Controller
 	   }
 	   
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
-		$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
-		if(empty($customer))
+		//$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
+		/* if(empty($customer))
 		{
 			$customer = new Customer();
 			$customer->name = $data['fname'].' '.$data['lname'];
 			$customer->mobile = $request->input('customer_mobile');
 			$customer->email = $request->input('customer_email');
 			$customer->save();
-		}
+		} */
 		
-		$record->customer_id = $customer->id;
+		//$record->customer_id = $customer->id;
 		
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
@@ -449,6 +449,9 @@ class VouchersController extends Controller
 			}
 			
 			$record->booking_date = date("Y-m-d");
+			$record->guest_name = $data['fname'].' '.$data['lname'];
+			$record->guest_email = $data['guest_email'];
+			$record->guest_phone = $data['guest_phone'];
 			$record->guest_name = $data['fname'].' '.$data['lname'];
 			$record->agent_ref_no = $data['agent_ref_no'];
 			$record->remark = $data['remark'];

@@ -125,6 +125,10 @@
 					          <option value="0" @if($record->pick_up_required ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
+			   <div class="form-group col-md-6 transfer_plan_div">
+                <label for="inputName">Pvt TFRS Text: <span class="red">*</span></label>
+                <textarea placeholder="Pvt TFRS Text" name="pvt_TFRS_text" cols="50" rows="1"  class="form-control box-size">{{ $record->pvt_TFRS_text }}</textarea>
+              </div>
 			    <div class="form-group col-md-12">
                 <label for="inputName">Black Out/Sold Out Date(separate By Comma YYYY-MM-DD): <span class="red">*</span></label>
                 <input type="text" id="black_sold_out" name="black_sold_out" value="{{ old('black_sold_out') ?: $record->black_sold_out }}" class="form-control"  placeholder="Black Out/Sold Out Date" />
@@ -176,10 +180,7 @@
 					<option value="0" @if($record->sic_TFRS ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
-			   <div class="form-group col-md-6 zones_div">
-                <label for="inputName">Sic TFRS Text: <span class="red">*</span></label>
-                <textarea placeholder="Pvt TFRS Text" name="sic_TFRS_text" cols="50" rows="1"  class="form-control box-size">{{ $record->sic_TFRS_text }}</textarea>
-              </div>
+			  
 			 
 			<div class="form-group col-md-6 zones_div" id="zones_div">
                 <label for="inputName"></label>

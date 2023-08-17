@@ -321,12 +321,12 @@ $stepNameSize: 1.6rem;
                 
                     <div class="col-6">
 					<label for="inputName">Email:</label>
-                     {{$voucher->agent->email}}
+                     {{$voucher->guest_email}}
                     </div>
                    
                     <div class="col-6">
 					  <label for="inputName">Mobile No.:</label>
-                     {{$voucher->agent->mobile}}
+                     {{$voucher->guest_phone}}
                     </div>
                     <div class="col-6">
                       
@@ -573,14 +573,32 @@ $stepNameSize: 1.6rem;
                    {{$ap->transfer_option}}
                   </div>
                 </div>
+               @if($ap->transfer_option == 'Shared Transfer')
+					@php
+					$pickup_time = SiteHelpers::getPickupTimeByZone($activity->zones,$ap->transfer_zone);
+					@endphp
                 <div class="row" style="margin-bottom: 5px;">
                   <div class="col-md-5 text-left">
                     <strong>Pickup Timing</strong>
                   </div>
                   <div class="col-md-7 text-right">
-                   {{$ap->actual_pickup_time}}
+                   {{$pickup_time}}
                   </div>
                 </div>
+				@endif
+				@if(($ap->transfer_option == 'Pvt Transfer') && ($activity->pick_up_required == '1')  && ($activity->pvt_TFRS == '1'))
+					@php
+					$pickup_time = SiteHelpers::getPickupTimeByZone($activity->zones,$ap->transfer_zone);
+					@endphp
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Pickup Timing</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   {{$activity->pvt_TFRS_text}}
+                  </div>
+                </div>
+				@endif
                 <div class="row" style="margin-bottom: 5px;">
                   <div class="col-md-5 text-left">
                     <strong>Pax</strong>

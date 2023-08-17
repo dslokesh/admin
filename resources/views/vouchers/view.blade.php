@@ -277,9 +277,17 @@ $stepNameSize: 1.6rem;
             <div class="progress"><div class="progress-bar"></div></div>
             <a href="#" class="multistep-dot"></a>
         </div>
-
+		 <div class="col-md-3">
+		  @if($voucher->is_activity == 1)
+								 @if($voucher->status_main < 4)
+					 <a class="btn btn-info btn-sm float-left" style=" margin-top: 20px;margin-left: 120px;" href="{{route('voucher.add.activity',$voucher->id)}}" >Add More</a>
+					
+					@endif
+								  @endif
+				</div>
         
     </div>
+	
         <div class="row" style="margin-top: 30px;">
 		
           <!-- left column -->
@@ -304,18 +312,18 @@ $stepNameSize: 1.6rem;
                       </select>
                     </div>
                     <div class="col-5">
-                      <input type="text" name="fname" value="{{$fname}}" class="form-control" placeholder="First Name" required>
+                      <input type="text" name="fname" value="{{$fname}}" class="form-control" placeholder="First Name*" required>
                     </div>
                     <div class="col-5">
-                      <input type="text" name="lname" value="{{$lname}}" class="form-control" placeholder="Last Name" required>
+                      <input type="text" name="lname" value="{{$lname}}" class="form-control" placeholder="Last Name*" required>
                     </div>
                   </div>
                   <div class="row" style="margin-bottom: 15px;">
                     <div class="col-4">
-                      <input type="text" name="customer_email" value="{{($voucher->customer_id > 0)?$voucher->customer->email:$voucher->agent->email}}" class="form-control" placeholder="Email ID">
+                      <input type="text" name="customer_email" value="{{(!empty($voucher->guest_email))?$voucher->guest_email:$voucher->agent->email}}" class="form-control" placeholder="Email ID">
                     </div>
                     <div class="col-4">
-                     <input type="text" name="customer_mobile" value="{{($voucher->customer_id > 0)?$voucher->customer->mobile:$voucher->agent->email}}" class="form-control" placeholder="Mobile No.">
+                     <input type="text" name="customer_mobile" value="{{(!empty($voucher->guest_phone))?$voucher->guest_phone:$voucher->agent->email}}" class="form-control" placeholder="Mobile No.">
                     </div>
                     <div class="col-4">
                       <input type="text" name="agent_ref_no" value="{{$voucher->agent_ref_no}}" class="form-control" placeholder="Agent Reference No.">
@@ -323,7 +331,7 @@ $stepNameSize: 1.6rem;
                   </div>
                   <div class="row" style="margin-bottom: 5px;">
                     <div class="col-12">
-                      <textarea type="text" class="form-control" style="resize:none;" name="remark" placeholder="Remark" rows="5">{{$voucher->remark}}</textarea>
+                      <textarea type="text" class="form-control" style="resize:none;" name="remark" placeholder="Remark" rows="2">{{$voucher->remark}}</textarea>
                     </div>
                    
                   </div>
@@ -365,103 +373,107 @@ $stepNameSize: 1.6rem;
           
 					@endphp
                   <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-12"><p><strong>{{$c}}. {{$ap->variant_name}} : {{$ap->transfer_option}}</strong></p></div>
+                    <div class="col-12"><p><strong>{{$c}}. {{$ap->variant_name}} : {{$ap->transfer_option}}@if($ap->transfer_option == 'Shared Transfer')
+					@php
+					$zone = SiteHelpers::getZoneName($ap->transfer_zone);
+					@endphp
+					- Zone :{{$zone->name}}
+					@endif</strong></p></div>
 					@if($activity->entry_type=='Arrival')
 						<div class="form-group col-md-6">
-						 <label for="inputName" style="width: 100%;">Dropoff Location: <span class="float-right"><input type="checkbox" data-idinput="dropoff_location{{$ap->id}}" class="chk_other " data-name="dropoff_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
-						<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location" />
+						 
+						<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" required data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location*" />
+						<label for="inputName" style="width: 100%;"> <span class="float-left"><input type="checkbox" data-idinput="dropoff_location{{$ap->id}}" class="chk_other " data-name="dropoff_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
 						</div>
 					
 					
 					<div class="form-group col-md-6 ">
-                <label for="inputName">Passenger Name:</label>
-				<input type="text" class="form-control inputsave" id="passenger_name{{$ap->id}}" data-name="passenger_name"  data-id="{{$ap->id}}" value="{{$ap->passenger_name}}"  placeholder="Passenger Name" />
+				<input type="text" class="form-control inputsave" id="passenger_name{{$ap->id}}" data-name="passenger_name"  data-id="{{$ap->id}}" required value="{{$ap->passenger_name}}"  placeholder="Passenger Name*" />
 				
               </div>
 			 
 			   <div class="form-group col-md-6 ">
-                <label for="inputName">Arrival Time:</label>
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave" required placeholder="Arrival Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
 			 
 			  
 			  <div class="form-group col-md-6 ">
-                <label for="inputName">Flight Details:</label>
-                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Arrival Flight Details" data-id="{{$ap->id}}" data-name="flight_no" />
+                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Arrival Flight Details*" required data-id="{{$ap->id}}" data-name="flight_no" />
 				
               </div>
                     
 					<div class="form-group col-md-12">
-					<label for="inputName">Remark:</label>
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
 					
 					@elseif($activity->entry_type=='Interhotel')
 		  
                     <div class="form-group col-md-6">
-					 <label for="inputName" style="width: 100%;">Pickup Location: <span class="float-right"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
 						
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
-					
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Pickup Location*" required />
+										 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
+
                      
                     </div>
 					 <div class="form-group col-md-6">
-					 <label for="inputName" style="width: 100%;">Dropoff Location: <span class="float-right"><input type="checkbox" data-idinput="dropoff_location{{$ap->id}}" class="chk_other " data-name="dropoff_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
+					
 					 
 					
-					<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location" />
+					<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  required placeholder="Dropoff Location*" />
+					 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="dropoff_location{{$ap->id}}" class="chk_other " data-name="dropoff_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
                     </div>
 					 <div class="form-group col-md-6 ">
-                <label for="inputName">Pickup Time:</label>
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+               
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
                     <div class="form-group col-md-6">
-					<label for="inputName">Remark:</label>
-					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
+					
+					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}" required placeholder="Remark" />
                     </div>
 					@elseif($activity->entry_type=='Departure')
 		  
                     <div class="form-group col-md-6">
-					 <label for="inputName" style="width: 100%;">Pickup Location: <span class="float-right"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
 					
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}"  data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
 					
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}"  data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location*" required />
+					 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
                      
                     </div>
 					
 					 <div class="form-group col-md-6 ">
-                <label for="inputName">Pickup Time:</label>
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Arrival Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
 			  <div class="form-group col-md-6 ">
-                <label for="inputName">Flight Details:</label>
-                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Departure Flight Details" data-id="{{$ap->id}}" data-name="flight_no" />
+               
+                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Departure Flight Details*" required data-id="{{$ap->id}}" data-name="flight_no" />
 				
               </div>
                     <div class="form-group col-md-6">
-					<label for="inputName">Remark:</label>
+					
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
 					@else
 						<div class="form-group col-md-6">
-					 <label for="inputName" style="width: 100%;">Pickup Location: <span class="float-right"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"   /> Other<span></label>
+					
 					 
 						
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}"  data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" placeholder="Pickup Location" required />
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}"  data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" required placeholder="Pickup Location*" required />
+					 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"   /> Other<span></label>
 					  </div>
 					
                      @if(($activity->pvt_TFRS=='1') && ($activity->pick_up_required=='1'))
 					<div class="form-group col-md-6 ">
-                <label for="inputName">Pickup Time:</label>
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Pickup Time" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                <label for="inputName"></label>
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave" required placeholder="Pickup Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
                     @endif
 					<div class="form-group col-md-6">
-					<label for="inputName">Remark:</label>
+					
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
 					
@@ -525,7 +537,7 @@ $stepNameSize: 1.6rem;
                 <div class="card-body">
                   <div class="row" style="margin-bottom: 5px;">
                     <div class="col-12">
-                      <input type="radio" checked name="payment"  /> Credit Limit (AED {{($voucher->agent->agent_amount_balance)?$voucher->agent->agent_amount_balance:0}})
+                      <input type="radio" checked name="payment"  /> Credit Limit (Wallet Balance AED {{($voucher->agent->agent_amount_balance)?$voucher->agent->agent_amount_balance:0}})
                     </div>
                    
                   </div>
@@ -579,6 +591,7 @@ $stepNameSize: 1.6rem;
           <!--/.col (left) -->
           <!-- right column -->
           <div class="col-md-4" >
+		 
             <!-- Form Element sizes -->
 			@php
 				$totalGrand =0; 
@@ -590,6 +603,7 @@ $stepNameSize: 1.6rem;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					@endphp
             <div class="card card-default">
+			
               <div class="card-header">
                 <div class="row">
 				<div class="col-md-8 text-left">
@@ -633,7 +647,7 @@ $stepNameSize: 1.6rem;
                     <strong>Date</strong>
                   </div>
                   <div class="col-md-7 text-right">
-                   {{$ap->tour_date}}
+                   {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}
                   </div>
                 </div>
                 <div class="row" style="margin-bottom: 5px;">
@@ -644,14 +658,32 @@ $stepNameSize: 1.6rem;
                    {{$ap->transfer_option}}
                   </div>
                 </div>
+				@if($ap->transfer_option == 'Shared Transfer')
+					@php
+					$pickup_time = SiteHelpers::getPickupTimeByZone($activity->zones,$ap->transfer_zone);
+					@endphp
                 <div class="row" style="margin-bottom: 5px;">
                   <div class="col-md-5 text-left">
                     <strong>Pickup Timing</strong>
                   </div>
                   <div class="col-md-7 text-right">
-                   {{$ap->actual_pickup_time}}
+                   {{$pickup_time}}
                   </div>
                 </div>
+				@endif
+				@if(($ap->transfer_option == 'Pvt Transfer') && ($activity->pick_up_required == '1')  && ($activity->pvt_TFRS == '1'))
+					@php
+					$pickup_time = SiteHelpers::getPickupTimeByZone($activity->zones,$ap->transfer_zone);
+					@endphp
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-md-5 text-left">
+                    <strong>Pickup Timing</strong>
+                  </div>
+                  <div class="col-md-7 text-right">
+                   {{$activity->pvt_TFRS_text}}
+                  </div>
+                </div>
+				@endif
                 <div class="row" style="margin-bottom: 5px;">
                   <div class="col-md-5 text-left">
                     <strong>Pax</strong>
