@@ -450,8 +450,8 @@ class VouchersController extends Controller
 			
 			$record->booking_date = date("Y-m-d");
 			$record->guest_name = $data['fname'].' '.$data['lname'];
-			$record->guest_email = $data['guest_email'];
-			$record->guest_phone = $data['guest_phone'];
+			$record->guest_email = $data['customer_email'];
+			$record->guest_phone = $data['customer_mobile'];
 			$record->guest_name = $data['fname'].' '.$data['lname'];
 			$record->agent_ref_no = $data['agent_ref_no'];
 			$record->remark = $data['remark'];

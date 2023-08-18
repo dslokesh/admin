@@ -13,6 +13,10 @@ body
 {
   font-size: 10pt;
 }
+body p
+{
+  font-size: 8pt;
+}
 .col-6 {
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
@@ -22,18 +26,18 @@ body
 </head>
   <body  style=" width:100%; height:100%;">
   @foreach($tickets as $ticket)
-
+  <div style = "display:block; clear:both; page-break-after:always;"></div>
   <div class="width:100%; padding: 10px 0px;">
-            <div style="width: 30%;float: left;">
+            <div style="width: 35%;float: left;">
                 @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->brand_logo)) && !empty($voucherActivity->activity->brand_logo))
-                  <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo)}}" style="max-width: 200px; display: block !important; width: 200px; height: 150px;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+                  <img src="{{asset('uploads/activities/thumb/'.$voucherActivity->activity->brand_logo)}}" style="max-height: 150px;max-width: 150px; display: block !important; height: auto; width: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
                   @else
                   {{-- Code to show a placeholder or alternate image --}}
                   <img src="{{ asset('uploads/activities/thumb/no-image.png') }}" style="max-width: 200px;width: 200px;height: 150px" alt="no-image">
                   @endif
             </div>
-            <div style="width: 60%;float: right;padding: 5px;">
-               <h3>This your E-Ticket.</h3>
+            <div style="width: 55%;float: right;margin-top: 15px;;padding:15px 10px 0px 10px;text-align: right;">
+               <h3 style="margin:0px;">This your E-Ticket.</h3>
                <p>This ticket is non refundable , non transferable and Void if altered.</p>
             </div>
              
@@ -42,57 +46,65 @@ body
       <div style="width: 100%;margin-top: 10px;">
           
           <div style="width:100%; padding: 10px 0px;">
-             <div style="width: 70%;float: left;background-color: #A3B6C6;text-align:center;">
-                            <table class="table table-condensed table-striped" cellspacing="0" cellpadding="3px">
+             <div style="width: 70%;float: left;background-color: #e4f2fd;text-align:center;border-radius:5px;">
+                            <table class="table table-condensed table-striped" cellspacing="0" cellpadding="4px">
                                 <thead>
 								 <tr >
-                                    <th style="text-align: left;width:200px">
+                                    <td style="text-align: left;width:200px">
                                       Tour Name
-                                    </th>
-                                    <th style="text-align: left;width:60%">
+                                    </td>
+                                    <td style="text-align: left;width:60%">
 									: {{ $voucherActivity->variant_name }}
-                                    </th>
+                                    </td>
                                    </tr>
                                   <tr >
-                                    <th style="text-align: left;width:200px">
+                                    <td style="text-align: left;width:200px">
                                       Guest Name
-                                    </th>
-                                   <th style="text-align: left;width:60%">
+                                    </td>
+                                   <td style="text-align: left;width:60%">
 									: {{(empty($voucher->guest_name))?$voucher->agent->name:$voucher->guest_name}}
-                                    </th>
+                                    </td>
                                    </tr>
+                                   <tr >
+                   <td style="text-align: left;width:200px">
+                                       Ticket Type
+                                    </td>
+                                    <td style="text-align: left;width:60%">
+                                    : {{$ticket->ticket_for}} 
+                                    </td>
+									 </tr>
 								   
 								   <tr >
-									<th style="text-align: left;width:200px">
+									<td style="text-align: left;width:200px">
                                        Travel Date
-                                    </th>
-                                    <th style="text-align: left;width:60%">
+                                    </td>
+                                    <td style="text-align: left;width:60%">
 									: {{ $voucherActivity->tour_date ? date(config('app.date_format'),strtotime($voucherActivity->tour_date)) : null }}
-                                    </th>
+                                    </td>
                                    </tr>
 									  <tr >
-                   <th style="text-align: left;width:200px">
+                   <td style="text-align: left;width:200px">
                                        Timings
-                                    </th>
-                                    <th style="text-align: left;width:60%">
+                                    </td>
+                                    <td style="text-align: left;width:60%">
                                     
-                                    </th>
+                                    </td>
 									 </tr>
 									  <tr >
-                    <th style="text-align: left;width:200px">
+                    <td style="text-align: left;width:200px">
                                        Validity
-                                    </th>
-                                    <th style="text-align: left;width:60%">
+                                    </td>
+                                    <td style="text-align: left;width:60%">
                                      : {{ $ticket->valid_till ? date(config('app.date_format'),strtotime($ticket->valid_till)) : null }}
-                                    </th>
+                                    </td>
 									 </tr>
 								   <tr>
-								<th style="text-align: left;width:200px">
-                                      Confirmation Id 
-                                    </th>
-                                    <th style="text-align: left;width:60%">
+								<td style="text-align: left;width:200px">
+                                      Confirmation ID 
+                                    </td>
+                                    <td style="text-align: left;width:60%">
                                     : {{ $voucher->code}}
-                                    </th>
+                                    </td>
 									 </tr>
                                 </thead>
                                
@@ -101,23 +113,25 @@ body
                     </tr>
                   </table>
              </div>
-             <div style="width: 28%;float: right;text-align: center;">
-<img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|1&chl={{$ticket->ticket_no}}" width="150" style="max-width: 150px; display: block !important; width: 150px; height: 150px;margin: 0px auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
-				
+             <div style="width: 28%;float: right;text-align: center;margin-top: 15px;">
+<img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|0&chl={{$ticket->ticket_no}}" width="120" style="max-width: 120px; display: block !important; width: 120px; height: 120px;margin: 0px auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
+{{$ticket->ticket_no}} 
              </div>
           </div>
       </div>
       <div style="clear:both; width: 100%;height: 10px;border-bottom: 2px #000 solid;">&nbsp;</div>
-      <div style="width: 100%;margin-top:10px;text-align:justify;">
+      <div style="width: 98%;margin-top:10px;text-align:justify;" style="">
       @if(file_exists(public_path('uploads/activities/'.$voucherActivity->activity->image)) && !empty($voucherActivity->activity->image))
-            <img src="{{asset('uploads/activities/'.$voucherActivity->activity->image)}}"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto" style="max-width: 100%;width: 100%;height: auto;max-height: 250px;">
+            <img src="{{asset('uploads/activities/'.$voucherActivity->activity->image)}}"  alt="logo-top" border="0" hspace="0" vspace="0" height="auto" style="max-width: 100%;width: 100%;height: auto;max-height: 250px;border-radius:5px;">
            
             @endif   
-      <h3>Terms And Conditions</h3>
-						<p style="font-size: 9px;">{!! $ticket->terms_and_conditions !!}</p>
+      <h3>General Rules and Regulations</h3>
+						<p style="font-size: 9px!important;">{!! $ticket->terms_and_conditions !!}</p>
           
               
       </div>
+     
+
       @endforeach
      
     </body>
