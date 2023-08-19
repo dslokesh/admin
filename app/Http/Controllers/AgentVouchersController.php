@@ -583,11 +583,11 @@ class AgentVouchersController extends Controller
         $hotels = Hotel::where('zone_id', $zone)
 					->where('status', 1)
 					->where('name', 'LIKE', '%'. $search. '%')
-					->get();
+					->paginate(10);
 		}else{
 			$hotels = Hotel::where('status', 1)
 					->where('name', 'LIKE', '%'. $search. '%')
-					->get();
+					->paginate(10);
 		}
 		$response = array();
 		
