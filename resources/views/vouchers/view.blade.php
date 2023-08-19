@@ -978,7 +978,7 @@ $('#cusDetails').validate({});
                 dataType: "json",
                 data: {
                     search: request.term,
-                    zone: inputElement.attr('data-zone')
+                    //zone: inputElement.attr('data-zone')
                 },
                 success: function(data) {
                     response(data);
@@ -1008,7 +1008,7 @@ $('#cusDetails').validate({});
                 dataType: "json",
                 data: {
                     search: request.term,
-                    zone: inputElement.attr('data-zone')
+                    //zone: inputElement.attr('data-zone')
                 },
                 success: function(data) {
                     response(data);

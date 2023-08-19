@@ -781,7 +781,7 @@ $('#cusDetails').validate({});
                 dataType: "json",
                 data: {
                     search: request.term,
-                    zone: inputElement.attr('data-zone')
+                    //zone: inputElement.attr('data-zone')
                 },
                 success: function(data) {
                     response(data);
@@ -811,7 +811,7 @@ $(".autodropoff_location").each(function() {
                 dataType: "json",
                 data: {
                     search: request.term,
-                    zone: inputElement.attr('data-zone')
+                    //zone: inputElement.attr('data-zone')
                 },
                 success: function(data) {
                     response(data);
