@@ -251,7 +251,13 @@ $(document).on('click', '.loadvari', function(evt) {
             $("body #pdivvar"+actid).css('display','block');
             $("body #loader-overlay").hide();
 			// Onload change price 
+			var pvttr =  $("body #transfer_option0").find(':selected').val();
 			$("body #adult0").trigger("change");
+			if(pvttr == 'Pvt Transfer'){
+				setTimeout(function() {
+				$("body .t_option#transfer_option0").trigger("change");
+				}, 1000);
+			}
             }
           });
 });

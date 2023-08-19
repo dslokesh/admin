@@ -187,26 +187,60 @@ class SiteHelpers
 	
 	public function getActivityLowPrice($activity_id,$agent_id)
     {
+		$minPrice = 0;
+		$zonePrice = 0;
+		$transferPrice = 0;
 		$ap = ActivityPrices::where('activity_id', $activity_id)->orderBy('adult_rate_without_vat', 'asc')->first();
-		$activity = Activity::where('id', $activity_id)->select('entry_type','sic_TFRS','pvt_TFRS')->first();
+		$activity = Activity::where('id', $activity_id)->select('entry_type','sic_TFRS','pvt_TFRS','zones','transfer_plan')->first();
 		if(isset($ap->variant_code)){
 		$markup = self::getAgentMarkup($agent_id,$activity_id, $ap->variant_code);
 		}else{
 			$markup['ticket_only'] = 0;
+			$markup['sic_transfer'] = 0;
+			$markup['pvt_transfer'] = 0;
 		}
-		$adult_rate = ActivityPrices::where('activity_id', $activity_id)->orderBy('adult_rate_without_vat', 'asc')->value('adult_rate_without_vat');
-		if($adult_rate == '0'){
-			if($activity->sic_TFRS==1){
-				return $adult_rate + $markup['sic_transfer'];
-			}
-			elseif($activity->pvt_TFRS==1){
-				return $adult_rate + $markup['pvt_transfer'];
-			}
-		} else {
-		return $adult_rate + $markup['ticket_only'];	
-		}
-
 		
+		
+		$adult_rate = $ap->adult_rate_without_vat;
+			if($activity->sic_TFRS==1){
+				
+				 $actZone = self::getZone($activity->zones,$activity->sic_TFRS);
+				 if(!empty($actZone))
+				 {
+					 $zonePrice = $actZone[0]['zoneValue'];
+				 }
+			}
+			if($activity->pvt_TFRS==1){
+					$td = TransferData::where('transfer_id', $activity->transfer_plan)->where('qty', 1)->first();
+					if(!empty($td))
+					{
+					$transferPrice = $td->price;
+					}
+			}
+			
+		if($adult_rate > '0'){
+			if($activity->entry_type=='Ticket Only'){
+				$minPrice = $adult_rate + $markup['ticket_only'];
+			} else {
+			if($activity->sic_TFRS==1){
+				$minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
+			}elseif($activity->pvt_TFRS==1){
+				 $minPrice = $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+			}
+			}
+			
+		} else {
+			if($activity->sic_TFRS==1){
+				$minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
+				
+			}elseif($activity->pvt_TFRS==1){
+				 $minPrice = $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+			}
+			
+
+		}
+		
+		return  $minPrice;
     }
 	
 	public function hotelRoomsDetails($data)
