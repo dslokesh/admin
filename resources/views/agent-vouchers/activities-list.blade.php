@@ -23,21 +23,15 @@
     <section class="content">
         
     <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-
-              
-            
+       
               <!-- /.card-header -->
               <div class="row">
            
-              <div class="offset-md-1 col-md-10">
-              <div class="col-md-12">
-          <div class="col-md-12">
+             
           <div class="col-md-12">
               <div class="card card-default">
               <!-- form start -->
-              <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
+               <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
                 <div class="card-body">
                   <div class="row">
                       <div class="col-md-12">
@@ -50,7 +44,7 @@
                       <div class="col-md-8">
                       <div class="input-group mb-2">
                           <button class="btn btn-info mb-2" type="submit">   <i class="fas fa-search"></i> Search</button>
-                          <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
+                           <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
                       </div>
                       </div>
                   </div>
@@ -58,25 +52,26 @@
                 <!-- /.card-body -->
                 </form>
                 </div>
-                </div>
-                </div>
+               
                 </div>
 
-        <div class="col-md-12">
+       
         <div class="col-md-12">
         
-        <div class="offset-md-9 col-md-3 text-right">
-        @if($voucherActivityCount > 0)
-              <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-lg btn-success pull-right">
+        <div class="offset-md-7 col-md-5 text-right">
+          @if($voucherActivityCount > 0)
+              <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-lg btn-success btn-sm pull-right">
             <i class="fas fa-shopping-cart"></i>
             Checkout({{$voucherActivityCount}})
         </a>
         @endif
+
         </div> 
+        
         </div>
-        </div>
-      
-             <div class="card-body">
+		 </div>
+       <div class="row">
+             <div class="card-body @if($voucherActivityCount > 0) col-md-8 @else col-md-12 @endif">
              
                   @foreach ($records as $record)
 				  @php
@@ -92,12 +87,12 @@
             <div class="col-md-6">
               <h2 class="card-title" style="color: #000"><strong>{{$record->title}}</strong></h2>
               <br/> <br/>
-              <ul class="list-unstyled">
+              <ul class="list-unstyled" style="margin-top: 70px;">
                 <li>
                   <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle"></i> Instant Confirmation</a>
                 </li>
                 <li>
-                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle "></i> Free Cancellation 24 hrs. Piror </a>
+                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle "></i> Free Cancellation 24 hrs. Prior </a>
                 </li>
                
                 
@@ -140,16 +135,87 @@
                  
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
 </div>
-</div>
+ @if(!empty($voucherActivity) && $voucher->is_activity == 1)
+<div class="col-md-4  mt-4 card card-body " >
+				
+			 
+					@if(!empty($voucherActivity))
+					  @foreach($voucherActivity as $ap)
+				  @php
+					$activity = SiteHelpers::getActivity($ap->activity_id);
+					@endphp
+            <div class="card">
+			
+              <div class="card-header">
+                <div class="row">
+				<div class="col-md-8 text-left">
+                    <h3 class="card-title">
+                      <strong> {{$activity->title}}</strong></h3>
+                  </div>
+				<div class="col-md-4 text-right">
+                    <form id="delete-form-{{$ap->id}}" method="post" action="{{route('agent.voucher.activity.delete',$ap->id)}}" style="display:none;">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                            </form>
+                            <a class="btn-danger btn-sm" title="delete" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to delete this?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('delete-form-{{$ap->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            "><i class="fas fa-times"></i></a>
+                    
+                  </div>
+				   </div>
+              </div>
+              <div class="card-body" >
+			 
+                <div class="row" >
+				  <div class="col-md-3">
+              <img src="{{asset('uploads/activities/'.$activity->image)}}" class="img-fluid" style="width: 75px;height:90px" />
+            </div>
+			<div class="col-md-9">
+              <ul class="list-unstyled" style="font-size:14px">
+                <li>
+                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle"></i> {{$ap->variant_name}}</a>
+                </li>
+				<li>
+                  <a href="#" class="btn-link text-secondary"><i class="fas fa-exchange-alt"></i> {{$ap->transfer_option}}</a>
+                </li>
+                <li>
+                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-calendar "></i>  {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}</a>
+                </li>
+                <li>
+                  <a href="#" class="btn-link text-secondary"><i class="fas fa-male" title="Adult"></i>  {{$ap->adult}}<i class="fas fa-child" title="Child"></i>  {{$ap->child}}</a>
+                </li>
+                <li class="float-right">
+                  <a href="#" class="btn-link text-secondary"><h2 class="card-title text-right" style="color: #000"><strong>AED {{$ap->totalprice}}</strong></h2></a>
+                </li>
+              </ul>
+			   
+            </div>
+			
+                </div>
+              
               </div>
               <!-- /.card-body -->
             </div>
+				 @endforeach
+                 @endif
+				 
+</div> @endif
+</div>
+
+           
+              <!-- /.card-body -->
+            </div>
             <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
+         
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -184,6 +250,8 @@ $(document).on('click', '.loadvari', function(evt) {
 			      $("body #var_data_div"+actid).html(data.html);
             $("body #pdivvar"+actid).css('display','block');
             $("body #loader-overlay").hide();
+			// Onload change price 
+			$("body #adult0").trigger("change");
             }
           });
 });
@@ -332,6 +400,7 @@ $(document).on('click', '.loadvari', function(evt) {
      $("body #child"+inputnumber).prop('disabled',false);
      $("body #infant"+inputnumber).prop('disabled',false);
      $("body #discount"+inputnumber).prop('disabled',false);
+	 $("body #adult"+inputnumber).trigger("change");
      } else {
        $("body #transfer_option"+inputnumber).prop('required',false);
      $("body #tour_date"+inputnumber).prop('required',false);
@@ -342,6 +411,8 @@ $(document).on('click', '.loadvari', function(evt) {
      $("body #child"+inputnumber).prop('disabled',true);
      $("body #infant"+inputnumber).prop('disabled',true);
      $("body #discount"+inputnumber).prop('disabled',true);
+	 $("body #totalprice"+inputnumber).val(0);
+     $("body #price"+inputnumber).text(0);
      }
  });
  

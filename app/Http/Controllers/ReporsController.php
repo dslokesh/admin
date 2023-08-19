@@ -301,7 +301,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$voucherStatus = config("constants.voucherStatus");
 		
 		$s = 0;
-		$query = AgentAmount::where('is_vat_invoice','=', '1');
+		$query = AgentAmount::where('id','!=', null);
 		if(Auth::user()->role_id == '3')
 		{
 			$query->where('agent_id', '=', Auth::user()->id);

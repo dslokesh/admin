@@ -421,8 +421,9 @@ class AgentVouchersController extends Controller
 		//dd($records);
 		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
-		
-        return view('agent-vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount'));
+		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->get();
+        return view('agent-vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount','voucherActivity'));
 		
        
     }
@@ -612,17 +613,7 @@ class AgentVouchersController extends Controller
 			return redirect()->back()->with('error', 'Please add activity this booking.');
 	   }
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
-		/* $customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
-		if(empty($customer))
-		{
-			$customer = new Customer();
-			$customer->name = $data['fname'].' '.$data['lname'];
-			$customer->mobile = $request->input('customer_mobile');
-			$customer->email = $request->input('customer_email');
-			$customer->save();
-		}
 		
-		$record->customer_id = $customer->id; */
 
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
@@ -631,8 +622,8 @@ class AgentVouchersController extends Controller
 			
 			
 			$agentAmountBalance = $agent->agent_amount_balance;
-			
-			if($agentAmountBalance >= $record->total_activity_amount)
+			$total_activity_amount = $record->voucheractivity->sum('totalprice');
+			if($agentAmountBalance >= $total_activity_amount)
 			{
 			
 			if($record->vat_invoice == 1)
@@ -653,12 +644,12 @@ class AgentVouchersController extends Controller
 			$record->status_main = 5;
 			$record->payment_date = $paymentDate;
 			$record->save();
-			$agent->agent_amount_balance -= $record->total_activity_amount;
+			$agent->agent_amount_balance -= $total_activity_amount;
 			$agent->save();
 			
 			$agentAmount = new AgentAmount();
 			$agentAmount->agent_id = $record->agent_id;
-			$agentAmount->amount = $record->total_activity_amount;
+			$agentAmount->amount = $total_activity_amount;
 			$agentAmount->date_of_receipt = date("Y-m-d");
 			$agentAmount->transaction_type = "Debit";
 			$agentAmount->transaction_from = 2;

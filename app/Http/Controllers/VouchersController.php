@@ -408,6 +408,7 @@ class VouchersController extends Controller
 		$data = $request->all();
 		
 		$record = Voucher::where('id',$id)->first();
+		
 		if (empty($record)) {
             return abort(404); //record not found
         }
@@ -418,27 +419,17 @@ class VouchersController extends Controller
 	   }
 	   
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
-		//$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
-		/* if(empty($customer))
-		{
-			$customer = new Customer();
-			$customer->name = $data['fname'].' '.$data['lname'];
-			$customer->mobile = $request->input('customer_mobile');
-			$customer->email = $request->input('customer_email');
-			$customer->save();
-		} */
 		
-		//$record->customer_id = $customer->id;
 		
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
 		if(!empty($agent))
 		{
 			
-			
+			$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->get();
 			$agentAmountBalance = $agent->agent_amount_balance;
-			
-			if($agentAmountBalance >= $record->total_activity_amount)
+			$total_activity_amount = $record->voucheractivity->sum('totalprice');
+			if($agentAmountBalance >= $total_activity_amount)
 			{
 			
 			if($record->vat_invoice == 1)
@@ -460,12 +451,12 @@ class VouchersController extends Controller
 			$record->status_main = 5;
 			$record->payment_date = $paymentDate;
 			$record->save();
-			$agent->agent_amount_balance -= $record->total_activity_amount;
+			$agent->agent_amount_balance -= $total_activity_amount;
 			$agent->save();
 			
 			$agentAmount = new AgentAmount();
 			$agentAmount->agent_id = $record->agent_id;
-			$agentAmount->amount = $record->total_activity_amount;
+			$agentAmount->amount = $total_activity_amount;
 			$agentAmount->date_of_receipt = date("Y-m-d");
 			$agentAmount->transaction_type = "Debit";
 			$agentAmount->transaction_from = 2;
@@ -794,8 +785,11 @@ class VouchersController extends Controller
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		//dd($records);
 		
+		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->get();
+		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
-        return view('vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount'));
+        return view('vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount','voucherHotel','voucherActivity'));
 		
        
     }

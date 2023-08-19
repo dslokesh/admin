@@ -47,5 +47,10 @@ class Voucher extends Model
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
+	
+	function voucheractivity() {
+
+    return $this->hasMany(VoucherActivity::class);
+}
    
 }
