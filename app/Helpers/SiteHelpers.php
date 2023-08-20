@@ -185,19 +185,33 @@ class SiteHelpers
 		 return $color;
 	}
 	
-	public function getActivityLowPrice($activity_id,$agent_id)
+	public function getActivityLowPrice($activity_id,$agent_id,$vat_invoice)
     {
 		$minPrice = 0;
 		$zonePrice = 0;
 		$transferPrice = 0;
+		$vatPrice = 0;
 		
+		$activity = Activity::where('id', $activity_id)->select('entry_type','sic_TFRS','pvt_TFRS','zones','transfer_plan','vat')->first();
+		$avat = 0;
+		if($activity->vat > 0){
+		$avat = $activity->vat;	
+		}
+		if($vat_invoice == 1){
 	$ap = ActivityPrices::where('activity_id', $activity_id)
     ->orderByRaw('CAST(adult_rate_without_vat AS DECIMAL(10, 2))')
     ->select('adult_rate_without_vat', 'variant_code')
     ->first();
+	$adult_rate = $ap->adult_rate_without_vat;
 	
 	
-		$activity = Activity::where('id', $activity_id)->select('entry_type','sic_TFRS','pvt_TFRS','zones','transfer_plan')->first();
+	} else {
+		$ap = ActivityPrices::where('activity_id', $activity_id)
+    ->orderByRaw('CAST(adult_rate_with_vat AS DECIMAL(10, 2))')
+    ->select('adult_rate_with_vat', 'variant_code')
+    ->first();
+	$adult_rate = $ap->adult_rate_with_vat;
+	}
 		if(isset($ap->variant_code)){
 		$markup = self::getAgentMarkup($agent_id,$activity_id, $ap->variant_code);
 		}else{
@@ -207,7 +221,7 @@ class SiteHelpers
 		}
 		
 		
-		 $adult_rate = $ap->adult_rate_without_vat;
+		 
 			if($activity->sic_TFRS==1){
 				
 				 $actZone = self::getZone($activity->zones,$activity->sic_TFRS);
@@ -229,24 +243,28 @@ class SiteHelpers
 				$minPrice = $adult_rate + $markup['ticket_only'];
 			} else {
 			if($activity->sic_TFRS==1){
-				$minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
+				$minPrice =  $adult_rate + $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
 			}elseif($activity->pvt_TFRS==1){
-				  $minPrice = $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+				  $minPrice = $adult_rate + $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
 			}
 			}
 			
 		} else {
 			if($activity->sic_TFRS==1){
-				 $minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
+				 $minPrice =  $adult_rate + $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
 				
 			}elseif($activity->pvt_TFRS==1){
-				  $minPrice = $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+				  $minPrice = $adult_rate + $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
 			}
 			
 
 		}
+		if($vat_invoice == 1){
+		$vatPrice = (($avat/100) * $minPrice);
+		}
 		
-		return $minPrice;
+		$total = $minPrice+$vatPrice;
+		return number_format($total, 2, '.', "");
     }
 	
 	public function hotelRoomsDetails($data)

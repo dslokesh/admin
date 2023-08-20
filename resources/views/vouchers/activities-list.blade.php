@@ -81,7 +81,7 @@
              
                   @foreach ($records as $record)
 				  @php
-            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id);
+            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher->vat_invoice);
           @endphp
                    <!-- Default box -->
       <div class="card collapsed-card">
