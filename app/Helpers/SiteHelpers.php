@@ -190,7 +190,13 @@ class SiteHelpers
 		$minPrice = 0;
 		$zonePrice = 0;
 		$transferPrice = 0;
-		$ap = ActivityPrices::where('activity_id', $activity_id)->orderBy('adult_rate_without_vat', 'asc')->first();
+		
+	$ap = ActivityPrices::where('activity_id', $activity_id)
+    ->orderByRaw('CAST(adult_rate_without_vat AS DECIMAL(10, 2))')
+    ->select('adult_rate_without_vat', 'variant_code')
+    ->first();
+	
+	
 		$activity = Activity::where('id', $activity_id)->select('entry_type','sic_TFRS','pvt_TFRS','zones','transfer_plan')->first();
 		if(isset($ap->variant_code)){
 		$markup = self::getAgentMarkup($agent_id,$activity_id, $ap->variant_code);
@@ -201,20 +207,20 @@ class SiteHelpers
 		}
 		
 		
-		$adult_rate = $ap->adult_rate_without_vat;
+		 $adult_rate = $ap->adult_rate_without_vat;
 			if($activity->sic_TFRS==1){
 				
 				 $actZone = self::getZone($activity->zones,$activity->sic_TFRS);
 				 if(!empty($actZone))
 				 {
-					 $zonePrice = $actZone[0]['zoneValue'];
+					  $zonePrice = $actZone[0]['zoneValue'];
 				 }
 			}
 			if($activity->pvt_TFRS==1){
 					$td = TransferData::where('transfer_id', $activity->transfer_plan)->where('qty', 1)->first();
 					if(!empty($td))
 					{
-					$transferPrice = $td->price;
+					 $transferPrice = $td->price;
 					}
 			}
 			
@@ -225,22 +231,22 @@ class SiteHelpers
 			if($activity->sic_TFRS==1){
 				$minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
 			}elseif($activity->pvt_TFRS==1){
-				 $minPrice = $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+				  $minPrice = $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
 			}
 			}
 			
 		} else {
 			if($activity->sic_TFRS==1){
-				$minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
+				 $minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
 				
 			}elseif($activity->pvt_TFRS==1){
-				 $minPrice = $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+				  $minPrice = $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
 			}
 			
 
 		}
 		
-		return  $minPrice;
+		return $minPrice;
     }
 	
 	public function hotelRoomsDetails($data)
