@@ -812,11 +812,13 @@ class VouchersController extends Controller
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
 		
-			$activityPrices = ActivityPrices::where('activity_id', $data['act'])
+		/* $activityPrices = ActivityPrices::where('activity_id', $data['act'])
 			->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')
 			->orderByRaw('CAST(adult_rate_without_vat AS DECIMAL(10, 2))')
-			->get();
-	
+			->get(); */
+			
+		
+	$activityPrices = ActivityPrices::where('activity_id', $data['act'])->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')->get();
 		
 		$typeActivities = config("constants.typeActivities"); 
 		$returnHTML = view('vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'))->render();
