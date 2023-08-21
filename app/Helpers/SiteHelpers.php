@@ -185,12 +185,16 @@ class SiteHelpers
 		 return $color;
 	}
 	
-	public function getActivityLowPrice($activity_id,$agent_id,$vat_invoice)
+	public function getActivityLowPrice($activity_id,$agent_id,$voucher)
     {
 		$minPrice = 0;
 		$zonePrice = 0;
 		$transferPrice = 0;
 		$vatPrice = 0;
+		$adult_rate = 0;
+		$vat_invoice = $voucher->vat_invoice;
+		$startDate = $voucher->travel_from_date;
+		$endDate = $voucher->travel_to_date;
 		
 		$activity = Activity::where('id', $activity_id)->select('entry_type','sic_TFRS','pvt_TFRS','zones','transfer_plan','vat')->first();
 		$avat = 0;
@@ -202,7 +206,9 @@ class SiteHelpers
     ->orderByRaw('CAST(adult_rate_without_vat AS DECIMAL(10, 2))')
     ->select('adult_rate_without_vat', 'variant_code')
     ->first();
+	if(isset($ap->variant_code)){
 	$adult_rate = $ap->adult_rate_without_vat;
+	}
 	
 	
 	} else {
@@ -210,7 +216,10 @@ class SiteHelpers
     ->orderByRaw('CAST(adult_rate_with_vat AS DECIMAL(10, 2))')
     ->select('adult_rate_with_vat', 'variant_code')
     ->first();
+	
+	if(isset($ap->adult_rate_with_vat)){
 	$adult_rate = $ap->adult_rate_with_vat;
+	}
 	}
 		if(isset($ap->variant_code)){
 		$markup = self::getAgentMarkup($agent_id,$activity_id, $ap->variant_code);

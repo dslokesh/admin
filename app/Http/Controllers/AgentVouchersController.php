@@ -411,14 +411,19 @@ class AgentVouchersController extends Controller
 			return redirect()->route('agentVoucherView',$voucher->id)->with('error', 'You can not add more activity. your voucher already vouchered.');
 		}
 		
+		$startDate = $voucher->travel_from_date;
+		$endDate = $voucher->travel_to_date;
         $query = Activity::with('prices')->where('status',1)->where('is_price',1);
 	
         if (isset($data['name']) && !empty($data['name'])) {
             $query->where('title', 'like', '%' . $data['name'] . '%');
         }
        
-        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
-		//dd($records);
+	 /*  $records = $query->whereHas('prices', function ($query) use($startDate,$endDate) {
+           $query->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0');
+       })->orderBy('created_at', 'DESC')->paginate($perPage); */
+	   
+       $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
 		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->get();
@@ -439,8 +444,11 @@ class AgentVouchersController extends Controller
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
 		
-			
-			$activityPrices = ActivityPrices::where('activity_id', $data['act'])->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')->get();
+		$activityPrices = ActivityPrices::where('activity_id', $data['act'])
+			->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')
+			->orderByRaw('CAST(adult_rate_without_vat AS DECIMAL(10, 2))')
+			->get();
+	
 
 		$typeActivities = config("constants.typeActivities"); 
 		$returnHTML = view('agent-vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'))->render();

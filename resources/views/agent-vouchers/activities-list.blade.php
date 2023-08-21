@@ -71,11 +71,11 @@
         </div>
 		 </div>
        <div class="row">
-             <div class="card-body @if($voucherActivityCount > 0) col-md-8 @else col-md-12 @endif">
+             <div class="card-body @if($voucherActivityCount > 0) col-md-8 @else offset-1 col-md-10 @endif">
              
                   @foreach ($records as $record)
 				  @php
-            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher->vat_invoice);
+            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher);
           @endphp
                    <!-- Default box -->
       <div class="card collapsed-card">

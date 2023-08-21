@@ -77,11 +77,11 @@
         </div>
 		 </div>
        <div class="row">
-             <div class="card-body col-md-8">
+             <div class="card-body @if($voucherActivityCount > 0) col-md-8 @else offset-1 col-md-10 @endif">
              
                   @foreach ($records as $record)
 				  @php
-            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher->vat_invoice);
+            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher);
           @endphp
                    <!-- Default box -->
       <div class="card collapsed-card">
@@ -141,9 +141,10 @@
                  
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
 </div>
+ @if(!empty($voucherActivity) && $voucher->is_activity == 1)
 <div class="col-md-4  mt-4 card card-body " >
 				
-			  @if(!empty($voucherActivity) && $voucher->is_activity == 1)
+			  
 					@if(!empty($voucherActivity))
 					  @foreach($voucherActivity as $ap)
 				  @php
@@ -212,8 +213,9 @@
             </div>
 				 @endforeach
                  @endif
-				  @endif
+				
 </div>
+  @endif
 </div>
 
            
