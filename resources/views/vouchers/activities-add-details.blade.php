@@ -1,6 +1,126 @@
 @extends('layouts.app')
 @section('content')
+<style>
 
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    text-align: left;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0.75rem;
+}
+table.rounded-corners {
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 10px;
+}
+
+table.rounded-corners th, table.rounded-corners td {
+  /* border: 1px solid #dee2e6; */
+  padding: 5px;
+  vertical-align: middle;
+}
+table.rounded-corners {
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+}
+
+table.rounded-corners {
+ border-spacing: 0;
+ border-collapse: separate;
+ border-radius: 5px;
+ border: 1px solid #dee2e6;
+}
+
+/* Apply a border to the right of all but the last column */
+table.rounded-corners th:not(:last-child),
+table.rounded-corners td:not(:last-child) {
+ /* border-right: 1px solid #dee2e6; */
+}
+
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners>thead>tr:not(:last-child)>th,
+table.rounded-corners>thead>tr:not(:last-child)>td,
+table.rounded-corners>tbody>tr:not(:last-child)>th,
+table.rounded-corners>tbody>tr:not(:last-child)>td,
+table.rounded-corners>tfoot>tr:not(:last-child)>th,
+table.rounded-corners>tfoot>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>th,
+table.rounded-corners>thead:not(:last-child),
+table.rounded-corners>tbody:not(:last-child),
+table.rounded-corners>tfoot:not(:last-child) {
+ border-bottom: 1px solid #dee2e6;
+}
+
+table.rounded-corners th {
+  background-color: #ddd;
+}
+
+table.rounded-corners {
+ /* Change these properties */
+ --border: 1px solid #dee2e6;
+ border-radius: 5px;
+ 
+
+ /* Don't change these properties */
+ border-spacing: 0;
+ border-collapse: separate;
+ border: var(--border);
+ overflow: hidden;
+}
+
+/* Apply a border to the right of all but the last column */
+table.rounded-corners th:not(:last-child),
+table.rounded-corners td:not(:last-child) {
+ /* border-right: var(--border); */
+}
+
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners>thead>tr:not(:last-child)>th,
+table.rounded-corners>thead>tr:not(:last-child)>td,
+table.rounded-corners>tbody>tr:not(:last-child)>th,
+table.rounded-corners>tbody>tr:not(:last-child)>td,
+table.rounded-corners>tfoot>tr:not(:last-child)>th,
+table.rounded-corners>tfoot>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>th,
+table.rounded-corners>thead:not(:last-child),
+table.rounded-corners>tbody:not(:last-child),
+table.rounded-corners>tfoot:not(:last-child) {
+ border-bottom: var(--border);
+}
+table.rounded-corners tbody tr:hover {
+  background-color: #eeeeee;
+}
+.card-body-hover:hover
+{
+  background-color: #eeeeee;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}
+</style>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -34,7 +154,7 @@
 			
 			 <div class="row">
 			
-				  <div class="form-group col-md-3" style="border:1px solid #17a2b8; padding:55px;height:351px;margin-left:80px;;margin-right:50px;">
+				  <div class="form-group col-md-3" style="">
                  @if(!empty($activity->image))
                
                   <img src="{{asset('uploads/activities/thumb/'.$activity->image)}}"  class="cimage" />
@@ -57,44 +177,44 @@
                             @endif 
                             </div>
 				 </div>
-				  <div class="form-group col-md-3 " style="border:1px solid #17a2b8; padding:55px;height:351px;margin-left:80px;;margin-right:50px;">
-                 @if(!empty($activity->brand_logo))
-               
-                  <img src="{{asset('uploads/activities/thumb/'.$activity->brand_logo)}}"  class="cimage" />
-                
-				@endif
-              </div>
+				 
 			 </div>
 			 <hr class="col-xs-12">
 			  <div class="row">
-			   <div class="col-md-4">
+			   <div class="col-md-6" >
 				 <h3><i class="far fa-fw  fa-check-circle"></i> {{$activity->title}}</h3>
               </div>
-			   <div class="col-md-8 text-right">
+			   <div class="col-md-6 text-right">
 			   @php
             $minPrice = SiteHelpers::getActivityLowPrice($activity->id,$activity->agent_id,$voucher);
           @endphp
+		  <small>Starting From </small><br/>
 				 <h3>AED {{$minPrice}}</h3>
               </div>
 			  
 			  </div>
 			  <hr class="col-xs-12">
 			    <div class="row">
-			   <div class="col-md-2">
-				 <h5><i class="fas fa-fw fa-clock"></i> 2 Hours Approx</h5>
-              </div>
-			   <div class="col-md-4">
-			   <h5><i class="far fa-fw  fa-check-circle "></i> Mobile Voucher Accepted</h5>
-              </div>
-			  <div class="col-md-3">
-			   <h5><i class="far fa-fw  fa-check-circle"></i> Instant Confirmation </h5>
-              </div>
-			  <div class="col-md-3 text-right">
-			   <h5><i class="fas fa-exchange-alt"></i> Transfer Available </h5>
-              </div>
+					<div class="col-md-12">
+						<ul class="list-inline list-group list-group-horizontal">
+							<li style="padding-right: 10px;">
+							<i class="fas fa-fw fa-clock"></i> 2 Hours Approx
+							</li>
+							<li style="padding-right: 10px;">
+							<i class="far fa-fw  fa-check-circle "></i> Mobile Voucher Accepted
+							</li>
+							<li style="padding-right: 10px;">
+							<i class="far fa-fw  fa-check-circle"></i> Instant Confirmation 
+							</li>
+							<li style="padding-right: 10px;">
+							<i class="fas fa-exchange-alt"></i> Transfer Available 
+							</li>
+						</ul>
+					</div>
 			  </div>
 			 
-				
+			  <hr class="col-xs-12">
+
 				<form action="{{route('voucher.activity.save')}}" method="post" class="form" >
 				{{ csrf_field() }}
 				 <input type="hidden" id="activity_id" name="activity_id" value="{{ $aid }}"  />
@@ -102,17 +222,17 @@
 				 <input type="hidden" id="activity_vat" name="activity_vat" value="{{ ($activity->vat > 0)?$activity->vat:0 }}"  />
 				 <input type="hidden" id="vat_invoice" name="vat_invoice" value="{{ $voucher->vat_invoice }}"  />
 			
-				<div class="row p-2 mt-5">
+				<div class="row   mt-2" style="">
 				<div class="col-lg-12">
 				<h4>Tour Options</h4>
 				</div>
 				
 				  </div>
 				<div id="hDetailsDiv">
-				<div class="row p-2">
+				<div class="row p-2" >
 			 
 			  <div class="col-md-12">
-                <table class="table table-bordered">
+			  <table class="table rounded-corners" style="border-radius: 10px !important;font-size:10pt;">
                   <thead>
 				  @if(!empty($activityPrices))
 					  @foreach($activityPrices as $kk => $ap)
@@ -121,13 +241,13 @@
 					<th>Tour Option</th>
                     <th id="top">Transfer Option</th>
 					<th>Tour Date</th>
-					<th>Adult (Above {{$ap->chield_end_age}} Yrs)</th>
-                    <th>Child({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</th>
-                    <th>Infant (Below {{$ap->chield_start_age}} Yrs)</th>
+					<th>Adult</th>
+                    <th>Child<br/><small>({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</small></th>
+                    <th>Infant<br/><small>(Below {{$ap->chield_start_age}} Yrs)</small></th>
 					<th>Ticket Only</th>
 					<th>SIC Transfer</th>
 					<th>PVT Transfer</th>
-					<th>Net Discount</th>
+					<th>Net Disc</th>
 					<th>Total Amount</th>
                   </tr>
 				  @endif
@@ -138,11 +258,11 @@
 				 
 				  @endphp
 				   <tr>
-                    <th><input type="checkbox"  name="activity_select[{{ $ap->u_code }}]" id="activity_select{{$kk}}" value="{{ $aid }}" class="actcsk" data-inputnumber="{{$kk}}" /> {{$ap->variant_name}} - {{$ap->variant_code}}
+                    <td><input type="checkbox"  name="activity_select[{{ $ap->u_code }}]" id="activity_select{{$kk}}" value="{{ $aid }}" class="actcsk" data-inputnumber="{{$kk}}" /> <strong>{{$ap->variant_name}}</strong>
 					<input type="hidden"  name="variant_unique_code[{{ $ap->u_code }}]" id="variant_unique_code{{$kk}}" value="{{ $ap->u_code }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_name[{{ $ap->u_code }}]" id="variant_name{{$kk}}" value="{{ $ap->variant_name }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_code[{{ $ap->u_code }}]" id="variant_code{{$kk}}" value="{{ $ap->variant_code }}" data-inputnumber="{{$kk}}" /> 
-					</th>
+					</td>
 					<td> <select name="transfer_option[{{ $ap->u_code }}]" id="transfer_option{{$kk}}" class="form-control t_option" data-inputnumber="{{$kk}}" disabled="disabled">
 						<option value="">--Select--</option>
 						@if($activity->entry_type=='Ticket Only')
@@ -246,7 +366,7 @@
 						<input type="hidden" value="{{$ap->chield_rate_with_vat}}" id="childPrice{{$kk}}"  name="childPrice[{{ $ap->u_code }}]"    />
 						<input type="hidden" value="{{$ap->infant_rate_with_vat}}" id="infPrice{{$kk}}"  name="infPrice[{{ $ap->u_code }}]"    />
 						@endif
-						<span id="price{{$kk}}">0</span>
+						<span id="price{{$kk}}" style="font-weight:bold">0</span>
 						<input type="hidden" id="totalprice{{$kk}}" value="0"  name="totalprice[{{ $ap->u_code }}]"    />
 						
 					</td>
@@ -260,35 +380,52 @@
 			  <div class="row">
 
         <div class="col-12 mt-3">
-          <a href="{{ route('vouchers.index') }}" class="btn btn-secondary">Back To Vouchers</a>
-		  
-		   <a href="{{route('vouchers.show',$vid)}}" class="btn btn-secondary mr-2">View Vouchers</a>
-          <button type="submit" class="btn btn-primary float-right" name="save">Add To Cart</button>
-			<button type="submit" class="btn btn-success float-right mr-2" name="save_and_continue">Add To Cart & Add More Activity</button>
+         
+			<button type="submit" class="btn btn-success float-right mr-2" name="save_and_continue">Add To Cart</button>
         </div>
       </div>
 			 </form>
+		<div class="col-md-12">
 			  <div class="row mt-5">
+				
 				  <div class="form-group col-md-12">
+				  <hr class="col-xs-12">
                 <h4>Description</h4>
 				{!! $activity->description !!}
               </div>
-			   <div class="form-group col-md-12">
-               
+			   <div class="form-group col-md-12" >
+			   <hr class="col-xs-12">
 				<h4>Inclusion</h4>
 				{!! $activity->inclusion !!}
               </div>
 			   <div class="form-group col-md-12">
+			   <hr class="col-xs-12">
 			   <h4>Booking Policy</h4>
 				{!! $activity->booking_policy !!}
               </div>
-			   <div class="form-group col-md-12">
+			   <div class="form-group col-md-12" >
+			   <hr class="col-xs-12">
 			   <h4>Cancellation Policy</h4>
 				{!! $activity->cancellation_policy !!}
               </div>
               </div>
 			 
 			  </div>
+<div class="row mb-20" style="margin-bottom: 20px;">
+<hr class="col-xs-12">
+	<div class="col-md-2 mb-20">
+	<a href="{{route('voucher.add.activity',$vid)}}" class="btn btn-secondary mr-2">Back</a>
+	</div>
+	<div class="col-md-2 offset-8 mb-20 pull-right">
+		<a href="{{route('vouchers.show',$vid)}}" class="btn btn-primary mr-2">View Voucher</a>
+	</div>
+	
+
+</div>
+</div>	 	 
+		  
+		 
+		
           <!-- /.card-body --> 
         </div>
 		
@@ -366,7 +503,7 @@ $(document).on('change', '.priceChange', function(evt) {
 			if(grandTotalAfterDis > 0)
 			{
 			$("body #totalprice"+inputnumber).val(grandTotalAfterDis.toFixed(2));
-			$("body #price"+inputnumber).text(grandTotalAfterDis.toFixed(2));
+			$("body #price"+inputnumber).text("AED "+grandTotalAfterDis.toFixed(2));
 			}
 			else
 			{
@@ -415,7 +552,7 @@ $(document).on('change', '.priceChange', function(evt) {
 		if(grandTotalAfterDis > 0)
 			{
 			$("body #totalprice"+inputnumber).val(grandTotalAfterDis.toFixed(2));
-			$("body #price"+inputnumber).text(grandTotalAfterDis.toFixed(2));
+			$("body #price"+inputnumber).text("AED "+grandTotalAfterDis.toFixed(2));
 			}
 			else
 			{

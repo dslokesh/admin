@@ -1,4 +1,3 @@
-
 		@php
 		$tourDateArray = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out)
 		@endphp
@@ -10,38 +9,37 @@
 				 <input type="hidden" id="v_id" name="v_id" value="{{ $vid }}"  />
 				 <input type="hidden" id="activity_vat" name="activity_vat" value="{{ ($activity->vat > 0)?$activity->vat:0 }}"  />
 				 <input type="hidden" id="vat_invoice" name="vat_invoice" value="{{ $voucher->vat_invoice }}"  />
-			
-				 <table class="table table-stripped table-condensed  table-hover" style="border: solid 0.5px gray;border-radius: 25px !important;">
+					
+				 <table class="table rounded-corners" style="border-radius: 10px !important;font-size:10pt;">
                   <thead>
 				 
 				  @if(!empty($activityPrices))
 					  @foreach($activityPrices as $kk => $ap)
 				  @if($kk == 0)
                   <tr>
-					<th>Tour Option</th>
-                    <th id="top">Transfer Option</th>
-					<th>Tour Date</th>
-					<th>Adult (Above {{$ap->chield_end_age}} Yrs)</th>
-                    <th>Child({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</th>
-                    <th>Infant (Below {{$ap->chield_start_age}} Yrs)</th>
-				
-					<th>Net Discount</th>
-					<th>Total Amount</th>
+					<th valign="middle">Tour Option</th>
+                    <th id="top" valign="middle">Transfer Option</th>
+					<th valign="middle">Tour Date</th>
+					<th valign="middle">Adult</th>
+                    <th valign="middle">Child<br/><small>({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</small></th>
+                    <th valign="middle">Infant<br/><small>(Below {{$ap->chield_start_age}} Yrs)</small></th>
+					<th valign="middle">Net Disc</th>
+					<th valign="middle">Total Amount</th>
                   </tr>
-				 
+				  </thead>
 				  @endif
-				  
+				  <tbody>
 				  @php
 				  $markup = SiteHelpers::getAgentMarkup($voucher->agent_id,$ap->activity_id,$ap->variant_code);
 				  $actZone = SiteHelpers::getZone($activity->zones,$activity->sic_TFRS);
 				 
 				  @endphp
 				   <tr>
-                    <th><input type="checkbox"  name="activity_select[{{$ap->u_code}}]" id="activity_select{{$kk}}" value="{{ $aid }}" @if($kk == '0') checked @endif class="actcsk" data-inputnumber="{{$kk}}" /> {{$ap->variant_name}} - {{$ap->variant_code}}
+                    <td><input type="checkbox"  name="activity_select[{{$ap->u_code}}]" id="activity_select{{$kk}}" value="{{ $aid }}" @if($kk == '0') checked @endif class="actcsk" data-inputnumber="{{$kk}}" /> <strong>{{$ap->variant_name}} </strong>
 					<input type="hidden"  name="variant_unique_code[{{$ap->u_code}}]" id="variant_unique_code{{$kk}}" value="{{ $ap->u_code }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_name[{{$ap->u_code}}]" id="variant_name{{$kk}}" value="{{ $ap->variant_name }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_code[{{$ap->u_code}}]" id="variant_code{{$kk}}" value="{{ $ap->variant_code }}" data-inputnumber="{{$kk}}" /> 
-					</th>
+					</td>
 					<td> <select name="transfer_option[{{$ap->u_code}}]" id="transfer_option{{$kk}}" class="form-control t_option" data-inputnumber="{{$kk}}" @if($kk > '0') disabled="disabled" @endif >
 						@if($kk > '0')
 						<option value="">--Select--</option>
@@ -120,9 +118,9 @@
 					
 						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[{{$ap->u_code}}]"    />
 						<td>
-						<input type="text" id="discount{{$kk}}" value="0"  name="discount[{{$ap->u_code}}]" @if($kk > '0') disabled="disabled" @endif data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
+						<input type="text" id="discount{{$kk}}" style="width: 50px;" value="0"  name="discount[{{$ap->u_code}}]" @if($kk > '0') disabled="disabled" @endif data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
 						</td>
-						<td>
+						<td class="text-center" >
 						@php
 						$priceAd = ($ap->adult_rate_with_vat*$ap->adult_min_no_allowed);
 						$mar = (($priceAd * $markup['ticket_only'])/100);
@@ -151,14 +149,15 @@
 						@endif
 
 						
-						<span id="price{{$kk}}">0</span>
+						<span id="price{{$kk}}" style="font-weight:bold">0</span>
 						<input type="hidden" id="totalprice{{$kk}}" value="0"  name="totalprice[{{$ap->u_code}}]"    />
 						</td>
                   </tr>
 				  @endforeach
 				 @endif
+					</tbody>
 				  </table>
-             
+				  
 			  <div class="row">
 
         <div class="col-12 mt-3">

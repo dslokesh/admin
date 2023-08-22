@@ -12,7 +12,7 @@
 <link href="{{asset('dist/css/owl.carousel.min.css')}}" rel="stylesheet">
 	<link href="{{asset('dist/css/owl.theme.default.min.css')}}" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <!-- Site wrapper -->
 <div class="wrapper">
 <div id="loader-overlay">

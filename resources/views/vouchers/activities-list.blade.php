@@ -1,6 +1,129 @@
 @extends('layouts.app')
 @section('content')
+<style>
 
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    text-align: left;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0.75rem;
+}
+table.rounded-corners {
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 10px;
+}
+
+table.rounded-corners th, table.rounded-corners td {
+  /* border: 1px solid #dee2e6; */
+  padding: 5px;
+  vertical-align: middle;
+}
+table.rounded-corners {
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+}
+
+table.rounded-corners {
+ border-spacing: 0;
+ border-collapse: separate;
+ border-radius: 5px;
+ border: 1px solid #dee2e6;
+}
+
+/* Apply a border to the right of all but the last column */
+table.rounded-corners th:not(:last-child),
+table.rounded-corners td:not(:last-child) {
+ /* border-right: 1px solid #dee2e6; */
+}
+
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners>thead>tr:not(:last-child)>th,
+table.rounded-corners>thead>tr:not(:last-child)>td,
+table.rounded-corners>tbody>tr:not(:last-child)>th,
+table.rounded-corners>tbody>tr:not(:last-child)>td,
+table.rounded-corners>tfoot>tr:not(:last-child)>th,
+table.rounded-corners>tfoot>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>th,
+table.rounded-corners>thead:not(:last-child),
+table.rounded-corners>tbody:not(:last-child),
+table.rounded-corners>tfoot:not(:last-child) {
+ border-bottom: 1px solid #dee2e6;
+}
+
+table.rounded-corners th {
+  background-color: #ddd;
+}
+
+table.rounded-corners {
+ /* Change these properties */
+ --border: 1px solid #dee2e6;
+ border-radius: 5px;
+ 
+
+ /* Don't change these properties */
+ border-spacing: 0;
+ border-collapse: separate;
+ border: var(--border);
+ overflow: hidden;
+}
+
+/* Apply a border to the right of all but the last column */
+table.rounded-corners th:not(:last-child),
+table.rounded-corners td:not(:last-child) {
+ /* border-right: var(--border); */
+}
+
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners>thead>tr:not(:last-child)>th,
+table.rounded-corners>thead>tr:not(:last-child)>td,
+table.rounded-corners>tbody>tr:not(:last-child)>th,
+table.rounded-corners>tbody>tr:not(:last-child)>td,
+table.rounded-corners>tfoot>tr:not(:last-child)>th,
+table.rounded-corners>tfoot>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>th,
+table.rounded-corners>thead:not(:last-child),
+table.rounded-corners>tbody:not(:last-child),
+table.rounded-corners>tfoot:not(:last-child) {
+ border-bottom: var(--border);
+}
+table.rounded-corners tbody tr:hover {
+  background-color: #EEE;
+}
+.card-body-hover:hover
+{
+  background-color: #EEE;
+}
+.card-header{
+  border-bottom: none!important;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}
+</style>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -28,24 +151,42 @@
               <div class="row">
            
              
-          <div class="col-md-12">
+          <div class="col-md-10 offset-1">
               <div class="card card-default">
               <!-- form start -->
               <form id="filterForm" class="form-inline" method="get" action="{{ route('voucher.add.activity',$vid) }}" >
                 <div class="card-body">
                   <div class="row">
-                      <div class="col-md-12">
-                      <div class="input-group mb-2">
-                        <input type="text" name="name" value="{{ request('name') }}" class="form-control"  placeholder="Filter with Name" />
+                      <div class="col-md-4">
+                        <div class="input-group">
+                          <input type="text" name="name" value="{{ request('name') }}" class="form-control"  placeholder="Filter with Name" />
+                        </div>
                       </div>
+                      <div class="col-md-4">
+                        <div class="input-group ">
+                            <button class="btn btn-info" type="submit">   <i class="fas fa-search"></i> Search</button>
+                            <a class="btn btn-default  mx-sm-2" href="{{ route('voucher.add.activity',$vid) }}">Clear</a>
+                        </div>
                       </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-8">
-                      <div class="input-group mb-2">
-                          <button class="btn btn-info mb-2" type="submit">   <i class="fas fa-search"></i> Search</button>
-                          <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('voucher.add.activity',$vid) }}">Clear</a>
-                      </div>
+                      <div class="col-md-2 text-right">
+                          <div class="input-group  text-right float-right">
+                          @if($voucher->is_hotel == '1')
+                                <a href="{{ route('voucher.add.hotels',$voucher->id) }}" class="btn btn-md btn-secondary pull-right">
+                                  <i class="fas fa-hotel"></i>
+                                  Add Hotels
+                              </a>
+                              @endif
+                        </div>
+                        </div>
+                      <div class="col-md-2 text-right">
+                        <div class="input-group  text-right float-right">
+                            @if($voucherActivityCount > 0)
+                                  <a href="{{ route('vouchers.show',$voucher->id) }}" class="btn btn-md btn-success pull-right">
+                                <i class="fas fa-shopping-cart"></i>
+                                Checkout({{$voucherActivityCount}})
+                            </a>
+                            @endif
+                        </div>
                       </div>
                   </div>
                 </div>
@@ -56,36 +197,21 @@
                 </div>
 
        
-        <div class="col-md-12">
         
-        <div class="offset-md-7 col-md-5 text-right">
-          @if($voucher->is_hotel == '1')
-          <a href="{{ route('voucher.add.hotels',$voucher->id) }}" class="btn btn-lg btn-success btn-sm pull-left">
-            <i class="fas fa-hotel"></i>
-            Add Hotels
-        </a>
-        @endif
-        @if($voucherActivityCount > 0)
-              <a href="{{ route('vouchers.show',$voucher->id) }}" class="btn btn-lg btn-success btn-sm pull-right">
-            <i class="fas fa-shopping-cart"></i>
-            Checkout({{$voucherActivityCount}})
-        </a>
-        @endif
-
-        </div> 
-        
-        </div>
 		 </div>
+     <div class="col-md-10 offset-1">
+
+
        <div class="row">
-             <div class="card-body @if($voucherActivityCount > 0) col-md-8 @else offset-1 col-md-10 @endif">
+             <div class="card-body @if($voucherActivityCount > 0) col-md-9 @else offset-1 col-md-10 @endif">
              
                   @foreach ($records as $record)
 				  @php
             $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher);
           @endphp
                    <!-- Default box -->
-      <div class="card collapsed-card">
-        <div class="card-header">
+      <div class="card collapsed-card ">
+        <div class="card-header card-body-hover">
           <div class="row">
             <div class="col-md-3">
               <img src="{{asset('uploads/activities/'.$record->image)}}" class="img-fluid" style="width: 278px;height:173px" />
@@ -146,7 +272,7 @@
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
 </div>
  @if(!empty($voucherActivity) && $voucher->is_activity == 1)
-<div class="col-md-4  mt-4 card card-body " >
+ <div class="col-md-3  mt-2 " style="padding: 7px;" >
 				
 			  
 					@if(!empty($voucherActivity))
@@ -156,14 +282,10 @@
 					@endphp
             <div class="card">
 			
-              <div class="card-header">
-                <div class="row">
-				<div class="col-md-8 text-left">
-                    <h3 class="card-title">
-                      <strong> {{$activity->title}}</strong></h3>
-                  </div>
-				<div class="col-md-4 text-right">
-                    <form id="delete-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.delete',$ap->id)}}" style="display:none;">
+              
+              <div class="card-body card-body-hover" >
+              <div class="col-md-12 text-right">
+              <form id="delete-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.delete',$ap->id)}}" style="display:none;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
@@ -178,33 +300,31 @@
                                     event.preventDefault();
                                 }
                             
-                            "><i class="fas fa-times"></i></a>
-                    
-                  </div>
-				   </div>
-              </div>
-              <div class="card-body" >
-			 
+                            "><i class="fas fa-trash"></i></a>
+                  </div>  
                 <div class="row" >
-				  <div class="col-md-3">
-              <img src="{{asset('uploads/activities/'.$activity->image)}}" class="img-fluid" style="width: 75px;height:90px" />
+				  <div class="col-md-4" style="padding: 5px; ">
+              <img src="{{asset('uploads/activities/'.$activity->image)}}" class="img-fluid" style="border-radius: 5px;" />
             </div>
-			<div class="col-md-9">
-              <ul class="list-unstyled" style="font-size:14px">
+			<div class="col-md-8">
+              <ul class="list-unstyled" style="font-size:14px;color:#000;">
+              <li style="color:#000; font-weight:bold;">
+              {{$activity->title}}
+                </li>
                 <li>
-                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle"></i> {{$ap->variant_name}}</a>
+                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"> {{$ap->variant_name}}</a>
                 </li>
 				<li>
-                  <a href="#" class="btn-link text-secondary"><i class="fas fa-exchange-alt"></i> {{$ap->transfer_option}}</a>
+                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;">{{$ap->transfer_option}}</a>
                 </li>
                 <li>
-                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-calendar "></i>  {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}</a>
+                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"> {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}</a>
                 </li>
                 <li>
-                  <a href="#" class="btn-link text-secondary"><i class="fas fa-male" title="Adult"></i>  {{$ap->adult}}<i class="fas fa-child" title="Child"></i>  {{$ap->child}}</a>
+                  <a href="#" class="btn-link text-secondary" ><i class="fas fa-male" style="font-size:18px;" title="Adult"></i> <span style="color:#000 !important;">{{$ap->adult}}</span> <i class="fas fa-child" title="Child"></i>  <span style="color:#000 !important;">{{$ap->child}}</span> </a>
                 </li>
                 <li class="float-right">
-                  <a href="#" class="btn-link text-secondary"><h2 class="card-title text-right" style="color: #000"><strong>AED {{$ap->totalprice}}</strong></h2></a>
+                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"><h2 class="card-title text-right" style="color: #000"><strong>AED {{$ap->totalprice}}</strong></h2></a>
                 </li>
               </ul>
 			   
@@ -217,11 +337,20 @@
             </div>
 				 @endforeach
                  @endif
+
+                 <div class="input-group  text-right float-right">
+                            @if($voucherActivityCount > 0)
+                                  <a href="{{ route('vouchers.show',$voucher->id) }}" class="btn btn-md btn-success pull-right">
+                                <i class="fas fa-shopping-cart"></i>
+                                Checkout({{$voucherActivityCount}})
+                            </a>
+                            @endif
+                        </div>
 				
 </div>
   @endif
 </div>
-
+</div>
            
               <!-- /.card-body -->
             </div>
@@ -335,7 +464,7 @@ $(document).on('click', '.loadvari', function(evt) {
        if(grandTotalAfterDis > 0)
        {
        $("body #totalprice"+inputnumber).val(grandTotalAfterDis.toFixed(2));
-       $("body #price"+inputnumber).text(grandTotalAfterDis.toFixed(2));
+       $("body #price"+inputnumber).text("AED "+grandTotalAfterDis.toFixed(2));
        }
        else
        {
@@ -384,7 +513,7 @@ $(document).on('click', '.loadvari', function(evt) {
      if(grandTotalAfterDis > 0)
        {
        $("body #totalprice"+inputnumber).val(grandTotalAfterDis.toFixed(2));
-       $("body #price"+inputnumber).text(grandTotalAfterDis.toFixed(2));
+       $("body #price"+inputnumber).text("AED "+grandTotalAfterDis.toFixed(2));
        }
        else
        {

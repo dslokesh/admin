@@ -29,7 +29,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
       </div>
   </div>
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar sidebar-no-expand">
      
       <!-- Sidebar Menu -->
       <nav class="mt-2">
