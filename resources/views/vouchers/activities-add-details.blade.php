@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Voucher Code :{{$voucher->code}} , Activity : {{ $activity->title }} </h1>
+            <h1>Voucher Code :{{$voucher->code}}</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -32,58 +32,68 @@
 			
 			<div class="card-body">
 			
+			 <div class="row">
 			
-			<header class="profile-header">
-          <div class="profile-image" style="border-radius:0px;height:auto;"> @if(!empty($activity->image))<img src="{{asset('uploads/activities/'.$activity->image)}}"  />@endif </div>
-				<div class="profile-content">
-				
-					<div class="row">
-              
-			      <div class="col-lg-4 mb-3">
-                <label for="inputName">Name:</label>
-                {{$activity->title}}
-				
-				
+				  <div class="form-group col-md-3" style="border:1px solid #17a2b8; padding:55px;height:351px;margin-left:80px;;margin-right:50px;">
+                 @if(!empty($activity->image))
+               
+                  <img src="{{asset('uploads/activities/thumb/'.$activity->image)}}"  class="cimage" />
+                
+				@endif
               </div>
-			  <div class="col-lg-4 mb-3">
-                <label for="inputName">Code:</label>
-                {{$activity->code}}
+			   
+				 <div class="slider-outer col-md-4">
+				 <div class="owl-theme owl-carousel  float-right">
+				 
+                       @if($activity->images->count() > 0)
+                           
+                                
+                                @foreach($activity->images as $image)
+                                <div clss="item">
+                              <img src="{{asset('uploads/activities/thumb/'.$image->filename)}}"  class="img-responsive">
+                                </div>
+                                @endforeach
+                           
+                            @endif 
+                            </div>
+				 </div>
+				  <div class="form-group col-md-3 " style="border:1px solid #17a2b8; padding:55px;height:351px;margin-left:80px;;margin-right:50px;">
+                 @if(!empty($activity->brand_logo))
+               
+                  <img src="{{asset('uploads/activities/thumb/'.$activity->brand_logo)}}"  class="cimage" />
+                
+				@endif
               </div>
-			   <div class="col-lg-4 mb-3">
-                <label for="inputName">Type of Activity:</label>
-                {{ $typeActivities[$activity->type_activity]}}
+			 </div>
+			 <hr class="col-xs-12">
+			  <div class="row">
+			   <div class="col-md-4">
+				 <h3><i class="far fa-fw  fa-check-circle"></i> {{$activity->title}}</h3>
               </div>
-			  <div class="col-lg-4 mb-3">
-                <label for="inputName">Entry Type:</label>
-               {{ $activity->entry_type }}
+			   <div class="col-md-8 text-right">
+			   @php
+            $minPrice = SiteHelpers::getActivityLowPrice($activity->id,$activity->agent_id,$voucher);
+          @endphp
+				 <h3>AED {{$minPrice}}</h3>
               </div>
 			  
-			  <div class="col-lg-4 mb-3">
-                <label for="inputName">Priror Booking Time:</label>
-               {{ $activity->priror_booking_time }}
+			  </div>
+			  <hr class="col-xs-12">
+			    <div class="row">
+			   <div class="col-md-2">
+				 <h5><i class="fas fa-fw fa-clock"></i> 2 Hours Approx</h5>
               </div>
-              
-			  @if($activity->is_opendated)
-			  <div class="col-lg-4 mb-3">
-                <label for="inputName">Valid Till (in Days from Date of Booking):</label>
-               {{ $activity->valid_till }}
+			   <div class="col-md-4">
+			   <h5><i class="far fa-fw  fa-check-circle "></i> Mobile Voucher Accepted</h5>
               </div>
-			  @endif
-			<div class="col-lg-12 mb-3">
-                <label for="inputName">Availability:</label>
-               @if($activity->availability=='All')
-				   All Days
-			   @else
-			   {{$activity->availability}}
-			   @endif
+			  <div class="col-md-3">
+			   <h5><i class="far fa-fw  fa-check-circle"></i> Instant Confirmation </h5>
               </div>
-			
-          </div>	
-		  
-				</div>
-          
-			
-				</header>
+			  <div class="col-md-3 text-right">
+			   <h5><i class="fas fa-exchange-alt"></i> Transfer Available </h5>
+              </div>
+			  </div>
+			 
 				
 				<form action="{{route('voucher.activity.save')}}" method="post" class="form" >
 				{{ csrf_field() }}
@@ -92,9 +102,9 @@
 				 <input type="hidden" id="activity_vat" name="activity_vat" value="{{ ($activity->vat > 0)?$activity->vat:0 }}"  />
 				 <input type="hidden" id="vat_invoice" name="vat_invoice" value="{{ $voucher->vat_invoice }}"  />
 			
-				<div class="row p-2">
+				<div class="row p-2 mt-5">
 				<div class="col-lg-12">
-				<h3>Activity Details</h3>
+				<h4>Tour Options</h4>
 				</div>
 				
 				  </div>
@@ -253,11 +263,32 @@
           <a href="{{ route('vouchers.index') }}" class="btn btn-secondary">Back To Vouchers</a>
 		  
 		   <a href="{{route('vouchers.show',$vid)}}" class="btn btn-secondary mr-2">View Vouchers</a>
-          <button type="submit" class="btn btn-primary float-right" name="save">Save</button>
-			<button type="submit" class="btn btn-success float-right mr-2" name="save_and_continue">Save & Add More Activity</button>
+          <button type="submit" class="btn btn-primary float-right" name="save">Add To Cart</button>
+			<button type="submit" class="btn btn-success float-right mr-2" name="save_and_continue">Add To Cart & Add More Activity</button>
         </div>
       </div>
 			 </form>
+			  <div class="row mt-5">
+				  <div class="form-group col-md-12">
+                <h4>Description</h4>
+				{!! $activity->description !!}
+              </div>
+			   <div class="form-group col-md-12">
+               
+				<h4>Inclusion</h4>
+				{!! $activity->inclusion !!}
+              </div>
+			   <div class="form-group col-md-12">
+			   <h4>Booking Policy</h4>
+				{!! $activity->booking_policy !!}
+              </div>
+			   <div class="form-group col-md-12">
+			   <h4>Cancellation Policy</h4>
+				{!! $activity->cancellation_policy !!}
+              </div>
+              </div>
+			 
+			  </div>
           <!-- /.card-body --> 
         </div>
 		
@@ -522,5 +553,24 @@ $(document).on('keypress', '.onlynumbrf', function(evt) {
 
 });
 
-  </script>   
+  </script>  
+
+<script type="text/javascript">
+$(window).on('load', function(){
+ var owl = $('.owl-carousel');
+owl.owlCarousel({
+    loop:true,
+    nav:true,
+	dots:false,
+    margin:10,
+	items:1
+  
+});
+
+  
+  
+});
+
+
+</script>  
 @endsection

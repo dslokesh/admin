@@ -433,6 +433,27 @@ class AgentVouchersController extends Controller
        
     }
 	
+	/* public function addActivityView($aid,$vid)
+    {
+		$query = Activity::with('images')->where('id', $aid);
+		$activity = $query->where('status', 1)->first();
+		
+		$voucher = Voucher::find($vid);
+		$startDate = $voucher->travel_from_date;
+		$endDate = $voucher->travel_to_date;
+		
+
+		$activityPrices = ActivityPrices::where('activity_id', $aid)
+->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->get();
+
+		
+		$typeActivities = config("constants.typeActivities"); 
+		
+			
+			
+       return view('agent-vouchers.activities-add-details', compact('activity','aid','vid','voucher','typeActivities','activityPrices'));
+    } */
+	
 	public function getActivityVariant(Request $request)
     {
 		$data = $request->all();
@@ -565,7 +586,8 @@ class AgentVouchersController extends Controller
 		
 		
 		if ($request->has('save_and_continue')) {
-         return redirect()->back()->with('success', 'Activity added Successfully.');
+        return redirect()->back()->with('success', 'Activity added Successfully.');
+		 // return redirect()->route('agent-voucher.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
 		} else {
 			return redirect()->back()->with('success', 'Activity added Successfully.');
         //return redirect('vouchers')->with('success', 'Activity Added Successfully.');

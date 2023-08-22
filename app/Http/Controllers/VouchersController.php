@@ -829,8 +829,9 @@ class VouchersController extends Controller
 	
 	public function addActivityView($aid,$vid)
     {
-		$query = Activity::where('id', $aid);
+		$query = Activity::with('images')->where('id', $aid);
 		$activity = $query->where('status', 1)->first();
+		
 		$voucher = Voucher::find($vid);
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
@@ -844,7 +845,7 @@ class VouchersController extends Controller
 		
 			
 			
-       return view('vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'));
+       return view('vouchers.activities-add-details', compact('activity','aid','vid','voucher','typeActivities','activityPrices'));
     }
 	
 	
@@ -949,8 +950,8 @@ class VouchersController extends Controller
 		
 		
 		if ($request->has('save_and_continue')) {
-			return redirect()->back()->with('success', 'Activity added Successfully.');
-         //return redirect()->route('voucher.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
+			//return redirect()->back()->with('success', 'Activity added Successfully.');
+         return redirect()->route('voucher.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
 		} else {
 			return redirect()->back()->with('success', 'Activity added Successfully.');
         //return redirect('vouchers')->with('success', 'Activity Added Successfully.');

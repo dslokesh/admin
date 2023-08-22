@@ -295,6 +295,7 @@ class ActivitiesController extends Controller
 			'code' => 'required',
 			'featured_image' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
 			'brand_logo' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
+			//'image' => 'nullable|image|max:' . ($options['allow_img_size'] * 1024),
 			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),
         ], [
 		'featured_image.max' => 'The featured image must not be greater than '.$options['allow_img_size'].' MB.',

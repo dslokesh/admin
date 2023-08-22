@@ -91,7 +91,11 @@
               <img src="{{asset('uploads/activities/'.$record->image)}}" class="img-fluid" style="width: 278px;height:173px" />
             </div>
             <div class="col-md-6">
-              <h2 class="card-title" style="color: #000"><strong>{{$record->title}}</strong></h2>
+              <h2 class="card-title" style="color: #000">
+			  <strong> <a class="" href="{{route('voucher.activity.view',[$record->id,$vid])}}">
+                            {{$record->title}}
+                          </a></strong>
+			 </h2>
               <br/> <br/>
               <ul class="list-unstyled" style="margin-top: 70px;">
                 <li>
