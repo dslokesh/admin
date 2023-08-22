@@ -1,3 +1,4 @@
+		
 		@php
 		$tourDateArray = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out)
 		@endphp
@@ -56,7 +57,7 @@
 						</select>
 						<input type="hidden" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[{{$ap->u_code}}]"    />
 						</td>
-						<td style="display:none" id="transfer_zone_td{{$kk}}"> 
+						<td style="display:none;border:none;" id="transfer_zone_td{{$kk}}"> 
 						@if($activity->sic_TFRS==1)
 						@if(!empty($actZone))
 						<select name="transfer_zone[{{$ap->u_code}}]" id="transfer_zone{{$kk}}" class="form-control zoneselect"  data-inputnumber="{{$kk}}">
@@ -76,7 +77,7 @@
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[{{$ap->u_code}}]"    />
 						</td>
 					<td class="coltd" style="display:none;border:none;"  >
-							<input type="hidden" id="pickup_location{{$kk}}" value=""  name="pickup_location[{{$ap->u_code}}]" placeholder="Pickup Location" class="form-control"   />
+							<input type="hidden" style="display:none" id="pickup_location{{$kk}}" value=""  name="pickup_location[{{$ap->u_code}}]" placeholder="Pickup Location" class="form-control"   />
 						</td>
 					<td>
 					<select name="tour_date[{{$ap->u_code}}]" id="tour_date{{$kk}}" class="form-control" required @if($kk > '0') disabled="disabled" @endif >

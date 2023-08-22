@@ -277,10 +277,10 @@ table.rounded-corners tbody tr:hover {
 						</select>
 						<input type="hidden" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[{{ $ap->u_code }}]"    />
 						</td>
-						<td style="display:none" id="transfer_zone_td{{$kk}}"> 
+						<td style="display:none;border:none" id="transfer_zone_td{{$kk}}"> 
 						@if($activity->sic_TFRS==1)
 						@if(!empty($actZone))
-						<select name="transfer_zone[{{ $ap->u_code }}]" id="transfer_zone{{$kk}}" class="form-control zoneselect"  data-inputnumber="{{$kk}}">
+						<select name="transfer_zone[{{ $ap->u_code }}]" id="transfer_zone{{$kk}}" class="form-control zoneselect"  data-inputnumber="{{$kk}}"  >
 						
 						
 						@foreach($actZone as $z)
@@ -296,8 +296,8 @@ table.rounded-corners tbody tr:hover {
 						
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[{{ $ap->u_code }}]"    />
 					</td>
-					<td  style="display:none" id="pickup_location_td{{$kk}}"> 
-							<input type="text" id="pickup_location{{$kk}}" value=""  name="pickup_location[{{ $ap->u_code }}]" placeholder="Pickup Location" class="form-control"   />
+					<td  style="display:none;border:none;" id="pickup_location_td{{$kk}}"> 
+							<input type="text" style="display:none"  id="pickup_location{{$kk}}" value=""  name="pickup_location[{{ $ap->u_code }}]" placeholder="Pickup Location" class="form-control"   />
 					</td>
 					<td>
 					<select name="tour_date[{{ $ap->u_code }}]" id="tour_date{{$kk}}" class="form-control" required disabled="disabled" >
@@ -478,7 +478,7 @@ $(document).on('change', '.priceChange', function(evt) {
 	
 	
 	let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
-	$("body #pickup_location"+inputnumber).val('');
+	//$("body #pickup_location"+inputnumber).val('');
 	let grandTotal = 0;
 	let grandTotalAfterDis = 0;
 	if(t_option_val == 3)
@@ -521,7 +521,7 @@ $(document).on('change', '.priceChange', function(evt) {
 			let zonevalue = parseFloat($("#transfer_zone"+inputnumber).find(':selected').data("zonevalue"));
 			let zoneptime = $("#transfer_zone"+inputnumber).find(':selected').data("zoneptime");
 			
-			$("body #pickup_location"+inputnumber).val(zoneptime);
+			//$("body #pickup_location"+inputnumber).val(zoneptime);
 			var totaladult = parseInt(adult + child);
 			let zonevalueTotal = (totaladult * zonevalue);
 			$("#zonevalprice"+inputnumber).val(zonevalueTotal);

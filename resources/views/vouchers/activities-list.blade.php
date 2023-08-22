@@ -439,7 +439,7 @@ $(document).on('click', '.loadvari', function(evt) {
    
    
    let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
-   $("body #pickup_location"+inputnumber).val('');
+   //$("body #pickup_location"+inputnumber).val('');
    let grandTotal = 0;
    let grandTotalAfterDis = 0;
    if(t_option_val == 3)
@@ -482,7 +482,7 @@ $(document).on('click', '.loadvari', function(evt) {
        let zonevalue = parseFloat($("body #transfer_zone"+inputnumber).find(':selected').data("zonevalue"));
        let zoneptime = $("body #transfer_zone"+inputnumber).find(':selected').data("zoneptime");
        
-       $("body #pickup_location"+inputnumber).val(zoneptime);
+      // $("body #pickup_location"+inputnumber).val(zoneptime);
        var totaladult = parseInt(adult + child);
        let zonevalueTotal = (totaladult * zonevalue);
        $("body #zonevalprice"+inputnumber).val(zonevalueTotal);
@@ -572,7 +572,7 @@ $(document).on('click', '.loadvari', function(evt) {
    $("body #top").removeAttr("colspan");
    $("body #transfer_zone_td"+inputnumber).css("display","none");
    $("body .coltd").css("display","none");
-   //$("#pickup_location_td"+inputnumber).css("display","none");
+   $("#pickup_location_td"+inputnumber).css("display","none");
    $("body #transfer_zone"+inputnumber).prop('required',false);
    $("body #zonevalprice"+inputnumber).val(0);
    $('body #transfer_zone'+inputnumber).prop('selectedIndex',0);
@@ -582,12 +582,12 @@ $(document).on('click', '.loadvari', function(evt) {
      $("body #top").attr("colspan",2);
      $("body #transfer_zone_td"+inputnumber).css("display","block");
      $("body .coltd").css("display","block");
-    // $("#pickup_location_td"+inputnumber).css("display","block");
+    $("#pickup_location_td"+inputnumber).css("display","block");
      $("body #transfer_zone"+inputnumber).prop('required',true);
    } else if(t_option_val == 3){
      $("body #top").attr("colspan",2);
 	 $("body .coltd").css("display","block")
-     //$("#pickup_location_td"+inputnumber).css("display","block");
+     $("#pickup_location_td"+inputnumber).css("display","block");
      var activity_id = $("body #activity_id").val();
      let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());
      let child = parseInt($("body #child"+inputnumber).find(':selected').val());

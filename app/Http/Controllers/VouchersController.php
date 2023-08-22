@@ -899,7 +899,7 @@ class VouchersController extends Controller
 		$infPrice = $request->input('infPrice');
 		$discount = $request->input('discount');
 		$totalprice = $request->input('totalprice');
-		$pickup_location = $request->input('pickup_location');
+		//$pickup_location = $request->input('pickup_location');
 		$variant_unique_code = $request->input('variant_unique_code');
 		
 		$data = [];
@@ -930,7 +930,7 @@ class VouchersController extends Controller
 			'infPrice' => $infPrice[$k],
 			'discountPrice' => $discount[$k],
 			'totalprice' => $totalprice[$k],
-			'pickup_location' => $pickup_location[$k],
+			//'pickup_location' => $pickup_location[$k],
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,	
                 ];
