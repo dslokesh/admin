@@ -120,8 +120,6 @@ table.rounded-corners tbody tr:hover {
     background-color: #fff;
     opacity: 1;
 }
-.disabled-date { background-color: #ccc; }
-        .available-date { background-color: #b2ffb2; }
 </style>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -133,7 +131,7 @@ table.rounded-corners tbody tr:hover {
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
 			 <li class="breadcrumb-item"><a href="{{ route('vouchers.index') }}">Vouchers</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('voucher.add.activity',[$voucher->id]) }}">Activities</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('agent-vouchers.add.activity',[$voucher->id]) }}">Activities</a></li>
               <li class="breadcrumb-item active">Activity Details</li>
             </ol>
           </div>
@@ -185,7 +183,6 @@ table.rounded-corners tbody tr:hover {
 			  <div class="row">
 			   <div class="col-md-6" >
 				 <h3><i class="far fa-fw  fa-check-circle"></i> {{$activity->title}}</h3>
-				 
               </div>
 			   <div class="col-md-6 text-right">
 			   @php
@@ -218,7 +215,7 @@ table.rounded-corners tbody tr:hover {
 			 
 			  <hr class="col-xs-12">
 
-				<form action="{{route('voucher.activity.save')}}" method="post" class="form" >
+				<form action="{{route('agent-voucher.activity.save')}}" method="post" class="form" >
 				{{ csrf_field() }}
 				 <input type="hidden" id="activity_id" name="activity_id" value="{{ $aid }}"  />
 				 <input type="hidden" id="v_id" name="v_id" value="{{ $vid }}"  />
@@ -242,7 +239,7 @@ table.rounded-corners tbody tr:hover {
 				  @if($kk == 0)
                   <tr>
 					<th>Tour Option</th>
-                    <th id="top"  colspan="2">Transfer Option</th>
+                    <th id="top" colspan="2">Transfer Option</th>
 					<th>Tour Date</th>
 					<th>Adult</th>
                     <th>Child<br/><small>({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</small></th>
@@ -280,7 +277,7 @@ table.rounded-corners tbody tr:hover {
 						</select>
 						<input type="hidden" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[{{ $ap->u_code }}]"    />
 						</td>
-						<td> 
+						<td > 
 						<div style="display:none;border:none" id="transfer_zone_td{{$kk}}">
 						@if($activity->sic_TFRS==1)
 						@if(!empty($actZone))
@@ -299,9 +296,11 @@ table.rounded-corners tbody tr:hover {
 						@endif
 						
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[{{ $ap->u_code }}]"    />
-						</div> 
+						<div>
 					</td>
+					
 							<input type="text" style="display:none"  id="pickup_location{{$kk}}" value=""  name="pickup_location[{{ $ap->u_code }}]" placeholder="Pickup Location" class="form-control"   />
+					
 					<td>
 					<select name="tour_date[{{ $ap->u_code }}]" id="tour_date{{$kk}}" class="form-control" required disabled="disabled" >
 						
@@ -444,37 +443,9 @@ table.rounded-corners tbody tr:hover {
     <!-- /.content -->
 @endsection
 
-@php
-$dates = SiteHelpers::getDateListBoth($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out)
-@endphp
+
 
 @section('scripts')
- <script>
-       /*  $(function() {
-          
-            var disabledDates = "{{$dates['disabledDates']}}";
-            var availableDates = "{{$dates['availableDates']}}";
-
-            
-            $(".dd").datepicker({
-                beforeShowDay: function(date) {
-                    var dateString = $.datepicker.formatDate('yy-mm-dd', date);
-                    if (disabledDates.indexOf(dateString) != -1) {
-                        return [false, "disabled-date", "This date is disabled"];
-                    }
-                    if (availableDates.indexOf(dateString) != -1) {
-                        return [true, "available-date", "This date is available"];
-                    }
-                    return [false];
-                },
-				weekStart: 1,
-        daysOfWeekHighlighted: "6,0",
-        autoclose: true,
-        todayHighlight: true,
-		dateFormat: 'yy-mm-dd'
-            });
-        }); */
-    </script>
  <script type="text/javascript">
  $(document).ready(function() {
 	
@@ -638,7 +609,7 @@ $(document).on('change', '.t_option', function(evt) {
 	let t_option_val = $(this).find(':selected').data("id");
 	//$("#top").removeAttr("colspan");
 	$("#transfer_zone_td"+inputnumber).css("display","none");
-	$("#pickup_location_td"+inputnumber).css("display","none");
+	//$("#pickup_location_td"+inputnumber).css("display","none");
 	$("body #transfer_zone"+inputnumber).prop('required',false);
 	$("#zonevalprice"+inputnumber).val(0);
 	$('#transfer_zone'+inputnumber).prop('selectedIndex',0);

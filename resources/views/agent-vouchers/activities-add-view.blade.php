@@ -19,7 +19,7 @@
 				  @if($kk == 0)
                   <tr>
 					<th>Tour Option</th>
-                    <th id="top">Transfer Option</th>
+                    <th id="top" colspan="2" valign="middle">Transfer Option</th>
 					<th>Tour Date</th>
 					<th>Adult (Above {{$ap->chield_end_age}} Yrs)</th>
                     <th>Child({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</th>
@@ -58,7 +58,8 @@
 						</select>
 						<input type="hidden" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[{{$ap->u_code}}]"    />
 						</td>
-						<td style="display:none;border:none" id="transfer_zone_td{{$kk}}"> 
+						<td> 
+						<div  style="display:none;border:none" id="transfer_zone_td{{$kk}}">
 						@if($activity->sic_TFRS==1)
 						@if(!empty($actZone))
 						<select name="transfer_zone[{{$ap->u_code}}]" id="transfer_zone{{$kk}}" class="form-control zoneselect"  data-inputnumber="{{$kk}}">
@@ -76,10 +77,11 @@
 						@endif
 						
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[{{$ap->u_code}}]"    />
+						</div> 
 						</td>
-					<td class="coltd" style="display:none;border:none;"  >
+					
 							<input type="hidden" style="display:none;border:none;" id="pickup_location{{$kk}}" value=""  name="pickup_location[{{$ap->u_code}}]" placeholder="Pickup Location" class="form-control"   />
-						</td>
+						
 					<td>
 					<select name="tour_date[{{$ap->u_code}}]" id="tour_date{{$kk}}" class="form-control" required @if($kk > '0') disabled="disabled" @endif >
 						

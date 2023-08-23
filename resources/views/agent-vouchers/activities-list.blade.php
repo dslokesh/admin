@@ -1,6 +1,129 @@
 @extends('layouts.app')
 @section('content')
+<style>
 
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    text-align: left;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0.75rem;
+}
+table.rounded-corners {
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 10px;
+}
+
+table.rounded-corners th, table.rounded-corners td {
+  /* border: 1px solid #dee2e6; */
+  padding: 5px;
+  vertical-align: middle;
+}
+table.rounded-corners {
+  border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+}
+
+table.rounded-corners {
+ border-spacing: 0;
+ border-collapse: separate;
+ border-radius: 5px;
+ border: 1px solid #dee2e6;
+}
+
+/* Apply a border to the right of all but the last column */
+table.rounded-corners th:not(:last-child),
+table.rounded-corners td:not(:last-child) {
+ /* border-right: 1px solid #dee2e6; */
+}
+
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners>thead>tr:not(:last-child)>th,
+table.rounded-corners>thead>tr:not(:last-child)>td,
+table.rounded-corners>tbody>tr:not(:last-child)>th,
+table.rounded-corners>tbody>tr:not(:last-child)>td,
+table.rounded-corners>tfoot>tr:not(:last-child)>th,
+table.rounded-corners>tfoot>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>th,
+table.rounded-corners>thead:not(:last-child),
+table.rounded-corners>tbody:not(:last-child),
+table.rounded-corners>tfoot:not(:last-child) {
+ border-bottom: 1px solid #dee2e6;
+}
+
+table.rounded-corners th {
+  background-color: #ddd;
+}
+
+table.rounded-corners {
+ /* Change these properties */
+ --border: 1px solid #dee2e6;
+ border-radius: 5px;
+ 
+
+ /* Don't change these properties */
+ border-spacing: 0;
+ border-collapse: separate;
+ border: var(--border);
+ overflow: hidden;
+}
+
+/* Apply a border to the right of all but the last column */
+table.rounded-corners th:not(:last-child),
+table.rounded-corners td:not(:last-child) {
+ /* border-right: var(--border); */
+}
+
+/* Apply a border to the bottom of all but the last row */
+table.rounded-corners>thead>tr:not(:last-child)>th,
+table.rounded-corners>thead>tr:not(:last-child)>td,
+table.rounded-corners>tbody>tr:not(:last-child)>th,
+table.rounded-corners>tbody>tr:not(:last-child)>td,
+table.rounded-corners>tfoot>tr:not(:last-child)>th,
+table.rounded-corners>tfoot>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>td,
+table.rounded-corners>tr:not(:last-child)>th,
+table.rounded-corners>thead:not(:last-child),
+table.rounded-corners>tbody:not(:last-child),
+table.rounded-corners>tfoot:not(:last-child) {
+ border-bottom: var(--border);
+}
+table.rounded-corners tbody tr:hover {
+  background-color: #EEE;
+}
+.card-body-hover:hover
+{
+  background-color: #EEE;
+}
+.card-header{
+  border-bottom: none!important;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}
+</style>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -28,24 +151,33 @@
               <div class="row">
            
              
-          <div class="col-md-12">
+          <div class="col-md-10 offset-1">
               <div class="card card-default">
               <!-- form start -->
-               <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
+              <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
                 <div class="card-body">
                   <div class="row">
-                      <div class="col-md-12">
-                      <div class="input-group mb-2">
-                        <input type="text" name="name" value="{{ request('name') }}" class="form-control"  placeholder="Filter with Name" />
+                      <div class="col-md-4">
+                        <div class="input-group">
+                          <input type="text" name="name" value="{{ request('name') }}" class="form-control"  placeholder="Filter with Name" />
+                        </div>
                       </div>
+                      <div class="col-md-4">
+                        <div class="input-group ">
+                            <button class="btn btn-info" type="submit">   <i class="fas fa-search"></i> Search</button>
+                            <a class="btn btn-default  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
+                        </div>
                       </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-8">
-                      <div class="input-group mb-2">
-                          <button class="btn btn-info mb-2" type="submit">   <i class="fas fa-search"></i> Search</button>
-                           <a class="btn btn-default mb-2  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
-                      </div>
+                    
+                      <div class="col-md-2 text-right">
+                        <div class="input-group  text-right float-right">
+                            @if($voucherActivityCount > 0)
+                                  <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-md btn-success pull-right">
+                                <i class="fas fa-shopping-cart"></i>
+                               Checkout({{$voucherActivityCount}})
+                            </a>
+                            @endif
+                        </div>
                       </div>
                   </div>
                 </div>
@@ -56,36 +188,31 @@
                 </div>
 
        
-        <div class="col-md-12">
         
-        <div class="offset-md-7 col-md-5 text-right">
-          @if($voucherActivityCount > 0)
-              <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-lg btn-success btn-sm pull-right">
-            <i class="fas fa-shopping-cart"></i>
-            Checkout({{$voucherActivityCount}})
-        </a>
-        @endif
-
-        </div> 
-        
-        </div>
 		 </div>
+     <div class="col-md-10 offset-1">
+
+
        <div class="row">
-             <div class="card-body @if($voucherActivityCount > 0) col-md-8 @else offset-1 col-md-10 @endif">
+             <div class="card-body @if($voucherActivityCount > 0) col-md-9 @else offset-1 col-md-10 @endif">
              
                   @foreach ($records as $record)
 				  @php
             $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher);
           @endphp
                    <!-- Default box -->
-      <div class="card collapsed-card">
-        <div class="card-header">
+      <div class="card collapsed-card ">
+        <div class="card-header card-body-hover">
           <div class="row">
             <div class="col-md-3">
               <img src="{{asset('uploads/activities/'.$record->image)}}" class="img-fluid" style="width: 278px;height:173px" />
             </div>
             <div class="col-md-6">
-              <h2 class="card-title" style="color: #000"><strong>{{$record->title}}</strong></h2>
+              <h2 class="card-title" style="color: #000">
+			  <strong> <a class="" href="{{route('agent-vouchers.activity.view',[$record->id,$vid])}}">
+                            {{$record->title}}
+                          </a></strong>
+			 </h2>
               <br/> <br/>
               <ul class="list-unstyled" style="margin-top: 70px;">
                 <li>
@@ -136,9 +263,9 @@
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
 </div>
  @if(!empty($voucherActivity) && $voucher->is_activity == 1)
-<div class="col-md-4  mt-4 card card-body " >
+ <div class="col-md-3  mt-2 " style="padding: 7px;" >
 				
-			 
+			  
 					@if(!empty($voucherActivity))
 					  @foreach($voucherActivity as $ap)
 				  @php
@@ -146,14 +273,10 @@
 					@endphp
             <div class="card">
 			
-              <div class="card-header">
-                <div class="row">
-				<div class="col-md-8 text-left">
-                    <h3 class="card-title">
-                      <strong> {{$activity->title}}</strong></h3>
-                  </div>
-				<div class="col-md-4 text-right">
-                    <form id="delete-form-{{$ap->id}}" method="post" action="{{route('agent.voucher.activity.delete',$ap->id)}}" style="display:none;">
+              
+              <div class="card-body card-body-hover" >
+              <div class="col-md-12 text-right">
+              <form id="delete-form-{{$ap->id}}" method="post" action="{{route('agent.voucher.activity.delete',$ap->id)}}" style="display:none;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
@@ -168,33 +291,31 @@
                                     event.preventDefault();
                                 }
                             
-                            "><i class="fas fa-times"></i></a>
-                    
-                  </div>
-				   </div>
-              </div>
-              <div class="card-body" >
-			 
+                            "><i class="fas fa-trash"></i></a>
+                  </div>  
                 <div class="row" >
-				  <div class="col-md-3">
-              <img src="{{asset('uploads/activities/'.$activity->image)}}" class="img-fluid" style="width: 75px;height:90px" />
+				  <div class="col-md-4" style="padding: 5px; ">
+              <img src="{{asset('uploads/activities/'.$activity->image)}}" class="img-fluid" style="border-radius: 5px;" />
             </div>
-			<div class="col-md-9">
-              <ul class="list-unstyled" style="font-size:14px">
+			<div class="col-md-8">
+              <ul class="list-unstyled" style="font-size:14px;color:#000;">
+              <li style="color:#000; font-weight:bold;">
+              {{$activity->title}}
+                </li>
                 <li>
-                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle"></i> {{$ap->variant_name}}</a>
+                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"> {{$ap->variant_name}}</a>
                 </li>
 				<li>
-                  <a href="#" class="btn-link text-secondary"><i class="fas fa-exchange-alt"></i> {{$ap->transfer_option}}</a>
+                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;">{{$ap->transfer_option}}</a>
                 </li>
                 <li>
-                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-calendar "></i>  {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}</a>
+                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"> {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}</a>
                 </li>
                 <li>
-                  <a href="#" class="btn-link text-secondary"><i class="fas fa-male" title="Adult"></i>  {{$ap->adult}}<i class="fas fa-child" title="Child"></i>  {{$ap->child}}</a>
+                  <a href="#" class="btn-link text-secondary" ><i class="fas fa-male" style="font-size:18px;" title="Adult"></i> <span style="color:#000 !important;">{{$ap->adult}}</span> <i class="fas fa-child" title="Child"></i>  <span style="color:#000 !important;">{{$ap->child}}</span> </a>
                 </li>
                 <li class="float-right">
-                  <a href="#" class="btn-link text-secondary"><h2 class="card-title text-right" style="color: #000"><strong>AED {{$ap->totalprice}}</strong></h2></a>
+                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"><h2 class="card-title text-right" style="color: #000"><strong>AED {{$ap->totalprice}}</strong></h2></a>
                 </li>
               </ul>
 			   
@@ -207,10 +328,20 @@
             </div>
 				 @endforeach
                  @endif
-				 
-</div> @endif
-</div>
 
+                 <div class="input-group  text-right float-right">
+                            @if($voucherActivityCount > 0)
+                                  <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-md btn-success pull-right">
+                                <i class="fas fa-shopping-cart"></i>
+                                Checkout({{$voucherActivityCount}})
+                            </a>
+                            @endif
+                        </div>
+				
+</div>
+  @endif
+</div>
+</div>
            
               <!-- /.card-body -->
             </div>
@@ -224,6 +355,8 @@
 @section('scripts')
 <script type="text/javascript">
   $(document).ready(function() {
+	  $('body #activity_select0').prop('checked', false); // Checks it
+			
 $(document).on('click', '.loadvari', function(evt) {
   var actid = $(this).data('act');
   $("body #loader-overlay").show();
@@ -297,7 +430,7 @@ $(document).on('click', '.loadvari', function(evt) {
    
    
    let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
-  // $("body #pickup_location"+inputnumber).val('');
+   //$("body #pickup_location"+inputnumber).val('');
    let grandTotal = 0;
    let grandTotalAfterDis = 0;
    if(t_option_val == 3)
@@ -322,7 +455,7 @@ $(document).on('click', '.loadvari', function(evt) {
        if(grandTotalAfterDis > 0)
        {
        $("body #totalprice"+inputnumber).val(grandTotalAfterDis.toFixed(2));
-       $("body #price"+inputnumber).text(grandTotalAfterDis.toFixed(2));
+       $("body #price"+inputnumber).text("AED "+grandTotalAfterDis.toFixed(2));
        }
        else
        {
@@ -340,7 +473,7 @@ $(document).on('click', '.loadvari', function(evt) {
        let zonevalue = parseFloat($("body #transfer_zone"+inputnumber).find(':selected').data("zonevalue"));
        let zoneptime = $("body #transfer_zone"+inputnumber).find(':selected').data("zoneptime");
        
-       //$("body #pickup_location"+inputnumber).val(zoneptime);
+      // $("body #pickup_location"+inputnumber).val(zoneptime);
        var totaladult = parseInt(adult + child);
        let zonevalueTotal = (totaladult * zonevalue);
        $("body #zonevalprice"+inputnumber).val(zonevalueTotal);
@@ -371,7 +504,7 @@ $(document).on('click', '.loadvari', function(evt) {
      if(grandTotalAfterDis > 0)
        {
        $("body #totalprice"+inputnumber).val(grandTotalAfterDis.toFixed(2));
-       $("body #price"+inputnumber).text(grandTotalAfterDis.toFixed(2));
+       $("body #price"+inputnumber).text("AED "+grandTotalAfterDis.toFixed(2));
        }
        else
        {
@@ -427,25 +560,25 @@ $(document).on('click', '.loadvari', function(evt) {
    //alert("Asas");
    let inputnumber = $(this).data('inputnumber');
    let t_option_val = $(this).find(':selected').data("id");
-   $("body #top").removeAttr("colspan");
+  // $("body #top").removeAttr("colspan");
    $("body #transfer_zone_td"+inputnumber).css("display","none");
    $("body .coltd").css("display","none");
-   $("#pickup_location_td"+inputnumber).css("display","none");
+   //$("#pickup_location_td"+inputnumber).css("display","none");
    $("body #transfer_zone"+inputnumber).prop('required',false);
    $("body #zonevalprice"+inputnumber).val(0);
    $('body #transfer_zone'+inputnumber).prop('selectedIndex',0);
    $("body #pvt_traf_val"+inputnumber).val(0);
    $("body #adult"+inputnumber).trigger("change");
    if(t_option_val == 2){
-     $("body #top").attr("colspan",2);
+     //$("body #top").attr("colspan",2);
      $("body #transfer_zone_td"+inputnumber).css("display","block");
      $("body .coltd").css("display","block");
-    $("#pickup_location_td"+inputnumber).css("display","block");
+    //$("#pickup_location_td"+inputnumber).css("display","block");
      $("body #transfer_zone"+inputnumber).prop('required',true);
    } else if(t_option_val == 3){
-     $("body #top").attr("colspan",2);
+     //$("body #top").attr("colspan",2);
 	 $("body .coltd").css("display","block")
-     $("#pickup_location_td"+inputnumber).css("display","block");
+     //$("#pickup_location_td"+inputnumber).css("display","block");
      var activity_id = $("body #activity_id").val();
      let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());
      let child = parseInt($("body #child"+inputnumber).find(':selected').val());
@@ -460,7 +593,7 @@ $(document).on('click', '.loadvari', function(evt) {
  $(document).on('change', '.zoneselect', function(evt) {
    let inputnumber = $(this).data('inputnumber');
    let zonevalue = parseFloat($(this).find(':selected').data("zonevalue"));
-   $("body #top").attr("colspan",2);
+   //$("body #top").attr("colspan",2);
    let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());
      let child = parseInt($("body #child"+inputnumber).find(':selected').val());
      var totaladult = parseInt(adult + child);

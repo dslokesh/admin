@@ -164,6 +164,40 @@ class SiteHelpers
 		return $dates;
     }
 	
+	public function getDateListBoth($startDate,$endDate,$blackoutDates='')
+    {
+			$blackDate = [];
+			if(!empty($blackoutDates)){
+				$blackDate = explode(",",$blackoutDates);
+			}
+			// Create DateTime objects from the start and end dates
+			$start = new \DateTime($startDate);
+			$end = new \DateTime($endDate);
+
+			// Add one day to the end date to include it in the range
+			$end->modify('+1 day');
+
+			// Initialize an empty array to store the dates
+			$dateData = [];
+			$availableDates = [];
+			$disabledDates = [];
+			// Iterate over each day and add it to the array
+			$interval = new \DateInterval('P1D'); // 1 day interval
+			$period = new \DatePeriod($start, $interval, $end);
+			foreach ($period as $date) {
+				$dt = $date->format('Y-m-d');
+				if(!in_array($dt,$blackDate)){
+				$availableDates[] = $dt;
+				} else {
+					$disabledDates[] = $dt;
+				}
+			}
+		
+		$dateData['availableDates'] = json_encode($availableDates);
+		$dateData['disabledDates'] = json_encode($disabledDates);
+		return $dateData;
+    }
+	
 	public function voucherStatus($val)
     {
 		$color = '';

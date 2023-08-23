@@ -569,25 +569,25 @@ $(document).on('click', '.loadvari', function(evt) {
    //alert("Asas");
    let inputnumber = $(this).data('inputnumber');
    let t_option_val = $(this).find(':selected').data("id");
-   $("body #top").removeAttr("colspan");
+   //$("body #top").removeAttr("colspan");
    $("body #transfer_zone_td"+inputnumber).css("display","none");
    $("body .coltd").css("display","none");
-   $("#pickup_location_td"+inputnumber).css("display","none");
+   //$("#pickup_location_td"+inputnumber).css("display","none");
    $("body #transfer_zone"+inputnumber).prop('required',false);
    $("body #zonevalprice"+inputnumber).val(0);
    $('body #transfer_zone'+inputnumber).prop('selectedIndex',0);
    $("body #pvt_traf_val"+inputnumber).val(0);
    $("body #adult"+inputnumber).trigger("change");
    if(t_option_val == 2){
-     $("body #top").attr("colspan",2);
+     //$("body #top").attr("colspan",2);
      $("body #transfer_zone_td"+inputnumber).css("display","block");
      $("body .coltd").css("display","block");
-    $("#pickup_location_td"+inputnumber).css("display","block");
+    //$("#pickup_location_td"+inputnumber).css("display","block");
      $("body #transfer_zone"+inputnumber).prop('required',true);
    } else if(t_option_val == 3){
-     $("body #top").attr("colspan",2);
+    // $("body #top").attr("colspan",2);
 	 $("body .coltd").css("display","block")
-     $("#pickup_location_td"+inputnumber).css("display","block");
+     //$("#pickup_location_td"+inputnumber).css("display","block");
      var activity_id = $("body #activity_id").val();
      let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());
      let child = parseInt($("body #child"+inputnumber).find(':selected').val());
@@ -602,7 +602,7 @@ $(document).on('click', '.loadvari', function(evt) {
  $(document).on('change', '.zoneselect', function(evt) {
    let inputnumber = $(this).data('inputnumber');
    let zonevalue = parseFloat($(this).find(':selected').data("zonevalue"));
-   $("body #top").attr("colspan",2);
+  // $("body #top").attr("colspan",2);
    let adult = parseInt($("body #adult"+inputnumber).find(':selected').val());
      let child = parseInt($("body #child"+inputnumber).find(':selected').val());
      var totaladult = parseInt(adult + child);

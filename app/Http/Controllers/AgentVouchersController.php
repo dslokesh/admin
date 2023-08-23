@@ -33,7 +33,7 @@ class AgentVouchersController extends Controller
 		 $perPage = config("constants.ADMIN_PAGE_LIMIT");
 		 $data = $request->all();
 		$query = VoucherActivity::whereHas('voucher', function($q){
-    $q->where('agent_id', '>=', Auth::user()->id);
+    $q->where('agent_id', '=', Auth::user()->id);
 	$q->where(function ($q) {
 		$q->where('status_main', 4)->orWhere('status_main', 5);
 		});
@@ -210,6 +210,7 @@ class AgentVouchersController extends Controller
     public function show($vid)
     {
 		$voucher = Voucher::where('id',$vid)->where('agent_id',Auth::user()->id)->first();
+		
 		if (empty($voucher)) {
             return abort(404); //record not found
         }
@@ -433,7 +434,7 @@ class AgentVouchersController extends Controller
        
     }
 	
-	/* public function addActivityView($aid,$vid)
+	 public function addActivityView($aid,$vid)
     {
 		$query = Activity::with('images')->where('id', $aid);
 		$activity = $query->where('status', 1)->first();
@@ -452,7 +453,7 @@ class AgentVouchersController extends Controller
 			
 			
        return view('agent-vouchers.activities-add-details', compact('activity','aid','vid','voucher','typeActivities','activityPrices'));
-    } */
+    } 
 	
 	public function getActivityVariant(Request $request)
     {
@@ -586,8 +587,8 @@ class AgentVouchersController extends Controller
 		
 		
 		if ($request->has('save_and_continue')) {
-        return redirect()->back()->with('success', 'Activity added Successfully.');
-		 // return redirect()->route('agent-voucher.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
+        //return redirect()->back()->with('success', 'Activity added Successfully.');
+		return redirect()->route('agent-vouchers.add.activity',$voucher_id)->with('success', 'Activity added Successfully.');
 		} else {
 			return redirect()->back()->with('success', 'Activity added Successfully.');
         //return redirect('vouchers')->with('success', 'Activity Added Successfully.');
