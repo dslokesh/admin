@@ -915,7 +915,7 @@ class VouchersController extends Controller
 			'variant_name' => $variant_name[$k],
 			'variant_code' => $variant_code[$k],
 			'transfer_option' => $transfer_option[$k],
-			'tour_date' => $tour_date[$k],
+			'tour_date' => date("Y-m-d",strtotime($tour_date[$k])),
 			'pvt_traf_val_with_markup' => $pvt_traf_val_with_markup[$k],
 			'transfer_zone' => $transfer_zone[$k],
 			'zonevalprice_without_markup' => $zonevalprice_without_markup[$k],

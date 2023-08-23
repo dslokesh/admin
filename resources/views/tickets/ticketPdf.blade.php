@@ -87,7 +87,7 @@ body p
                                        Timings
                                     </td>
                                     <td style="text-align: left;width:60%">
-                                    
+                                    {{date("H:i a",strtotime($ticket->created_at))}}
                                     </td>
 									 </tr>
 									  <tr >
