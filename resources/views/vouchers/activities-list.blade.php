@@ -123,6 +123,11 @@ table.rounded-corners tbody tr:hover {
     background-color: #fff;
     opacity: 1;
 }
+
+.disabled-date { background-color: #ccc; }
+.available-date { background-color: #b2ffb2; }
+.disabled-day { background-color: #FF00B9; }
+
 </style>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -362,12 +367,15 @@ table.rounded-corners tbody tr:hover {
 @endsection
 
 @section('scripts')
+
+	
 <script type="text/javascript">
   $(document).ready(function() {
 	  $('body #activity_select0').prop('checked', false); // Checks it
 			
 $(document).on('click', '.loadvari', function(evt) {
   var actid = $(this).data('act');
+   var inputnumber = $(this).data('inputnumber');
   $("body #loader-overlay").show();
 		$.ajaxSetup({
                 headers: {
@@ -400,6 +408,30 @@ $(document).on('click', '.loadvari', function(evt) {
 				$("body .t_option#transfer_option0").trigger("change");
 				}, 1000);
 			}
+				//var response = JSON.parse(data.dates);
+				var disabledDates = data.dates.disabledDates;
+				var availableDates = data.dates.availableDates;
+				$(".tour_datepicker").datepicker({
+                        beforeShowDay: function(date) {
+                            var dateString = $.datepicker.formatDate('yy-mm-dd', date);
+                            /* if (disabledDates.indexOf(dateString) != -1) {
+                                return [false, "disabled-date", "This date is disabled"];
+                            } */
+                            if (availableDates.indexOf(dateString) != -1) {
+                                return [true, "available-date", "This date is available"];
+                            }else{
+								return [false, "disabled-date", "This date is disabled"];
+							}
+                            return [true];
+                        },
+							weekStart: 1,
+							daysOfWeekHighlighted: "6,0",
+							autoclose: true,
+							todayHighlight: true,
+							dateFormat: 'dd-mm-yy'
+                    });
+			
+			
             }
           });
 });

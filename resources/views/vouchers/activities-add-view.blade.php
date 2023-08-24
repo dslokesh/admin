@@ -82,16 +82,8 @@
 							<input type="hidden" style="display:none" id="pickup_location{{$kk}}" value=""  name="pickup_location[{{$ap->u_code}}]" placeholder="Pickup Location" class="form-control"   />
 						
 					<td>
-					<select name="tour_date[{{$ap->u_code}}]" id="tour_date{{$kk}}" class="form-control" required @if($kk > '0') disabled="disabled" @endif >
-						
-						@if($kk > '0')
-						<option value="">--Select--</option>
-						@endif
-						@foreach($tourDateArray as $dt)
-						<option value="{{$dt}}">{{$dt}}</option>
-						@endforeach
-						
-						</select>
+					<input type="text"id="tour_date{{$kk}}" value=""  name="tour_date[{{ $ap->u_code }}]" placeholder="Tour Date" class="form-control tour_datepicker" required @if($kk > '0') disabled="disabled" @endif     />
+					
 					</td>
 					<td><select name="adult[{{$ap->u_code}}]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" @if($kk > '0') disabled="disabled" @endif>
 					@if($kk > '0')

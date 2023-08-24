@@ -120,8 +120,10 @@ table.rounded-corners tbody tr:hover {
     background-color: #fff;
     opacity: 1;
 }
+
 .disabled-date { background-color: #ccc; }
-        .available-date { background-color: #b2ffb2; }
+.available-date { background-color: #b2ffb2; }
+.disabled-day { background-color: #FF00B9; }
 </style>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -146,9 +148,7 @@ table.rounded-corners tbody tr:hover {
     <section class="content">
     <div class="row">
         <div class="col-md-12">
-		@php
-		$tourDateArray = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out)
-		@endphp
+		
           <div class="card">
            
 			
@@ -301,16 +301,10 @@ table.rounded-corners tbody tr:hover {
 						<input type="hidden" id="zonevalprice{{$kk}}" value="0"  name="zonevalprice[{{ $ap->u_code }}]"    />
 						</div> 
 					</td>
-							<input type="text" style="display:none"  id="pickup_location{{$kk}}" value=""  name="pickup_location[{{ $ap->u_code }}]" placeholder="Pickup Location" class="form-control"   />
+							<input type="text" style="display:none"  id="pickup_location{{$kk}}" value=""  name="pickup_location[{{ $ap->u_code }}]" placeholder="Pickup Location" class="form-control "   />
 					<td>
-					<select name="tour_date[{{ $ap->u_code }}]" id="tour_date{{$kk}}" class="form-control" required disabled="disabled" >
-						
-						<option value="">--Select--</option>
-						@foreach($tourDateArray as $dt)
-						<option value="{{$dt}}">{{$dt}}</option>
-						@endforeach
-						
-						</select>
+					<input type="text"id="tour_date{{$kk}}" value=""  name="tour_date[{{ $ap->u_code }}]" required disabled="disabled"  placeholder="Tour Date" class="form-control tour_datepicker"   />
+					
 					</td>
 					<td><select name="adult[{{ $ap->u_code }}]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" disabled="disabled">
 						<option value="">0</option>
@@ -450,30 +444,38 @@ $dates = SiteHelpers::getDateListBoth($voucher->travel_from_date,$voucher->trave
 
 @section('scripts')
  <script>
-       /*  $(function() {
+         $(function() {
           
             var disabledDates = "{{$dates['disabledDates']}}";
             var availableDates = "{{$dates['availableDates']}}";
 
             
-            $(".dd").datepicker({
+            $(".tour_datepicker").datepicker({
                 beforeShowDay: function(date) {
                     var dateString = $.datepicker.formatDate('yy-mm-dd', date);
-                    if (disabledDates.indexOf(dateString) != -1) {
+                    
+					/* 
+					if (disabledDates.indexOf(dateString) != -1) {
                         return [false, "disabled-date", "This date is disabled"];
                     }
+					if (date.getDay() === 2) {
+                        return [false, "disabled-day", "Sunday is disabled"];
+                    } */
                     if (availableDates.indexOf(dateString) != -1) {
                         return [true, "available-date", "This date is available"];
-                    }
-                    return [false];
+                    } else {
+					return [false, "disabled-date", "This date is disabled"];	
+					}
+						
+                    return [true];
                 },
 				weekStart: 1,
-        daysOfWeekHighlighted: "6,0",
-        autoclose: true,
-        todayHighlight: true,
-		dateFormat: 'yy-mm-dd'
+				daysOfWeekHighlighted: "6,0",
+				autoclose: true,
+				todayHighlight: true,
+				dateFormat: 'dd-mm-yy'
             });
-        }); */
+        }); 
     </script>
  <script type="text/javascript">
  $(document).ready(function() {
