@@ -37,7 +37,7 @@ body p
                   @endif
             </div>
             <div style="width: 55%;float: right;margin-top: 15px;;padding:15px 10px 0px 10px;text-align: right;">
-               <h3 style="margin:0px;">This your E-Ticket.</h3>
+               <h3 style="margin:0px;">This is your E-Ticket.</h3>
                <p>This ticket is non refundable , non transferable and Void if altered.</p>
             </div>
              
@@ -82,14 +82,7 @@ body p
 									: {{ $voucherActivity->tour_date ? date(config('app.date_format'),strtotime($voucherActivity->tour_date)) : null }}
                                     </td>
                                    </tr>
-									  <tr >
-                   <td style="text-align: left;width:200px">
-                                       Timings
-                                    </td>
-                                    <td style="text-align: left;width:60%">
-                                    : {{date("h:i a",strtotime($ticket->created_at))}}
-                                    </td>
-									 </tr>
+									 
 									  <tr >
                     <td style="text-align: left;width:200px">
                                        Validity
