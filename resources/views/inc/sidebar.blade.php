@@ -394,6 +394,22 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			  
 		@endpermission
+		@permission('list.ActivityCanceledReport') 
+			  @php
+          $class=''; $active='';
+          if($controller == 'ReporsController' and in_array($action,array('voucherActivtyCanceledReport'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp    
+			   <!--<li class="nav-item">
+                <a href="{{ route('voucherActivtyCanceledReport') }}" class="nav-link {{$active}}">
+                   <i class="nav-icon fas fa-file"></i>
+                  <p>Activty Canceled Report</p>
+                </a>
+              </li>-->
+			  
+		@endpermission
 		@role(1)
         @php
         $class=''; $active='';

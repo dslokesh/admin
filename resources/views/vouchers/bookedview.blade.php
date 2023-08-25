@@ -555,9 +555,28 @@ $stepNameSize: 1.6rem;
                     <h3 class="card-title">
                       <strong> {{$activity->title}}</strong></h3>
                   </div>
+				  
+				 
+				  
 				<div class="col-md-4 text-right pl-5">
-				
-                    @if(($voucher->status_main == 5) and ($ap->ticket_generated == '0') and ($ticketCount > '0'))
+						@if(($ap->status == '0'))
+						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.cancel',$ap->id)}}" style="display:none;">
+						{{csrf_field()}}
+						</form>
+							<a class="btn-danger  float-right  btn-sm ml-2" href="javascript:void(0)" onclick="
+							if(confirm('Are you sure, You want to cancel this?'))
+							{
+							event.preventDefault();
+							document.getElementById('cancel-form-{{$ap->id}}').submit();
+							}
+							else
+							{
+							event.preventDefault();
+							}
+
+							"><i class="fas fa-times"></i> Cancel</a>
+						@endif
+                    @if(($voucher->status_main == 5) and ($ap->ticket_generated == '0') and ($ticketCount > '0') and ($ap->status == '0'))
 						<form id="tickets-generate-form-{{$ap->id}}" method="post" action="{{route('tickets.generate',$ap->id)}}" style="display:none;">
                                 {{csrf_field()}}
 								<input type="hidden" id="statusv" value="2" name="statusv"  /> 
@@ -577,12 +596,17 @@ $stepNameSize: 1.6rem;
                             
                             "><i class="fas fa-download"></i> Ticket</a>
 							
-							@elseif($ap->ticket_generated == '1')
+							@elseif(($ap->ticket_generated == '1') and ($ap->status == '0'))
 							<a class="btn btn-success float-right  btn-sm" href="{{route('ticket.dwnload',$ap->id)}}" ><i class="fas fa-download"></i> Ticket</a>
 							@endif
-							
+							@if($ap->status > 0)
+							<span class=" btn-danger float-right  btn-sm"  >{{ config('constants.voucherActivityStatus')[$ap->status] }}</span>
+							@endif
+                   
+                    
                     
                   </div>
+				  
 				   </div>
               </div>
               <div class="card-body">

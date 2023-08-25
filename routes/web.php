@@ -125,6 +125,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::post('get-pvt-transfer-amount', [VouchersController::class, 'getPVTtransferAmount'])->name('voucher.getPVTtransferAmount');
 		Route::post('voucher-activity-save', [VouchersController::class, 'activitySaveInVoucher'])->name('voucher.activity.save');
         Route::delete('voucher-activity-delete/{id}', [VouchersController::class, 'destroyActivityFromVoucher'])->name('voucher.activity.delete');
+		Route::post('voucher-activity-cancel/{id}', [VouchersController::class, 'cancelActivityFromVoucher'])->name('voucher.activity.cancel');
 		Route::post('activity-get-variant/{aid?}/{vid?}', [VouchersController::class, 'getActivityVariant'])->name('get-vouchers.activity.variant');
         Route::get('voucher-activity-itinerary-Pdf/{vid?}', [VouchersController::class, 'voucherActivityItineraryPdf'])->name('voucherActivityItineraryPdf');
         Route::get('voucher-invoice-Pdf/{vid?}', [VouchersController::class, 'voucherInvoicePdf'])->name('voucherInvoicePdf');
@@ -133,6 +134,8 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('voucher-report-export', [ReporsController::class, 'voucherReportExport'])->name('voucherReportExport');
         Route::post('voucher-report-save', [ReporsController::class, 'voucherReportSave'])->name('voucherReportSave');
         Route::post('voucher-hotel-input-save', [VouchersController::class, 'voucherHotelInputSave'])->name('voucherHotelInputSave');
+		 Route::get('voucher-activity-canceled-report', [ReporsController::class, 'voucherActivtyCanceledReport'])->name('voucherActivtyCanceledReport');
+		 Route::post('voucher-activity-refund-save', [ReporsController::class, 'activityRefundSave'])->name('activityRefundSave');
 
         Route::resource('agent-vouchers', AgentVouchersController::class);
         Route::get('agent-add-activity-vouchers/{vid?}', [AgentVouchersController::class, 'addActivityList'])->name('agent-vouchers.add.activity');
@@ -140,6 +143,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::post('agent-activity-get-variant/{aid?}/{vid?}', [AgentVouchersController::class, 'getActivityVariant'])->name('get-agent-vouchers.activity.variant');
         Route::post('agent-voucher-activity-save', [AgentVouchersController::class, 'activitySaveInVoucher'])->name('agent-voucher.activity.save');
         Route::delete('agent-voucher-activity-delete/{id}', [AgentVouchersController::class, 'destroyActivityFromVoucher'])->name('agent.voucher.activity.delete');
+		Route::post('agent-voucher-activity-cancel/{id}', [AgentVouchersController::class, 'cancelActivityFromVoucher'])->name('agent-voucher.activity.cancel');
         Route::post('agent-voucher-status-change/{id}', [AgentVouchersController::class, 'statusChangeVoucher'])->name('agent.vouchers.status.change');
         Route::get('auto-hotel', [AgentVouchersController::class, 'autocompleteHotel'])->name('auto.hotel');
 		 Route::get('agent-voucher-view/{vid?}', [AgentVouchersController::class, 'agentVoucherView'])->name('agentVoucherView');
@@ -150,6 +154,8 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		Route::get('agent-ledger-with-vat-report', [ReporsController::class, 'agentLedgerReportWithVat'])->name('agentLedgerReportWithVat');
         
         Route::resource('users', UsersController::class);
+		Route::get('profile-edit/{id}', [UsersController::class, 'editProfileForm'])->name('profile-edit');
+		Route::post('profile-edit/{id}', [UsersController::class, 'updateProfile'])->name('profile-edit-post');
 		Route::resource('agentamounts', AgentAmountController::class);
 		Route::post('voucher-status-change/{id}', [VouchersController::class, 'statusChangeVoucher'])->name('voucher.status.change');
 		Route::resource('tickets', TicketsController::class);

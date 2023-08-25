@@ -299,6 +299,7 @@ class UsersController extends Controller
         //pr($user);
 		if(Auth::user()->id == $id)
 		{
+			//pr($user);
 			return view('users.profile', compact('roles','user','countries','states','cities'));
 		}
 		else
@@ -399,6 +400,101 @@ class UsersController extends Controller
 		{
             return redirect('users')->with('success','Users Updated Successfully.');
 		}
+		
+        
+    }
+	
+	 /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+	 
+	 public function editProfileForm($id)
+    {
+        //$this->checkPermissionMethod('list.subadmin');
+        $user = User::find($id);
+        $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
+        $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
+        $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
+        $roles = Role::where('id', '!=' , '1')->where('id', '!=' , '3')->orderBy('name', 'ASC')->get();
+        //pr($user);
+		
+			return view('users.profile', compact('roles','user','countries','states','cities'));
+		
+        
+    }
+
+
+    public function updateProfile(Request $request, $id)
+    {
+        $user = User::find($id);
+       
+            $options['allow_img_size'] = 10;
+            $request->validate([
+                'first_name' => 'required|max:255|sanitizeScripts',
+                'last_name' => 'required|max:255|sanitizeScripts',
+                //'postcode' => 'nullable|max:20|sanitizeScripts',
+                //'email'=>'required|max:255|sanitizeScripts|email|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix|unique:users,email,' .$id,
+                'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024),     
+                //'is_active'=>'required',
+            ],
+            [
+                'first_name.sanitize_scripts' => 'Invalid value entered for Name field.',
+                'last_name.sanitize_scripts' => 'Invalid value entered for Name field.',
+                'postcode.sanitize_scripts' => 'Invalid value entered for Postcode field.',
+                'country.sanitize_scripts' => 'Invalid value entered for Country field.',
+                'city.sanitize_scripts' => 'Invalid value entered for City field.',
+                'email.sanitize_scripts' => 'Invalid value entered for Email Address field.',
+                'email.regex' => 'The email must be a valid email address.',
+            ]);
+        
+
+        
+
+        /** Below code for save image **/
+		$destinationPath = public_path('/uploads/users/');
+		//$newName = '';
+        //pr($request->all()); die;
+        $input = $request->all();
+		if ($request->hasFile('image')) {
+
+           
+			$fileName = $input['image']->getClientOriginalName();
+			$file = request()->file('image');
+			$fileNameArr = explode('.', $fileName);
+			$fileNameExt = end($fileNameArr);
+			$newName = date('His').rand() . time() . '.' . $fileNameExt;
+			$file->move($destinationPath, $newName);
+			$img = Image::make(public_path('/uploads/users/'.$newName));
+            $img->resize(250, 250, function($constraint) {
+				$constraint->aspectRatio();
+			});
+			$img->save(public_path('/uploads/users/thumb/'.$newName));
+			if($record->image != 'no-image.png'){
+            //** Below code for unlink old image **//
+			$oldImage = public_path('/uploads/users/'.$user->image);
+			$oldImageThumb = public_path('/uploads/users/thumb/'.$user->image);
+			if(!empty($user->image) && @getimagesize($oldImage) && file_exists($oldImage)) {
+				unlink($oldImage);
+				unlink($oldImageThumb);
+			}
+			}
+            $user->image = $newName;
+		}
+
+      
+        $user->name = $request->input('first_name');
+        $user->lname = $request->input('last_name');
+		$user->mobile = $request->input('mobile');
+		$user->updated_by = Auth::user()->id;
+        $user->save();
+		
+        
+			return redirect('/dashboard')->with('success','Profile Updated Successfully.');
+		
 		
         
     }

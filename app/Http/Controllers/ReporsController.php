@@ -342,5 +342,95 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
         return view('reports.agent-with-vat-ledger-report', compact('records','voucherStatus','agetid','agetName'));
 
     }
+	
+	public function voucherActivtyCanceledReport(Request $request)
+    {
+		$this->checkPermissionMethod('list.ActivityCanceledReport');
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		
+		$query = VoucherActivity::where('id','!=', null);
+		
+		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
+			
+			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+				 $query->where('canceled_date', '>=', $startDate);
+				 $query->where('canceled_date', '<=', $endDate);
+				}
+				}
+			}
+        if(isset($data['reference']) && !empty($data['reference'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('code', '=', $data['reference']);
+			});
+		}
+		
+		$query->where('status', '=', 1);
+			
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		
+        return view('reports.activity-canceled-report', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
+
+    }
+	
+	public function activityRefundSave(Request $request)
+    {
+		$data = $request->all();
+		
+		$record = VoucherActivity::where("id",$data['id'])->where('status', '=', 1)->first();
+		if($data['val'] <= $record->totalprice){
+			if(!empty($record)){
+				
+			$record->refund_amount = $data['val'];
+			$record->status = 2;
+			$record->refund_by = Auth::user()->id;
+			
+			$voucher = Voucher::where('id',$record->voucher_id)->select(['agent_id','vat_invoice','invoice_number'])->first();
+			$agent = User::find($voucher->agent_id);
+			if(!empty($agent))
+			{
+				
+				$agent->agent_amount_balance += $data['val'];
+				$agent->save();
+				
+				$agentAmount = new AgentAmount();
+				$agentAmount->agent_id = $agent->id;
+				$agentAmount->amount = $data['val'];
+				$agentAmount->date_of_receipt = date("Y-m-d");
+				$agentAmount->transaction_type = "Credit";
+				$agentAmount->transaction_from = 2;
+				$agentAmount->created_by = Auth::user()->id;
+				$agentAmount->updated_by = Auth::user()->id;
+				$agentAmount->receipt_no = $voucher->invoice_number;
+				$agentAmount->is_vat_invoice = $voucher->vat_invoice;
+				$agentAmount->save();
+				$record->save();
+				$response[] = array("status"=>1);
+			}else{
+			$response[] = array("status"=>2);
+			}
+			
+			}
+			else{
+			$response[] = array("status"=>3);
+			}
+			
+		}
+		else{
+			$response[] = array("status"=>4);
+		}
+		
+        return response()->json($response);
+	}
    
 }

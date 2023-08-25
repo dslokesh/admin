@@ -128,8 +128,8 @@
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
                     <td>{{$record->tour_date}}</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
-					<td>{{($record->voucher->customer)?$record->voucher->customer->name:''}}</td>
-					<td>{{($record->voucher->customer)?$record->voucher->customer->mobile:''}}</td>
+					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
+					<td>{{($record->voucher)?$record->voucher->guest_phone:''}}</td>
 					<td><input type="text" class="form-control inputsave" id="transfer_supp_ref_no{{$record->id}}" data-name="transfer_supp_ref_no"  data-id="{{$record->id}}" value="{{$record->transfer_supp_ref_no}}" /></td>
 					<td><input type="text" class="form-control inputsave" id="ticket_supp_ref_no{{$record->id}}" data-name="ticket_supp_ref_no"  data-id="{{$record->id}}" value="{{$record->ticket_supp_ref_no}}" /></td>
 					<td><input type="hidden" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  />{{$record->pickup_location}}</td>

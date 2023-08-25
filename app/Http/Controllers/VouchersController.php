@@ -821,11 +821,12 @@ class VouchersController extends Controller
 	$activityPrices = ActivityPrices::where('activity_id', $data['act'])->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')->get();
 		
 		$dates = SiteHelpers::getDateListBoth($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out);
+		$disabledDay = SiteHelpers::getNovableActivityDays($activity->availability);
 		
 		$typeActivities = config("constants.typeActivities"); 
 		$returnHTML = view('vouchers.activities-add-view', compact('activity','aid','vid','voucher','typeActivities','activityPrices'))->render();
 		
-		return response()->json(array('success' => true, 'html'=>$returnHTML, 'dates'=>$dates));	
+		return response()->json(array('success' => true, 'html'=>$returnHTML, 'dates'=>$dates,'disabledDay'=>$disabledDay));	
 			
     }
 	
@@ -970,6 +971,8 @@ class VouchersController extends Controller
         $record->delete();
         return redirect()->back()->with('success', 'Activity Deleted Successfully.');
     }
+	
+	
 	
  public function voucherActivityItineraryPdf(Request $request, $vid)
     {
@@ -1150,4 +1153,15 @@ class VouchersController extends Controller
 		$response[] = array("status"=>1);
         return response()->json($response);
 	}
+	
+	public function cancelActivityFromVoucher($id)
+	{
+		$record = VoucherActivity::find($id);
+		$record->status = 1;
+		$record->canceled_date = Carbon::now()->toDateTimeString();
+		$record->save();
+		return redirect()->back()->with('success', 'Activity Canceled Successfully.');
+	}
 }
+
+	

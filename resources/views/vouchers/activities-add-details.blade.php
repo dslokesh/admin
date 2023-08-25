@@ -439,7 +439,8 @@ table.rounded-corners tbody tr:hover {
 @endsection
 
 @php
-$dates = SiteHelpers::getDateListBoth($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out)
+$dates = SiteHelpers::getDateListBoth($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out);
+$disabledDay = SiteHelpers::getNovableActivityDays($activity->availability);
 @endphp
 
 @section('scripts')
@@ -448,19 +449,25 @@ $dates = SiteHelpers::getDateListBoth($voucher->travel_from_date,$voucher->trave
           
             var disabledDates = "{{$dates['disabledDates']}}";
             var availableDates = "{{$dates['availableDates']}}";
+			 var disabledDay = "{{$disabledDay}}";
 
             
             $(".tour_datepicker").datepicker({
                 beforeShowDay: function(date) {
                     var dateString = $.datepicker.formatDate('yy-mm-dd', date);
                     
-					/* 
-					if (disabledDates.indexOf(dateString) != -1) {
-                        return [false, "disabled-date", "This date is disabled"];
-                    }
-					if (date.getDay() === 2) {
-                        return [false, "disabled-day", "Sunday is disabled"];
-                    } */
+					/* for (let i = 0; i < disabledDay.length; ++i) {
+						if (date.getDay() === disabledDay[i]) {
+							return [false, "disabled-day", "This date is disabled"];
+						}
+					} */
+					//console.log(disabledDay);
+					if(disabledDay.length > 0){
+						if (disabledDay.indexOf(date.getDay()) != -1) {
+							return [false, "disabled-day", "This day is disabled"];
+						}
+					}
+					
                     if (availableDates.indexOf(dateString) != -1) {
                         return [true, "available-date", "This date is available"];
                     } else {
@@ -469,6 +476,7 @@ $dates = SiteHelpers::getDateListBoth($voucher->travel_from_date,$voucher->trave
 						
                     return [true];
                 },
+				minDate: new Date(),
 				weekStart: 1,
 				daysOfWeekHighlighted: "6,0",
 				autoclose: true,

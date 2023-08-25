@@ -32,6 +32,11 @@ return [
 	5 => 'Vouchered',
 	6 => 'Canceled',
 	],
+	'voucherActivityStatus' => [
+	0 => 'Booked',
+	1 => 'Canceled',
+	2 => 'Refunded',
+	],
 	//'RECAPTCHA_SITE_KEY' => '6LdeR9UUAAAAADpy3OzNUr6P04htVf3UtZtVFMEZ',
 	//'RECAPTCHA_SECRET_KEY' => '6LdeR9UUAAAAAL7zjTU6NhSfCVGqj6k1Rmji1cvv',
 	//'formErrorMsg' => 'There are some error in form submission, please find error in below form.',

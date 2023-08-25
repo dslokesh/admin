@@ -400,12 +400,16 @@ $(document).on('click', '.loadvari', function(evt) {
 			//var response = JSON.parse(data.dates);
 				var disabledDates = data.dates.disabledDates;
 				var availableDates = data.dates.availableDates;
+				var disabledDay = data.disabledDay;
 				$(".tour_datepicker").datepicker({
                         beforeShowDay: function(date) {
                             var dateString = $.datepicker.formatDate('yy-mm-dd', date);
-                            /* if (disabledDates.indexOf(dateString) != -1) {
-                                return [false, "disabled-date", "This date is disabled"];
-                            } */
+							
+							if(disabledDay.length > 0){
+								if (disabledDay.indexOf(date.getDay()) != -1) {
+									return [false, "disabled-day", "This day is disabled"];
+								}
+							}
                             if (availableDates.indexOf(dateString) != -1) {
                                 return [true, "available-date", "This date is available"];
                             }else{
@@ -413,6 +417,7 @@ $(document).on('click', '.loadvari', function(evt) {
 							}
                             return [true];
                         },
+							minDate: new Date(),
 							weekStart: 1,
 							daysOfWeekHighlighted: "6,0",
 							autoclose: true,

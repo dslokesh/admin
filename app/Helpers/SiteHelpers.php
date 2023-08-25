@@ -198,6 +198,43 @@ class SiteHelpers
 		return $dateData;
     }
 	
+	public function getNovableActivityDays($availability)
+    {
+		$days = [];
+			$notAvDay = [];
+		if(($availability != 'All') and !empty(($availability))){
+		
+		$daysName = [
+		'Sunday' => 0,
+		'Monday' => 1,
+		'Tuesday' => 2,
+		'Wednesday' => 3,
+		'Thursday' => 4,
+		'Friday' => 5,
+		'Saturday' => 6,
+		];
+			
+			if(!empty($availability)){
+				$days = explode(",",$availability);
+				
+			foreach ($daysName as $k => $day) {
+				if(in_array($k,$days)){
+				//$notAvDay[] = $k;
+				}
+				else{
+					$notAvDay[] = $day;
+				}
+			}
+			}
+			
+			//print_r($notAvDay);
+	
+		}
+		
+		return json_encode($notAvDay);
+    }
+	
+	
 	public function voucherStatus($val)
     {
 		$color = '';

@@ -20,8 +20,8 @@
 
     <!-- Main content -->
     <section class="content">
-    <form action="{{ route('users.update', $user->id) }}" method="post" class="form" enctype="multipart/form-data">
-    <input type="hidden" name="_method" value="put">
+    <form action="{{ route('profile-edit-post', $user->id) }}" method="post" class="form" enctype="multipart/form-data">
+    
     {{ csrf_field() }}
     <div class="row">
         <div class="col-md-12">
@@ -30,7 +30,7 @@
               <h3 class="card-title">Edit User</h3>
             </div>
             <div class="card-body">
-              <div class="form-group">
+              <div class="form-group col-md-6">
                 <label for="inputName">First Name: <span class="red">*</span></label>
                 <input type="text" id="first_name" name="first_name" value="{{ old('first_name') ?: $user->name }}" class="form-control"  placeholder="Name" />
                 @if ($errors->has('first_name'))
@@ -46,27 +46,19 @@
               </div>
               <div class="form-group">
                 <label for="inputName">Mobile Number:</label>
-                <input type="text" id="phone" name="phone" value="{{ old('phone') ?: $user->phone }}" class="form-control"  placeholder="Mobile Number" />
-                @if ($errors->has('phone'))
-                    <span class="text-danger">{{ $errors->first('phone') }}</span>
+                <input type="text" id="mobile" name="mobile" value="{{ old('mobile') ?: $user->mobile }}" class="form-control"  placeholder="Mobile Number" />
+                @if ($errors->has('mobile'))
+                    <span class="text-danger">{{ $errors->first('mobile') }}</span>
                 @endif
               </div>
               <div class="form-group">
                 <label for="inputName">Email Address: <span class="red">*</span></label>
-                <input type="text" id="email" name="email" value="{{ old('email') ?: $user->email }}" class="form-control"  placeholder="Email Address" />
+                <input type="text" id="email" name="email" readonly value="{{ old('email') ?: $user->email }}" class="form-control"  placeholder="Email Address" />
                 @if ($errors->has('email'))
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
               </div>
           
-            
-              <div class="form-group">
-                <label for="inputName">Postcode:</label>
-                <input type="text" id="postcode" name="postcode" value="{{ old('postcode') ?: $user->postcode }}" class="form-control"  placeholder="Postcode" />
-                @if ($errors->has('postcode'))
-                    <span class="text-danger">{{ $errors->first('postcode') }}</span>
-                @endif
-              </div>
               
               <div class="form-group">
                 <label for="inputName">Profile Image:</label>
@@ -82,13 +74,6 @@
               @endif
 
              
-              <div class="form-group">
-                <label for="inputName">Status: <span class="red">*</span></label>
-                <select name="is_active" id="is_active" class="form-control">
-                    <option value="1" @if($user->is_active ==1) {{'selected="selected"'}} @endif>Active</option>
-					          <option value="0" @if($user->is_active ==0) {{'selected="selected"'}} @endif >Inactive</option>
-                 </select>
-              </div>
             </div>
             <!-- /.card-body -->
           </div>

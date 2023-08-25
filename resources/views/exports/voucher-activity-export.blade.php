@@ -42,8 +42,8 @@
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
                     <td>{{$record->tour_date}}</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
-					<td>{{($record->voucher->customer)?$record->voucher->customer->name:''}}</td>
-					<td>{{($record->voucher->customer)?$record->voucher->customer->mobile:''}}</td>
+					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
+					<td>{{($record->voucher)?$record->voucher->guest_phone:''}}</td>
 					<td>{{$record->transfer_supp_ref_no}}</td>
 					<td>{{$record->ticket_supp_ref_no}}</td>
 					<td>{{$record->pickup_location}}</td>
