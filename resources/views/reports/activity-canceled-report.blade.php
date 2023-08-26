@@ -69,19 +69,7 @@
                     <input type="text" name="reference" value="{{ request('reference') }}" class="form-control"  placeholder="Reference Number" />
                   </div>
                 </div>
-                <div class="col-auto col-md-3" style="display:none">
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">Booking Status</div>
-                  </div>
-                 <select name="booking_status" id="booking_status" class="form-control">
-						<option value = "">All</option>
-						@foreach($voucherStatus as $vsk => $vs)
-						<option value = "{{$vsk}}" @if(request('booking_status')==$vsk) selected="selected" @endif>{{$vs}}</option>
-						@endforeach
-                 </select>
-                </div>
-              </div>
+                
                
               <div class="col-auto col-md-2">
                 <button class="btn btn-info mb-2" type="submit">Filter</button>
