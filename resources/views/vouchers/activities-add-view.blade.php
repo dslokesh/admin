@@ -156,7 +156,7 @@
 			  <div class="row">
 
         <div class="col-12 mt-3">
-          <button type="submit" class="btn btn-info  float-right" name="save">Add To Cart</button>
+          <button type="submit" class="btn btn-sm  btn-primary-flip float-right" name="save">Add To Cart</button>
         </div>
       </div>
 			 </form>

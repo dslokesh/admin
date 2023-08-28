@@ -14,6 +14,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <link href="{{asset('dist/css/style.css')}}" rel="stylesheet">
+  <link href="{{asset('dist/css/custom.css')}}" rel="stylesheet">
+
 </head>
 <body class="hold-transition login-page">
 <div class="login-box" style="width:50%">
@@ -29,6 +31,7 @@
   <!-- /.card -->
 </div>
 <!-- /.login-box -->
+@include('inc.footer')
 
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>

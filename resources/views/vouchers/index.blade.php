@@ -45,7 +45,7 @@
                     <th>Agency</th>
                     <th>Status</th>
                     <th>Travel Date</th>
-                    <th>Created</th>
+                    <th>Created On</th>
 					<th>Hotels</th>
 					<th width="7%">Activities</th>
 					<th>Invoice</th>
@@ -88,8 +88,8 @@
 				  <td>{{ ($record->code)}}</td>
                     <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
                      <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>
-					   <td>{{ $record->travel_from_date ? date(config('app.date_format'),strtotime($record->travel_from_date)) : null }} <b>To</b> {{ $record->travel_to_date ? date(config('app.date_format'),strtotime($record->travel_to_date)) : null }}</td>
-                    <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
+					   <td>{{ $record->travel_from_date ? date("M d Y, H:i:s",strtotime($record->travel_from_date)) : null }} <b>To</b> {{ $record->travel_to_date ? date(config('app.date_format'),strtotime($record->travel_to_date)) : null }}</td>
+                    <td>{{ $record->created_at ? date("M d Y, H:i:s",strtotime($record->created_at)) : null }}</td>
                   
 					 <td>
 					 @if($record->is_hotel == 1)

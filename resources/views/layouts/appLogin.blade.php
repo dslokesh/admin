@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+  <link href="{{asset('dist/css/custom.css')}}" rel="stylesheet">
+
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -27,6 +29,7 @@
   </div>
   <!-- /.card -->
 </div>
+@include('inc.footer')
 <!-- /.login-box -->
 
 <!-- jQuery -->

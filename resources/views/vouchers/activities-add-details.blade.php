@@ -1,135 +1,10 @@
 @extends('layouts.app')
 @section('content')
-<style>
-
-.form-control {
-    display: block;
-    width: 100%;
-    height: calc(2.25rem + 2px);
-    padding: 0.375rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    box-shadow: inset 0 0 0 transparent;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    text-align: left;
-}
-
-.card-body {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 0.75rem;
-}
-table.rounded-corners {
-  border-spacing: 0;
-  border-collapse: separate;
-  border-radius: 10px;
-}
-
-table.rounded-corners th, table.rounded-corners td {
-  /* border: 1px solid #dee2e6; */
-  padding: 5px;
-  vertical-align: middle;
-}
-table.rounded-corners {
-  border-spacing: 0;
-  border-collapse: separate;
-  border-radius: 10px;
-  border: 1px solid #dee2e6;
-}
-
-table.rounded-corners {
- border-spacing: 0;
- border-collapse: separate;
- border-radius: 5px;
- border: 1px solid #dee2e6;
-}
-
-/* Apply a border to the right of all but the last column */
-table.rounded-corners th:not(:last-child),
-table.rounded-corners td:not(:last-child) {
- /* border-right: 1px solid #dee2e6; */
-}
-
-/* Apply a border to the bottom of all but the last row */
-table.rounded-corners>thead>tr:not(:last-child)>th,
-table.rounded-corners>thead>tr:not(:last-child)>td,
-table.rounded-corners>tbody>tr:not(:last-child)>th,
-table.rounded-corners>tbody>tr:not(:last-child)>td,
-table.rounded-corners>tfoot>tr:not(:last-child)>th,
-table.rounded-corners>tfoot>tr:not(:last-child)>td,
-table.rounded-corners>tr:not(:last-child)>td,
-table.rounded-corners>tr:not(:last-child)>th,
-table.rounded-corners>thead:not(:last-child),
-table.rounded-corners>tbody:not(:last-child),
-table.rounded-corners>tfoot:not(:last-child) {
- border-bottom: 1px solid #dee2e6;
-}
-
-table.rounded-corners th {
-  background-color: #ddd;
-}
-
-table.rounded-corners {
- /* Change these properties */
- --border: 1px solid #dee2e6;
- border-radius: 5px;
- 
-
- /* Don't change these properties */
- border-spacing: 0;
- border-collapse: separate;
- border: var(--border);
- overflow: hidden;
-}
-
-/* Apply a border to the right of all but the last column */
-table.rounded-corners th:not(:last-child),
-table.rounded-corners td:not(:last-child) {
- /* border-right: var(--border); */
-}
-
-/* Apply a border to the bottom of all but the last row */
-table.rounded-corners>thead>tr:not(:last-child)>th,
-table.rounded-corners>thead>tr:not(:last-child)>td,
-table.rounded-corners>tbody>tr:not(:last-child)>th,
-table.rounded-corners>tbody>tr:not(:last-child)>td,
-table.rounded-corners>tfoot>tr:not(:last-child)>th,
-table.rounded-corners>tfoot>tr:not(:last-child)>td,
-table.rounded-corners>tr:not(:last-child)>td,
-table.rounded-corners>tr:not(:last-child)>th,
-table.rounded-corners>thead:not(:last-child),
-table.rounded-corners>tbody:not(:last-child),
-table.rounded-corners>tfoot:not(:last-child) {
- border-bottom: var(--border);
-}
-table.rounded-corners tbody tr:hover {
-  background-color: #eeeeee;
-}
-.card-body-hover:hover
-{
-  background-color: #eeeeee;
-}
-.form-control:disabled, .form-control[readonly] {
-    background-color: #fff;
-    opacity: 1;
-}
-
-.disabled-date { background-color: #ccc; }
-.available-date { background-color: #b2ffb2; }
-.disabled-day { background-color: #FF00B9; }
-</style>
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <section class="content-header d-done" >
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <!-- <div class="col-sm-6">
             <h1>Voucher Code :{{$voucher->code}}</h1>
           </div>
           <div class="col-sm-6">
@@ -138,14 +13,14 @@ table.rounded-corners tbody tr:hover {
               <li class="breadcrumb-item"><a href="{{ route('voucher.add.activity',[$voucher->id]) }}">Activities</a></li>
               <li class="breadcrumb-item active">Activity Details</li>
             </ol>
-          </div>
+          </div> -->
         </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" id="activities-list-blade">
     <div class="row">
         <div class="col-md-12">
 		
@@ -156,47 +31,53 @@ table.rounded-corners tbody tr:hover {
 			
 			 <div class="row">
 			
-				  <div class="form-group col-md-3" style="">
-                 @if(!empty($activity->image))
-               
-                  <img src="{{asset('uploads/activities/thumb/'.$activity->image)}}"  class="cimage" />
-                
-				@endif
-              </div>
+			
+						<div class="form-group col-md-8" style="">
+							@if(!empty($activity->image))
+						
+							<img src="{{asset('uploads/activities/'.$activity->image)}}"  class="img-fluid" />
+							
+							@endif
+						</div>
 			   
-				 <div class="slider-outer col-md-4">
-				 <div class="owl-theme owl-carousel  float-right">
+						<div class="slider-outer col-md-4">
+						<div class="owl-theme owl-carousel  float-right">
 				 
-                       @if($activity->images->count() > 0)
+                       	@if($activity->images->count() > 0)
                            
                                 
                                 @foreach($activity->images as $image)
                                 <div clss="item">
-                              <img src="{{asset('uploads/activities/thumb/'.$image->filename)}}"  class="img-responsive">
+                              <img src="{{asset('uploads/activities/thumb/'.$image->filename)}}"  class="img-fluid">
                                 </div>
                                 @endforeach
                            
                             @endif 
-                            </div>
+						</div>
 				 </div>
 				 
 			 </div>
-			 <hr class="col-xs-12">
-			  <div class="row">
-			   <div class="col-md-6" >
-				 <h3><i class="far fa-fw  fa-check-circle"></i> {{$activity->title}}</h3>
-				 
-              </div>
-			   <div class="col-md-6 text-right">
-			   @php
-            $minPrice = SiteHelpers::getActivityLowPrice($activity->id,$activity->agent_id,$voucher);
-          @endphp
-		  <small>Starting From </small><br/>
-				 <h3>AED {{$minPrice}}</h3>
-              </div>
+</div>
+</div>
+<div class="card">
+           
+			
+		   <div class="card-body">
+		 	 <div class="row">
+				<div class="col-md-6" >
+					<h3><i class="far fa-fw  fa-check-circle"></i> {{$activity->title}}</h3>
+					
+				</div>
+				<div class="col-md-6 text-right">
+							@php
+							$minPrice = SiteHelpers::getActivityLowPrice($activity->id,$activity->agent_id,$voucher);
+						@endphp
+						<small>Starting From </small><br/>
+						<h3>AED {{$minPrice}}</h3>
+					</div>
 			  
 			  </div>
-			  <hr class="col-xs-12">
+			  
 			    <div class="row">
 					<div class="col-md-12">
 						<ul class="list-inline list-group list-group-horizontal">
@@ -215,8 +96,14 @@ table.rounded-corners tbody tr:hover {
 						</ul>
 					</div>
 			  </div>
-			 
-			  <hr class="col-xs-12">
+			  </div>
+			  </div>
+			  <div class="card">
+           
+			
+		   <div class="card-body">
+			  
+		
 
 				<form action="{{route('voucher.activity.save')}}" method="post" class="form" >
 				{{ csrf_field() }}
@@ -378,43 +265,70 @@ table.rounded-corners tbody tr:hover {
 
         <div class="col-12 mt-3">
          
-			<button type="submit" class="btn btn-success float-right mr-2" name="save_and_continue">Add To Cart</button>
+			<button type="submit" class="btn btn-sm btn-primary-flip float-right mr-2" name="save_and_continue">Add To Cart</button>
         </div>
       </div>
 			 </form>
-		<div class="col-md-12">
-			  <div class="row mt-5">
-				
-				  <div class="form-group col-md-12">
-				  <hr class="col-xs-12">
-                <h4>Description</h4>
-				{!! $activity->description !!}
-              </div>
-			   <div class="form-group col-md-12" >
-			   <hr class="col-xs-12">
-				<h4>Inclusion</h4>
-				{!! $activity->inclusion !!}
-              </div>
-			   <div class="form-group col-md-12">
-			   <hr class="col-xs-12">
-			   <h4>Booking Policy</h4>
-				{!! $activity->booking_policy !!}
-              </div>
-			   <div class="form-group col-md-12" >
-			   <hr class="col-xs-12">
-			   <h4>Cancellation Policy</h4>
-				{!! $activity->cancellation_policy !!}
-              </div>
-              </div>
-			 
+			 </div>
 			  </div>
-<div class="row mb-20" style="margin-bottom: 20px;">
-<hr class="col-xs-12">
-	<div class="col-md-2 mb-20">
+			  <div class="card">
+           
+			
+		   <div class="card-body">
+		
+				
+				  	<div class="form-group col-md-12">
+				
+						<h4>Description</h4>
+						{!! $activity->description !!}
+              		</div>
+					  </div>
+			  </div>
+			  <div class="card">
+           
+			
+		   <div class="card-body">
+					<div class="form-group col-md-12" >
+					
+						<h4>Inclusion</h4>
+						{!! $activity->inclusion !!}
+					</div>
+					</div>
+			  </div>
+			  <div class="card">
+           
+			
+		   <div class="card-body">
+					<div class="form-group col-md-12">
+						
+						<h4>Booking Policy</h4>
+						{!! $activity->booking_policy !!}
+					</div>
+					</div>
+			  </div>
+			  <div class="card">
+           
+			
+		   <div class="card-body">
+					<div class="form-group col-md-12" >
+						
+						<h4>Cancellation Policy</h4>
+						{!! $activity->cancellation_policy !!}
+					</div>
+					</div>
+			  </div>
+			  <div class="card">
+           
+			
+		   <div class="card-body">
+             
+<div class="row mb-20">
+
+	<div class="col-md-2 ">
 	<a href="{{route('voucher.add.activity',$vid)}}" class="btn btn-secondary mr-2">Back</a>
 	</div>
-	<div class="col-md-2 offset-8 mb-20 pull-right">
-		<a href="{{route('vouchers.show',$vid)}}" class="btn btn-primary mr-2">View Voucher</a>
+	<div class="col-md-2 offset-8 pull-right">
+		<a href="{{route('vouchers.show',$vid)}}" class="btn btn-primary mr-2">Checkout</a>
 	</div>
 	
 

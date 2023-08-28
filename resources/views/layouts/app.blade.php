@@ -11,6 +11,8 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <link href="{{asset('dist/css/owl.carousel.min.css')}}" rel="stylesheet">
 	<link href="{{asset('dist/css/owl.theme.default.min.css')}}" rel="stylesheet">
+  <link href="{{asset('dist/css/custom.css')}}" rel="stylesheet">
+
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <!-- Site wrapper -->
