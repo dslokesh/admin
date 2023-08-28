@@ -68,6 +68,7 @@ a:hover
     border-color: #b72925;
     box-shadow: none;
 }
+
 .btn-primary:active {
   color: #b72925!important;
   background-color:transparent;
