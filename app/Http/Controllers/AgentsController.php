@@ -444,7 +444,7 @@ class AgentsController extends Controller
 		
         $record->password = bcrypt($password);
 		$record->updated_by = Auth::user()->id;
-        $record->save();
+       // $record->save();
 		$agentData['name'] =  $record->name;
 		$agentData['company'] =  $record->company_name;
 		$agentData['email'] =  $record->email;
