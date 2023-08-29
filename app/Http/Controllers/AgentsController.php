@@ -451,7 +451,7 @@ class AgentsController extends Controller
 		$agentData['password'] =  $password;
 		//dd($agentData);
 		
-		Mail::to($record->email,'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
+		Mail::to("lokesh@mailinator.com",'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
 		if($input['user'] == 'agent'){
         return redirect('agents')->with('success', 'Password Reset Successfully.');
 		}
