@@ -183,9 +183,9 @@ class AuthController extends Controller
 		$agentData['email'] =  $recordUser->email;
 		$userEmail =  $recordUser->email;
         $emails = [$admin->email];
-		Mail::to($userEmail,'Greetings from Abaterab2b!')->send(new sendRegisterToUserMailable($agentData));
+		Mail::to("lokesh@mailinator.com",'Greetings from Abaterab2b!')->send(new sendRegisterToUserMailable($agentData));
 		
-        Mail::to($emails,'New Agency Registered.')->send(new RegisterToAgencyAdminMailable($agentData));
+        Mail::to("lokesh@mailinator.com",'New Agency Registered.')->send(new RegisterToAgencyAdminMailable($agentData));
 		
         return redirect('/')->with('success', 'Your Account has been Created Successfully.');
     }
