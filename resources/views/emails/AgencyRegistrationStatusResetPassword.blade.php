@@ -1,13 +1,21 @@
-@component('mail::message')
-<h3> Hello {{$technician_details['name']}},</h3>
-<p style="margin:0 0 12px 0;font-size:14px;line-height:24px;font-family:Arial,sans-serif;">
-	Greetings from Abaterab2b!<br>
-    Here are the login details :-<br>
-	Email: {{$technician_details['email']}}<br>
-	Password: <b>{{$technician_details['password']}}</b>
-</p>
-<br>
+@extends('emails.layout')
+@section('message')
 
-Thanks,<br>
-{{ config('app.name') }}
-@endcomponent
+<div style="width: 100%;margin: 20px 0px;padding: 0px 20px">
+		<p>
+			<strong>Dear {{$technician_details['name']}},</strong>
+		</p>
+		<p>Greetings from Abaterab2b!</p>
+ 
+<p>Here are the login details</p>
+ 
+<p>Email: {{$technician_details['email']}}<br>
+	Password: <b>{{$technician_details['password']}}</b></p>
+
+
+ 
+<p><strong>Thanks</br></br>Team Abatera B2B </strong></p>
+	</div>
+
+
+@endsection
