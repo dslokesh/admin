@@ -369,10 +369,10 @@
 				   <tr>
                     <td>Ticket Only</td>
 					<td>
-		{{SiteHelpers::format_minutes_to_hours($pdata->booking_window_valueto)}}
+		{{$pdata->booking_window_valueto}} Hour(s)
 					</td>
                     <td>
-					{{SiteHelpers::format_minutes_to_hours($pdata->cancellation_value_to)}}
+					{{$pdata->cancellation_value_to}} Hour(s)
 					
 					</td>
                   </tr>
@@ -384,11 +384,11 @@
 					
                     <td>Ticket with SIC TFR</td>
 					<td>
-					{{SiteHelpers::format_minutes_to_hours($pdata->booking_window_valueSIC)}}
+					{{$pdata->booking_window_valueSIC}} Hour(s)
 					
 					</td>
                     <td>
-			{{SiteHelpers::format_minutes_to_hours($pdata->cancellation_valueSIC)}}
+			{{$pdata->cancellation_valueSIC}} Hour(s)
 					</td>
                   </tr>
 				   @if($activity->pvt_TFRS==1)
@@ -398,10 +398,10 @@
 					@endif
                     <td>Ticket with PVT TFR</td>
 					<td>
-		{{SiteHelpers::format_minutes_to_hours($pdata->booking_window_valuePVT)}}
+		{{$pdata->booking_window_valuePVT}} Hour(s)
 					</td>
                     <td>
-			{{SiteHelpers::format_minutes_to_hours($pdata->cancellation_valuePVT)}}
+			{{$pdata->cancellation_valuePVT}} Hour(s)
 					</td>
                   </tr>
 				  </table>

@@ -155,7 +155,7 @@ class SiteHelpers
 			$interval = new \DateInterval('P1D'); // 1 day interval
 			$period = new \DatePeriod($start, $interval, $end);
 			foreach ($period as $date) {
-				$dt = $date->format('d-m-Y');
+				$dt = $date->format('Y-m-d');
 				if(!in_array($dt,$blackDate)){
 				$dates[] = $dt;
 				}

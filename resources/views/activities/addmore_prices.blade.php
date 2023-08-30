@@ -139,8 +139,8 @@
                   <thead>
                   <tr>
                     <th>Variant</th>
-					<th>Booking Window Value (In Minutes)</th>
-					<th>Cancellation Value (In Minutes)</th>
+					<th>Booking Window Value (In Hours)</th>
+					<th>Cancellation Value (In Hours)</th>
                    
                   </tr>
 				   <tr>

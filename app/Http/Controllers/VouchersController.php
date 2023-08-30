@@ -882,8 +882,16 @@ class VouchersController extends Controller
 	{
 		
 		$voucher_id = $request->input('v_id');
-		$activity_vat = $request->input('activity_vat');
 		$activity_id = $request->input('activity_id');
+		$voucher = Voucher::find($voucher_id);
+		$activity = Activity::find($activity_id);
+		$startDate = $voucher->travel_from_date;
+		$endDate = $voucher->travel_to_date;
+		$getAvailableDateList = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out);
+		//dd($getAvailableDateList);
+		
+		$activity_vat = $request->input('activity_vat');
+		
 		$variant_name = $request->input('variant_name');
 		$variant_code = $request->input('variant_code');
 		$transfer_option = $request->input('transfer_option');
@@ -909,7 +917,14 @@ class VouchersController extends Controller
 		$total_activity_amount = 0;
 		foreach($activity_select as $k => $v)
 		{
+			
+			
 			if($totalprice[$k] > 0){
+				$tour_dt = date("Y-m-d",strtotime($tour_date[$k]));
+				if(!in_array($tour_dt,$getAvailableDateList)){
+				return redirect()->back()->with('error', 'This Tour is not available for Selected Date. Kindly Contact Customer Service for more details.');
+				}
+			
 			$data[] = [
 			'voucher_id' => $voucher_id,
 			'activity_id' => $activity_id,
@@ -918,7 +933,7 @@ class VouchersController extends Controller
 			'variant_name' => $variant_name[$k],
 			'variant_code' => $variant_code[$k],
 			'transfer_option' => $transfer_option[$k],
-			'tour_date' => date("Y-m-d",strtotime($tour_date[$k])),
+			'tour_date' => $tour_dt,
 			'pvt_traf_val_with_markup' => $pvt_traf_val_with_markup[$k],
 			'transfer_zone' => $transfer_zone[$k],
 			'zonevalprice_without_markup' => $zonevalprice_without_markup[$k],

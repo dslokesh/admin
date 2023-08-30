@@ -190,7 +190,7 @@
 					</td>
 							<input type="text" style="display:none"  id="pickup_location{{$kk}}" value=""  name="pickup_location[{{ $ap->u_code }}]" placeholder="Pickup Location" class="form-control "   />
 					<td>
-					<input type="text"id="tour_date{{$kk}}" value=""  name="tour_date[{{ $ap->u_code }}]" required disabled="disabled"  placeholder="Tour Date" class="form-control tour_datepicker"   />
+					<input type="text"id="tour_date{{$kk}}" value="{{date('d-m-Y',strtotime($voucher->travel_from_date))}}" name="tour_date[{{ $ap->u_code }}]" required disabled="disabled"  placeholder="Tour Date" class="form-control tour_datepicker"   />
 					
 					</td>
 					<td><select name="adult[{{ $ap->u_code }}]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" disabled="disabled">
@@ -375,12 +375,8 @@ $disabledDay = SiteHelpers::getNovableActivityDays($activity->availability);
 							return [false, "disabled-day", "This date is disabled"];
 						}
 					} */
-					//console.log(disabledDay);
-					if(disabledDay.length > 0){
-						if (disabledDay.indexOf(date.getDay()) != -1) {
-							return [false, "disabled-day", "This day is disabled"];
-						}
-					}
+					//console.log(availableDates);
+					
 					
                     if (availableDates.indexOf(dateString) != -1) {
                         return [true, "available-date", "This date is available"];

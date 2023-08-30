@@ -305,7 +305,7 @@ table.rounded-corners tbody tr:hover {
 							<input type="text" style="display:none"  id="pickup_location{{$kk}}" value=""  name="pickup_location[{{ $ap->u_code }}]" placeholder="Pickup Location" class="form-control"   />
 					
 					<td>
-					<input type="text"id="tour_date{{$kk}}" value=""  name="tour_date[{{ $ap->u_code }}]" required disabled="disabled"  placeholder="Tour Date" class="form-control tour_datepicker"   />
+					<input type="text"id="tour_date{{$kk}}" value="{{date('d-m-Y',strtotime($voucher->travel_from_date))}}" name="tour_date[{{ $ap->u_code }}]" required disabled="disabled"  placeholder="Tour Date" class="form-control tour_datepicker"   />
 					
 					</td>
 					<td><select name="adult[{{ $ap->u_code }}]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" disabled="disabled">

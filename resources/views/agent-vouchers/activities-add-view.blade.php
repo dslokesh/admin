@@ -83,7 +83,7 @@
 							<input type="hidden" style="display:none;border:none;" id="pickup_location{{$kk}}" value=""  name="pickup_location[{{$ap->u_code}}]" placeholder="Pickup Location" class="form-control"   />
 						
 					<td>
-					<input type="text"id="tour_date{{$kk}}" value=""  name="tour_date[{{ $ap->u_code }}]" placeholder="Tour Date" class="form-control tour_datepicker" required @if($kk > '0') disabled="disabled" @endif     />
+					<input type="text"id="tour_date{{$kk}}" value="{{date('d-m-Y',strtotime($voucher->travel_from_date))}}"  name="tour_date[{{ $ap->u_code }}]" placeholder="Tour Date" class="form-control tour_datepicker" required @if($kk > '0') disabled="disabled" @endif     />
 					
 					</td>
 					<td><select name="adult[{{$ap->u_code}}]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" @if($kk > '0') disabled="disabled" @endif>
