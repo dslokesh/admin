@@ -421,4 +421,35 @@ class SiteHelpers
 		
     }
 	
+	
+	public function checkAvailableBookingTimeSlot($u_code,$activity_id,$tourDt,$transfer_option)
+    {
+		
+		$activityPrice = ActivityPrices::where(['u_code'=>$u_code,'activity_id'=>$activity_id])->select('start_time','end_time','booking_window_valueto','booking_window_valueSIC','booking_window_valuePVT')->first();
+			$startTime = $activityPrice->start_time;
+			$combinedDatetime = $tourDt . ' ' . $startTime;
+			$validuptoTime = strtotime($combinedDatetime);
+			$booking_window_valueto = 0;
+			$currentTimestamp = strtotime("now");
+			
+			if($transfer_option == 'Shared Transfer'){
+				$booking_window_valueto = $activityPrice->booking_window_valueSIC*60*60;
+			}
+			elseif($transfer_option == 'Pvt Transfer'){
+				$booking_window_valueto = $activityPrice->booking_window_valuePVT*60*60;
+			}else{
+				$booking_window_valueto = $activityPrice->booking_window_valueto*60*60;
+			}
+			
+			
+			$bookingTime = $currentTimestamp + $booking_window_valueto;
+			
+			if($validuptoTime >= $bookingTime){
+				return 0;
+			} else {
+				return 1;
+			}
+		
+    }
+	
 }

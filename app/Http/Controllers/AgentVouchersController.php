@@ -524,6 +524,7 @@ class AgentVouchersController extends Controller
 		$getAvailableDateList = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out);
 		//dd($getAvailableDateList);
 		
+		
 		$activity_vat = $request->input('activity_vat');
 		$variant_name = $request->input('variant_name');
 		$variant_code = $request->input('variant_code');
@@ -550,10 +551,16 @@ class AgentVouchersController extends Controller
 		$total_activity_amount = 0;
 		foreach($activity_select as $k => $v)
 		{
+			
+			$tourDt = date("Y-m-d",strtotime($tour_date[$k]));
 			if($totalprice[$k] > 0){
-				$tour_dt = date("Y-m-d",strtotime($tour_date[$k]));
-				if(!in_array($tour_dt,$getAvailableDateList)){
-				return redirect()->back()->with('error', 'This Tour is not available for Selected Date. Kindly Contact Customer Service for more details.');
+				if(!in_array($tourDt,$getAvailableDateList)){
+					return redirect()->back()->with('error', 'This Tour is not available for Selected Date. Kindly Contact Customer Service for more details.');
+				}
+			
+			$timeCheck = SiteHelpers::checkAvailableBookingTimeSlot($variant_unique_code[$k],$activity_id,$tourDt,$transfer_option[$k]);	
+				if($timeCheck > 0){
+					return redirect()->back()->with('error', 'This Tour time slot is not available for Selected Date. Kindly Contact Customer Service for more details.');
 				}
 				
 			$data[] = [
