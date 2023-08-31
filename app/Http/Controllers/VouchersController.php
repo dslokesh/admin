@@ -922,7 +922,7 @@ class VouchersController extends Controller
 			if($totalprice[$k] > 0){
 				$tour_dt = date("Y-m-d",strtotime($tour_date[$k]));
 				if(!in_array($tour_dt,$getAvailableDateList)){
-				return redirect()->back()->with('error', 'This Tour is not available for Selected Date. Kindly Contact Customer Service for more details.');
+				return redirect()->back()->with('error', 'This Tour is not available for Selected Date.');
 				}
 			
 			$data[] = [

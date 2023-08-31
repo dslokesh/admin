@@ -555,12 +555,12 @@ class AgentVouchersController extends Controller
 			$tourDt = date("Y-m-d",strtotime($tour_date[$k]));
 			if($totalprice[$k] > 0){
 				if(!in_array($tourDt,$getAvailableDateList)){
-					return redirect()->back()->with('error', 'This Tour is not available for Selected Date. Kindly Contact Customer Service for more details.');
+					return redirect()->back()->with('error', 'This Tour is not available for Selected Date.');
 				}
 			
 			$timeCheck = SiteHelpers::checkAvailableBookingTimeSlot($variant_unique_code[$k],$activity_id,$tourDt,$transfer_option[$k]);	
 				if($timeCheck > 0){
-					return redirect()->back()->with('error', 'This Tour time slot is not available for Selected Date. Kindly Contact Customer Service for more details.');
+					return redirect()->back()->with('error', 'Due to the cutoff time, you are unable to book this tour on the chosen day. Kindly contact Customer Service for more details.');
 				}
 				
 			$data[] = [
