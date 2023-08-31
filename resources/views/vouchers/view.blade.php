@@ -537,7 +537,10 @@ $stepNameSize: 1.6rem;
                 <div class="card-body">
                   <div class="row" style="margin-bottom: 5px;">
                     <div class="col-12">
-                      <input type="radio" checked name="payment"  /> Credit Limit (Wallet Balance AED {{($voucher->agent->agent_amount_balance)?$voucher->agent->agent_amount_balance:0}})
+					@php
+					$balance  = $voucher->agent->agent_amount_balance - $voucher->agent->agent_credit_limit;
+					@endphp
+                      <input type="radio" checked name="payment"  /> Credit Limit (Wallet Balance AED {{($balance > 0)?$balance:0}})
                     </div>
                    
                   </div>

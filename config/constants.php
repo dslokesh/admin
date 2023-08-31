@@ -34,7 +34,8 @@ return [
 	],
 	'voucherActivityStatus' => [
 	0 => 'Booked',
-	1 => 'Canceled',
+	//1 => 'Canceled',
+	1 => 'Cancellation Requested',
 	2 => 'Refunded',
 	3 => 'In Process',
 	4 => 'Confirmed',
