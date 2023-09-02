@@ -20,6 +20,7 @@ class ActivitiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+	 
     public function index(Request $request)
     {
 		$this->checkPermissionMethod('list.activity');
