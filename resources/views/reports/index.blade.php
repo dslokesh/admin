@@ -90,35 +90,35 @@
             </form>
           </div>
         </div><div class="col-md-12" style="overflow-x:auto">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table rounded-corners">
                   <thead>
                   <tr>
-					<th>VOUCHER CODE</th>
-                    <th>SERVICE DATE</th>
-					<th>SERVICE</th>
-					<th>SERVICE TYPE</th>
-					<th>AGENCY</th>
-					<th>NAME</th>
-					<th>GUEST'S CONTACT</th>
+					<th>Booking #</th>
+                    <th>Service Date</th>
+					<th>Service</th>
+					<th>Service Type</th>
+					<th>Agency</th>
+					<th>Guest Name</th>
+					<th>Guest Contact No</th>
 					<th>A</th>
                     <th>C</th>
                     <th>I</th>
-					<th>SUPPLIER TICKET</th>
-					<th>TICKET SUPPLIER REF NO.</th>
-					<th>TOTAL TICKET COST</th>
-					<th>ACTUAL TOTAl COST</th>
+					<th>TKT Supplier</th>
+					<th>TKT Supplier Ref #</th>
+					<th>TKT SP</th>
+					<th>TKT Net Cost</th>
 					<th>SIC/PVT</th>
-					<th>PICKUP LOCATION</th>
-					<th>PICK UP TIME</th>
-					<th>DROPOFF LOCATION</th>
-					<th>DROPOFF TIME</th>
-					<th>SUPPLIER TRANSFER</th>
-					<th>TRANSFER SUPPLIER REF NO.</th>
-					<th>DRIVER NAME</th>
-					<th>TOTAL TRANSFER COST</th>
-					<th>ACTUAL TRANSFER COST</th>
-					<th>REMARKS</th>
-					<th>STATUS</th>
+					<th>Pickup</th>
+					<th>Pickup Time</th>
+					<th>Dropoff</th>
+					<th>Dropoff Time</th>
+					<th>TFR Supplier</th>
+					<th>TFR Supplier Ref #</th>
+					<th>Driver name</th>
+					<th>TFR SP</th>
+					<th>TFR Net Cost</th>
+					<th>Remark</th>
+					<th>Status</th>
                   </tr>
 				  
                   </thead>
@@ -152,7 +152,7 @@
 					@php
 					$zone = SiteHelpers::getZoneName($record->transfer_zone);
 					@endphp
-						- <b>Zone :</b> {{$zone->name}}
+						- <b>{{$zone->name}} </b>
 					
 					@endif
 					@if($record->transfer_option == 'Pvt Transfer')

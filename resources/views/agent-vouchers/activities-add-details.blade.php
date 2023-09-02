@@ -3,7 +3,7 @@
 
 
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -17,14 +17,14 @@
             </ol>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+      </div><
+    </section> -->
     <!-- /.content-header -->
 
     <!-- Main content -->
     <section class="content" id="activities-list-blade">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10 offset-md-1 mt-10">
 		
           <div class="card">
            
@@ -33,30 +33,34 @@
 			
 			 <div class="row">
 			
-				  <div class="form-group col-md-12" style="">
-                 @if(!empty($activity->image))
+				 <div class="col-md-7">
+				 @if(!empty($activity->image))
                
-                  <img src="{{asset('uploads/activities/'.$activity->image)}}"  class="img-fluid" />
-                
-				@endif
-            
+			   <img src="{{asset('uploads/activities/'.$activity->image)}}"  class="img-fluid" style="border-radius: 5px;" />
+			 
+			 @endif
+				 </div>
+					<div class="col-md-5">
+						<div class="row">
+								
+							@if($activity->images->count() > 0)
+								
+										
+								@foreach($activity->images as $k => $image)
+								@if($k < 6)
+								<div class="col-md-6" style="margin-bottom: 16px;">
+								<img src="{{asset('uploads/activities/'.$image->filename)}}"  class="img-fluid"  style="border-radius: 5px;">
+								</div>
+								@endif 
+								@endforeach
+							
+							@endif 
+							</div>
+					
+					</div>
 			   
-				 <!-- <div class="slider-outer col-md-4">
-				 <div class="owl-theme owl-carousel  float-right">
-				 
-                       @if($activity->images->count() > 0)
-                           
-                                
-                                @foreach($activity->images as $image)
-                                <div clss="item">
-                              <img src="{{asset('uploads/activities/thumb/'.$image->filename)}}"  class="img-responsive">
-                                </div>
-                                @endforeach
-                           
-                            @endif 
-                            </div>
-				 </div> -->
-				 </div> 
+	
+				
 			 </div>
 			 <hr class="col-md-12">
 			  <div class="row">
@@ -319,11 +323,7 @@
 	<div class="col-md-2 mb-20">
 	<a href="{{route('agent-vouchers.add.activity',$vid)}}" class="btn btn-secondary mr-2">Back</a>
 	</div>
-	<div class="col-md-2 offset-8 mb-20 pull-right">
-		<a href="{{route('agent-vouchers.show',$vid)}}" class="btn btn-primary mr-2">Checkout</a>
-	</div>
 	
-
 </div>
 </div>	 	 
 		  

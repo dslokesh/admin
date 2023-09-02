@@ -12,11 +12,13 @@
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
+  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <link href="{{asset('dist/css/custom.css')}}" rel="stylesheet">
 
 </head>
-<body class="hold-transition login-page">
+<body >
+  <div class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
@@ -28,6 +30,7 @@
     <!-- /.card-body -->
   </div>
   <!-- /.card -->
+</div>
 </div>
 @include('inc.footer')
 <!-- /.login-box -->

@@ -85,24 +85,31 @@
   $(function () {
   $("#loader-overlay").hide();
    $('.select2').select2()
-    $('#example2').DataTable({
+   $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,
+      "bFilter": true, // show search input
     });
+
+    $('#txt_example2_filter').keyup(function() {
+    var table = $('#example2').DataTable();
+    table.search($(this).val()).draw();
+});
 	
 	$('.dataTable').DataTable({
       "paging": false,
       "lengthChange": false,
-      "searching": false,
-      "ordering": true,
+      "searching": true,
+      "ordering": false,
       "info": false,
-      "autoWidth": false,
+      "autoWidth": true,
       "responsive": true,
+      "bFilter": true, // show search input
     });
 
 $('.datepicker').datepicker({

@@ -8,6 +8,11 @@
   
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">	
+	<li class="nav-item dropdown">
+		<a class="nav-link"  href="#">
+				<span class="hidden-xs"><i class="fa fa-phone-alt" aria-hidden="true"></i> <b>+971 4 591 7098</b></span>
+			</a>
+		</li> 
 		<!-- Messages Dropdown Menu -->
 		@if(auth()->user()->role_id == '3')
 			@php
@@ -37,7 +42,7 @@
 						<a href="{{ route('profile-edit',Auth::user()->id) }}" class="btn btn-default d-block">Profile</a>
 						<a href="{{ route('change-password') }}" class="btn btn-default d-block">Change Password</a>
 						<div class="dropdown-divider my-2"></div>
-						<a href="{{route('logout')}}" class="btn btn-default d-block">Sign out</a>
+						<a href="{{route('logout')}}" class="btn btn-info d-block">Log out</a>
 					</div>
 				</div>
 			</div>

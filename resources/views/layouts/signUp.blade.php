@@ -13,12 +13,14 @@
   <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
   <link href="{{asset('dist/css/style.css')}}" rel="stylesheet">
   <link href="{{asset('dist/css/custom.css')}}" rel="stylesheet">
 
 </head>
-<body class="hold-transition login-page">
-<div class="login-box" style="width:50%">
+<body >
+  <div class="hold-transition login-page">
+<div class="login-div" style="width:50%">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
@@ -30,7 +32,9 @@
   </div>
   <!-- /.card -->
 </div>
+
 <!-- /.login-box -->
+</div>
 @include('inc.footer')
 
 <!-- jQuery -->
