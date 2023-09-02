@@ -1,4 +1,8 @@
 /vendor/ 
+/public/uploads/
+.htaccess
+.rnd
+htaccess
 node_modules/ 
 npm-debug.log
 yarn-error.log

@@ -267,7 +267,7 @@
 			   <div class="form-group col-md-12">
                 <label for="inputName">Booking Policy: </label>
 				
-                <textarea placeholder="Booking Policy" name="booking_policy" cols="50" rows="5" id="booking_policy" class="form-control box-size">{{ old('booking_policy') }}</textarea>
+                <textarea placeholder="Booking Policy" name="booking_policy" cols="50" rows="5" id="booking_policy" class="form-control box-size ">{{ old('booking_policy') }}</textarea>
                 @if ($errors->has('booking_policy'))
                     <span class="text-danger">{{ $errors->first('booking_policy') }}</span>
                 @endif

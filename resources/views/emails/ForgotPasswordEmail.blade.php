@@ -13,7 +13,7 @@
     <a href="{{url('forgot-password', $adminuser_details['token'])}}">Reset your password</a>
 </p>
 
-<p><strong>Thanks</br></br>Team Abatera B2B </strong></p>
+<p><strong>Thanks</br></br>Team </br></br>Abatera B2B </strong></p>
 	</div>
 @endsection
 
