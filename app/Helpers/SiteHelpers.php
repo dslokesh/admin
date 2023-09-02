@@ -14,6 +14,7 @@ use App\Models\AgentPriceMarkup;
 use App\Models\Zone;
 use App\Models\TransferData;
 use App\Models\Activity;
+use App\Models\Voucher;
 use App\Models\Ticket;
 
 class SiteHelpers
@@ -449,6 +450,20 @@ class SiteHelpers
 			} else {
 				return 1;
 			}
+		
+    }
+	
+	public function getAgentlastVoucher()
+    {
+		$user = auth()->user();
+		$startDate = date("Y-m-d");
+		$voucher = Voucher::where('status_main','1')->where('agent_id',$user->id)->whereDate('travel_from_date','>=', $startDate)->first();
+		if(!empty($voucher)){
+			return $voucher;
+		}
+		else{
+		return 0;	
+		}
 		
     }
 	

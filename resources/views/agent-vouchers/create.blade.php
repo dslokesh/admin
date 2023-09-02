@@ -118,7 +118,7 @@
               </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Travel Date: <span class="red">*</span></label>
-               <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date')?:date('Y-m-d') }}" class="form-control datepickerdiscurdate"  placeholder="Travel Date From" />
+               <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date')?:date('d-m-Y') }}" class="form-control datepickerAgent"  placeholder="Travel Date From" />
 				  @if ($errors->has('travel_from_date'))
                     <span class="text-danger">{{ $errors->first('travel_from_date') }}</span>
                 @endif
@@ -333,18 +333,32 @@
   });
   
   $('#travel_from_date, #nof_night').on('change', function() {
-    var fromDate = new Date($('#travel_from_date').val());
+    var fromDateStr = $('#travel_from_date').val();
     var numberOfNights = parseInt($('#nof_night').val());
 
-    if (!isNaN(fromDate) && !isNaN(numberOfNights)) {
-      var toDate = new Date(fromDate);
-      toDate.setDate(fromDate.getDate() + numberOfNights);
-		
-      var formattedDate = toDate.toISOString().split('T')[0];
-	 
-      $('#travel_to_date').val(formattedDate);
+    // Split the fromDateStr into day, month, and year
+    var dateParts = fromDateStr.split('-');
+    var day = parseInt(dateParts[0]);
+    var month = parseInt(dateParts[1]) - 1; // JavaScript months are 0-indexed
+    var year = 2000 + parseInt(dateParts[2]); // Assuming 'yy' represents years in the 21st century
+
+    if (!isNaN(day) && !isNaN(month) && !isNaN(year) && !isNaN(numberOfNights)) {
+        var fromDate = new Date(year, month, day);
+
+        // Calculate the toDate by adding numberOfNights to fromDate
+        var toDate = new Date(fromDate);
+        toDate.setDate(toDate.getDate() + numberOfNights);
+
+        // Format toDate in 'yy-mm-dd' format
+        var formattedYear = toDate.getFullYear().toString().slice(-2);
+        var formattedMonth = ('0' + (toDate.getMonth() + 1)).slice(-2);
+        var formattedDay = ('0' + toDate.getDate()).slice(-2);
+        var formattedDate = formattedYear + '-' + formattedMonth + '-' + formattedDay;
+
+        $('#travel_to_date').val(formattedDate);
     }
-  });
+});
+
   
   $("#nof_night").trigger("change");
   

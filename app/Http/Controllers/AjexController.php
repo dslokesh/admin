@@ -14,21 +14,21 @@ class AjexController extends Controller
     public function getCityByCountrySelect(Request $request)
     {
 		$data = $request->all();
-        $records = City::select('name','id')->where('country_id',$data['country_id'])->get();
+        $records = City::select('name','id')->where(['country_id'=>$data['country_id'],'status'=>'1'])->get();
 		return response()->json($records, 200);
     }
 	
 	public function getCityByStateSelect(Request $request)
     {
 		$data = $request->all();
-        $records = City::select('name','id')->where('state_id',$data['state_id'])->get();
+        $records = City::select('name','id')->where('state_id',$data['state_id'])->where('status','1')->get();
 		return response()->json($records, 200);
     }
 	
 	public function getStateByCountrySelect(Request $request)
     {
 		$data = $request->all();
-        $records = State::select('name','id')->where('country_id',$data['country_id'])->get();
+        $records = State::select('name','id')->where('country_id',$data['country_id'])->where('status','1')->get();
 		return response()->json($records, 200);
     }
 	

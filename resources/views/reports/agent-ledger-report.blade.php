@@ -53,13 +53,13 @@
 			  <div class="col-auto col-md-3">
                   <div class="input-group mb-2">
                     <div class="input-group-prepend"><div class="input-group-text">From Date</div></div>
-                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepicker" required placeholder="From Date" />
+                    <input type="text" name="from_date" value="{{ request('from_date') }}" autocomplete ="off" class="form-control datepickerdmy" required placeholder="From Date" />
                   </div>
                 </div>
 				<div class="col-auto col-md-3">
                   <div class="input-group mb-2">
                     <div class="input-group-prepend"><div class="input-group-text">To Date</div></div>
-                    <input type="text" name="to_date" autocomplete ="off" value="{{ request('to_date') }}" required class="form-control datepicker"  placeholder="To Date" />
+                    <input type="text" name="to_date" autocomplete ="off" value="{{ request('to_date') }}" required class="form-control datepickerdmy"  placeholder="To Date" />
                   </div>
                 </div>
                

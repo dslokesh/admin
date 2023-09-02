@@ -126,7 +126,22 @@ $('.timepicker').datetimepicker({
 		dateFormat: 'yy-mm-dd'
     });
   
- 
+ $('.datepickerAgent').datepicker({
+        weekStart: 1,
+		minDate: 0,
+        daysOfWeekHighlighted: "6,0",
+        autoclose: true,
+        todayHighlight: true,
+		dateFormat: 'dd-mm-yy'
+    });
+	
+	$('.datepickerdmy').datepicker({
+        weekStart: 1,
+        daysOfWeekHighlighted: "6,0",
+        autoclose: true,
+        todayHighlight: true,
+		dateFormat: 'dd-mm-yy'
+    });
 
 </script>
 <!-- Google tag (gtag.js) -->

@@ -137,6 +137,12 @@ class AgentVouchersController extends Controller
 		$depature_date = $request->input('depature_date'); // get the value of the date input
 		$customer = Customer::where('mobile',$request->input('customer_mobile'))->first();
 		
+		$timestamp = strtotime($request->input('travel_from_date'));
+		$travel_from_date = date('Y-m-d', $timestamp);
+		$daysToAdd = $request->input('nof_night');
+		$newTimestamp = strtotime("+{$daysToAdd} days", $timestamp);
+		$travel_to_date = date('Y-m-d', $newTimestamp);
+		
 		if(empty($customer))
 		{
 			$customer = new Customer();
@@ -153,6 +159,7 @@ class AgentVouchersController extends Controller
 		}
 			
 		
+
         $record = new Voucher();
         $record->agent_id = $request->input('agent_id_select');
 		$record->customer_id = $customer->id;
@@ -168,8 +175,8 @@ class AgentVouchersController extends Controller
 		$record->depature_date = $depature_date;
 		$record->depature_airport = $request->input('depature_airport');
 		$record->depature_terminal = $request->input('depature_terminal');
-		$record->travel_from_date = $request->input('travel_from_date');
-		$record->travel_to_date = $request->input('travel_to_date');
+		$record->travel_from_date = $travel_from_date;
+		$record->travel_to_date = $travel_to_date;
 		$record->nof_night = $request->input('nof_night');
 		$record->vat_invoice = $request->input('vat_invoice');
 		$record->agent_ref_no = $request->input('agent_ref_no');

@@ -263,8 +263,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		}
 		
 		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
-			$startDate = $data['from_date'];
-			$endDate =  $data['to_date'];
+			$startDate = date('Y-m-d', strtotime($data['from_date']));
+			$endDate = date('Y-m-d', strtotime($data['to_date']));
 			 $query->whereDate('date_of_receipt', '>=', $startDate);
 			 $query->whereDate('date_of_receipt', '<=', $endDate);
 		$s = 1;
@@ -315,8 +315,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		}
 		
 		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
-			$startDate = $data['from_date'];
-			$endDate =  $data['to_date'];
+			$startDate = date('Y-m-d', strtotime($data['from_date']));
+			$endDate = date('Y-m-d', strtotime($data['to_date']));
 			 $query->whereDate('date_of_receipt', '>=', $startDate);
 			 $query->whereDate('date_of_receipt', '<=', $endDate);
 		$s = 1;

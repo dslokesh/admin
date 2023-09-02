@@ -1,4 +1,3 @@
-
 		@php
 		$tourDateArray = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out)
 		@endphp
@@ -11,7 +10,7 @@
 				 <input type="hidden" id="activity_vat" name="activity_vat" value="{{ ($activity->vat > 0)?$activity->vat:0 }}"  />
 				 <input type="hidden" id="vat_invoice" name="vat_invoice" value="{{ $voucher->vat_invoice }}"  />
 			
-				 <table class="table table-stripped table-condensed  table-hover" style="border: solid 0.5px gray;border-radius: 25px !important;">
+				 <table class="table rounded-corners" style="border-radius: 10px !important;font-size:10pt;">
                   <thead>
 				 
 				  @if(!empty($activityPrices))
@@ -24,8 +23,6 @@
 					<th>Adult (Above {{$ap->chield_end_age}} Yrs)</th>
                     <th>Child({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</th>
                     <th>Infant (Below {{$ap->chield_start_age}} Yrs)</th>
-				
-					<th>Net Discount</th>
 					<th>Total Amount</th>
                   </tr>
 				 
@@ -113,9 +110,9 @@
 						<input type="hidden" value="{{$markup['sic_transfer']}}" id="markup_p_sic_transfer{{$kk}}"  name="markup_p_sic_transfer[{{$ap->u_code}}]"    />
 					
 						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[{{$ap->u_code}}]"    />
-						<td>
-						<input type="text" id="discount{{$kk}}" value="0"  name="discount[{{$ap->u_code}}]" @if($kk > '0') disabled="disabled" @endif data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
-						</td>
+						
+						<input type="hidden" id="discount{{$kk}}" value="0"  name="discount[{{$ap->u_code}}]" @if($kk > '0') disabled="disabled" @endif data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
+						
 						<td>
 						@php
 						$priceAd = ($ap->adult_rate_with_vat*$ap->adult_min_no_allowed);
@@ -145,7 +142,7 @@
 						@endif
 
 						
-						<span id="price{{$kk}}">0</span>
+						<span id="price{{$kk}}" style="font-weight:bold">0</span>
 						<input type="hidden" id="totalprice{{$kk}}" value="0"  name="totalprice[{{$ap->u_code}}]"    />
 						</td>
                   </tr>
@@ -156,7 +153,7 @@
 			  <div class="row">
 
         <div class="col-12 mt-3">
-          <button type="submit" class="btn btn-info  float-right" name="save">Add To Cart</button>
+		<button type="submit" class="btn btn-sm  btn-primary-flip float-right" name="save">Add To Cart</button>
         </div>
       </div>
 			 </form>

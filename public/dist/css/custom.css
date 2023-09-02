@@ -3,6 +3,10 @@
   src: url('../fonts/Rubik-Regular.ttf');
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body
 {
   font-family: "Rubik", Helvetica, Arial, sans-serif;
@@ -505,4 +509,23 @@ box-shadow: 1px 0px 22px -8px rgba(0,0,0,0.75);
 {
   color: #17a2b8!important;
 }
+.fixme
+{
+  background-color: #b72925;
+  padding: 10px;
+  color: #fff;
+  width:100%;
+  z-index: 999!important;
+  border-radius: 5px;
+  margin: 10px 0px 30px 0px;
+}
 
+.fixme a
+{
+   color: #fff!important;
+}
+
+.p-30
+{
+  padding: 30px 0px;
+}

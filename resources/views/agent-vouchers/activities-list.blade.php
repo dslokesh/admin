@@ -1,134 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<style>
-
-.form-control {
-    display: block;
-    width: 100%;
-    height: calc(2.25rem + 2px);
-    padding: 0.375rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    box-shadow: inset 0 0 0 transparent;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    text-align: left;
-}
-
-.card-body {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 0.75rem;
-}
-table.rounded-corners {
-  border-spacing: 0;
-  border-collapse: separate;
-  border-radius: 10px;
-}
-
-table.rounded-corners th, table.rounded-corners td {
-  /* border: 1px solid #dee2e6; */
-  padding: 5px;
-  vertical-align: middle;
-}
-table.rounded-corners {
-  border-spacing: 0;
-  border-collapse: separate;
-  border-radius: 10px;
-  border: 1px solid #dee2e6;
-}
-
-table.rounded-corners {
- border-spacing: 0;
- border-collapse: separate;
- border-radius: 5px;
- border: 1px solid #dee2e6;
-}
-
-/* Apply a border to the right of all but the last column */
-table.rounded-corners th:not(:last-child),
-table.rounded-corners td:not(:last-child) {
- /* border-right: 1px solid #dee2e6; */
-}
-
-/* Apply a border to the bottom of all but the last row */
-table.rounded-corners>thead>tr:not(:last-child)>th,
-table.rounded-corners>thead>tr:not(:last-child)>td,
-table.rounded-corners>tbody>tr:not(:last-child)>th,
-table.rounded-corners>tbody>tr:not(:last-child)>td,
-table.rounded-corners>tfoot>tr:not(:last-child)>th,
-table.rounded-corners>tfoot>tr:not(:last-child)>td,
-table.rounded-corners>tr:not(:last-child)>td,
-table.rounded-corners>tr:not(:last-child)>th,
-table.rounded-corners>thead:not(:last-child),
-table.rounded-corners>tbody:not(:last-child),
-table.rounded-corners>tfoot:not(:last-child) {
- border-bottom: 1px solid #dee2e6;
-}
-
-table.rounded-corners th {
-  background-color: #ddd;
-}
-
-table.rounded-corners {
- /* Change these properties */
- --border: 1px solid #dee2e6;
- border-radius: 5px;
- 
-
- /* Don't change these properties */
- border-spacing: 0;
- border-collapse: separate;
- border: var(--border);
- overflow: hidden;
-}
-
-/* Apply a border to the right of all but the last column */
-table.rounded-corners th:not(:last-child),
-table.rounded-corners td:not(:last-child) {
- /* border-right: var(--border); */
-}
-
-/* Apply a border to the bottom of all but the last row */
-table.rounded-corners>thead>tr:not(:last-child)>th,
-table.rounded-corners>thead>tr:not(:last-child)>td,
-table.rounded-corners>tbody>tr:not(:last-child)>th,
-table.rounded-corners>tbody>tr:not(:last-child)>td,
-table.rounded-corners>tfoot>tr:not(:last-child)>th,
-table.rounded-corners>tfoot>tr:not(:last-child)>td,
-table.rounded-corners>tr:not(:last-child)>td,
-table.rounded-corners>tr:not(:last-child)>th,
-table.rounded-corners>thead:not(:last-child),
-table.rounded-corners>tbody:not(:last-child),
-table.rounded-corners>tfoot:not(:last-child) {
- border-bottom: var(--border);
-}
-table.rounded-corners tbody tr:hover {
-  background-color: #EEE;
-}
-.card-body-hover:hover
-{
-  background-color: #EEE;
-}
-.card-header{
-  border-bottom: none!important;
-}
-.form-control:disabled, .form-control[readonly] {
-    background-color: #fff;
-    opacity: 1;
-}
-
-.disabled-date { background-color: #ccc; }
-.available-date { background-color: #b2ffb2; }
-.disabled-day { background-color: #FF00B9; }
-
-</style>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -148,7 +19,7 @@ table.rounded-corners tbody tr:hover {
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" id="activities-list-blade">
         
     <div class="container-fluid">
        
@@ -156,55 +27,24 @@ table.rounded-corners tbody tr:hover {
               <div class="row">
            
              
-          <div class="col-md-10 offset-1">
-              <div class="card card-default">
-              <!-- form start -->
-              <form id="filterForm" class="form-inline" method="get" action="{{ route('agent-vouchers.add.activity',$vid) }}" >
-                <div class="card-body">
-                  <div class="row">
-                      <div class="col-md-4">
-                        <div class="input-group">
-                          <input type="text" name="name" value="{{ request('name') }}" class="form-control"  placeholder="Filter with Name" />
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="input-group ">
-                            <button class="btn btn-info" type="submit">   <i class="fas fa-search"></i> Search</button>
-                            <a class="btn btn-default  mx-sm-2" href="{{ route('agent-vouchers.add.activity',$vid) }}">Clear</a>
-                        </div>
-                      </div>
-                    
-                      <div class="col-md-2 text-right">
-                        <div class="input-group  text-right float-right">
-                            @if($voucherActivityCount > 0)
-                                  <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-md btn-success pull-right">
-                                <i class="fas fa-shopping-cart"></i>
-                               Checkout({{$voucherActivityCount}})
-                            </a>
-                            @endif
-                        </div>
-                      </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-                </form>
-                </div>
-               
-                </div>
-
-       
-        
-		 </div>
-     <div class="col-md-10 offset-1">
+     <div class="col-md-12">
 
 
        <div class="row">
              <div class="card-body @if($voucherActivityCount > 0) col-md-9 @else offset-1 col-md-10 @endif">
-             
+                        
+             <table id="tbl-activites" class="dataTable" style="width:100%" cellpadding="0px;" cellspaccing="0px" aria-describedby="example2_info">
+              <thead>
+                <tr>
+                <th class=" " tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="" aria-sort=""></th>
+                </tr>
+              </thead>
+            
                   @foreach ($records as $record)
 				  @php
             $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher);
           @endphp
+          <tr><td>
                    <!-- Default box -->
       <div class="card collapsed-card ">
         <div class="card-header card-body-hover">
@@ -214,12 +54,12 @@ table.rounded-corners tbody tr:hover {
             </div>
             <div class="col-md-6">
               <h2 class="card-title" style="color: #000">
-			  <strong> <a class="" href="{{route('agent-vouchers.activity.view',[$record->id,$vid])}}">
+			  <strong> <a class="" href="{{route('agent-vouchers.activity.view',[$record->id,$vid])}}" target="_blank">
                             {{$record->title}}
                           </a></strong>
 			 </h2>
               <br/> <br/>
-              <ul class="list-unstyled" style="margin-top: 70px;">
+              <!-- <ul class="list-unstyled" style="margin-top: 70px;">
                 <li>
                   <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle"></i> Instant Confirmation</a>
                 </li>
@@ -228,7 +68,7 @@ table.rounded-corners tbody tr:hover {
                 </li>
                
                 
-              </ul>
+              </ul> -->
             </div>
             <div class="col-md-3 text-right">
               <br/>
@@ -241,7 +81,7 @@ table.rounded-corners tbody tr:hover {
               <br/>
               </span>
               <br/>
-              <button type="button" data-act="{{ $record->id }}"  data-vid="{{ $vid }}" class="btn btn-info btn-tool loadvari" data-card-widget="collapse" title="Collapse">
+              <button type="button" data-act="{{ $record->id }}"  data-vid="{{ $vid }}" class="btn btn-sm btn-primary-flip loadvari" data-card-widget="collapse" title="Collapse">
                 SELECT
               </button>
             </div>
@@ -262,9 +102,9 @@ table.rounded-corners tbody tr:hover {
         <!-- /.card-footer-->
       </div>
       <!-- /.card -->
-				 
+      </td></tr>
                   @endforeach
-                 
+</table> 
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
 </div>
  @if(!empty($voucherActivity) && $voucher->is_activity == 1)
@@ -280,12 +120,19 @@ table.rounded-corners tbody tr:hover {
 			
               
               <div class="card-body card-body-hover" >
-              <div class="col-md-12 text-right">
+              <div class="row">
+              <div class="col-10">
+              <span class="cart-title font-size-21 text-dark">
+              {{$activity->title}}
+              </span>
+              </div>
+              <div class="col-2  text-right">
               <form id="delete-form-{{$ap->id}}" method="post" action="{{route('agent.voucher.activity.delete',$ap->id)}}" style="display:none;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
                             </form>
-                            <a class="btn-danger btn-sm" title="delete" href="javascript:void(0)" onclick="
+                            <small>
+                            <a class="btn btn-xs btn-danger border-round" title="delete" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to delete this?'))
                                 {
                                     event.preventDefault();
@@ -296,33 +143,34 @@ table.rounded-corners tbody tr:hover {
                                     event.preventDefault();
                                 }
                             
-                            "><i class="fas fa-trash"></i></a>
-                  </div>  
+                            "><small><i class="fas fa-trash-alt "></i></small></a></small>
+                 </div>
+              </div>
+             
                 <div class="row" >
-				  <div class="col-md-4" style="padding: 5px; ">
+                <div class="col-md-3" style="padding: 5px 0px 5px 5px; ">
               <img src="{{asset('uploads/activities/'.$activity->image)}}" class="img-fluid" style="border-radius: 5px;" />
             </div>
-			<div class="col-md-8">
-              <ul class="list-unstyled" style="font-size:14px;color:#000;">
-              <li style="color:#000; font-weight:bold;">
-              {{$activity->title}}
-                </li>
-                <li>
-                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"> {{$ap->variant_name}}</a>
-                </li>
-				<li>
-                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;">{{$ap->transfer_option}}</a>
-                </li>
-                <li>
-                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"> {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}</a>
-                </li>
-                <li>
-                  <a href="#" class="btn-link text-secondary" ><i class="fas fa-male" style="font-size:18px;" title="Adult"></i> <span style="color:#000 !important;">{{$ap->adult}}</span> <i class="fas fa-child" title="Child"></i>  <span style="color:#000 !important;">{{$ap->child}}</span> </a>
-                </li>
-                <li class="float-right">
-                  <a href="#" class="btn-link text-secondary" style="color:#000 !important;"><h2 class="card-title text-right" style="color: #000"><strong>AED {{$ap->totalprice}}</strong></h2></a>
-                </li>
-              </ul>
+			<div class="col-md-9">
+      <ul class="list-unstyled" style="">
+             
+             <li>
+              {{$ap->variant_name}}
+             </li>
+     <li>
+               {{$ap->transfer_option}}
+             </li>
+             <li>
+                {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}
+             </li>
+             <li>
+
+              <i class="fas fa-male color-grey" style="font-size:16px;" title="Adult"></i> <span class="color-black">{{$ap->adult}}</span> <i class="fas fa-child color-grey" title="Child"></i>  <span class="color-black">{{$ap->child}}</span>
+
+               <span class="float-right " ><h2 class="card-title text-right color-black"><strong>AED {{$ap->totalprice}}</strong></h2></span>
+             </li>
+             
+           </ul>
 			   
             </div>
 			
@@ -336,7 +184,7 @@ table.rounded-corners tbody tr:hover {
 
                  <div class="input-group  text-right float-right">
                             @if($voucherActivityCount > 0)
-                                  <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-md btn-success pull-right">
+                                  <a href="{{ route('agent-vouchers.show',$voucher->id) }}" class="btn btn-lg btn-primary pull-right" style="width:100%">
                                 <i class="fas fa-shopping-cart"></i>
                                 Checkout({{$voucherActivityCount}})
                             </a>
@@ -429,7 +277,14 @@ $(document).on('click', '.loadvari', function(evt) {
           });
 });
 });
-</script>  
+</script> 
+<script>
+        $(document).ready(function ()
+        {   
+            var table = $('#tbl-activites').DataTable();
+        });
+
+    </script> 
 <script type="text/javascript">
   $(document).ready(function() {
    

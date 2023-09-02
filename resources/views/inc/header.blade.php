@@ -10,6 +10,16 @@
     <ul class="navbar-nav ml-auto">	
 		<!-- Messages Dropdown Menu -->
 		@if(auth()->user()->role_id == '3')
+			@php
+				$lastVoucher = SiteHelpers::getAgentlastVoucher();
+			@endphp
+			@if(!empty($lastVoucher))
+			<li class="nav-item dropdown">
+		<a class="nav-link"  href="{{route('agent-vouchers.add.activity',$lastVoucher->id)}}">
+				<span class="hidden-xs"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <b>(1)</b></span>
+			</a>
+		</li> 
+		@endif
 		<li class="nav-item dropdown">
 		<a class="nav-link" data-toggle="dropdown" href="#">
 				<span class="hidden-xs"><i class="fa fa-wallet" aria-hidden="true"></i> <b>AED {{\Auth::user()->agent_amount_balance}}</b></span>
