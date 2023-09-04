@@ -10,7 +10,7 @@
     <ul class="navbar-nav ml-auto">	
 	<li class="nav-item dropdown">
 		<a class="nav-link"  href="#">
-				<span class="hidden-xs"><i class="fa fa-phone-alt" aria-hidden="true"></i> <b>+971 4 591 7098</b></span>
+				<span class="hidden-xs"><i class="fa fa-headset" aria-hidden="true"></i> <b>+971 4 591 7098</b></span>
 			</a>
 		</li> 
 		<!-- Messages Dropdown Menu -->

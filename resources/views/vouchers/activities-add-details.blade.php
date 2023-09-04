@@ -28,56 +28,52 @@
            
 			
 			<div class="card-body">
+			<div class="row">
 			
-			 <div class="row">
-			
-			
-						<div class="form-group col-md-8" style="">
-							@if(!empty($activity->image))
-						
-							<img src="{{asset('uploads/activities/'.$activity->image)}}"  class="img-fluid" />
-							
-							@endif
-						</div>
-			   
-						<div class="slider-outer col-md-4">
-						<div class="owl-theme owl-carousel  float-right">
-				 
-                       	@if($activity->images->count() > 0)
-                           
-                                
-                                @foreach($activity->images as $image)
-                                <div clss="item">
-                              <img src="{{asset('uploads/activities/thumb/'.$image->filename)}}"  class="img-fluid">
-                                </div>
-                                @endforeach
-                           
-                            @endif 
-						</div>
+				 <div class="col-md-7">
+				 @if(!empty($activity->image))
+               
+			   <img src="{{asset('uploads/activities/'.$activity->image)}}"  class="img-fluid" style="border-radius: 5px;" />
+			 
+			 @endif
 				 </div>
-				 
-			 </div>
-</div>
-</div>
-<div class="card">
-           
-			
-		   <div class="card-body">
-		 	 <div class="row">
-				<div class="col-md-6" >
-					<h3><i class="far fa-fw  fa-check-circle"></i> {{$activity->title}}</h3>
+					<div class="col-md-5">
+						<div class="row">
+								
+							@if($activity->images->count() > 0)
+								
+										
+								@foreach($activity->images as $k => $image)
+								@if($k < 6)
+								<div class="col-md-6" style="margin-bottom: 16px;">
+								<img src="{{asset('uploads/activities/'.$image->filename)}}"  class="img-fluid"  style="border-radius: 5px;">
+								</div>
+								@endif 
+								@endforeach
+							
+							@endif 
+							</div>
 					
-				</div>
-				<div class="col-md-6 text-right">
-							@php
-							$minPrice = SiteHelpers::getActivityLowPrice($activity->id,$activity->agent_id,$voucher);
-						@endphp
-						<small>Starting From </small><br/>
-						<h3>AED {{$minPrice}}</h3>
 					</div>
+			   
+	
+				
+			 </div>
+			 <hr class="col-md-12">
+			  <div class="row">
+			   <div class="col-md-6" >
+				 <h3><i class="far fa-fw  fa-check-circle"></i> {{$activity->title}}</h3>
+              </div>
+			   <div class="col-md-6 text-right">
+			   @php
+            $minPrice = SiteHelpers::getActivityLowPrice($activity->id,$activity->agent_id,$voucher);
+          @endphp
+		  <small>Starting From </small><br/>
+				 <h3>AED {{$minPrice}}</h3>
+              </div>
 			  
 			  </div>
-			  
+			 
 			    <div class="row">
 					<div class="col-md-12">
 						<ul class="list-inline list-group list-group-horizontal">
@@ -96,13 +92,48 @@
 						</ul>
 					</div>
 			  </div>
+
+			 
+			    <div class="row fixme">
+					<div class="col-md-12">
+						<ul class="list-inline list-group list-group-horizontal">
+							<li style="padding-right: 10px;">
+								<a href="#description">Description</a>
+							</li>
+							<li style="padding-right: 10px;">
+								|
+							</li>
+							<li style="padding-right: 10px;">
+								<a href="#tour_options">Tour Options</a>
+							</li>
+							<li style="padding-right: 10px;">
+								|
+							</li>
+							<li style="padding-right: 10px;">
+								<a href="#inclusion">Inclusion</a>
+							</li>
+							<li style="padding-right: 10px;">
+								|
+							</li>
+							<li style="padding-right: 10px;">
+								<a href="#booking">Booking Policy</a>
+							</li>
+							<li style="padding-right: 10px;">
+								|
+							</li>
+							<li style="padding-right: 10px;">
+								<a href="#cancellation ">Cancellation Policy</a>
+							</li>
+						</ul>
+					</div>
 			  </div>
-			  </div>
-			  <div class="card">
-           
-			
-		   <div class="card-body">
-			  
+			 
+				  <div class="form-group col-md-12" id="description"  >
+				 
+                <h4>Description</h4>
+				{!! $activity->description !!}
+              </div>
+			  <hr class="col-md-12 p-30" id="tour_options">
 		
 
 				<form action="{{route('voucher.activity.save')}}" method="post" class="form" >
@@ -257,7 +288,7 @@
                   </tr>
 				  @endforeach
 				 @endif
-				  </table>
+				 </table>
               </div>
 			 </div>	
 			 </div>	
@@ -265,73 +296,38 @@
 
         <div class="col-12 mt-3">
          
-			<button type="submit" class="btn btn-sm btn-primary-flip float-right mr-2" name="save_and_continue">Add To Cart</button>
+			<button type="submit" class="btn btn-success float-right mr-2" name="save_and_continue">Add To Cart</button>
         </div>
       </div>
 			 </form>
-			 </div>
+		<div class="col-md-12">
+			  <div class="row mt-5">
+			  <hr class="col-md-12 p-30" id="inclusion">
+			   <div class="form-group col-md-12" >
+			   
+				<h4>Inclusion</h4>
+				{!! $activity->inclusion !!}
+              </div>
+			  <hr class="col-md-12 p-30" id="booking">
+			   <div class="form-group col-md-12">
+			   
+			   <h4>Booking Policy</h4>
+				{!! $activity->booking_policy !!}
+              </div>
+			  <hr class="col-md-12 p-30" id="cancellation">
+			   <div class="form-group col-md-12" >
+			   
+			   <h4>Cancellation Policy</h4>
+				{!! $activity->cancellation_policy !!}
+              </div>
+              </div>
+			 
 			  </div>
-			  <div class="card">
-           
-			
-		   <div class="card-body">
-		
-				
-				  	<div class="form-group col-md-12">
-				
-						<h4>Description</h4>
-						{!! $activity->description !!}
-              		</div>
-					  </div>
-			  </div>
-			  <div class="card">
-           
-			
-		   <div class="card-body">
-					<div class="form-group col-md-12" >
-					
-						<h4>Inclusion</h4>
-						{!! $activity->inclusion !!}
-					</div>
-					</div>
-			  </div>
-			  <div class="card">
-           
-			
-		   <div class="card-body">
-					<div class="form-group col-md-12">
-						
-						<h4>Booking Policy</h4>
-						{!! $activity->booking_policy !!}
-					</div>
-					</div>
-			  </div>
-			  <div class="card">
-           
-			
-		   <div class="card-body">
-					<div class="form-group col-md-12" >
-						
-						<h4>Cancellation Policy</h4>
-						{!! $activity->cancellation_policy !!}
-					</div>
-					</div>
-			  </div>
-			  <div class="card">
-           
-			
-		   <div class="card-body">
-             
-<div class="row mb-20">
-
-	<div class="col-md-2 ">
+<div class="row mb-20" style="margin-bottom: 20px;">
+	<div class="col-md-2 mb-20">
 	<a href="{{route('voucher.add.activity',$vid)}}" class="btn btn-secondary mr-2">Back</a>
 	</div>
-	<div class="col-md-2 offset-8 pull-right">
-		<a href="{{route('vouchers.show',$vid)}}" class="btn btn-primary mr-2">Checkout</a>
-	</div>
 	
-
 </div>
 </div>	 	 
 		  

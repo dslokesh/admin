@@ -319,10 +319,10 @@
 			 
 			  </div>
 <div class="row mb-20" style="margin-bottom: 20px;">
-<hr class="col-xs-12">
-	<div class="col-md-2 mb-20">
+<div class="col-md-2 text-left">
+	
 	<a href="{{route('agent-vouchers.add.activity',$vid)}}" class="btn btn-secondary mr-2">Back</a>
-	</div>
+					</div>	
 	
 </div>
 </div>	 	 

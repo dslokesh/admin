@@ -2,8 +2,11 @@
 <head>
 <title></title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/><!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]--><!--[if !mso]><!-->
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"/><!--<![endif]-->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
 <style>
 		* {
 			box-sizing: border-box;
@@ -90,7 +93,7 @@
 			<img alt="Abatera Logo" src="https://abaterab2b.com/Abatera_logo.jpg" style="height: auto; display: block; border: 0; max-width: 80px; width: 100%;" title="Abatera Logo" width="80"/>
 		</div>
 		<div style="width: 30%; float:right;text-align: left;padding-top: 20px;">
-			+971 4 591 7098 <br/> reservations@abatera.com 
+		<i class="fa fa-headset" aria-hidden="true"></i>  +971 4 591 7098 <br/> <i class="fa fa-envelope" aria-hidden="true"></i>  reservations@abatera.com 
 		</div>
 		<div style="clear:both;"></div>
 	</div>
