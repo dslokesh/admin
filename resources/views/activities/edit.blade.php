@@ -448,7 +448,7 @@ $("#myTable").on("click", ".delete-row", function() {
         initialPreviewAsData: true,
         allowedFileExtensions: ['jpg', 'png','jpeg'],
         overwriteInitial: false,
-        maxFileCount: 5,
+        maxFileCount: 10,
         uploadAsync: false,
         showUpload:false,
 		ajaxDeleteSettings: {

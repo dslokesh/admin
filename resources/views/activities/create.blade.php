@@ -412,7 +412,7 @@ $("#myTable").on("click", ".delete-row", function() {
         theme: 'fa',
         allowedFileExtensions: ['jpg', 'png','jpeg'],
         overwriteInitial: false,
-        maxFileCount: 5,
+        maxFileCount: 10,
         showUpload:false
     });
 });

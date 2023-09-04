@@ -59,11 +59,13 @@
                           </a></strong>
 			 </h2>
               <br/> <br/>
-              <!-- <ul class="list-unstyled" style="margin-top: 70px;">
-                <li>
-                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle"></i> Instant Confirmation</a>
+              <ul class="list-unstyled" style="margin-top: 70px;">
+                @if($activity->entry_type == 'Tour')
+                <li class="text-color">
+                 <i class="far fa-fw  fa-check-circle"></i> Instant Confirmation
                 </li>
-                <li>
+				@endif
+               <!--  <li>
                   <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle "></i> Free Cancellation 24 hrs. Prior </a>
                 </li>
                

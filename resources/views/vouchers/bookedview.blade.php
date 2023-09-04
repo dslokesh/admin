@@ -563,7 +563,7 @@ $stepNameSize: 1.6rem;
 						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.cancel',$ap->id)}}" style="display:none;">
 						{{csrf_field()}}
 						</form>
-							<a class="btn-danger  float-right  btn-sm ml-2" href="javascript:void(0)" onclick="
+							<a class="btn btn-primary  float-right  btn-sm ml-2" href="javascript:void(0)" onclick="
 							if(confirm('Are you sure, You want to cancel this?'))
 							{
 							event.preventDefault();
