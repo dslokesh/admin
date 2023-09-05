@@ -95,7 +95,7 @@
 			 </h2>
               <br/> <br/>
               <ul class="list-unstyled" style="margin-top: 70px;">
-				@if($activity->entry_type == 'Tour')
+				@if($record->entry_type == 'Tour')
                 <li class="text-color">
                  <i class="far fa-fw  fa-check-circle"></i> Instant Confirmation
                 </li>
