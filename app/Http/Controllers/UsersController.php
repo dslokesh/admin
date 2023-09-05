@@ -365,7 +365,7 @@ class UsersController extends Controller
 				$constraint->aspectRatio();
 			});
 			$img->save(public_path('/uploads/users/thumb/'.$newName));
-			if($record->image != 'no-image.png'){
+			if($user->image != 'no-image.png'){
             //** Below code for unlink old image **//
 			$oldImage = public_path('/uploads/users/'.$user->image);
 			$oldImageThumb = public_path('/uploads/users/thumb/'.$user->image);
@@ -473,7 +473,7 @@ class UsersController extends Controller
 				$constraint->aspectRatio();
 			});
 			$img->save(public_path('/uploads/users/thumb/'.$newName));
-			if($record->image != 'no-image.png'){
+			if($user->image != 'no-image.png'){
             //** Below code for unlink old image **//
 			$oldImage = public_path('/uploads/users/'.$user->image);
 			$oldImageThumb = public_path('/uploads/users/thumb/'.$user->image);
