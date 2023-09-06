@@ -548,21 +548,31 @@ $stepNameSize: 1.6rem;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					$ticketCount = SiteHelpers::getTicketCountByCode($ap->variant_unique_code);
 					@endphp
+					@php
+				$tourDt = date("Y-m-d",strtotime($ap->tour_date));
+				$validTime = SiteHelpers::checkCancelBookingTime($ap->variant_unique_code,$activity->id,$tourDt,$ap->transfer_option);
+				
+				@endphp
             <div class="card card-default">
               <div class="card-header">
                 <div class="row">
-				<div class="col-md-8 text-left">
+				<div class="col-md-5 text-left">
                     <h3 class="card-title">
                       <strong> {{$activity->title}}</strong></h3>
                   </div>
-				  
+				  <div class="col-md-3 text-rihgt">
+                    <h6 class="card-title" style="font-size:10px">
+                      <strong> Cancellation upto {{$validTime['validuptoTime']}}</strong></h6>
+                  </div>
 				 
 				  
 				<div class="col-md-4 text-right pl-5">
-						@if(($ap->status == '0'))
+				@if(($ap->status == '0') && $validTime['btm'] =='1')
+						
 						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.cancel',$ap->id)}}" style="display:none;">
 						{{csrf_field()}}
 						</form>
+						
 							<a class="btn btn-primary  float-right  btn-sm ml-2" href="javascript:void(0)" onclick="
 							if(confirm('Are you sure, You want to cancel this?'))
 							{
@@ -574,7 +584,7 @@ $stepNameSize: 1.6rem;
 							event.preventDefault();
 							}
 
-							"><i class="fas fa-times"></i> Cancel</a>
+							"><i class="fas fa-times"></i> Cancel </a>
 						@endif
                     @if(($voucher->status_main == 5) and ($ap->ticket_generated == '0') and ($ticketCount > '0') and ($ap->status == '0'))
 						<form id="tickets-generate-form-{{$ap->id}}" method="post" action="{{route('tickets.generate',$ap->id)}}" style="display:none;">

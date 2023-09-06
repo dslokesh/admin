@@ -467,4 +467,43 @@ class SiteHelpers
 		
     }
 	
+	public function checkCancelBookingTime($u_code,$activity_id,$tourDt,$transfer_option)
+    {
+		
+		$activityPrice = ActivityPrices::where(['u_code'=>$u_code,'activity_id'=>$activity_id])->select('start_time','end_time','cancellation_value_to','cancellation_valueSIC','cancellation_valuePVT')->first();
+			$startTime = $activityPrice->start_time;
+			$combinedDatetime = $tourDt . ' ' . $startTime;
+			$validuptoTime = strtotime($combinedDatetime);
+			$booking_window_valueto = 0;
+			$cancelHours = 0;
+			$currentTimestamp = strtotime("now");
+			
+			if($transfer_option == 'Shared Transfer'){
+				$cancelHours = $activityPrice->cancellation_valueSIC*60*60;
+			}
+			elseif($transfer_option == 'Pvt Transfer'){
+				$cancelHours = $activityPrice->cancellation_valuePVT*60*60;
+			}else{
+				$cancelHours = $activityPrice->cancellation_value_to*60*60;
+			}
+			
+			if($cancelHours > 0){
+			$booking_window_valueto  = $cancelHours * 60*60;
+			}
+			
+			$vlt= $validuptoTime - $booking_window_valueto;
+			$bookingTime = $currentTimestamp;
+			$data['validuptoTime'] = date("d-m-Y h:i a",$vlt);
+			$data['cancelhwr'] = $cancelHours;
+			
+			if($vlt >= $bookingTime){
+				$data['btm'] = 1;
+			} else {
+				$data['btm'] = 0;
+			}
+			
+			return $data;
+		
+    }
+	
 }

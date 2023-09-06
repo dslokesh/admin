@@ -509,15 +509,26 @@ $stepNameSize: 1.6rem;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					$ticketCount = SiteHelpers::getTicketCountByCode($ap->variant_unique_code);
 					@endphp
+					
+					@php
+				$tourDt = date("Y-m-d",strtotime($ap->tour_date));
+				$validTime = SiteHelpers::checkCancelBookingTime($ap->variant_unique_code,$activity->id,$tourDt,$ap->transfer_option);
+				
+				@endphp
             <div class="card card-default">
               <div class="card-header">
                 <div class="row">
-				<div class="col-md-8 text-left">
+				<div class="col-md-5 text-left">
                     <h3 class="card-title">
                       <strong> {{$activity->title}}</strong></h3>
                   </div>
+				  
+				    <div class="col-md-3 text-rihgt">
+                    <h6 class="card-title" style="font-size:10px">
+                      <strong> Cancellation upto {{$validTime['validuptoTime']}}</strong></h6>
+                  </div>
                   <div class="col-md-4 text-right pl-5">
-                   @if(($ap->status == '0'))
+                   @if(($ap->status == '0') && $validTime['btm'] =='1')
 						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('agent-voucher.activity.cancel',$ap->id)}}" style="display:none;">
 						{{csrf_field()}}
 						</form>
