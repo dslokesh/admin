@@ -15,9 +15,7 @@
 
 </div>
 <div class="col-md-9 background-white">
-              <div class="card">
-                 
-                  <div class="card-body">
+             
   
                       <form action="{{ route('register.post') }}" method="post" class="form" enctype="multipart/form-data">
     {{ csrf_field() }}
@@ -27,7 +25,7 @@
             <div class="card-body row">
                
                   <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
                   <input type="text" id="company_name	" name="company_name" value="{{ old('company_name')}}" class="form-control"  placeholder="Agency Name" />
                   @if ($errors->has('company_name'))
                       <span class="text-danger">{{ $errors->first('company_name') }}</span>
@@ -59,8 +57,8 @@
                 @endif
               </div>
 			 
-              <div class="form-group col-md-6">
-               <input type="text" id="address" name="address" value="{{ old('address') }}" class="form-control" required placeholder="Address" />
+              <div class="form-group col-md-12">
+               <textarea id="address" name="address" rows="2" style="resize:none;" class="form-control" required placeholder="Address" >{{ old('address') }}</textarea>
                 @if ($errors->has('address'))
                     <span class="text-danger">{{ $errors->first('address') }}</span>
                 @endif
@@ -118,15 +116,14 @@
         
         </div>
       </div>
-      <p class="mb-1">
+      <p class="mb-1 mt-20">
        
-		<a class="btn btn-link float-right" href="{{route('login')}}"> {{ __('Agency Login') }}</a>
+		<a class="btn btn-link float-right" href="{{route('login')}}"> {{ __('Already have an account?') }}</a>
       </p>
     </form>
-                      </form>
+                      
                         
-                  </div>
-              </div>
+                 
               </div>
         </div>
           </div>

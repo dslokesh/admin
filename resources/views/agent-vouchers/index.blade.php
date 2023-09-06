@@ -99,7 +99,7 @@
         </div>
 		 </div>
 			  <div class="col-md-12" style="overflow-x:auto">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table rounded-corners">
                   <thead>
                   <tr>
 				    <th>Service Type</th>

@@ -40,7 +40,7 @@
         </div>
       </form>
 
-      <p class="mb-1">
+      <p class="mb-1 mt-20">
         <a class="btn btn-link" href="{{route('resetpassword')}}"> {{ __('Forgot Your Password?') }}</a>
 		<a class="btn btn-link float-right" href="{{route('register')}}"> {{ __('Agency SignUp') }}</a>
       </p>

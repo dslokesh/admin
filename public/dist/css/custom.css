@@ -199,7 +199,8 @@ border-color: #6c757d;
 
 .login-div
 {
-margin: 0px auto;  
+margin: 10px auto; 
+border-radius: 5px; 
 }
 
 .login-box
@@ -483,9 +484,14 @@ box-shadow: 1px 0px 22px -8px rgba(0,0,0,0.75);
   }
   .login-page, .register-page 
   {
-    height: 600px;
+    
     overflow: auto;
     display: block;
+  }
+  .login-form
+  {
+    max-height: 600px;
+    overflow: auto;
   }
 .background-bg-1
 {
@@ -662,4 +668,3 @@ box-shadow: 1px 0px 22px -8px rgba(0,0,0,0.75);
   .multistep .multistep-step.next a.multistep-dot {
       pointer-events: all;
   }
-  

@@ -1,4 +1,4 @@
-@extends('layouts.signUp')
+@extends('layouts.static')
   
 @section('content')
 <main class="login-form">
