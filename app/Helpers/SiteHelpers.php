@@ -498,11 +498,14 @@ class SiteHelpers
 			$bookingTime = $currentTimestamp;
 			$data['validuptoTime'] = date("d-m-Y h:i a",$vlt);
 			$data['cancelhwr'] = $cancelHours;
-			
+			if($cancelHours == 0){
+				$data['btm'] = 0;
+			} else {
 			if($vlt >= $bookingTime){
 				$data['btm'] = 1;
 			} else {
 				$data['btm'] = 0;
+			}
 			}
 			
 			return $data;
