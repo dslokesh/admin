@@ -34,7 +34,7 @@
 				 
 				  @endphp
 				   <tr>
-                    <td><input type="checkbox"  name="activity_select[{{$ap->u_code}}]" id="activity_select{{$kk}}" value="{{ $aid }}" @if($kk == '0') checked @endif class="actcsk" data-inputnumber="{{$kk}}" /> {{$ap->variant_name}} - {{$ap->variant_code}}
+                    <td><input type="checkbox"  name="activity_select[{{$ap->u_code}}]" id="activity_select{{$kk}}" value="{{ $aid }}" @if($kk == '0') checked @endif class="actcsk" data-inputnumber="{{$kk}}" /> {{$ap->variant_name}}
 					<input type="hidden"  name="variant_unique_code[{{$ap->u_code}}]" id="variant_unique_code{{$kk}}" value="{{ $ap->u_code }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_name[{{$ap->u_code}}]" id="variant_name{{$kk}}" value="{{ $ap->variant_name }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_code[{{$ap->u_code}}]" id="variant_code{{$kk}}" value="{{ $ap->variant_code }}" data-inputnumber="{{$kk}}" /> 
