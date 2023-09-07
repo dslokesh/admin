@@ -309,7 +309,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 		
      <li class="nav-item ">
               <a href="{{ route('agent-vouchers.index') }}" class="nav-link {{$active}}">
-                 <i class="nav-icon fas fa-gift"></i>
+                 <i class="nav-icon fas fa-file"></i>
                 <p>My Booking</p>
               </a>
             </li>
@@ -324,7 +324,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
         @endphp 
 			 <li class="nav-item ">
               <a href="{{ route('agent-vouchers.create') }}" class="nav-link {{$active}}">
-                 <i class="nav-icon fas fa-file"></i>
+                 <i class="nav-icon fas fa-calendar-alt"></i>
                 <p>Book Now</p>
               </a>
             </li>
@@ -388,7 +388,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
           @endphp    
 			   <li class="nav-item">
                 <a href="{{ route('agentLedgerReportWithVat') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-file"></i>
+                   <i class="nav-icon fas fa-file-alt"></i>
                   <p>Agent Ledger</p>
                 </a>
               </li>

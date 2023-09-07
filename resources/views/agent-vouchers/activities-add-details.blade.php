@@ -77,7 +77,7 @@
 			  
 			  </div>
 			 
-			    <div class="row">
+			    <!-- <div class="row">
 					<div class="col-md-12">
 						<ul class="list-inline list-group list-group-horizontal">
 							<li style="padding-right: 10px;">
@@ -94,7 +94,7 @@
 							</li>
 						</ul>
 					</div>
-			  </div>
+			  </div> -->
 
 			 
 			    <div class="row fixme">

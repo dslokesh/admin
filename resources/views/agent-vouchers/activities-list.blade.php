@@ -20,7 +20,7 @@
 
     <!-- Main content -->
     <section class="content" id="activities-list-blade">
-        
+
     <div class="container-fluid">
        
               <!-- /.card-header -->
@@ -111,7 +111,7 @@
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
 </div>
  @if(!empty($voucherActivity) && $voucher->is_activity == 1)
- <div class="col-md-3  mt-2 " style="padding: 7px;" >
+ <div class="col-md-3  mt-2 " id="div-cart-list" >
 				
 			  
 					@if(!empty($voucherActivity))
@@ -119,7 +119,7 @@
 				  @php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					@endphp
-            <div class="card">
+            <div class="card mt-10">
 			
               
               <div class="card-body card-body-hover" >
@@ -150,30 +150,30 @@
                  </div>
               </div>
              
-                <div class="row" >
-                <div class="col-md-3" style="padding: 5px 0px 5px 5px; ">
+              <div class="row" >
+				  <div class="col-md-3" style="padding: 5px 0px 5px 5px; ">
               <img src="{{asset('uploads/activities/'.$activity->image)}}" class="img-fluid" style="border-radius: 5px;" />
             </div>
 			<div class="col-md-9">
-      <ul class="list-unstyled" style="">
+              <ul class="list-unstyled" style="">
              
-             <li>
-              {{$ap->variant_name}}
-             </li>
-     <li>
-               {{$ap->transfer_option}}
-             </li>
-             <li>
-                {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}
-             </li>
-             <li>
+                <li>
+                 {{$ap->variant_name}}
+                </li>
+				<li>
+                  {{$ap->transfer_option}}
+                </li>
+                <li>
+                   {{ $ap->tour_date ? date(config('app.date_format'),strtotime($ap->tour_date)) : null }}
+                </li>
+                <li>
 
-              <i class="fas fa-male color-grey" style="font-size:16px;" title="Adult"></i> <span class="color-black">{{$ap->adult}}</span> <i class="fas fa-child color-grey" title="Child"></i>  <span class="color-black">{{$ap->child}}</span>
+                 <i class="fas fa-male color-grey" style="font-size:16px;" title="Adult"></i> <span class="color-black">{{$ap->adult}}</span> <i class="fas fa-child color-grey" title="Child"></i>  <span class="color-black">{{$ap->child}}</span>
 
-               <span class="float-right " ><h2 class="card-title text-right color-black"><strong>AED {{$ap->totalprice}}</strong></h2></span>
-             </li>
-             
-           </ul>
+                  <span class="float-right " ><h2 class="card-title text-right color-black"><strong>AED {{$ap->totalprice}}</strong></h2></span>
+                </li>
+                
+              </ul>
 			   
             </div>
 			
