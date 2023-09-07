@@ -11,7 +11,7 @@
         <div class="alert alert-danger text-center">
             <h2 class="display-3">419</h2>
             <p class="display-5">Oops! Page Expired.</p>
-			 <a href='/'>GO TO LOGIN</a>
+			 <a href='http://abaterab2b.com/'>GO TO LOGIN</a>
         </div>
     </div>
 </body>

@@ -12,6 +12,6 @@
 <p>We look forward for working with you.</p>
 <p>For any further information or assistance please feel free to contact us.</p>
 <p>Note: Please do not reply to this email. It has been sent from an email account that is not monitored.</p>
-<p><strong>Thanks</br></br>Team Abatera B2B </strong></p>
+<p><strong>Thanks </strong></p><p><strong></br>Team Abatera B2B </strong></p>
 	</div>
 @endsection

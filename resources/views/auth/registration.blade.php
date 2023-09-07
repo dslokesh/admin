@@ -4,17 +4,12 @@
 <main class="login-form">
   <div class="cotainer">
       <div class=" justify-content-center">
-        <div class="col-md-12  background-bg-1">
+        <div class="col-md-12 ">
           <div class="row">
 
          
-      <div class="col-md-3 text-center">
-        <p class="text-center sign-up-icon"><span class="fas fa-file"></span></p>
-        <p class="text-dark"><strong>Fill Up this registration form</strong></p>
-        <p>Fill this short form to initiate your free free registration request</p>
-
-</div>
-<div class="col-md-9 background-white">
+     
+<div class="col-md-12 background-white">
              
   
                       <form action="{{ route('register.post') }}" method="post" class="form" enctype="multipart/form-data">
@@ -45,7 +40,7 @@
               </div>
 			  
                 <div class="form-group col-md-6">
-                <input type="text" id="mobile" name="mobile" required value="{{ old('mobile') }}" class="form-control"  placeholder="Phone No *" />
+                <input type="text" id="mobile" name="mobile" required value="{{ old('mobile') }}" class="form-control"  placeholder="Mobile No with Country Code *" />
                 @if ($errors->has('mobile'))
                     <span class="text-danger">{{ $errors->first('mobile') }}</span>
                 @endif

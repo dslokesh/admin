@@ -32,7 +32,6 @@
   <!-- /.card -->
 </div>
 </div>
-@include('inc.footer')
 <!-- /.login-box -->
 
 <!-- jQuery -->

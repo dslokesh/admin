@@ -12,6 +12,7 @@
             <h2 class="display-3">404</h2>
 			<h5 class="display-5">Page not found</h5>
             <p class="display-5">Oops! Something is wrong.</p>
+            <a href='http://abaterab2b.com/'>GO TO LOGIN</a>
         </div>
     </div>
 </body>

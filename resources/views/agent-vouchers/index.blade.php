@@ -29,12 +29,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Bookings</h3>
-				<div class="card-tools">
-				 <a href="{{ route('agent-vouchers.create') }}" class="btn btn-sm btn-info">
-                      <i class="fas fa-plus"></i>
-                      Create
-                  </a> 
-				   </div>
+			
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -102,21 +97,24 @@
                 <table id="example1" class="table rounded-corners">
                   <thead>
                   <tr>
-				    <th>Service Type</th>
-					<th>Booking Number</th>
+                  <th>Booking Number</th>
+                  <th>Booking Date</th>
+                  <th>Service Type</th>
+					
 					<th>Service Name</th>
-					<th>Agent Reference Number</th>
+          <th>Travel Date</th>
+					<th>Agent Ref. No.</th>
 					<th>Customer</th>
 					<th>Adult</th>
 					<th>Child</th>
 					<th>Infant</th>
-					<th>Booking Date</th>
-					<th>Travel Date</th>
-					<th>Cancellation DeadLine</th>
+					
+				
+					
                     <th>Status</th>
-                    <th>Payment Type</th>
-					<th>Invoice</th>
-                    <th width="12%"></th>
+                  
+				
+                    <th></th>
                   </tr>
 				  
                   </thead>
@@ -125,23 +123,26 @@
                  
                   @foreach ($records as $record)
                   <tr>
+                  <td>{{ ($record->voucher->code)}}</td>
+                  <td>
+					{{ $record->voucher->booking_date ? date(config('app.date_format'),strtotime($record->voucher->booking_date)) : null }}
+</td>
 				  <td>{{ ($record->activity->entry_type)}}</td>
-				   <td>{{ ($record->voucher->code)}}</td>
+				  
 				   <td>{{ ($record->activity->title)}}</td>
+           <td>
+					{{ $record->tour_date ? date(config('app.date_format'),strtotime($record->tour_date)) : null }}
+					</td>
 				   <td>{{ ($record->voucher->agent_ref_no)}}</td>
 					<td>{{ ($record->voucher->guest_name)?$record->voucher->guest_name:''}}</td>
 					<td>{{ ($record->adult)}}</td>
 					<td>{{ ($record->child)}}</td>
 					<td>{{ ($record->infant)}}</td>
-					<td>
-					{{ $record->voucher->booking_date ? date(config('app.date_format'),strtotime($record->voucher->booking_date)) : null }}
-</td>
-					<td>
-					{{ $record->tour_date ? date(config('app.date_format'),strtotime($record->tour_date)) : null }}
-					</td>
-					<td>24:00 Hour(s)</td>
+					
+				
+					
                     <td>{!! SiteHelpers::voucherStatus($record->voucher->status_main) !!}</td>
-                   <td>{{ ($record->voucher->status_main==5)?'Credit Limit':''}}</td>
+                
 
 					
 					 <td class="hide">
@@ -164,21 +165,11 @@
                           </a>
 						  @endif
 						  </td>
-						   <td>
-					 @if($record->voucher->is_activity == 1)
-						 @if($record->voucher->status_main > 1)
-					 <a class="btn btn-info btn-sm" href="{{route('voucherActivityItineraryPdf',$record->voucher->id)}}">
-                              <i class="fas fa-download">
-                              </i>
-                             
-                          </a>
-						  @endif
-						  @endif
-						  </td>
+					
                      <td>
 					 @if($record->voucher->status_main == '4')
 					 
-					 <a class="btn btn-info btn-sm" href="{{route('agent-vouchers.show',$record->voucher->id)}}">
+					 <a class="btn btn-info btn-sm" alt="View Details" href="{{route('agent-vouchers.show',$record->voucher->id)}}">
                               <i class="fas fa-eye">
                               </i>
                               
@@ -186,7 +177,7 @@
 					@endif
           @if($record->voucher->status_main > 4)
 					 
-          <a class="btn btn-info btn-sm" href="{{route('agentVoucherView',$record->voucher->id)}}">
+          <a class="btn btn-info btn-sm" alt="View Details" href="{{route('agentVoucherView',$record->voucher->id)}}">
                              <i class="fas fa-eye">
                              </i>
                              

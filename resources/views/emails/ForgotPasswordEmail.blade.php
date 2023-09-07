@@ -12,10 +12,10 @@
 <p style="text-align: center;">
     <a href="{{url('forgot-password', $adminuser_details['token'])}}">Reset your password</a>
 </p>
-<p><strong>The above link is valid for 20 Minutes (As per theactual time).</strong></p>
+<p><strong>The above link is valid for 20 Minutes.</strong></p>
 <p>For any further information or assistance please feel free to contact us.</p>
 <p>Note: Please do not reply to this email. It has been sent from an email account that is not monitored.</p>
-<p><strong>Thanks</br></br>Team </br></br>Abatera B2B </strong></p>
+<p><strong>Thanks </strong></p><p><strong></br></br>Team Abatera B2B </strong></p>
 	</div>
 @endsection
 

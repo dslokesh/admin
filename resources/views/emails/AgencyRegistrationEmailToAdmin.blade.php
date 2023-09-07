@@ -14,6 +14,6 @@
 
 
  
-<p><strong>Thanks</br></br>Team Abatera B2B </strong></p>
+<p><strong>Thanks </strong></p><p><strong></br></br>Team Abatera B2B </strong></p>
 	</div>
 @endsection
