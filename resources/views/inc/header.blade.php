@@ -32,9 +32,15 @@
 		</li> 
 	@endif		
 		<li class="nav-item dropdown">
+		@if(auth()->user()->role_id == '3')
+			<a class="nav-link" data-toggle="dropdown" href="#">
+				<span class="hidden-xs">{{\Auth::user()->company_name}} <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+			</a>
+		@else
 			<a class="nav-link" data-toggle="dropdown" href="#">
 				<span class="hidden-xs">{{\Auth::user()->name}} <i class="fa fa-caret-down" aria-hidden="true"></i></span>
 			</a>
+		@endif
 			<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 				<div class="card m-0">
 					<div class="card-body text-center">
