@@ -525,7 +525,12 @@ $stepNameSize: 1.6rem;
 				  
 				    <div class="col-md-3 text-rihgt">
                     <h6 class="card-title" style="font-size:10px">
-                      <strong> Cancellation upto {{$validTime['validuptoTime']}}</strong></h6>
+                     @if($validTime['btm'] == '0')
+                      <strong> Non - Refundable</strong>
+					@else
+						 <strong> Cancellation upto {{$validTime['validuptoTime']}}</strong>
+					@endif
+					</h6>
                   </div>
                   <div class="col-md-4 text-right pl-5">
                    @if(($ap->status == '0') && $validTime['btm'] =='1')
