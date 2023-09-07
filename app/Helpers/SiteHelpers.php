@@ -437,12 +437,16 @@ class SiteHelpers
 			}
 			
 			if($transfer_option == 'Shared Transfer'){
-				$booking_window_valueto = $activityPrice->booking_window_valueSIC*60*60;
+				$cancelHours = ($activityPrice->cancellation_valueSIC>0)?$activityPrice->cancellation_valueSIC:0;
 			}
 			elseif($transfer_option == 'Pvt Transfer'){
-				$booking_window_valueto = $activityPrice->booking_window_valuePVT*60*60;
+				$cancelHours = ($activityPrice->cancellation_valuePVT>0)?$activityPrice->cancellation_valuePVT:0;
 			}else{
-				$booking_window_valueto = $activityPrice->booking_window_valueto*60*60;
+				$cancelHours = ($activityPrice->cancellation_value_to>0)?$activityPrice->cancellation_value_to:0;
+			}
+			
+			if($cancelHours > 0){
+			$booking_window_valueto  = $cancelHours * 60*60;
 			}
 			
 			
@@ -482,12 +486,12 @@ class SiteHelpers
 			$currentTimestamp = strtotime("now");
 			
 			if($transfer_option == 'Shared Transfer'){
-				$cancelHours = $activityPrice->cancellation_valueSIC;
+				$cancelHours = ($activityPrice->cancellation_valueSIC>0)?$activityPrice->cancellation_valueSIC:0;
 			}
 			elseif($transfer_option == 'Pvt Transfer'){
-				$cancelHours = $activityPrice->cancellation_valuePVT;
+				$cancelHours = ($activityPrice->cancellation_valuePVT>0)?$activityPrice->cancellation_valuePVT:0;
 			}else{
-				$cancelHours = $activityPrice->cancellation_value_to;
+				$cancelHours = ($activityPrice->cancellation_value_to>0)?$activityPrice->cancellation_value_to:0;
 			}
 			
 			if($cancelHours > 0){
