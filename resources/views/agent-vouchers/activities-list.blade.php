@@ -43,6 +43,7 @@
                   @foreach ($records as $record)
 				  @php
             $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher);
+			$cutoffTime = SiteHelpers::getActivityVarByCutoffCancellation($record->id);
           @endphp
           <tr><td>
                    <!-- Default box -->
@@ -61,16 +62,16 @@
               <br/> <br/>
               <ul class="list-unstyled" style="margin-top: 70px;">
                 @if($record->entry_type == 'Tour')
-                <li class="text-color">
+                 <li class="text-color">
                  <i class="far fa-fw  fa-check-circle"></i> Instant Confirmation
                 </li>
 				@endif
-               <!--  <li>
-                  <a href="#" class="btn-link text-secondary"><i class="far fa-fw  fa-check-circle "></i> Free Cancellation 24 hrs. Prior </a>
+             <li  class="text-color">
+                 <i class="far fa-fw  fa-check-circle "></i> {!!$cutoffTime!!}
                 </li>
                
                 
-              </ul> -->
+              </ul> 
             </div>
             <div class="col-md-3 text-right">
               <br/>

@@ -30,7 +30,7 @@ class sendRegisterToUserMailable extends Mailable
     {
 
         $user_details = (array)$this->data;
-		$this->subject("Greetings from Abaterab2b");
+		$this->subject("Registration Confirmation");
 
         return $this->markdown('emails.AgencyRegistrationEmail', compact('user_details'));
     }

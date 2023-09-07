@@ -255,7 +255,7 @@ class UsersController extends Controller
 				$recordUser = User::find($user->id);
 				$recordUser->email_verified_at = now();
 				$recordUser->save(); 
-				Mail::to($user->email,'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
+				Mail::to($user->email,'Log in Credentials.')->send(new RegisterToAgencyMailable($agentData)); 
 			
        
             return redirect('users')->with('success','Users Created Successfully.');

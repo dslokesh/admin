@@ -79,6 +79,7 @@
                   @foreach ($records as $record)
 				  @php
             $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher);
+			$cutoffTime = SiteHelpers::getActivityVarByCutoffCancellation($record->id);
           @endphp
                    <!-- Default box -->
       <div class="card collapsed-card ">
@@ -101,7 +102,7 @@
                 </li>
 				@endif
                 <li  class="text-color">
-                 <i class="far fa-fw  fa-check-circle "></i> Free Cancellation 24 hrs. Prior
+                 <i class="far fa-fw  fa-check-circle "></i> {!!$cutoffTime!!}
                 </li>
                
                 

@@ -423,7 +423,7 @@ class SiteHelpers
     }
 	
 	
-	public function checkAvailableBookingTimeSlot($u_code,$activity_id,$tourDt,$transfer_option)
+	public function checkAvailableBookingTimeSlot($u_code,$activity_id,$tourDt,$transfer_option,$is_opendated)
     {
 		
 		$activityPrice = ActivityPrices::where(['u_code'=>$u_code,'activity_id'=>$activity_id])->select('start_time','end_time','booking_window_valueto','booking_window_valueSIC','booking_window_valuePVT')->first();
@@ -432,6 +432,9 @@ class SiteHelpers
 			$validuptoTime = strtotime($combinedDatetime);
 			$booking_window_valueto = 0;
 			$currentTimestamp = strtotime("now");
+			if(($transfer_option == 'Ticket Only') && ($is_opendated == '1')){
+				return 0;
+			}
 			
 			if($transfer_option == 'Shared Transfer'){
 				$booking_window_valueto = $activityPrice->booking_window_valueSIC*60*60;
@@ -479,12 +482,12 @@ class SiteHelpers
 			$currentTimestamp = strtotime("now");
 			
 			if($transfer_option == 'Shared Transfer'){
-				$cancelHours = $activityPrice->cancellation_valueSIC*60*60;
+				$cancelHours = $activityPrice->cancellation_valueSIC;
 			}
 			elseif($transfer_option == 'Pvt Transfer'){
-				$cancelHours = $activityPrice->cancellation_valuePVT*60*60;
+				$cancelHours = $activityPrice->cancellation_valuePVT;
 			}else{
-				$cancelHours = $activityPrice->cancellation_value_to*60*60;
+				$cancelHours = $activityPrice->cancellation_value_to;
 			}
 			
 			if($cancelHours > 0){
@@ -504,6 +507,27 @@ class SiteHelpers
 			
 			return $data;
 		
+    }
+	
+	public function getActivityVarByCutoffCancellation($activity_id)
+    {
+		
+		$activityPrice = ActivityPrices::where(['activity_id'=>$activity_id])->where(function ($query) {
+        $query->where('cancellation_value_to', 0);
+            $query->orWhereNull('cancellation_value_to');
+			 $query->orWhere('cancellation_valueSIC', 0);
+			  $query->orWhereNull('cancellation_valueSIC');
+			   $query->orWhere('cancellation_valuePVT', 0);
+			    $query->orWhereNull('cancellation_valuePVT');
+    })->count();
+			
+			
+			if($activityPrice == 0){
+			$booking_window_text  = 'Non - Refundable';
+			} else{
+				$booking_window_text  = 'Free Cancellation';
+			}
+		return $booking_window_text;
     }
 	
 }
