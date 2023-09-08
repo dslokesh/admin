@@ -427,11 +427,11 @@ class AgentVouchersController extends Controller
             $query->where('title', 'like', '%' . $data['name'] . '%');
         }
        
-	 /*  $records = $query->whereHas('prices', function ($query) use($startDate,$endDate) {
+	  $records = $query->whereHas('prices', function ($query) use($startDate,$endDate) {
            $query->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0');
-       })->orderBy('created_at', 'DESC')->paginate($perPage); */
+       })->orderBy('created_at', 'DESC')->paginate($perPage); 
 	   
-       $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+       //$records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
 		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->get();

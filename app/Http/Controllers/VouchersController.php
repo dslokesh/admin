@@ -784,12 +784,12 @@ class VouchersController extends Controller
             $query->where('title', 'like', '%' . $data['name'] . '%');
         }
 		
-     /*   
+       
        $records = $query->whereHas('prices', function ($query) use($startDate,$endDate) {
-           $query->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0');
-       })->orderBy('created_at', 'DESC')->paginate($perPage); */
+           $query->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate);
+       })->orderBy('created_at', 'DESC')->paginate($perPage); 
 	   
-		$records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		//$records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 	
 		
 		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->get();
