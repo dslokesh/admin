@@ -319,7 +319,7 @@ class SiteHelpers
 					}
 			}
 			
-		if($adult_rate > '0'){
+		if($adult_rate > 0){
 			if($activity->entry_type=='Ticket Only'){
 				$minPrice = $adult_rate + $markup['ticket_only'];
 			} else {
@@ -332,10 +332,10 @@ class SiteHelpers
 			
 		} else {
 			if($activity->sic_TFRS==1){
-				 $minPrice =  $adult_rate + $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
+				 $minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
 				
 			}elseif($activity->pvt_TFRS==1){
-				  $minPrice = $adult_rate + $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+				  $minPrice =  $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
 			}
 			
 

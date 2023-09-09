@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
 use App\Models\AgentAmount;
 use App\Models\Supplier;
+use App\Models\Ticket;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use SiteHelpers;
@@ -431,6 +432,46 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		}
 		
         return response()->json($response);
+	}
+
+	public function ticketStockReport(Request $request)
+    {
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$activities = Activity::where('status', 1)->orderBy('title', 'ASC')->get();
+		$query = Ticket::with(['activity','voucheractivity'])
+            ->select(
+                'activity_id',
+                'activity_variant',
+                'valid_till',
+                DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_uploaded_adult'),
+                DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_uploaded_child'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_allotted_adult'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_allotted_child'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_left_adult'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_left_child')
+            );
+		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = date("Y-m-d",strtotime($data['from_date']));
+			$endDate =  date("Y-m-d",strtotime($data['to_date']));
+				 $query->whereDate('valid_till', '>=', $startDate);
+				 $query->whereDate('valid_till', '<=', $endDate);
+		}
+		
+		if (isset($data['activity_id']) && !empty($data['activity_id'])) {
+				 $query->where('activity_id',  $data['activity_id']);
+		}
+		
+		if (isset($data['activity_variant']) && !empty($data['activity_variant'])) {
+				 $query->where('activity_variant',  $data['activity_variant']);
+		}
+				
+            $query->groupBy('activity_id', 'activity_variant', 'valid_till');
+           $records = $query->paginate($perPage);
+			
+		
+	//dd($records);
+		return view('reports.ticket-report', compact('records','activities'));
 	}
    
 }
