@@ -572,7 +572,7 @@ $stepNameSize: 1.6rem;
 				 
 				  
 				<div class="col-md-4 text-right pl-5">
-				@if(($ap->status == '0') && $validTime['btm'] =='1')
+				@if(($ap->status == '0') && ($validTime['btm'] =='1') && ($ap->ticket_downloaded == '0'))
 						
 						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.cancel',$ap->id)}}" style="display:none;">
 						{{csrf_field()}}
