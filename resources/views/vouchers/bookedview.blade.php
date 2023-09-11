@@ -612,10 +612,10 @@ $stepNameSize: 1.6rem;
                             "><i class="fas fa-download"></i> Ticket</a>
 							
 							@elseif(($ap->ticket_generated == '1') and ($ap->status == '0'))
-							<a class="btn btn-success float-right  btn-sm" href="{{route('ticket.dwnload',$ap->id)}}" ><i class="fas fa-download"></i> Ticket</a>
+							<a class="btn btn-success float-right  btn-sm  d-pdf" href="#" onclick='window.open("{{route('ticket.dwnload',$ap->id)}}");return false;'  ><i class="fas fa-download"></i> Ticket</a>
 							@endif
 							@if($ap->status > 0)
-							<span class=" btn-danger float-right  btn-sm"  >{{ config('constants.voucherActivityStatus')[$ap->status] }}</span>
+							<span class=" btn-danger float-right  btn-sm"   >{{ config('constants.voucherActivityStatus')[$ap->status] }}</span>
 							@endif
                    
                     
@@ -871,6 +871,15 @@ $stepNameSize: 1.6rem;
 @section('scripts')
 
 <script type="text/javascript">
- 
+
+   $(".d-pdf").on('click', function (e) {
+    e.preventDefault();
+    window.location.href = this.getAttribute('href');
+    // Reload the page after a delay (adjust the delay time as needed)
+    setTimeout(function () {
+        location.reload();
+    }, 2000); // Reload after 2 seconds
+});
+
 </script>
 @endsection
