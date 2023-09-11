@@ -267,15 +267,20 @@ class SiteHelpers
 		$vat_invoice = $voucher->vat_invoice;
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
+		$user = auth()->user();
 		
 		$activity = Activity::where('id', $activity_id)->select('entry_type','sic_TFRS','pvt_TFRS','zones','transfer_plan','vat')->first();
 		$avat = 0;
 		if($activity->vat > 0){
 		$avat = $activity->vat;	
 		}
+		
+		$query = ActivityPrices::where('activity_id', $activity_id);
+		if($user->role_id == '3'){
+			$query->where('for_backend_only', '0');
+		}
 		if($vat_invoice == 1){
-	$ap = ActivityPrices::where('activity_id', $activity_id)
-    ->orderByRaw('CAST(adult_rate_without_vat AS DECIMAL(10, 2))')
+			$ap = $query->orderByRaw('CAST(adult_rate_without_vat AS DECIMAL(10, 2))')
     ->select('adult_rate_without_vat', 'variant_code')
     ->first();
 	if(isset($ap->variant_code)){
@@ -284,8 +289,7 @@ class SiteHelpers
 	
 	
 	} else {
-		$ap = ActivityPrices::where('activity_id', $activity_id)
-    ->orderByRaw('CAST(adult_rate_with_vat AS DECIMAL(10, 2))')
+	$ap = $query->orderByRaw('CAST(adult_rate_with_vat AS DECIMAL(10, 2))')
     ->select('adult_rate_with_vat', 'variant_code')
     ->first();
 	
@@ -320,22 +324,31 @@ class SiteHelpers
 			}
 			
 		if($adult_rate > 0){
+			$markupPriceT  = ($adult_rate * $markup['ticket_only'])/100;
+			$markupPriceS  = ($adult_rate * $markup['sic_transfer'])/100;
+			$markupPriceP  = ($adult_rate * $markup['pvt_transfer'])/100;
+			
 			if($activity->entry_type=='Ticket Only'){
-				$minPrice = $adult_rate + $markup['ticket_only'];
+				$minPrice = $adult_rate + $markupPriceT;
 			} else {
 			if($activity->sic_TFRS==1){
-				$minPrice =  $adult_rate + $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
+				$minPrice =  $adult_rate + $markupPriceS + $markupPriceT + $zonePrice;
 			}elseif($activity->pvt_TFRS==1){
-				  $minPrice = $adult_rate + $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+				  $minPrice = $adult_rate + $markupPriceP + $markupPriceT + $transferPrice;
 			}
 			}
 			
 		} else {
+			
 			if($activity->sic_TFRS==1){
-				 $minPrice =  $markup['sic_transfer'] + $markup['ticket_only'] + $zonePrice;
+				$markupPriceT  = ($zonePrice * $markup['ticket_only'])/100;
+				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				$minPrice =  $markupPriceS + $markupPriceT + $zonePrice;
 				
 			}elseif($activity->pvt_TFRS==1){
-				  $minPrice =  $markup['ticket_only'] + $markup['pvt_transfer'] + $transferPrice;
+				$markupPriceT  = ($transferPrice * $markup['ticket_only'])/100;
+				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+				$minPrice =  $markupPriceT + $markupPriceP + $transferPrice;
 			}
 			
 

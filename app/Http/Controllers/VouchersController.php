@@ -793,7 +793,7 @@ class VouchersController extends Controller
 	
 		
 		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->orderBy('tour_date','DESC')->get();
 		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
         return view('vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount','voucherHotel','voucherActivity'));
@@ -811,15 +811,15 @@ class VouchersController extends Controller
 		$voucher = Voucher::find($data['vid']);
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
+		$user = auth()->user();
 		
-		/* $activityPrices = ActivityPrices::where('activity_id', $data['act'])
-			->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')
-			->orderByRaw('CAST(adult_rate_without_vat AS DECIMAL(10, 2))')
-			->get(); */
-			
+		$queryPrices = ActivityPrices::where('activity_id', $data['act'])->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate);
+		if($user->role_id == '3'){
+		$queryPrices->where('for_backend_only', '0');
+		}
 		
-	$activityPrices = ActivityPrices::where('activity_id', $data['act'])->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('for_backend_only', '0')->get();
 		
+		$activityPrices = $queryPrices->get();
 		$dates = SiteHelpers::getDateListBoth($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out);
 		$disabledDay = SiteHelpers::getNovableActivityDays($activity->availability);
 		

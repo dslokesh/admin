@@ -435,7 +435,7 @@ class AgentVouchersController extends Controller
 		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
 		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->orderBy('tour_date','DESC')->get();
         return view('agent-vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount','voucherActivity'));
 		
        

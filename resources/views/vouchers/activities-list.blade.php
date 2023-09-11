@@ -284,6 +284,11 @@ $(document).on('click', '.loadvari', function(evt) {
 				$("body .t_option#transfer_option0").trigger("change");
 				}, 1000);
 			}
+			
+			if(pvttr == 'Shared Transfer'){
+				$("body .t_option#transfer_option0").trigger("change");
+			}
+			
 				//var response = JSON.parse(data.dates);
 				var disabledDates = data.dates.disabledDates;
 				var availableDates = data.dates.availableDates;
