@@ -177,3 +177,7 @@ header.profile-header {
 .error{
 	color:#dc3545;
 }
+
+.small-box p{
+	color:#fff!important;
+}
