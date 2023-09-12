@@ -325,15 +325,17 @@ class SiteHelpers
 			
 		if($adult_rate > 0){
 			$markupPriceT  = ($adult_rate * $markup['ticket_only'])/100;
-			$markupPriceS  = ($adult_rate * $markup['sic_transfer'])/100;
-			$markupPriceP  = ($adult_rate * $markup['pvt_transfer'])/100;
+			
+			
 			
 			if($activity->entry_type=='Ticket Only'){
 				$minPrice = $adult_rate + $markupPriceT;
 			} else {
 			if($activity->sic_TFRS==1){
+				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
 				$minPrice =  $adult_rate + $markupPriceS + $markupPriceT + $zonePrice;
 			}elseif($activity->pvt_TFRS==1){
+				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
 				  $minPrice = $adult_rate + $markupPriceP + $markupPriceT + $transferPrice;
 			}
 			}
@@ -341,14 +343,13 @@ class SiteHelpers
 		} else {
 			
 			if($activity->sic_TFRS==1){
-				$markupPriceT  = ($zonePrice * $markup['ticket_only'])/100;
+				
 				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
-				$minPrice =  $markupPriceS + $markupPriceT + $zonePrice;
+				$minPrice =  $markupPriceS +  $zonePrice;
 				
 			}elseif($activity->pvt_TFRS==1){
-				$markupPriceT  = ($transferPrice * $markup['ticket_only'])/100;
 				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
-				$minPrice =  $markupPriceT + $markupPriceP + $transferPrice;
+				$minPrice =   $markupPriceP + $transferPrice;
 			}
 			
 
