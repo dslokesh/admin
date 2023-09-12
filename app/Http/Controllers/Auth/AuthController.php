@@ -20,6 +20,7 @@ use App\Models\Hotel;
 use App\Models\Supplier;
 use App\Models\Activity;
 use App\Models\Agent;
+use App\Models\Voucher;
 use Hash;
 use DB;
 use Carbon\Carbon;
@@ -221,7 +222,17 @@ class AuthController extends Controller
 				if(Auth::user()->role_id == '3'){
 					 return view('dashboard-agent', compact('totalUserRecords','totalAgentRecords','totalSupplierRecords','totalCustomerRecords','totalActivityRecords','totalHotelRecords'));
 				}else{
-                return view('dashboard', compact('totalUserRecords','totalAgentRecords','totalSupplierRecords','totalCustomerRecords','totalActivityRecords','totalHotelRecords'));
+					$todayDate = date("Y-m-d");
+					$query = Voucher::where('id','!=', null);
+					$query->whereDate('created_at', $todayDate);
+					$query->where(function ($q) {
+					$q->where('status', '=', 1)
+					->orWhere('status', '=', 4)->orWhere('status', '=', 5);
+					});
+					
+          
+					$vouchers = $query->orderBy('created_at', 'DESC')->paginate(10);
+                return view('dashboard', compact('totalUserRecords','totalAgentRecords','totalSupplierRecords','totalCustomerRecords','totalActivityRecords','totalHotelRecords','vouchers'));
 				}
            
         }

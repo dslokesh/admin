@@ -39,18 +39,7 @@
     <!-- Small boxes (Stat box) -->
     <div class="row"> 
       
-		<div class="col-lg-3 col-6">
-        <!-- small box -->
-			<div class="small-box bg-success">
-				<div class="inner">
-				<h3>{{$totalUserRecords}}</h3>
-
-				<p>Users</p>
-				</div>
-				
-				<a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-			</div>
-        </div>
+		
 		<div class="col-lg-3 col-6">
         <!-- small box -->
 			<div class="small-box bg-warning">
@@ -75,18 +64,7 @@
 				<a href="{{ route('suppliers.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
-		<div class="col-lg-3 col-6">
-        <!-- small box -->
-			<div class="small-box bg-warning">
-				<div class="inner">
-				<h3>{{$totalCustomerRecords}}</h3>
-
-				<p>Customers</p>
-				</div>
-				
-				<a href="{{ route('customers.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-			</div>
-        </div>
+		
 		<div class="col-lg-3 col-6">
         <!-- small box -->
 			<div class="small-box bg-success">
@@ -111,8 +89,55 @@
 				<a href="{{ route('hotels.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
-		
-		
+		<div class="col-lg-12 col-6">
+		<div class="card">
+		<div class="card-body">
+		<table id="example1" class="table table-bordered">
+                  <thead>
+                  <tr>
+					<th>Code</th>
+                    <th>Agency</th>
+                    <th>Status</th>
+                    <th>Travel Date</th>
+                    <th>Created On</th>
+					<th>Created By</th>
+                    <th width="4%"></th>
+                  </tr>
+				  
+                  </thead>
+                  <tbody>
+				 
+                  @foreach ($vouchers as $record)
+				  
+                  <tr>
+				  <td>{{ ($record->code)}}</td>
+                    <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
+                     <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>
+					   <td>{{ $record->travel_from_date ? date("M d Y, H:i:s",strtotime($record->travel_from_date)) : null }} <b>To</b> {{ $record->travel_to_date ? date(config('app.date_format'),strtotime($record->travel_to_date)) : null }}</td>
+                    <td>{{ $record->created_at ? date("M d Y, H:i:s",strtotime($record->created_at)) : null }}</td>
+					<td>{{ ($record->createdBy)?$record->createdBy->name:''}}</td>
+                  
+					
+						 
+                     <td>
+					 
+					 <a class="btn btn-info btn-sm" href="{{route('voucherView',$record->id)}}">
+                              <i class="fas fa-eye">
+                              </i>
+                              
+                          </a>
+					
+                            
+                         </td>
+                  </tr>
+				 
+                  @endforeach
+                  </tbody>
+                 
+                </table>
+				
+				<div class="pagination pull-right mt-3"> {!! $vouchers->links() !!} </div> 
+		</div> </div></div>
       
     </div>
     <!-- /.row --> 
