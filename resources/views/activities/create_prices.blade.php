@@ -98,8 +98,13 @@
 			   <div class="form-group col-md-3">
                 <label for="inputName">For Backend Only: <span class="red">*</span></label>
                 <select name="for_backend_only[]" id="for_backend_only" class="form-control">
-				<option value="1" @if(old('for_backend_only') ==1) {{'selected="selected"'}} @endif>Yes</option>
+				@if(old('for_backend_only'))
 				<option value="0" @if(old('for_backend_only') ==0) {{'selected="selected"'}} @endif>No</option>
+				<option value="1" @if(old('for_backend_only') ==1) {{'selected="selected"'}} @endif>Yes</option>
+				@else
+					<option value="0" >No</option>
+					<option value="1" selected="selected">Yes</option>
+				@endif
                    
                  </select>
 				 @if ($errors->has('for_backend_only'))

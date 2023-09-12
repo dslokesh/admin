@@ -187,7 +187,7 @@ class AgentVouchersController extends Controller
 		$record->status = 1;
 		$record->created_by = Auth::user()->id;
         $record->save();
-		$code = 'V-'.date("Y")."-00".$record->id;
+		$code = 'ABT-'.date("Y")."-00".$record->id;
 		$recordUser = Voucher::find($record->id);
 		$recordUser->code = $code;
 		
