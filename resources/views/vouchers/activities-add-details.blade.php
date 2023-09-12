@@ -66,7 +66,7 @@
               </div>
 			   <div class="col-md-6 text-right">
 			   @php
-            $minPrice = SiteHelpers::getActivityLowPrice($activity->id,$activity->agent_id,$voucher);
+            $minPrice = SiteHelpers::getActivityLowPrice($activity->id,$voucher->agent_id,$voucher);
           @endphp
 		  <small>Starting From </small><br/>
 				 <h3>AED {{$minPrice}}</h3>
