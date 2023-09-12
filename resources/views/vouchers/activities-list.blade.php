@@ -78,7 +78,7 @@
              
                   @foreach ($records as $record)
 				  @php
-            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$record->agent_id,$voucher);
+            $minPrice = SiteHelpers::getActivityLowPrice($record->id,$voucher->agent_id,$voucher);
 			$cutoffTime = SiteHelpers::getActivityVarByCutoffCancellation($record->id);
           @endphp
                    <!-- Default box -->

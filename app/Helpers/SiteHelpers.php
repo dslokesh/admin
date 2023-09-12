@@ -326,8 +326,6 @@ class SiteHelpers
 		if($adult_rate > 0){
 			$markupPriceT  = ($adult_rate * $markup['ticket_only'])/100;
 			
-			
-			
 			if($activity->entry_type=='Ticket Only'){
 				$minPrice = $adult_rate + $markupPriceT;
 			} else {
