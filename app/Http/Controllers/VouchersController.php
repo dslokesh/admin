@@ -1063,7 +1063,7 @@ class VouchersController extends Controller
 		$agent = User::where('id',$voucher->agent_id)->first();
 		$customer = Customer::where('id',$voucher->customer_id)->first();
 		
-       $voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
+       $voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->where('status','!=','1')->get();
 	  
 		
         $dataArray = [];
