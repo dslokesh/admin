@@ -275,7 +275,7 @@ class SiteHelpers
 		$avat = $activity->vat;	
 		}
 		
-		$query = ActivityPrices::where('activity_id', $activity_id);
+		$query = ActivityPrices::where('activity_id', $activity_id)->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate);
 		if($user->role_id == '3'){
 			$query->where('for_backend_only', '0');
 		}
@@ -542,9 +542,10 @@ class SiteHelpers
 			
 			
 			if($activityPrice == 0){
-			$booking_window_text  = 'Non - Refundable';
-			} else{
 				$booking_window_text  = 'Free Cancellation';
+			} else{
+				$booking_window_text  = 'Non - Refundable';
+				
 			}
 		return $booking_window_text;
     }
