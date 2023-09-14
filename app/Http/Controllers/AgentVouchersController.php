@@ -765,9 +765,20 @@ class AgentVouchersController extends Controller
 	public function cancelActivityFromVoucher($id)
 	{
 		$record = VoucherActivity::find($id);
+		if($record->ticket_downloaded == '0'){
 		$record->status = 1;
 		$record->canceled_date = Carbon::now()->toDateTimeString();
 		$record->save();
+		$recordCount = VoucherActivity::where("voucher_id",$record->voucher_id)->where("status",'0')->count();
+		if($recordCount == '0'){
+			$voucher = Voucher::find($record->voucher_id);
+			$voucher->status_main = 6;
+			$voucher->save();		
+		}
 		return redirect()->back()->with('success', 'Activity Canceled Successfully.');
+		}
+		else{
+		return redirect()->back()->with('error', "Ticket already downloaded you can not cancel this.");	
+		}
 	}
 }

@@ -532,12 +532,9 @@ class SiteHelpers
     {
 		
 		$activityPrice = ActivityPrices::where(['activity_id'=>$activity_id])->where(function ($query) {
-        $query->where('cancellation_value_to', 0);
-            $query->orWhereNull('cancellation_value_to');
-			 $query->orWhere('cancellation_valueSIC', 0);
-			  $query->orWhereNull('cancellation_valueSIC');
-			   $query->orWhere('cancellation_valuePVT', 0);
-			    $query->orWhereNull('cancellation_valuePVT');
+        $query->where('cancellation_value_to', '0');
+			 $query->orWhere('cancellation_valueSIC', '0');
+			   $query->orWhere('cancellation_valuePVT', '0');
     })->count();
 			
 			
