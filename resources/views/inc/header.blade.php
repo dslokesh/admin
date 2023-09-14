@@ -19,9 +19,12 @@
 				$lastVoucher = SiteHelpers::getAgentlastVoucher();
 			@endphp
 			@if(!empty($lastVoucher))
+				@php
+				$voucherActivityCount = App\Models\VoucherActivity::where('voucher_id',$lastVoucher->id)->count();
+				@endphp
 			<li class="nav-item dropdown">
 		<a class="nav-link"  href="{{route('agent-vouchers.add.activity',$lastVoucher->id)}}">
-				<span class="hidden-xs"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <b>(1)</b></span>
+				<span class="hidden-xs"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <b>({{$voucherActivityCount}})</b></span>
 			</a>
 		</li> 
 		@endif
