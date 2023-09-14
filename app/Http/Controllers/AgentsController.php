@@ -218,7 +218,8 @@ class AgentsController extends Controller
 				$recordUser = User::find($record->id);
 				$recordUser->email_verified_at = now();
 				$recordUser->save(); 
-				Mail::to($record->email,'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
+				$admin = User::where("role_id",1)->first();
+				Mail::to($record->email,'Abaterab2b Login Details.')->cc($admin->email)->send(new RegisterToAgencyMailable($agentData)); 
 				
 		}
 		
@@ -450,8 +451,8 @@ class AgentsController extends Controller
 		$agentData['email'] =  $record->email;
 		$agentData['password'] =  $password;
 		//dd($agentData);
-		
-		Mail::to($record->email,'Abaterab2b Login Details.')->send(new RegisterToAgencyMailable($agentData)); 
+		$admin = User::where("role_id",1)->first();
+		Mail::to($record->email,'Abaterab2b Login Details.')->cc($admin->email)->send(new RegisterToAgencyMailable($agentData)); 
 		if($input['user'] == 'agent'){
         return redirect('agents')->with('success', 'Password Reset Successfully.');
 		}

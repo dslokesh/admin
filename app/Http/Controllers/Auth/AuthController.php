@@ -344,8 +344,8 @@ class AuthController extends Controller
 			//Mail::to($data['email'],'Password details')
 					 //->send(new sendForgotPasswordToUserMailable($admin_details[0], $new_password));
             //die;
-          
-            Mail::to($data['email'],'Password Reset Link')->send(new sendForgotPasswordToUserMailable($admin_details[0], $token));         
+			$admin = User::where("role_id",1)->first();
+            Mail::to($data['email'],'Password Reset Link')->cc($admin->email)->send(new sendForgotPasswordToUserMailable($admin_details[0], $token));         
 			
             return redirect()->route('resetpassword')->with('success', 'Success! password reset link has been sent to your email.');
 		} else {
