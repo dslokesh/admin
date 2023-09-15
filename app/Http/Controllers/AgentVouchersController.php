@@ -529,88 +529,70 @@ class AgentVouchersController extends Controller
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
 		$getAvailableDateList = SiteHelpers::getDateList($voucher->travel_from_date,$voucher->travel_to_date,$activity->black_sold_out);
-		//dd($getAvailableDateList);
 		
-		
-		$activity_vat = $request->input('activity_vat');
 		$variant_name = $request->input('variant_name');
 		$variant_code = $request->input('variant_code');
 		$transfer_option = $request->input('transfer_option');
 		$tour_date = $request->input('tour_date');
-		$pvt_traf_val_with_markup = $request->input('pvt_traf_val');
 		$transfer_zone = $request->input('transfer_zone');
-		$zonevalprice_without_markup = $request->input('zonevalprice');
 		$adult = $request->input('adult');
 		$child = $request->input('child');
 		$infant = $request->input('infant');
-		$markup_p_ticket_only = $request->input('markup_p_ticket_only');
-		$markup_p_sic_transfer = $request->input('markup_p_sic_transfer');
-		$markup_p_pvt_transfer = $request->input('markup_p_pvt_transfer');
-		$adultPrice = $request->input('adultPrice');
-		$childPrice = $request->input('childPrice');
-		$infPrice = $request->input('infPrice');
 		$discount = $request->input('discount');
-		$totalprice = $request->input('totalprice');
-		$pickup_location = '';//$request->input('pickup_location');
 		$variant_unique_code = $request->input('variant_unique_code');
 		
 		$data = [];
 		$total_activity_amount = 0;
 		foreach($activity_select as $k => $v)
 		{
-			
-			$tourDt = date("Y-m-d",strtotime($tour_date[$k]));
-			if($totalprice[$k] > 0){
-				if(!in_array($tourDt,$getAvailableDateList)){
-					return redirect()->back()->with('error', 'This Tour is not available for Selected Date.');
+			$totalmember = $adult[$k] + $child[$k];
+			$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity($activity_id,$voucher->agent_id,$voucher,$variant_unique_code[$k],$totalmember);
+			if($priceCal['totalprice'] > 0){
+				$tour_dt = date("Y-m-d",strtotime($tour_date[$k]));
+				if(!in_array($tour_dt,$getAvailableDateList)){
+				return redirect()->back()->with('error', 'This Tour is not available for Selected Date.');
 				}
 			
-			$timeCheck = SiteHelpers::checkAvailableBookingTimeSlot($variant_unique_code[$k],$activity_id,$tourDt,$transfer_option[$k],$activity->is_opendated);	
-				if($timeCheck > 0){
-					return redirect()->back()->with('error', 'Due to the cutoff time, you are unable to book this tour on the chosen day. Kindly contact Customer Service for more details.');
-				}
-				
+			
+			
+			
 			$data[] = [
 			'voucher_id' => $voucher_id,
 			'activity_id' => $activity_id,
-			'activity_vat' => $activity_vat,
+			'activity_vat' => $priceCal['activity_vat'],
 			'variant_unique_code' => $variant_unique_code[$k],
 			'variant_name' => $variant_name[$k],
 			'variant_code' => $variant_code[$k],
 			'transfer_option' => $transfer_option[$k],
-			'tour_date' => date("Y-m-d",strtotime($tour_date[$k])),
-			'pvt_traf_val_with_markup' => $pvt_traf_val_with_markup[$k],
+			'tour_date' => $tour_dt,
+			'pvt_traf_val_with_markup' => $priceCal['pvt_traf_val_with_markup'],
 			'transfer_zone' => $transfer_zone[$k],
-			'zonevalprice_without_markup' => $zonevalprice_without_markup[$k],
+			'zonevalprice_without_markup' => $priceCal['zonevalprice_without_markup'],
 			'adult' => $adult[$k],
 			'child' => $child[$k],
 			'infant' => $infant[$k],
-			'markup_p_ticket_only' => $markup_p_ticket_only[$k],
-			'markup_p_sic_transfer' => $markup_p_sic_transfer[$k],
-			'markup_p_pvt_transfer' => $markup_p_pvt_transfer[$k],
-			'adultPrice' => $adultPrice[$k],
-			'childPrice' => $childPrice[$k],
-			'infPrice' => $infPrice[$k],
+			'markup_p_ticket_only' => $priceCal['markup_p_ticket_only'],
+			'markup_p_sic_transfer' => $priceCal['markup_p_sic_transfer'],
+			'markup_p_pvt_transfer' => $priceCal['markup_p_pvt_transfer'],
+			'adultPrice' => $priceCal['adultPrice'],
+			'childPrice' => $priceCal['childPrice'],
+			'infPrice' => $priceCal['infPrice'],
 			'discountPrice' => $discount[$k],
-			'totalprice' => $totalprice[$k],
-			//'pickup_location' => $pickup_location[$k],
+			'totalprice' => $priceCal['totalprice'] - $discount[$k],
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,	
                 ];
 
-				$total_activity_amount +=$totalprice[$k];
+				$total_activity_amount += $priceCal['totalprice'] - $discount[$k];
 			}
 		}
 		
-		
 		if(count($data) > 0)
 		{
-			
 			VoucherActivity::insert($data);
 			$voucher = Voucher::find($voucher_id);
 			$voucher->total_activity_amount += $total_activity_amount;
 			$voucher->save();
-			
 		}
 
 		

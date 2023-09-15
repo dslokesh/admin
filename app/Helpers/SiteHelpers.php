@@ -547,4 +547,132 @@ class SiteHelpers
 		return $booking_window_text;
     }
 	
+	public function getActivityPriceSaveInVoucherActivity($activity_id,$agent_id,$voucher,$u_code,$totalmember)
+    {
+		$totalPrice = 0;
+		$zonePrice = 0;
+		$transferPrice = 0;
+		$vatPrice = 0;
+		$adult_total_rate = 0;
+		$adultPrice = 0;
+		$childPrice = 0;
+		$infPrice = 0;
+		$pvtTrafValWithMarkup = 0;
+		
+		$vat_invoice = $voucher->vat_invoice;
+		$startDate = $voucher->travel_from_date;
+		$endDate = $voucher->travel_to_date;
+		$user = auth()->user();
+		
+		$activity = Activity::where('id', $activity_id)->select('entry_type','sic_TFRS','pvt_TFRS','zones','transfer_plan','vat')->first();
+		$avat = 0;
+		if($activity->vat > 0){
+		$avat = $activity->vat;	
+		}
+		
+		$query = ActivityPrices::where('activity_id', $activity_id)->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->where('u_code', $u_code);
+		if($user->role_id == '3'){
+			$query->where('for_backend_only', '0');
+		}
+		if($vat_invoice == 1){
+			$ap = $query->select('adult_rate_without_vat', 'variant_code','chield_rate_without_vat','infant_rate_without_vat')
+    ->first();
+	if(isset($ap->variant_code)){
+	$adultPrice = $ap->adult_rate_without_vat;
+	$childPrice = $ap->chield_rate_without_vat;
+	$infPrice = $ap->infant_rate_without_vat;
+	}
+	
+	
+	} else {
+	$ap = $query->select('adult_rate_with_vat', 'variant_code','chield_rate_with_vat','infant_rate_with_vat')
+    ->first();
+	
+	if(isset($ap->adult_rate_with_vat)){
+	$adultPrice = $ap->adult_rate_with_vat ;
+	$childPrice = $ap->chield_rate_with_vat;
+	$infPrice = $ap->infant_rate_with_vat;
+	}
+	}
+	
+	$adult_total_rate = $adultPrice * $totalmember;
+		if(isset($ap->variant_code)){
+		$markup = self::getAgentMarkup($agent_id,$activity_id, $ap->variant_code);
+		}else{
+			$markup['ticket_only'] = 0;
+			$markup['sic_transfer'] = 0;
+			$markup['pvt_transfer'] = 0;
+		}
+		
+		
+		 
+			if($activity->sic_TFRS==1){
+				
+				 $actZone = self::getZone($activity->zones,$activity->sic_TFRS);
+				 if(!empty($actZone))
+				 {
+					  $zonePrice = $actZone[0]['zoneValue'] * $totalmember;
+				 }
+			}
+			if($activity->pvt_TFRS==1){
+					$td = TransferData::where('transfer_id', $activity->transfer_plan)->where('qty', $totalmember)->first();
+					if(!empty($td))
+					{
+					 $transferPrice = $td->price * $totalmember ;
+					}
+			}
+			
+		if($adult_total_rate > 0){
+			$markupPriceT  = ($adult_total_rate * $markup['ticket_only'])/100;
+			
+			if($activity->entry_type=='Ticket Only'){
+				$totalPrice = $adult_total_rate + $markupPriceT;
+			} else {
+			if($activity->sic_TFRS==1){
+				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				$totalPrice =  $adult_total_rate + $markupPriceS + $markupPriceT + $zonePrice;
+			}elseif($activity->pvt_TFRS==1){
+				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
+				  $totalPrice = $adult_total_rate + $markupPriceP + $markupPriceT + $transferPrice;
+			}
+			}
+			
+		} else {
+			
+			if($activity->sic_TFRS==1){
+				
+				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				$totalPrice =  $markupPriceS +  $zonePrice;
+				
+			}elseif($activity->pvt_TFRS==1){
+				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
+				$totalPrice =   $markupPriceP + $transferPrice;
+			}
+			
+
+		}
+		if($vat_invoice == 1){
+		$vatPrice = (($avat/100) * $totalPrice);
+		}
+		
+		$total = $totalPrice+$vatPrice;
+		$data = [
+		'adultPrice' =>$adultPrice,
+		'childPrice' =>$childPrice,
+		'infPrice' =>$infPrice,
+		'totalprice' =>$total,
+		'activity_vat' =>$avat,
+		'pvt_traf_val_with_markup' =>$pvtTrafValWithMarkup,
+		'zonevalprice_without_markup' =>$zonePrice,
+		'markup_p_ticket_only' =>$markup['ticket_only'],
+		'markup_p_sic_transfer' =>$markup['sic_transfer'],
+		'markup_p_pvt_transfer' =>$markup['pvt_transfer'],
+		];
+		
+		return $data;
+		
+    }
+	
 }
