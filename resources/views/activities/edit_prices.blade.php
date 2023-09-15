@@ -163,7 +163,7 @@
                     <td><input type="text" id="chield_max_no_allowed{{$k}}"  name="chield_max_no_allowed[]"  class="form-control onlynumbr notNull" value="{{ $pdata->chield_max_no_allowed }}" /></td>
                     <td><input type="text" id="chield_min_no_allowed{{$k}}" name="chield_min_no_allowed[]"  class="form-control onlynumbr notNull" value="{{ $pdata->chield_min_no_allowed }}" /></td>
 					 <td><input type="text" id="chield_start_age{{$k}}" name="chield_start_age[]" value="{{ $pdata->chield_start_age }}" class="form-control onlynumbrf notNull" /></td>
-					  <td><input type="text" id="chield_end_age{{$k}}" name="chield_end_age[]" value="{{ $pdata->chield_start_age }}" class="form-control onlynumbrf notNull" /></td>
+					  <td><input type="text" id="chield_end_age{{$k}}" name="chield_end_age[]" value="{{ $pdata->chield_end_age }}" class="form-control onlynumbrf notNull" /></td>
                   </tr>
 				   <tr>
                     <td>Infant</td>
