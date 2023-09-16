@@ -6,19 +6,112 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Itinerary</title>
+  
   <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+	body
+	{
+		margin:0 auto; 
+		font-family: 'Rubik', Helvetica, Arial, sans-serif; 
+	}
+	.outter-div
+	{
+		width: 800px;
+		 margin: 0 auto;  
+		  padding: 40px; 
+		  clear:both;
+	}
+	.inner-div
+	{
+		width:100%; 
+		padding: 10px 0px;
+		margin-bottom:20px;
+		clear:both;
+	}
+	.col-3
+	{
+		width: 25%!important;
+	}
+	.col-4
+	{
+		width: 33.33%!important;
+	}
+	.col-5
+	{
+		width: 41.66%!important;
+	}
+	.col-6
+	{
+		width: 50%!important;
+	}
+	.col-7
+	{
+		width: 58.33%!important;
+	}
+	.col-8
+	{
+		width: 66.66%!important;
+	}
+	.col-9
+	{
+		width: 75%!important;
+	}
+	.col-11
+	{
+		width: 91.66%!important;
+	}
+	.col-12
+	{
+		width: 100%!important;
+	}
+	
+	.float-left
+	{
+		float: left!important;
+	}
+	.float-right
+	{
+		float: right!important;
+	}
+	.text-right
+	{
+		text-align: right!important;
+	}
+	.activity-outter-div
+	{
+		background: #ddd; 
+		/* border-radius: 15px; */
+		/* margin-bottom: 30px; */
+	}
+	.activity-innter-div
+	{
+		background:#dcedf7; 
+		padding: 15px; 
+
+		width:96.16%;
+	}
+	.font-bold
+	{
+		font-weight: bold;
+	}
+	.no-margin
+	{
+		margin: 0px;
+	}
+  </style>
 </head>
 <!-- font-family: 'Poppins', sans-serif; -->
-<body style="margin:0 auto; font-family: 'Inter', sans-serif; ">
-	<div style="width: 780px; margin: 0 auto;  border: solid 1px #f1f1f1; padding: 40px; clear:both;">
-		<div class="width:100%; padding: 10px 0px;margin-bottom:20px">
-			<div style="width: 35%;float: left;">
+<body >
+	<div class="outter-div">
+		<div class="inner-div" style="margin-bottom: 20px;">
+			<div class="col-6 float-left">
 				<span style="display: block;font-size: 28px;">
-				<b>{{($voucher->guest_name)?$voucher->guest_name:''}}</b>Trip to
+				<b>{{($voucher->guest_name)?$voucher->guest_name:''}}</b> Trip to
 				<span style="display:block;font-size: 66px;font-weight: bold;color: #1732bb;font-family: initial;">Dubai</span>
 			</div>
-			<div style="width: 35%;float: right;text-align: right;">
+			<div class="col-6 float-right text-right" >
 				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
 					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 				@else
@@ -27,26 +120,24 @@
 				@endif
 			</div>
 		</div>
-		<div style="width:90%;margin:20px auto;">
-			<img src="{{asset('images/2.jpg')}}" style="width: 100%;border-radius: 30px">
+		<div class="col-11" style="margin:20px auto;">
+			<img src="{{asset('images/2.jpg')}}" style="width: 100%;border-radius: 30px;margin-top: 20px;">
 		</div>
-		<div class="width:100%; padding: 10px 0px;margin-bottom:20px;clear:both;">
-			<div style="width: 60%;float: left;">
-				<p style="margin-bottom: 0">Start Date:{{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
-				<p style="margin-top: 5px">End Date:{{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
+		<div class="inner-div">
+			<div class="col-7 float-left">
+				<p style="margin-bottom: 0"><b>Start Date </b>: {{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
+				<p style="margin-top: 5px"><b>End Date </b>: {{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
 			</div>
-			<div style="width: 40%;float: right;text-align: left;">
-				<p style="margin-bottom: 0">Quote ID: {{$voucher->code}}</p>
-				<p style="margin-top: 5px;font-weight: bold"></p>
+			<div class="col-4 float-right">
+				<p style="margin-bottom: 0"><b>Quote ID </b>: {{$voucher->code}}</p>
+				<p class="font-bold" style="margin-top: 5px;"></p>
 			</div>
 		</div>
-		<div style="width:100%; padding: 10px 0px;margin-bottom:20px;clear:both;">
-			
+		<div class="inner-div">
 			<div>
 				<img src="{{asset('images/2.jpg')}}" style="max-width: 40px" />
-				<span style="font-size: 20px;font-weight: 600">Inclusions</span>
+				<span class="font-bold" style="font-size: 20px;">Inclusions</span>
 			</div>
-				
 			<ul style="padding-left: 20px; margin-bottom: 30px">
 				@if(!empty($voucherActivity))
 					@foreach($voucherActivity as $k => $ap1)
@@ -83,33 +174,9 @@
 
 	@if(!empty($voucherHotel))
 	<!-- Hotel Block Start -->
-	<div style="width: 780px; margin: 0 auto;  border: solid 1px #f1f1f1; padding: 40px; clear:both;">
-		<div class="width:100%; padding: 10px 0px;margin-bottom:20px">
-			<div style="width: 35%;float: left;">
-				<span style="display: block;font-size: 28px;">
-				<b>{{($voucher->guest_name)?$voucher->guest_name:''}}</b>Trip to
-				<span style="display:block;font-size: 66px;font-weight: bold;color: #1732bb;font-family: initial;">Dubai</span>
-			</div>
-			<div style="width: 35%;float: right;text-align: right;">
-				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
-					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
-				@else
-				{{-- Code to show a placeholder or alternate image --}}
-					<img src="{{ asset('uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
-				@endif
-			</div>
-		</div>
-		<div class="width:100%; padding: 10px 0px;margin-bottom:20px;clear:both;">
-			<div style="width: 60%;float: left;">
-				<p style="margin-bottom: 0">Start Date:{{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
-				<p style="margin-top: 5px">End Date:{{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
-			</div>
-			<div style="width: 40%;float: right;text-align: left;">
-				<p style="margin-bottom: 0">Quote ID: {{$voucher->code}}</p>
-				<p style="margin-top: 5px;font-weight: bold"></p>
-			</div>
-		</div>
-		<div style="width:100%; padding: 10px 0px;margin-bottom:20px;clear:both;">
+	<div class="outter-div">
+		
+		<div class="inner-div">
 		
 			@foreach($voucherHotel as $vh)
       		<div style="padding-top: 30px;display: block;">
@@ -129,29 +196,37 @@
       					<span style="padding-left: 10px;"><!-- <img src="{{asset('images/6.png')}}"> -->{{$vh->hotel->hotelcategory->name}}</span>
       				</span>
       				<span style="display: block; align-items: center; gap: 10px; padding-top: 10px;width:100%;">
-      					<img src="{{asset('images/7.png')}}" alt="" style="width: 18px;float:left;"> 
-						{{$vh->hotel->address}},{{($vh->hotel->city)?$vh->hotel->city->name:''}},{{($vh->hotel->state)?$vh->hotel->state->name:''}},{{($vh->hotel->country)?$vh->hotel->country->name:''}}
+					  <i class="fas fa-map-marker-alt"></i> 
+						 {{$vh->hotel->address}},{{($vh->hotel->city)?$vh->hotel->city->name:''}},{{($vh->hotel->state)?$vh->hotel->state->name:''}},{{($vh->hotel->country)?$vh->hotel->country->name:''}}
       					
       				</span>
       				<div style="max-width: 350px; padding-top: 15px; display: flex;">
       					<span>
-      						<span style="color: #ccc;">Check in :</span>
+      						<span >Check in :</span>
       						<p style="color: #121212; margin-top: 5px; margin-bottom: 0; font-weight: 500">{{date("d M- Y",strtotime($vh->check_in_date))}}</p>
+							  <div style="padding-top: 10px">
+								@php
+								$room = SiteHelpers::hotelRoomsDetails($vh->hotel_other_details)
+								@endphp
+									<span style="font-size: 16px; display: block; margin-top: 5px"><b>Room Type </b>: {{$room['room_type']}}</span>
+									
+									<span style="font-size: 16px; display: block; margin-top: 5px"><b>Meal Plan </b>: {{$room['mealplan']}}</span>
+									
+								</div>
       					</span>
       					<span style="margin-left: auto;">
-      						<span style="color: #ccc;">Check out :</span>
+      						<span >Check out :</span>
       						<p style="color: #121212; margin-top: 5px; margin-bottom: 0; font-weight: 500">{{date("d M- Y",strtotime($vh->check_out_date))}}</p>
+							  <div style="padding-top: 10px">
+							
+									
+									<span style="font-size: 16px; display: block; margin-top: 5px"><b>Number of Rooms </b>: {{$room['number_of_rooms']}}</span>
+									<span style="font-size: 16px; display: block; margin-top: 5px"><b>Occupancy </b>: {{$room['occupancy']}}</span>
+									
+								</div>
       					</span>
       				</div>
-      				<div style="padding-top: 10px">
-					@php
-					$room = SiteHelpers::hotelRoomsDetails($vh->hotel_other_details)
-					@endphp
-      					<span style="font-size: 16px; display: block; margin-top: 5px">Room Type:{{$room['room_type']}}</span>
-      					<span style="font-size: 16px; display: block; margin-top: 5px">Number of Rooms :{{$room['number_of_rooms']}}</span>
-      					
-      					<span style="font-size: 16px; display: block; margin-top: 5px">Occupancy :{{$room['occupancy']}}</span>
-      				</div>
+      				
       			</div>
       		</div>
 			@endforeach
@@ -169,17 +244,29 @@
 	
 	@if(!empty($voucherActivity))
 	<!-- Activity Block Start -->
-	<div style="width: 780px; margin: 0 auto;  border: solid 1px #f1f1f1; padding: 40px; clear:both;">
-		<div style="width:100%; padding: 10px 0px;margin-bottom:20px;clear:both;">
-		
+	<div class="outter-div">
+		<div class="inner-div">
+		@php
+			$old_day_no = 0;
+			$tr_dt = "";
+			$day_no = 0;
+		@endphp
 		@foreach($voucherActivity as $k => $ap)
 		@php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					$pickup_time = SiteHelpers::getPickupTimeByZone($activity->zones,$ap->transfer_zone);
+					if($tr_dt != $ap->tour_date)
+						$day_no++;
 					@endphp
 
-      		<div style="background: #ddd; border-radius: 15px;margin-bottom: 30px;">
-	      		<div style="background:#dcedf7; padding: 15px; border-radius: 15px;width:96.16%;">
+      		<div class="activity-outter-div">
+			  @if($day_no != $old_day_no)
+			  	<h3 style="padding: 20px 20px 0px 20px;">Day {{$day_no}} : <span class="col-6 float-right text-right">{{date("d M- Y",strtotime($ap->tour_date))}}</span></h3>
+				  <div class="activity-innter-div">
+				  @else
+				  <div class="activity-innter-div">
+				  @endif
+	      		
 	      			<div style="width: 170px; height: 150px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;float:left;">
 			@if(file_exists(public_path('uploads/activities/'.$activity->image)) && !empty($activity->image))
 			<img src="{{asset('uploads/activities/'.$activity->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
@@ -190,27 +277,48 @@
 	      			</div>
 	      			<div style="width: 530px;float:right;padding-left: 15px">
 	      				<div style="display: block;">
-	      					<h5 style="margin:0 ">Day {{$k+1}} : {{$activity->title}} - {{$ap->variant_name}}</h5>
-	      					<h5  style="margin-left: auto !important; margin:0">{{date("d M- Y",strtotime($ap->tour_date))}}</h5>
+	      					<h5 style="margin:0px;font-size: 18px; ">{{$activity->title}} - {{$ap->variant_name}}</h5>
+	      					<h5  style="margin-left: auto !important; margin:0px;font-size: 16px; "></h5>
 	      				</div>
-	      				<div style="height: 155px;overflow:hidden;text-align:jutify;"> {!!$activity->description!!}</div>
+	      				<div style="height: 150px;overflow:hidden;text-align:justify!important;font-size: 14px;line-height: 22px;"> {!!$activity->description!!}</div>
 	      			</div>
 					<div style="width:100%;clear:both;"></div>
 	      		</div>
-	      		<div style="padding: 30px;display: block;width:100%;">
+	      		<div style="padding: 10px;display: block;width:100%;">
 	      			<span style="width: 45%;float:left;">
-			  			<span style="margin:0"><b>Transfer Type </b>: {{$ap->transfer_option}}</span>
-			  			<span style="display: block;padding-top: 6px">Adult : {{$ap->adult}} @if($ap->child > 0) | Child : {{$ap->child}} @endif @if($ap->infant > 0) | Infant : {{$ap->infant}}@endif</span>
+			  			<span style=""><b>Transfer Type </b>: {{$ap->transfer_option}}</span>
+			  			<span style="display: block;padding-top: 6px">
+						
+						   <span class="color-black"><b>Adult</b> : {{$ap->adult}}</span>@if($ap->child > 0) | <span class="color-black"><b>Child</b> : {{$ap->child}}</span>@endif @if($ap->infant > 0) | <b>Infant</b> :  <span class="color-black">{{$ap->infant}}</span>@endif
+						</span>
 			  		</span>
-					@if($ap->transfer_option == 'Shared Transfer')
-						<span style="margin-left: auto;width: 45%;float:left;">
-			  			<p style="margin: 0; font-weight: 600">Pick Up Timings : {{$pickup_time}}</p>
+					  <span style="margin-left: auto;width: 45%;float:left;">
+						@if((($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer')) && ($ap->pickup_time != ''))
+			  				<p class="no-margin"><b>Pick Up Timings</b> : {{$pickup_time}}</p>
+						@endif
+						@if($ap->flight_no != '')
+			  				<p class="no-margin">
+								<b>Flight Details</b> : {{$ap->flight_no}}
+							</p>
+						@endif
+						@if($ap->passenger_name != '')
+			  				<p class="no-margin"><b>Passenger Name</b> : {{$ap->passenger_name}}</p>
+						@endif
+						@if($ap->pickup_location != '')
+			  				<p class="no-margin"><b>Pickup Location</b> : {{$ap->pickup_location}}</p>
+						@endif
+						@if($ap->dropoff_location != '')
+			  				<p class="no-margin"><b>Dropoff Location</b> : {{$ap->dropoff_location}}</p>
+						@endif
 			  		</span>
-					@endif
 					<div style="clear:both;"></div>
 			  		
 	      		</div>
 	      	</div>
+			  @php
+					$tr_dt = $ap->tour_date;
+					$old_day_no = $day_no;
+					@endphp
 			@endforeach
 			
 			
@@ -220,14 +328,14 @@
 	<div style = "display:block; clear:both; page-break-after:always;"></div>
 	<!-- Activity Block End -->
 	@endif	
-	<div style="width: 780px; margin: 0 auto;  border: solid 1px #f1f1f1; padding: 40px; clear:both;">
-		<div class="width:100%; padding: 10px 0px;margin-bottom:20px">
-			<div style="width: 35%;float: left;">
+	<div class="outter-div">
+		<div class="inner-div" style="margin-bottom: 20px;">
+			<div class="col-6 float-left">
 				<span style="display: block;font-size: 28px;">
-				<b>{{($voucher->guest_name)?$voucher->guest_name:''}}</b>Trip to
+				<b>{{($voucher->guest_name)?$voucher->guest_name:''}}</b> Trip to
 				<span style="display:block;font-size: 66px;font-weight: bold;color: #1732bb;font-family: initial;">Dubai</span>
 			</div>
-			<div style="width: 35%;float: right;text-align: right;">
+			<div class="col-6 float-right text-right" >
 				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
 					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
 				@else
@@ -236,24 +344,24 @@
 				@endif
 			</div>
 		</div>
-		
-		<div class="width:100%; padding: 10px 0px;margin-bottom:20px;clear:both;">
-			<div style="width: 60%;float: left;">
-				<p style="margin-bottom: 0">Start Date:{{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
-				<p style="margin-top: 5px">End Date:{{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
+		<div class="col-11" style="margin:20px auto;">
+			<img src="{{asset('images/2.jpg')}}" style="width: 100%;border-radius: 30px;margin-top: 20px;">
+		</div>
+		<div class="inner-div">
+			<div class="col-7 float-left">
+				<p style="margin-bottom: 0"><b>Start Date </b>: {{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
+				<p style="margin-top: 5px"><b>End Date </b>: {{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
 			</div>
-			<div style="width: 40%;float: right;text-align: left;">
-				<p style="margin-bottom: 0">Quote ID: {{$voucher->code}}</p>
-				<p style="margin-top: 5px;font-weight: bold"></p>
+			<div class="col-4 float-right">
+				<p style="margin-bottom: 0"><b>Quote ID </b>: {{$voucher->code}}</p>
+				<p class="font-bold" style="margin-top: 5px;"></p>
 			</div>
 		</div>
-		<div style="width:100%; padding: 10px 0px;margin-bottom:20px;clear:both;">
-			
+		<div class="inner-div">
 			<div>
 				<img src="{{asset('images/2.jpg')}}" style="max-width: 40px" />
-				<span style="font-size: 20px;font-weight: 600">Inclusions</span>
+				<span class="font-bold" style="font-size: 20px;">Inclusions</span>
 			</div>
-				
 			<ul style="padding-left: 20px; margin-bottom: 30px">
 					<li style="">After the confirmation of the booking below conditions are applicable</li>
 		<li style="">Transfer options are made available for the Tour if the With Transfer option is been selected at the time of Booking.</li>

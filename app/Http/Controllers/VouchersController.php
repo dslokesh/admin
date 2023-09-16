@@ -1025,7 +1025,7 @@ class VouchersController extends Controller
 					
 			}
 			
-         return view('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
+         //return view('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
         
 		
 
