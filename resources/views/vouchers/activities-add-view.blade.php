@@ -107,11 +107,11 @@
 						@endfor
 						</select></td>
 						
-						<input type="hidden" value="{{$markup['ticket_only']}}" id="markup_p_ticket_only{{$kk}}"  name="markup_p_ticket_only[{{$ap->u_code}}]"    />
+						<input type="hidden" value="{{$markup['ticket_only']}}" id="mpt{{$kk}}"  name="mpt[{{$ap->u_code}}]"    />
 						
-						<input type="hidden" value="{{$markup['sic_transfer']}}" id="markup_p_sic_transfer{{$kk}}"  name="markup_p_sic_transfer[{{$ap->u_code}}]"    />
+						<input type="hidden" value="{{$markup['sic_transfer']}}" id="mpst{{$kk}}"  name="mpst[{{$ap->u_code}}]"    />
 					
-						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[{{$ap->u_code}}]"    />
+						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="mppt{{$kk}}"  name="mppt[{{$ap->u_code}}]"    />
 						<td>
 						<input type="text" id="discount{{$kk}}" style="width: 50px;" value="0"  name="discount[{{$ap->u_code}}]" @if($kk > '0') disabled="disabled" @endif data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
 						</td>

@@ -242,11 +242,11 @@
 						@endfor
 						</select></td>
 						
-						<input type="hidden" value="{{$markup['ticket_only']}}" id="markup_p_ticket_only{{$kk}}"  name="markup_p_ticket_only[{{ $ap->u_code }}]"    />
+						<input type="hidden" value="{{$markup['ticket_only']}}" id="mpt{{$kk}}"  name="mpt[{{ $ap->u_code }}]"    />
 						
-						<input type="hidden" value="{{$markup['sic_transfer']}}" id="markup_p_sic_transfer{{$kk}}"  name="markup_p_sic_transfer[{{ $ap->u_code }}]"    />
+						<input type="hidden" value="{{$markup['sic_transfer']}}" id="mpst{{$kk}}"  name="mpst[{{ $ap->u_code }}]"    />
 						
-						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="markup_p_pvt_transfer{{$kk}}"  name="markup_p_pvt_transfer[{{ $ap->u_code }}]"    />
+						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="mppt{{$kk}}"  name="mppt[{{ $ap->u_code }}]"    />
 						
 						<input type="hidden" id="discount{{$kk}}" value="0"  name="discount[{{ $ap->u_code }}]" disabled="disabled" data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
 						
@@ -405,9 +405,9 @@ $(document).on('change', '.priceChange', function(evt) {
 	let infant = parseInt($("body #infant"+inputnumber).val());
 	let discount = parseFloat($("body #discount"+inputnumber).val());
 	//alert(discount);
-	let markup_p_ticket_only = parseFloat($("body #markup_p_ticket_only"+inputnumber).val());
-	let markup_p_sic_transfer = parseFloat($("body #markup_p_sic_transfer"+inputnumber).val());
-	let markup_p_pvt_transfer = parseFloat($("body #markup_p_pvt_transfer"+inputnumber).val());
+	let mpt = parseFloat($("body #mpt"+inputnumber).val());
+	let mpst = parseFloat($("body #mpst"+inputnumber).val());
+	let mppt = parseFloat($("body #mppt"+inputnumber).val());
 	
 	let adultPrice = $("body #adultPrice"+inputnumber).val();
 	let childPrice = $("body #childPrice"+inputnumber).val();
@@ -415,7 +415,7 @@ $(document).on('change', '.priceChange', function(evt) {
 	var ad_price = (adult*adultPrice) ;
 	var chd_price = (child*childPrice) ;
 	var ad_ch_TotalPrice = ad_price + chd_price;
-	var ticket_only_markupamt = ((ad_ch_TotalPrice*markup_p_ticket_only)/100);
+	var ticket_only_markupamt = ((ad_ch_TotalPrice*mpt)/100);
 	
 	
 	let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
@@ -425,7 +425,7 @@ $(document).on('change', '.priceChange', function(evt) {
 	if(t_option_val == 3)
 	{
 		var totaladult = parseInt(adult + child);
-	getPVTtransfer(activity_id,totaladult,markup_p_pvt_transfer,inputnumber);
+	getPVTtransfer(activity_id,totaladult,mppt,inputnumber);
 	$("#loader-overlay").show();	
 	waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
 		var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
@@ -466,7 +466,7 @@ $(document).on('change', '.priceChange', function(evt) {
 			var totaladult = parseInt(adult + child);
 			let zonevalueTotal = (totaladult * zonevalue);
 			$("#zonevalprice"+inputnumber).val(zonevalueTotal);
-			var sic_transfer_markupamt = ((zonevalueTotal *  markup_p_sic_transfer)/100);
+			var sic_transfer_markupamt = ((zonevalueTotal *  mpst)/100);
 			var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
 			
 			grandTotal = ( (totalPrice - discount));
@@ -567,8 +567,8 @@ $(document).on('change', '.t_option', function(evt) {
 		let child = parseInt($("body #child"+inputnumber).find(':selected').val());
 		var totaladult = parseInt(adult + child);
 		//alert(totaladult);
-		let markup_p_pvt_transfer = parseFloat($("body #markup_p_pvt_transfer"+inputnumber).val());
-		getPVTtransfer(activity_id,totaladult,markup_p_pvt_transfer,inputnumber);
+		let mppt = parseFloat($("body #mppt"+inputnumber).val());
+		getPVTtransfer(activity_id,totaladult,mppt,inputnumber);
 		$("#adult"+inputnumber).trigger("change");
 	}
 });
