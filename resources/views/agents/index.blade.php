@@ -96,7 +96,7 @@
                     <td>{{ $record->company_name}}</td>
                     <td>{{ ($record->city)?$record->city->name:''}}</td>
                      <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
-					  <td>AED {{ $record->agent_amount_balance}}</td>
+					  <td>AED {{ number_format($record->agent_amount_balance,2)}}</td>
 					  <td>
 					  
                           <form id="resetpsw-form-{{$record->id}}" method="post" action="{{route('passwordResetAdmin',$record->id)}}" style="display:none;">
