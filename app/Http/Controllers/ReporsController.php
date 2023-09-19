@@ -446,10 +446,13 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
                 'valid_till',
                 DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_uploaded_adult'),
                 DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_uploaded_child'),
+				DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "both" THEN 1 ELSE 0 END) as stock_uploaded_both'),
                 DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_allotted_adult'),
                 DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_allotted_child'),
+				DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "both" THEN 1 ELSE 0 END) as stock_allotted_both'),
                 DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_left_adult'),
-                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_left_child')
+                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_left_child'),
+				DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "both" THEN 1 ELSE 0 END) as stock_left_both')
             );
 		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
 			$startDate = date("Y-m-d",strtotime($data['from_date']));

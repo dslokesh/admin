@@ -48,6 +48,7 @@
                     <th>Company</th>
                     <th>City</th>
                     <th>Status</th>
+					<th>Ledger Balance</th>
 					<th>Password</th>
                     <th>Created</th>
                     <th>Updated</th>
@@ -73,6 +74,7 @@
                     <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Active</option>
 					          <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Inactive</option>
                  </select></th>
+				 <th></th>
 					<th></th>
                     <th></th>
 					
@@ -94,6 +96,7 @@
                     <td>{{ $record->company_name}}</td>
                     <td>{{ ($record->city)?$record->city->name:''}}</td>
                      <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
+					  <td>AED {{ $record->agent_amount_balance}}</td>
 					  <td>
 					  
                           <form id="resetpsw-form-{{$record->id}}" method="post" action="{{route('passwordResetAdmin',$record->id)}}" style="display:none;">
