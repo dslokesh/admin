@@ -14,6 +14,9 @@ use App\Models\VoucherActivity;
 use App\Models\AgentAmount;
 use App\Models\Supplier;
 use App\Models\Ticket;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use SiteHelpers;
@@ -135,55 +138,51 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
      *
      * @return \Illuminate\Http\Response
      */
-    public function soaReport(Request $request)
+    public function accountsReceivablesReport(Request $request)
     {
 		$this->checkPermissionMethod('list.accountsreceivables');
-		$data = $request->all();
-		$perPage = config("constants.ADMIN_PAGE_LIMIT");
-		$voucherStatus = config("constants.voucherStatus");
-		$query = VoucherActivity::where('id','!=', null);
+		 $data = $request->all();
+        $perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $query = User::with(['country', 'state', 'city']);
+		$query->where('role_id', 3);
+		$query->whereColumn('agent_credit_limit','!=','agent_amount_balance');
+        if (isset($data['name']) && !empty($data['name'])) {
+            $query->where('name', 'like', '%' . $data['name'] . '%');
+        }
+       if (isset($data['email']) && !empty($data['email'])) {
+            $query->where('email', 'like', '%' . $data['email'] . '%');
+        }
+		if (isset($data['cname']) && !empty($data['cname'])) {
+            $query->where('company_name', 'like', '%' . $data['cname'] . '%');
+        }
+       
+        if (isset($data['code']) && !empty($data['code'])) {
+            $query->where('code', $data['code']);
+        }
 		
-		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
-			
-			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
-			$startDate = $data['from_date'];
-			$endDate =  $data['to_date'];
-				if($data['booking_type'] == 2) {
-				 $query->whereDate('tour_date', '>=', $startDate);
-				 $query->whereDate('tour_date', '<=', $endDate);
-				}
-				elseif($data['booking_type'] == 1) {
-					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
-				 $q->where('booking_date', '>=', $startDate);
-				 $q->where('booking_date', '<=', $endDate);
-				});
+		 if (isset($data['mobile']) && !empty($data['mobile'])) {
+            $query->where('mobile', $data['mobile']);
+        }
 		
-				}
-				}
-			}
-		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
-			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('status_main', '=', $data['booking_status']);
-			});
-		}
+		if (isset($data['city_id']) && !empty($data['city_id'])) {
+            $query->where('city_id', $data['city_id']);
+        }
 		
-		if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
-			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('agent_id', '=', $data['agent_id_select']);
-			});
-		}
-		
-		$agetid = '';
-		$agetName = '';
-		if(old('agent_id')){
-		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
-		$agetid = $agentTBA->id;
-		$agetName = $agentTBA->company_name;
-		}
-		
+        if (isset($data['status']) && !empty($data['status'])) {
+            if ($data['status'] == 1)
+                $query->where('is_active', 1);
+            if ($data['status'] == 2)
+                $query->where('is_active', 0);
+        }
+
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+
+        $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
+        $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
+        $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
+
 		
-        return view('reports.soa-report', compact('records','voucherStatus','agetid','agetName'));
+        return view('reports.accounts-receivables-report', compact('records', 'countries', 'states', 'cities'));
 
     }
 	
@@ -444,15 +443,15 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
                 'activity_id',
                 'activity_variant',
                 'valid_till',
-                DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_uploaded_adult'),
-                DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_uploaded_child'),
-				DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "both" THEN 1 ELSE 0 END) as stock_uploaded_both'),
-                DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_allotted_adult'),
-                DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_allotted_child'),
-				DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "both" THEN 1 ELSE 0 END) as stock_allotted_both'),
-                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "adult" THEN 1 ELSE 0 END) as stock_left_adult'),
-                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "child" THEN 1 ELSE 0 END) as stock_left_child'),
-				DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "both" THEN 1 ELSE 0 END) as stock_left_both')
+                DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "Adult" THEN 1 ELSE 0 END) as stock_uploaded_adult'),
+                DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "Child" THEN 1 ELSE 0 END) as stock_uploaded_child'),
+				DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "Both" THEN 1 ELSE 0 END) as stock_uploaded_both'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "Adult" THEN 1 ELSE 0 END) as stock_allotted_adult'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "Child" THEN 1 ELSE 0 END) as stock_allotted_child'),
+				DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "Both" THEN 1 ELSE 0 END) as stock_allotted_both'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "Adult" THEN 1 ELSE 0 END) as stock_left_adult'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "Child" THEN 1 ELSE 0 END) as stock_left_child'),
+				DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "Both" THEN 1 ELSE 0 END) as stock_left_both')
             );
 		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
 			$startDate = date("Y-m-d",strtotime($data['from_date']));

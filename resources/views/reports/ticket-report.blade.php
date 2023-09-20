@@ -122,12 +122,12 @@
 					<td>{{ @$record->stock_uploaded_adult}}</td>
 					<td>{{ @$record->stock_uploaded_child}}</td>
 					<td>{{ @$record->stock_uploaded_both}}</td>
-					<td>@if($record->stock_allotted_adult > 0) <span style="color: white;font-weight:bold;background-color: red;padding: 8px;">{{ @$record->stock_allotted_adult}}<span> @else 0 @endif<span></td>
-					<td>@if($record->stock_allotted_child > 0) <span style="color: white;font-weight:bold;background-color: red;padding: 8px;">{{ @$record->stock_allotted_child}}<span> @else 0 @endif<span></td>
-					<td>@if($record->stock_allotted_both > 0) <span style="color: white;font-weight:bold;background-color: red;padding: 8px;">{{ @$record->stock_allotted_both}}<span> @else 0 @endif<span></td>
-					<td>@if($record->stock_left_adult > 0) <span style="color: white;font-weight:bold;background-color: green;padding: 8px;">{{ @$record->stock_left_adult}}<span> @else 0 @endif<span></td>
-					<td>@if($record->stock_left_child > 0) <span style="color: white;font-weight:bold;background-color: green;padding: 8px;">{{ @$record->stock_left_child}}<span> @else 0 @endif<span></td>
-					<td>@if($record->stock_left_both > 0) <span style="color: white;font-weight:bold;background-color: green;padding: 8px;">{{ @$record->stock_left_both}}<span> @else 0 @endif<span></td>
+					<td>@if($record->stock_allotted_adult > 0) <span style="color: white;font-weight:bold;background-color: red;padding: 8px;display: inline-block;width: 100%;">{{ @$record->stock_allotted_adult}}</span> @else 0 @endif</td>
+					<td>@if($record->stock_allotted_child > 0) <span style="color: white;font-weight:bold;background-color: red;padding: 8px;display: inline-block;width: 100%;">{{ @$record->stock_allotted_child}}</span> @else 0 @endif</td>
+					<td>@if($record->stock_allotted_both > 0) <span style="color: white;font-weight:bold;background-color: red;padding: 8px;display: inline-block;width: 100%;">{{ @$record->stock_allotted_both}}</span> @else 0 @endif</td>
+					<td>@if($record->stock_left_adult > 0) <span style="color: white;font-weight:bold;background-color: green;padding: 8px;display: inline-block;width: 100%;">{{ @$record->stock_left_adult}}</span> @else 0 @endif</td>
+					<td>@if($record->stock_left_child > 0) <span style="color: white;font-weight:bold;background-color: green;padding: 8px;display: inline-block;width: 100%;">{{ @$record->stock_left_child}}</span> @else 0 @endif</td>
+					<td>@if($record->stock_left_both > 0) <span style="color: white;font-weight:bold;background-color: green;padding: 8px;display: inline-block;width: 100%;">{{ @$record->stock_left_both}}</span> @else 0 @endif</td>
 					<td>0</td>
 					<td>0</td>
 					<td>0</td>

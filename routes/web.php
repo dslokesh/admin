@@ -149,7 +149,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::get('auto-hotel', [AgentVouchersController::class, 'autocompleteHotel'])->name('auto.hotel');
 		 Route::get('agent-voucher-view/{vid?}', [AgentVouchersController::class, 'agentVoucherView'])->name('agentVoucherView');
 
-        Route::get('soa-report', [ReporsController::class, 'soaReport'])->name('soaReport');
+        Route::get('accounts-receivables-report', [ReporsController::class, 'accountsReceivablesReport'])->name('accountsReceivablesReport');
         Route::get('soa-report-export', [ReporsController::class, 'soaReportExcel'])->name('soaReportExcel');
         Route::get('agent-ledger-report', [ReporsController::class, 'agentLedgerReport'])->name('agentLedgerReport');
 		Route::get('agent-ledger-with-vat-report', [ReporsController::class, 'agentLedgerReportWithVat'])->name('agentLedgerReportWithVat');

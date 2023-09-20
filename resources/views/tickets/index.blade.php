@@ -65,9 +65,21 @@
                      <th><input type="text" name="serial_number" value="{{request('serial_number')}}" class="form-control"  placeholder="Serial Number" autocomplete="off" /></th>
                     <th><input type="text" name="valid_from" value="{{request('valid_from')}}" class="form-control datepicker"  placeholder="Valid From" autocomplete="off" /></th>
 					 <th><input type="text" name="valid_till" value="{{request('valid_till')}}" class="form-control datepicker"  placeholder="Valid Till" autocomplete="off" /></th>
-					 <th></th>
-                    <th></th>
-					 <th></th>
+					 <th> <select name="activity_id"  id="activity_id" class="form-control">
+				<option value="">--select--</option>
+				@foreach($activities as $activity)
+                    <option value="{{$activity->id}}" @if(request('activity_id') == $activity->id) {{'selected="selected"'}} @endif>{{$activity->title}}</option>
+				@endforeach
+                 </select></th>
+                    <th> <select name="activity_variant"  id="activity_variant" class="form-control">
+				<option value="">--select--</option>
+				</select></th>
+					 <th> <select name="ticket_for"  id="ticket_for" class="form-control">
+				<option value="">--select--</option>
+				<option value="Adult" @if(request('ticket_for') == 'Adult') {{'selected="selected"'}} @endif>Adult</option>
+				<option value="Child" @if(request('ticket_for') == 'Child') {{'selected="selected"'}} @endif>Child</option>
+				<option value="Both" @if(request('ticket_for') == 'Both') {{'selected="selected"'}} @endif>Both</option>
+				</select></th>
                    <th></th>
                     <th width="10%"><button class="btn btn-info btn-sm" type="submit">Filter</button>
                     <a class="btn btn-default btn-sm" href="{{route('tickets.index')}}">Clear</a></th>
@@ -129,5 +141,38 @@
 @endsection
 
 @section('scripts')
- @include('inc.citystatecountryjs')
+<script type="text/javascript">
+ $(document).ready(function(){
+	var activity_id = "{{request('activity_id')}}";
+	var oldactivity_variant = "{{request('activity_variant')}}";
+	
+	$("body #activity_id").on("change", function () {
+            var activity_id = $(this).val();
+			$("#activity_variant").prop("disabled",true);
+            $.ajax({
+                type: "POST",
+                url: '{{ route("variantByActivity") }}',
+                data: {'activity_id': activity_id, '_token': '{{ csrf_token() }}'},
+                success: function (data) {
+					 $('#activity_variant').html('<option value="">--select--</option>');
+					$.each(data, function (key, value) {
+                            $("#activity_variant").append('<option value="' + value
+                                .u_code + '">' + value.variant_name + '</option>');
+                        });
+					$('#activity_variant').val(oldactivity_variant).prop('selected', true);
+					$("#activity_variant").prop("disabled",false);
+					
+					
+                }
+            });
+        });
+		if(activity_id){
+					$("body #activity_id").trigger("change");
+					}
+					
+		if(oldactivity_variant){
+					$("body #activity_id").trigger("change");
+					}
+		});
+			</script>  
 @endsection

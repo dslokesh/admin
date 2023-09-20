@@ -42,11 +42,22 @@ class TicketsController extends Controller
         }if (isset($data['valid_till']) && !empty($data['valid_till'])) {
             $query->whereDate('valid_till', '<=',$data['valid_till']);
         }
+		if (isset($data['activity_id']) && !empty($data['activity_id'])) {
+				 $query->where('activity_id',  $data['activity_id']);
+		}
+		
+		if (isset($data['activity_variant']) && !empty($data['activity_variant'])) {
+				 $query->where('activity_variant',  $data['activity_variant']);
+		}
+		if (isset($data['ticket_for']) && !empty($data['ticket_for'])) {
+				 $query->where('ticket_for',  $data['ticket_for']);
+		}
+		
         $records = $query->where('ticket_generated','0')->orderBy('created_at', 'DESC')->paginate($perPage);
 		$agetid = '';
 		$agetName = '';
-		
-        return view('tickets.index', compact('records'));
+		$activities = Activity::where('status', 1)->orderBy('title', 'ASC')->get();
+        return view('tickets.index', compact('records','activities'));
 
     }
 	
@@ -65,11 +76,22 @@ class TicketsController extends Controller
         }if (isset($data['valid_till']) && !empty($data['valid_till'])) {
             $query->whereDate('valid_till', '<=',$data['valid_till']);
         }
+		if (isset($data['activity_id']) && !empty($data['activity_id'])) {
+				 $query->where('activity_id',  $data['activity_id']);
+		}
+		
+		if (isset($data['activity_variant']) && !empty($data['activity_variant'])) {
+				 $query->where('activity_variant',  $data['activity_variant']);
+		}
+		if (isset($data['ticket_for']) && !empty($data['ticket_for'])) {
+				 $query->where('ticket_for',  $data['ticket_for']);
+		}
+		
         $records = $query->where('ticket_generated','1')->orderBy('created_at', 'DESC')->paginate($perPage);
 		$agetid = '';
 		$agetName = '';
-		
-        return view('tickets.generated-tickets-list', compact('records'));
+		$activities = Activity::where('status', 1)->orderBy('title', 'ASC')->get();
+        return view('tickets.generated-tickets-list', compact('records','activities'));
 
     }
 

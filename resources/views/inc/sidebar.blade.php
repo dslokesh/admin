@@ -366,13 +366,13 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 		@permission('list.accountsreceivables') 
 			  @php
           $class=''; $active='';
-          if($controller == 'ReporsController' and in_array($action,array('soaReport'))){
+          if($controller == 'ReporsController' and in_array($action,array('accountsReceivablesReport'))){
             $class = 'menu-open';
             $active = 'active';
           }
           @endphp    
 			   <li class="nav-item">
-                <a href="{{ route('soaReport') }}" class="nav-link {{$active}}">
+                <a href="{{ route('accountsReceivablesReport') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-file"></i>
                   <p>Accounts Receivables</p>
                 </a>
