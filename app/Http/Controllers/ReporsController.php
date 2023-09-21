@@ -73,7 +73,8 @@ class ReporsController extends Controller
 				$q->where('status_main', '=', 5);
 			});
 			
-        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+       // $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		$records = $query->orderBy('created_at', 'DESC')->get();
 		
         return view('reports.index', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
 

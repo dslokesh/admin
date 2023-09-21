@@ -65,7 +65,8 @@ class AgentsController extends Controller
                 $query->where('is_active', 0);
         }
 
-        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+        //$records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		$records = $query->orderBy('created_at', 'DESC')->get();
 
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();

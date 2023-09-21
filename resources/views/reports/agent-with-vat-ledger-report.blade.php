@@ -93,7 +93,14 @@
                   <tr>
                     <td>{{($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ $record->date_of_receipt ? date(config('app.date_format'),strtotime($record->date_of_receipt)) : null }}</td>
-					<td>{{ ($record->receipt_no)}}</td>
+					<td>
+					@if(isset($record->voucher))
+						 <a class="" style="color:#007bff!important" href="{{route('voucherView',$record->voucher->id)}}">{{ ($record->receipt_no)}}</a>
+					
+					@else
+						{{ ($record->receipt_no)}}
+					@endif
+				</td>
 					<td>
 					{{($record->transaction_from == '2')?'Vouchered':''}}
 					{{($record->transaction_from == '3')?'Canceled':''}}

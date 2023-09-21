@@ -38,14 +38,16 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="" class="table table-bordered table-striped example3">
                   <thead>
                   <tr>
+					<th>SN.</th>
 					<th>Code</th>
+					<th>Company</th>
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>Email</th>
-                    <th>Company</th>
+                    
                     <th>City</th>
                     <th>Status</th>
 					<th>Ledger Balance</th>
@@ -54,7 +56,7 @@
                     <th>Updated</th>
 					<th width="17%"></th>
                   </tr>
-				  <tr>
+				  <!-- <tr style="display:none">
                     <form id="filterForm" method="get" action="{{route('agents.index')}}" >
 					<th><input type="text" name="code" value="{{request('code')}}" class="form-control"  placeholder="Code" /></th>
                     <th><input type="text" name="name" value="{{request('name')}}" class="form-control"  placeholder="Name" /></th>
@@ -83,17 +85,19 @@
                     <a class="btn btn-default btn-sm" href="{{route('agents.index')}}">Clear</a></th>
                     
                   </form>
-                  </tr>
+                  </tr> -->
                   </thead>
                   <tbody>
-                  @foreach ($records as $record)
+                  @foreach ($records as $k => $record)
 				  
                   <tr>
+					<td>{{ $k+1}}</td>
                     <td>{{ $record->code}}</td>
+					<td>{{ $record->company_name}}</td>
                     <td>{{ $record->name}}</td>
                     <td>{{ $record->mobile}}</td>
 					<td>{{ $record->email}}</td>
-                    <td>{{ $record->company_name}}</td>
+                    
                     <td>{{ ($record->city)?$record->city->name:''}}</td>
                      <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
 					  <td>AED {{ number_format($record->agent_amount_balance,2)}}</td>
@@ -119,7 +123,7 @@
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
 					
-                     <td>
+                     <td  style="padding:0px">
 					  <a class="btn btn-info btn-sm"  href="{{route('agents.markup.activity',$record->id)}}">
                               Markup
                               
@@ -156,7 +160,7 @@
                   </tbody>
                  
                 </table>
-				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
+				
               </div>
               <!-- /.card-body -->
             </div>
@@ -172,5 +176,27 @@
 @endsection
 
 @section('scripts')
+<script>
+ $(document).ready(function () {
+  $('.example3').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "searching": true,
+    "ordering": true, // Enable sorting
+    "info": true,
+    "autoWidth": false,
+    "responsive": true,
+    "bFilter": true, // Show search input
+    "columnDefs": [
+      {
+        "targets": [12], // Column index (0-indexed) for which to customize sorting and width
+        "orderable": false, // Set to false to disable sorting for this column
+      },
+      // You can add more objects to customize sorting and width for other columns
+    ],
+  });
+});
+
+	</script>
  @include('inc.citystatecountryjs')
 @endsection

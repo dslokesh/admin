@@ -36,21 +36,23 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="" class="table table-bordered table-striped example3">
                   <thead>
                   <tr>
+				  <th>SN.</th>
 					<th>Code</th>
+					<th>Company</th>
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>Email</th>
-                    <th>Company</th>
+                    
                     <th>City</th>
                     <th>Status</th>
-					<th width="10%">Credit Limit</th>
-                   <th width="10%">Ledger Balance</th>
-				   <th width="12%">Balance</th>
+					<th width="10%">Credit Limit(AED)</th>
+                   <th width="10%">Ledger Balance(AED)</th>
+				   <th width="12%">Balance(AED)</th>
                   </tr>
-				  <tr>
+				  <!--<tr>
                     <form id="filterForm" method="get" action="{{route('accountsReceivablesReport')}}" >
 					<th><input type="text" name="code" value="{{request('code')}}" class="form-control"  placeholder="Code" /></th>
                     <th><input type="text" name="name" value="{{request('name')}}" class="form-control"  placeholder="Name" /></th>
@@ -78,27 +80,29 @@
                     <a class="btn btn-default btn-sm" href="{{route('accountsReceivablesReport')}}">Clear</a></th>
                     
                   </form>
-                  </tr>
+                  </tr>-->
                   </thead>
                   <tbody>
-                  @foreach ($records as $record)
+                 @foreach ($records as $k => $record)
 				  
                   <tr>
+					<td>{{ $k+1}}</td>
                     <td>{{ $record->code}}</td>
+					 <td>{{ ($record->city)?$record->city->name:''}}</td>
                     <td>{{ $record->name}}</td>
                     <td>{{ $record->mobile}}</td>
 					<td>{{ $record->email}}</td>
                     <td>{{ $record->company_name}}</td>
-                    <td>{{ ($record->city)?$record->city->name:''}}</td>
+                   
                     <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
-					<td>AED {{ number_format($record->agent_credit_limit,2)}}</td>
-					<td>AED {{ number_format($record->agent_amount_balance,2)}}</td> 
+					<td>{{ number_format($record->agent_credit_limit,2)}}</td>
+					<td>{{ number_format($record->agent_amount_balance,2)}}</td> 
 					@php
 					$balance = $record->agent_credit_limit - $record->agent_amount_balance;
 					@endphp
 					
                   
-				   <td>@if($balance > 0) <span style="color: white;font-weight:bold;background-color: green;padding: 8px;display: inline-block;width: 70%;">AED {{ number_format($balance,2)}}</span> @else <span style="color: white;font-weight:bold;background-color: red;padding: 8px;display: inline-block;width: 70%;">AED {{ number_format($balance,2)}}</span> @endif</td>
+				   <td>@if($balance > 0) <span style="color: white;font-weight:bold;background-color: green;padding: 8px;display: inline-block;width: 70%;">{{ number_format($balance,2)}}</span> @else <span style="color: white;font-weight:bold;background-color: red;padding: 8px;display: inline-block;width: 70%;">{{ number_format($balance,2)}}</span> @endif</td>
 				   
                   </tr>
 				 
@@ -179,8 +183,25 @@ $(document).ready(function() {
 			  $("#loader-overlay").hide();
             }
           });
-	 });	
+	 });
+
+$('.example3').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "searching": true,
+    "ordering": true, // Enable sorting
+    "info": true,
+    "autoWidth": false,
+    "responsive": true,
+    "bFilter": true, // Show search input
+   
+  });	 
 });
 
   </script> 
+  
+  <script>
+
+
+	</script>
   @endsection

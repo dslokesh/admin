@@ -28,4 +28,9 @@ class AgentAmount extends Model
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
+	
+	public function voucher()
+    {
+        return $this->belongsTo(Voucher::class, 'receipt_no', 'invoice_number');
+    }
 }
