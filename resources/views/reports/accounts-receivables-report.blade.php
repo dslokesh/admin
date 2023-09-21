@@ -194,7 +194,13 @@ $('.example3').DataTable({
     "autoWidth": false,
     "responsive": true,
     "bFilter": true, // Show search input
-   
+    "columnDefs": [
+      {
+        "targets": [10], // Column index (0-indexed) for which to customize sorting and width
+        "orderable": false, // Set to false to disable sorting for this column
+      },
+      // You can add more objects to customize sorting and width for other columns
+    ],
   });	 
 });
 
