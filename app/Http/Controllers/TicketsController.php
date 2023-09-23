@@ -356,9 +356,9 @@ class TicketsController extends Controller
 				
 				}
 				
-				 return response()->json([
+				/*  return response()->json([
 				'message' => "$j records successfully uploaded"
-				]); 
+				]);  */
 				
 				
 				if(count($data) > 0){
