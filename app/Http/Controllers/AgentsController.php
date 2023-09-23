@@ -573,9 +573,9 @@ class AgentsController extends Controller
 				'agent_id' => $agent_id,
 				'activity_id' => $activity_id,
 				'variant_code' => $variant_code,
-				'ticket_only' => $ac,
-				'sic_transfer' => $sic_transfer[$activity_id][$variant_code],
-				'pvt_transfer' => $pvt_transfer[$activity_id][$variant_code],
+				'ticket_only' => number_format($ac,2),
+				'sic_transfer' => number_format($sic_transfer[$activity_id][$variant_code],2),
+				'pvt_transfer' => number_format($pvt_transfer[$activity_id][$variant_code],2),
 				'created_by' => Auth::user()->id,
 				'updated_by' => Auth::user()->id,
 				];
