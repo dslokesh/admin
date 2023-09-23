@@ -139,6 +139,7 @@
 					 <select name="supplier_ticket{{$record->id}}" id="supplier_ticket{{$record->id}}" class="form-control inputsaveSp">
 						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value="">All</option>
 						@foreach($supplier_ticket as  $stv)
+						
 						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value = "{{$stv->id}}" @if($record->supplier_ticket==$stv->id) selected="selected" @endif >{{$stv->name}}</option>
 						@endforeach
                  </select>
@@ -198,7 +199,7 @@
 					<select name="status{{$record->id}}" id="status{{$record->id}}" class="form-control inputsaveSp">
 						@foreach($actStatus as $k => $status)
 						@if($k > 2)
-						<option data-name="status"  data-id="{{$record->id}}" value = "{{$stv->id}}" @if($record->status==$k) selected="selected" @endif >{{$status}}</option>
+						<option data-name="status"  data-id="{{$record->id}}" value = "{{$k}}" @if($record->status==$k) selected="selected" @endif >{{$status}}</option>
 						@endif
 						@endforeach
                  </select>
