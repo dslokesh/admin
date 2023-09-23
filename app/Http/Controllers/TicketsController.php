@@ -221,13 +221,92 @@ class TicketsController extends Controller
 		return view('tickets.csv-upload',  compact('activities'));
     }
 	
+	public function csvUploadPost(Request $request)
+    {
+		$validator = Validator::make($request->all(), [
+            'ticket_for' => 'required',
+			'type_of_ticket' => 'required',
+			'activity_id' => 'required',
+			'activity_variant' => 'required',
+			'serial_number' => 'required',
+			'valid_from' => 'required',
+			'valid_till' => 'required',
+            
+        ]);
+		
+		// if the validator fails, redirect back to the form
+		$data = [];
+		$j = 0;
+        if ($validator->fails()) {    
+            
+            return redirect()->back()
+                ->withErrors($validator) // send back all errors to the form
+                ->withInput();
+        } else {
+            
+			$ticket_for = $request->input('ticket_for');
+			$type_of_ticket = $request->input('type_of_ticket');
+			$activity_id = $request->input('activity_id');
+			$activity_variant = $request->input('activity_variant');
+			$serial_number = $request->input('serial_number');
+			$valid_from = $request->input('valid_from');
+			$valid_till = $request->input('valid_till');
+			$terms_and_conditions = $request->input('terms_and_conditions');
+			$ticket_nos = nl2br(trim($_POST['ticket_no']));
+			$importData_tickets = explode("<br />", $ticket_nos);
+			$d_from = date("Y-m-d",strtotime($valid_from));
+			$d_till = date("Y-m-d",strtotime($valid_till));
+				foreach ($importData_tickets as $ticket_no) {
+				if(!empty($ticket_no)){
+				$data[] = [
+					'ticket_for' => $ticket_for,	
+					'type_of_ticket' => $type_of_ticket,	
+					'activity_id' => $activity_id,	
+					'activity_variant' => $activity_variant,	
+					'terms_and_conditions' => $terms_and_conditions,	
+					'ticket_no' => $ticket_no,
+					'serial_number' => $serial_number,
+                    'valid_from' => $d_from,
+					'valid_till' => $d_till,
+				];
+				$j++;
+				}
+				}
+				
+				/*  return response()->json([
+				'message' => "$j records successfully uploaded"
+				]);  */
+				
+				
+				if(count($data) > 0){
+					DB::beginTransaction();
+					try {
+						// Data ko database me insert karein
+						Ticket::insert($data);
+						DB::commit();
+						return redirect('tickets')->with('success', $j . ' Records successfully uploaded.');
+					} catch (\Exception $e) {
+						DB::rollback();
+						return redirect()->back()->withInput()->with('error', 'An error occurred while uploading records.');
+					}
+				}
+				
+							         
+            
+            
+           return redirect('tickets')->with('success', $j.' Records successfully uploaded.');
+        }
+		
+		
+    }
+	
 	/**
      * Upload the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-	public function csvUploadPost(Request $request)
+	public function csvUploadPostOLD(Request $request)
     {
 		$validator = Validator::make($request->all(), [
             'ticket_for' => 'required',

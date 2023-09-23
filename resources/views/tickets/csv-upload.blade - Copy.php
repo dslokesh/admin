@@ -81,31 +81,23 @@
               </div>
 			    <div class="form-group col-md-6">
                 <label for="inputName">Serial Number: <span class="red">*</span></label>
-                <input type="text" id="serial_number" autocomplete="off" name="serial_number" value="{{ old('serial_number') }}" class="form-control"  placeholder="Serial Number" />
+                <input type="text" id="serial_number" name="serial_number" value="{{ old('serial_number') }}" class="form-control"  placeholder="Serial Number" />
                 @if ($errors->has('serial_number'))
                     <span class="text-danger">{{ $errors->first('serial_number') }}</span>
                 @endif
               </div>
 			    <div class="form-group col-md-3">
                 <label for="inputName">Valid From: <span class="red">*</span></label>
-                <input type="text" id="valid_from"  autocomplete="off"name="valid_from" value="{{ old('valid_from') }}" class="form-control datepickerdmy"  placeholder="Valid From" />
+                <input type="text" id="valid_from" name="valid_from" value="{{ old('valid_from') }}" class="form-control datepickerdmy"  placeholder="Valid From" />
                 @if ($errors->has('valid_from'))
                     <span class="text-danger">{{ $errors->first('valid_from') }}</span>
                 @endif
               </div>
 			    <div class="form-group col-md-3">
                 <label for="inputName">Valid Till: <span class="red">*</span></label>
-                <input type="text" id="valid_till" autocomplete="off" name="valid_till" value="{{ old('valid_till') }}" class="form-control datepickerdmy"  placeholder="Name" />
+                <input type="text" id="valid_till" name="valid_till" value="{{ old('valid_till') }}" class="form-control datepickerdmy"  placeholder="Name" />
                 @if ($errors->has('valid_till'))
                     <span class="text-danger">{{ $errors->first('valid_till') }}</span>
-                @endif
-              </div>
-			   <div class="form-group col-md-12">
-                <label for="inputName">Tickets No.: <span class="red">*</span></label>
-				
-                <textarea placeholder="Tickets No" name="ticket_no" required cols="50" rows="10"  class="form-control box-size">{{ old('ticket_no') }}</textarea>
-                @if ($errors->has('ticket_no'))
-                    <span class="text-danger">{{ $errors->first('ticket_no') }}</span>
                 @endif
               </div>
 			  <div class="form-group col-md-12">
@@ -117,8 +109,22 @@
                 @endif
               </div>
                </div>
-			  
-			   
+			   <div class="form-group col-md-12">
+                <label for="inputName">CSV File : <span class="red">*</span></label>
+                <input type="file" id="uploaded_file_csv" required name="uploaded_file_csv"  class="form-control"  />
+                @if ($errors->has('uploaded_file_csv'))
+                    <span class="text-danger">{{ $errors->first('uploaded_file_csv') }}</span>
+                @endif
+				
+              </div>
+			   <div class="col-md-6">
+                <label for="inputName">CSV File Sample: <span class="red">*</span></label>
+               <a href="{{ asset('images/ticket-csv-sample.csv') }}" class="">
+                      
+                      Download <i class="fas fa-download"></i>
+                  </a> 
+				
+              </div>
             </div>
 			
             <!-- /.card-body -->
