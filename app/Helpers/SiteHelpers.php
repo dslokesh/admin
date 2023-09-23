@@ -599,7 +599,7 @@ class SiteHelpers
 	$childPriceTotal  = $childPrice * $child;
 	$infentPriceTotal  = $infPrice * $infent;
 	$adult_total_rate = $adultPriceTotal + $childPriceTotal;
-	
+	$adult_total_rate = ($adult_total_rate > 0)?$adult_total_rate:0;
 		if(isset($ap->variant_code)){
 		$markup = self::getAgentMarkup($agent_id,$activity_id, $ap->variant_code);
 		}else{
