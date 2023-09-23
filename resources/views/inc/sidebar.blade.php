@@ -3,7 +3,11 @@ $currentAction = \Route::currentRouteAction();
 list($controller, $action) = explode('@', $currentAction);
 $controller = preg_replace('/.*\\\/', '', $controller);
 @endphp
-
+<style>
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
+    background-color: #17a2b8;
+}
+</style>
 <aside class="main-sidebar sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <!--<a href="{{route('dashboard')}}" class="brand-link">
@@ -49,254 +53,10 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </p>
             </a>
           </li>
-		           
-        @permission('list.countries')
-		 @php
-          $class=''; $active='';
-          if($controller == 'CountryController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		  
-          @endphp  
-              <li class="nav-item">
-                <a href="{{ route('countries.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-flag"></i>
-                  <p>Countries</p>
-                </a>
-              </li>
-	@endpermission
-	 @permission('list.state')
-			  @php
-          $class=''; $active='';
-          if($controller == 'StateController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('states.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-flag"></i>
-                  <p>States</p>
-                </a>
-              </li>
-			  @endpermission
-	 @permission('list.city')
-			  @php
-          $class=''; $active='';
-          if($controller == 'CityController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('cities.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-city"></i>
-                  <p>Cities</p>
-                </a>
-              </li>
-			    @endpermission
-	 @permission('list.zone')
-			   @php
-          $class=''; $active='';
-          if($controller == 'ZonesController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('zones.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-chart-area"></i>
-                  <p>Zones</p>
-                </a>
-              </li>
-			   @endpermission
-	 @permission('list.vehicle')
-			   @php
-          $class=''; $active='';
-          if($controller == 'VehiclesController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('vehicles.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-car"></i>
-                  <p>Vehicles</p>
-                </a>
-              </li>
-			   @endpermission
-	 @permission('list.hotlecat')
-			  @php
-          $class=''; $active='';
-          if($controller == 'HotelCategoryController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('hotelcategories.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-star"></i>
-                  <p>Hotel Category</p>
-                </a>
-              </li>
-		@endpermission
-	 @permission('list.hotel')
-			  @php
-          $class=''; $active='';
-          if($controller == 'HotelController' and in_array($action,array('index','create','edit','show'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('hotels.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-hotel"></i>
-                  <p>Hotels</p>
-                </a>
-              </li>
-			  
-			  @endpermission
-	 @permission('list.airline')
-			   @php
-          $class=''; $active='';
-          if($controller == 'AirlinesController' and in_array($action,array('index','create','edit','show'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('airlines.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-plane"></i>
-                  <p>Airlines</p>
-                </a>
-              </li>
-			   @endpermission
-	 @permission('list.transfer')
-			   @php
-          $class=''; $active='';
-          if($controller == 'TransfersController' and in_array($action,array('index','create','edit','show'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('transfers.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-exchange-alt"></i>
-                  <p>Transfers</p>
-                </a>
-              </li>
-			   @endpermission
-	 @permission('list.activity')
-			   @php
-          $class=''; $active='';
-          if($controller == 'ActivitiesController' and in_array($action,array('index','create','edit','show','editPriceForm','createPriceForm'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('activities.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-tasks"></i>
-                  <p>Activities</p>
-                </a>
-              </li>
-			   @endpermission
-	 @permission('list.voucher')
-			   @php
-          $class=''; $active='';
-          if($controller == 'VouchersController' and in_array($action,array('index','create','edit','show'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('vouchers.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-gift"></i>
-                  <p>Vouchers</p>
-                </a>
-              </li>
-			   @endpermission
-	 @permission('list.customer')
-			   @php
-          $class=''; $active='';
-          if($controller == 'CustomersController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('customers.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-user"></i>
-                  <p>Cutomers</p>
-                </a>
-              </li>
-			 @endpermission
-	 @permission('list.supplier')
-			 @php
-          $class=''; $active='';
-          if($controller == 'SuppliersController' and in_array($action,array('index','create','edit','show'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('suppliers.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-user"></i>
-                  <p>Suppliers</p>
-                </a>
-              </li>
-			   @endpermission
-	 @permission('list.subadmin')   
-              @php
-          $class=''; $active='';
-          if($controller == 'UsersController' and in_array($action,array('index','create','edit','show'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp          
-        
-              <li class="nav-item">
-                <a href="{{ route('users.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-user"></i>
-                  <p>Sub Admins</p>
-                </a>
-              </li>
-			  @endpermission
-	 @permission('list.agent')  
-			   @php
-          $class=''; $active='';
-          if($controller == 'AgentsController' and in_array($action,array('index','create','edit','show'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp     
-			 <li class="nav-item">
-                <a href="{{ route('agents.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-user"></i>
-                  <p>Agents</p>
-                </a>
-              </li>
-			  @endpermission
-			  @permission('agency.voucher.booking') 
+		  @if(auth()->user()->role_id == '3')
+		@permission('agency.voucher.booking') 
 
-        @if(auth()->user()->role_id == '3')
+       
         @php
         $class=''; $active='';
         if($controller == 'AgentVouchersController' and in_array($action,array('index','edit','agentVoucherView'))){
@@ -328,57 +88,10 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 <p>Book Now</p>
               </a>
             </li>
-			@endif
+			
 
 @endpermission
-	 @permission('list.agentamount') 
-			   @php
-          $class=''; $active='';
-          if($controller == 'AgentAmountController' and in_array($action,array('index','create','edit','show'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-		 
-		  
-          @endphp     
-			 <li class="nav-item">
-                <a href="{{ route('agentamounts.index') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-money-bill"></i>
-                  <p>Agent Amounts</p>
-                </a>
-              </li>
-		@endpermission
-		@permission('list.logisticreport') 
-			    @php
-          $class=''; $active='';
-          if($controller == 'ReporsController' and in_array($action,array('voucherReport'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('voucherReport') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-file"></i>
-                  <p>Logistic Report</p>
-                </a>
-              </li>
-		@endpermission
-		@permission('list.accountsreceivables') 
-			  @php
-          $class=''; $active='';
-          if($controller == 'ReporsController' and in_array($action,array('accountsReceivablesReport'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp    
-			   <li class="nav-item">
-                <a href="{{ route('accountsReceivablesReport') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-file"></i>
-                  <p>Accounts Receivables</p>
-                </a>
-              </li>
-	@endpermission
-		@permission('list.agent.ledger') 
+ @permission('list.agent.ledger') 
 			  @php
           $class=''; $active='';
           if($controller == 'ReporsController' and in_array($action,array('agentLedgerReportWithVat'))){
@@ -388,13 +101,397 @@ $controller = preg_replace('/.*\\\/', '', $controller);
           @endphp    
 			   <li class="nav-item">
                 <a href="{{ route('agentLedgerReportWithVat') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-file-alt"></i>
+                  <i class="far fa-circle nav-icon"></i>
                   <p>Agent Ledger</p>
                 </a>
+				
               </li>
+			  @endpermission
+         @else
+		<li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Masters
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+             <li class="nav-item has-treeview">
+                <a href="#" class="nav-link ">
+                  <i class="nav-icon fas fa-flag"></i>
+                  <p>Location <i class="right fas fa-angle-left"></i></p>
+                </a>
+				<ul class="nav nav-treeview">
+				@permission('list.countries')
+		 @php
+          $class=''; $active='';
+          if($controller == 'CountryController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		  
+          @endphp  
+              <li class="nav-item">
+               <a href="{{ route('countries.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Countries</p>
+                </a>
+              </li>
+			  @endpermission
+	 @permission('list.state')
+			  @php
+          $class=''; $active='';
+          if($controller == 'StateController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp 
+		  
+              <li class="nav-item">
+                <a href="{{ route('states.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>States</p>
+                </a>
+              </li>
+			  @endpermission
+	 @permission('list.city')
+			  @php
+          $class=''; $active='';
+          if($controller == 'CityController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('cities.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cities</p>
+                </a>
+              </li>
+			   @endpermission
+	 @permission('list.zone')
+			   @php
+          $class=''; $active='';
+          if($controller == 'ZonesController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			   <li class="nav-item">
+                <a href="{{ route('zones.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Zones</p>
+                </a>
+              </li>
+			  @endpermission
+            </ul>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="nav-icon fas fa-hotel"></i>
+                  <p>Hotel <i class="right fas fa-angle-left"></i></p>
+                </a>
+				<ul class="nav nav-treeview">
+              @permission('list.hotel')
+			  @php
+          $class=''; $active='';
+          if($controller == 'HotelController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('hotels.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Hotels</p>
+                </a>
+              </li>
+			    @endpermission
+              @permission('list.hotlecat')
+			  @php
+          $class=''; $active='';
+          if($controller == 'HotelCategoryController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('hotelcategories.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Hotel Category</p>
+                </a>
+              </li>
+			 @endpermission
+			   
+            </ul>
+              </li>
+			  <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="nav-icon fas fa-car"></i>
+                  <p>Transport <i class="right fas fa-angle-left"></i></p>
+                </a>
+				<ul class="nav nav-treeview">
+				@permission('list.airline')
+			   @php
+          $class=''; $active='';
+          if($controller == 'AirlinesController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('airlines.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Airlines</p>
+                </a>
+              </li>
+			  @endpermission
+             @permission('list.vehicle')
+			   @php
+          $class=''; $active='';
+          if($controller == 'VehiclesController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('vehicles.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vehicles</p>
+                </a>
+              </li>
+			   @endpermission
+			   @permission('list.transfer')
+			   @php
+          $class=''; $active='';
+          if($controller == 'TransfersController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp    
+                <li class="nav-item">
+                <a href="{{ route('transfers.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Transfers</p>
+                </a>
+              </li>
+			  @endpermission
+			   
+            </ul>
+              </li>
+			 
 			  
-		@endpermission
-		@permission('list.ActivityCanceledReport') 
+			
+            </ul>
+          </li>
+		   @permission('list.activity')
+			   @php
+          $class=''; $active='';
+          if($controller == 'ActivitiesController' and in_array($action,array('index','create','edit','show','editPriceForm','createPriceForm'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('activities.index') }}" class="nav-link {{$active}}">
+               <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Activities
+              </p>
+            </a>
+          </li>
+		  @endpermission
+	 @permission('list.voucher')
+			   @php
+          $class=''; $active='';
+          if($controller == 'VouchersController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('vouchers.index') }}" class="nav-link {{$active}}">
+               <i class="nav-icon fas fa-gift"></i>
+              <p>
+                Vouchers
+              </p>
+            </a>
+          </li>
+		   @endpermission
+		  @permission('list.logisticreport') 
+			    @php
+          $class=''; $active='';
+          if($controller == 'ReporsController' and in_array($action,array('voucherReport'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('voucherReport') }}" class="nav-link {{$active}}">
+               <i class="nav-icon fas fa-file"></i>
+              <p>
+                Logistic Report
+              </p>
+            </a>
+          </li>
+		   @endpermission
+		  <li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Users
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            
+			   @permission('list.agent')  
+			   @php
+          $class=''; $active='';
+          if($controller == 'AgentsController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			 <li class="nav-item">
+                <a href="{{ route('agents.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Agents</p>
+                </a>
+				
+              </li>
+			  @endpermission
+			   @permission('list.subadmin')   
+              @php
+          $class=''; $active='';
+          if($controller == 'UsersController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp          
+        
+              <li class="nav-item">
+                <a href="{{ route('users.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sub Admins</p>
+                </a>
+				
+              </li>
+			   @endpermission
+			  @permission('list.supplier')
+			 @php
+          $class=''; $active='';
+          if($controller == 'SuppliersController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('suppliers.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Suppliers</p>
+                </a>
+				
+              </li>
+			   @endpermission
+			   
+			  @role(1)
+			 @php
+		 
+          $class=''; $active='';
+          if($controller == 'RoleController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp          
+         
+              <li class="nav-item">
+                <a href="{{ route('roles.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Roles</p>
+                </a>
+				
+              </li>
+			     @php
+          $class=''; $active='';
+          if($controller == 'PermissionRoleController' and in_array($action,array('index','create','edit'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp          
+         
+              <li class="nav-item">
+                <a href="{{ route('permrole.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Permissions</p>
+                </a>
+				
+              </li>
+			    @php
+		 
+            $class=''; $active='';
+            if($controller == 'PagesController' and in_array($action,array('index','create','edit'))){
+              $class = 'menu-open';
+              $active = 'active';
+            }
+            @endphp          
+           
+                <li class="nav-item">
+                  <a href="{{ route('pages.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Content Settings</p>
+                </a>
+				
+              </li>
+			  @endrole 
+		
+            </ul>
+          </li>
+		  
+		  <li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-money-bill"></i>
+              <p>
+                Accounting
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            
+			  @permission('list.agent.ledger') 
+			  @php
+          $class=''; $active='';
+          if($controller == 'ReporsController' and in_array($action,array('agentLedgerReportWithVat'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp    
+			   <li class="nav-item">
+                <a href="{{ route('agentLedgerReportWithVat') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Agent Ledger</p>
+                </a>
+				
+              </li>
+			  @endpermission
+			  @permission('list.ActivityCanceledReport') 
 			  @php
           $class=''; $active='';
           if($controller == 'ReporsController' and in_array($action,array('voucherActivtyCanceledReport'))){
@@ -410,22 +507,55 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			  
 		@endpermission
-		@role(1)
-		@php
+			  @permission('list.accountsreceivables') 
+			  @php
           $class=''; $active='';
-          if($controller == 'ReporsController' and in_array($action,array('ticketStockReport'))){
+          if($controller == 'ReporsController' and in_array($action,array('accountsReceivablesReport'))){
             $class = 'menu-open';
             $active = 'active';
           }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('ticketStockReport') }}" class="nav-link {{$active}}">
-                   <i class="nav-icon fas fa-file"></i>
-                  <p>Ticket Stock Report</p>
+          @endphp    
+			   <li class="nav-item">
+                <a href="{{ route('accountsReceivablesReport') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Accounts Receivables</p>
                 </a>
+				
               </li>
+			  	@endpermission
+			 @permission('list.agentamount') 
+			   @php
+          $class=''; $active='';
+          if($controller == 'AgentAmountController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp     
+			 <li class="nav-item">
+                <a href="{{ route('agentamounts.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Agent Amounts</p>
+                </a>
+				
+              </li>
+			 @endpermission
 			  
-        @php
+            </ul>
+          </li>
+		  @role(1)
+		   <li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-ticket-alt"></i>
+              <p>
+                Ticket
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            
+			  @php
         $class=''; $active='';
         if($controller == 'TicketsController' and in_array($action,array('index','create','edit','show','csvUploadForm'))){
           $class = 'menu-open';
@@ -437,11 +567,26 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 		
      <li class="nav-item ">
               <a href="{{ route('tickets.index') }}" class="nav-link {{$active}}">
-                <i class="nav-icon fas fa-ticket-alt"></i>
-                <p>Tickets</p>
-              </a>
-            </li>
-			@php
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tickets</p>
+                </a>
+				
+              </li>
+			 @php
+          $class=''; $active='';
+          if($controller == 'ReporsController' and in_array($action,array('ticketStockReport'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('ticketStockReport') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ticket Stock Repor</p>
+                </a>
+				
+              </li>
+			 	@php
         $class=''; $active='';
         if($controller == 'TicketsController' and in_array($action,array('generatedTickets'))){
           $class = 'menu-open';
@@ -452,65 +597,17 @@ $controller = preg_replace('/.*\\\/', '', $controller);
         @endphp 
 			  <li class="nav-item ">
               <a href="{{ route('tickets.generated.tickets') }}" class="nav-link {{$active}}">
-                <i class="nav-icon fas fa-ticket-alt"></i>
-                <p>Generated Tickets</p>
-              </a>
-            </li>
-
-            @php
-		 
-            $class=''; $active='';
-            if($controller == 'PagesController' and in_array($action,array('index','create','edit'))){
-              $class = 'menu-open';
-              $active = 'active';
-            }
-            @endphp          
-           
-                <li class="nav-item">
-                  <a href="{{ route('pages.index') }}" class="nav-link {{$active}}">
-                    <i class="nav-icon fas fa-list"></i>
-                    <p>Content Settings</p>
-                  </a>
-                </li>
-		
-		@php
-		 
-          $class=''; $active='';
-          if($controller == 'RoleController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp          
-         
-              <li class="nav-item">
-                <a href="{{ route('roles.index') }}" class="nav-link {{$active}}">
-                  <i class="nav-icon fas fa-list"></i>
-                  <p>Roles</p>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Generated Tickets</p>
                 </a>
+				
               </li>
-          @php
-          $class=''; $active='';
-          if($controller == 'PermissionRoleController' and in_array($action,array('index','create','edit'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp          
-         
-              <li class="nav-item">
-                <a href="{{ route('permrole.index') }}" class="nav-link {{$active}}">
-                  <i class="nav-icon fas fa-list"></i>
-                  <p>Permissions</p>
-                </a>
-              </li>
-              
-		@endrole 
-		
-        
+			 
 			  
-            
-		
-
-          <li class="nav-item">
+            </ul>
+          </li>@endrole 
+		  @endif
+		   <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
@@ -518,7 +615,6 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </p>
             </a>
           </li>
-
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

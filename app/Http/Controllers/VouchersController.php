@@ -905,7 +905,7 @@ class VouchersController extends Controller
 		foreach($activity_select as $k => $v)
 		{
 			$totalmember = $adult[$k] + $child[$k];
-			$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity($activity_id,$voucher->agent_id,$voucher,$variant_unique_code[$k],$totalmember);
+			$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity($activity_id,$voucher->agent_id,$voucher,$variant_unique_code[$k],$adult[$k],$child[$k],$infant[$k],$discount[$k]);
 			if($priceCal['totalprice'] > 0){
 				$tour_dt = date("Y-m-d",strtotime($tour_date[$k]));
 				if(!in_array($tour_dt,$getAvailableDateList)){
@@ -937,7 +937,7 @@ class VouchersController extends Controller
 			'childPrice' => $priceCal['childPrice'],
 			'infPrice' => $priceCal['infPrice'],
 			'discountPrice' => $discount[$k],
-			'totalprice' => $priceCal['totalprice'] - $discount[$k],
+			'totalprice' => number_format($priceCal['totalprice'],2),
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,	
                 ];

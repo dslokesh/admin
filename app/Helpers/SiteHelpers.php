@@ -547,7 +547,7 @@ class SiteHelpers
 		return $booking_window_text;
     }
 	
-	public function getActivityPriceSaveInVoucherActivity($activity_id,$agent_id,$voucher,$u_code,$totalmember)
+	public function getActivityPriceSaveInVoucherActivity($activity_id,$agent_id,$voucher,$u_code,$adult,$child,$infent,$discount)
     {
 		$totalPrice = 0;
 		$zonePrice = 0;
@@ -558,7 +558,7 @@ class SiteHelpers
 		$childPrice = 0;
 		$infPrice = 0;
 		$pvtTrafValWithMarkup = 0;
-		
+		$totalmember = $adult + $child;
 		$vat_invoice = $voucher->vat_invoice;
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
@@ -595,7 +595,11 @@ class SiteHelpers
 	}
 	}
 	
-	$adult_total_rate = $adultPrice * $totalmember;
+	$adultPriceTotal  = $adultPrice * $adult;
+	$childPriceTotal  = $childPrice * $child;
+	$infentPriceTotal  = $infPrice * $infent;
+	$adult_total_rate = $adultPriceTotal + $childPriceTotal;
+	
 		if(isset($ap->variant_code)){
 		$markup = self::getAgentMarkup($agent_id,$activity_id, $ap->variant_code);
 		}else{
@@ -622,42 +626,29 @@ class SiteHelpers
 					}
 			}
 			
-		if($adult_total_rate > 0){
-			$markupPriceT  = ($adult_total_rate * $markup['ticket_only'])/100;
 			
+			$markupPriceT  = ($adult_total_rate * $markup['ticket_only'])/100;
+			$ticketPrice = $adult_total_rate + $markupPriceT + $infentPriceTotal;
 			if($activity->entry_type=='Ticket Only'){
-				$totalPrice = $adult_total_rate + $markupPriceT;
+				$totalPrice = $ticketPrice;
 			} else {
 			if($activity->sic_TFRS==1){
 				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
-				$totalPrice =  $adult_total_rate + $markupPriceS + $markupPriceT + $zonePrice;
+				$totalPrice =  $ticketPrice + $markupPriceS + $zonePrice;
 			}elseif($activity->pvt_TFRS==1){
 				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
 				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
-				  $totalPrice = $adult_total_rate + $markupPriceP + $markupPriceT + $transferPrice;
+				  $totalPrice = $ticketPrice + + $markupPriceP +  $transferPrice;
 			}
 			}
 			
-		} else {
-			
-			if($activity->sic_TFRS==1){
-				
-				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
-				$totalPrice =  $markupPriceS +  $zonePrice;
-				
-			}elseif($activity->pvt_TFRS==1){
-				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
-				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
-				$totalPrice =   $markupPriceP + $transferPrice;
-			}
-			
-
-		}
+		
+		$grandTotal = $totalPrice - $discount;
 		if($vat_invoice == 1){
-		$vatPrice = (($avat/100) * $totalPrice);
+		$vatPrice = (($avat/100) * $grandTotal);
 		}
 		
-		$total = $totalPrice+$vatPrice;
+		$total = $grandTotal+$vatPrice;
 		$data = [
 		'adultPrice' =>$adultPrice,
 		'childPrice' =>$childPrice,
