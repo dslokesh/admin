@@ -508,11 +508,14 @@ $stepNameSize: 1.6rem;
            
                     <div class="row" style="margin-bottom: 15px;">
                       <div class="col-12"><p>{{$vah->hotel->name}} - {{$vah->hotel->hotelcategory->name}}</p></div>
-                      <div class="col-12">
+                      <div class="col-4">
             <input type="text" class="form-control inputsavehotel" id="confirmation_number{{$vah->id}}" name="confirmation_number[]" data-name="confirmation_number"  data-id="{{$vah->id}}" value="{{$vah->confirmation_number}}" placeholder="Confirmation number" required />
                        
                       </div>
-                     
+                      <div class="col-8">
+            <input type="text" class="form-control inputsavehotel" id="remark{{$vah->id}}{{$vah->voucher_id}}"  data-name="remark"  data-id="{{$vah->id}}" value="{{$vah->remark}}" placeholder="Remark" required />
+                       
+                      </div>
                     </div>
             
             @endforeach

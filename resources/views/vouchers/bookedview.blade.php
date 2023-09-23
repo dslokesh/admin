@@ -500,13 +500,18 @@ $stepNameSize: 1.6rem;
            
                     <div class="row" style="margin-bottom: 15px;">
                       <div class="col-12"><p>{{$vah->hotel->name}} - {{$vah->hotel->hotelcategory->name}}</p></div>
-                      <div class="col-12">
+                      <div class="col-4">
                         <label for="inputName">Confirmation Number:</label>
 					{{$vah->confirmation_number}}
 
                        
                       </div>
-                     
+                     <div class="col-8">
+                        <label for="inputName">Remark:</label>
+					{{$vah->remark}}
+
+                       
+                      </div>
                     </div>
             
             @endforeach

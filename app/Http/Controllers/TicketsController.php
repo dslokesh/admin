@@ -356,13 +356,22 @@ class TicketsController extends Controller
 				
 				}
 				
-				/* return response()->json([
+				 return response()->json([
 				'message' => "$j records successfully uploaded"
-				]); */
+				]); 
 				
 				
 				if(count($data) > 0){
-					Ticket::insert($data);
+					DB::beginTransaction();
+					try {
+						// Data ko database me insert karein
+						Ticket::insert($data);
+						DB::commit();
+						return redirect('tickets')->with('success', $j . ' Records successfully uploaded.');
+					} catch (\Exception $e) {
+						DB::rollback();
+						return redirect()->back()->withInput()->with('error', 'An error occurred while uploading records.');
+					}
 				}
 				}
 				else
