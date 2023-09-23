@@ -234,6 +234,9 @@ class TicketsController extends Controller
 			'type_of_ticket' => 'required',
 			'activity_id' => 'required',
 			'activity_variant' => 'required',
+			'serial_number' => 'required',
+			'valid_from' => 'required',
+			'valid_till' => 'required',
             
         ]);
 		
@@ -251,6 +254,9 @@ class TicketsController extends Controller
 			$type_of_ticket = $request->input('type_of_ticket');
 			$activity_id = $request->input('activity_id');
 			$activity_variant = $request->input('activity_variant');
+			$serial_number = $request->input('serial_number');
+			$valid_from = $request->input('valid_from');
+			$valid_till = $request->input('valid_till');
 			$terms_and_conditions = $request->input('terms_and_conditions');
 		
 			$file = $request->file('uploaded_file_csv');
@@ -279,21 +285,21 @@ class TicketsController extends Controller
 				$i = 0;
 				//Read the contents of the uploaded file 
 				while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
-					$dateStr = $filedata[2];
-					$dateStr2 = $filedata[3];
+					//$dateStr = $filedata[2];
+					//$dateStr2 = $filedata[3];
 
                 // Custom function to parse dates with single-digit day values
-                $date = $this->parseDate($dateStr);
-                $date2 = $this->parseDate($dateStr2);
+               // $date = $this->parseDate($dateStr);
+                //$date2 = $this->parseDate($dateStr2);
 
                 // Check if parsing was successful before assigning the formatted dates
 				
-                if ($date && $date2) {
-                    $filedata[2] = $date->format('Y-m-d');
-                    $filedata[3] = $date2->format('Y-m-d');
-                } else {
-                    Log::error("Error parsing dates '{$dateStr}' or '{$dateStr2}'");
-                }
+                //if ($date && $date2) {
+                    //$filedata[2] = $date->format('Y-m-d');
+                    //$filedata[3] = $date2->format('Y-m-d');
+                //} else {
+                   // Log::error("Error parsing dates '{$dateStr}' or '{$dateStr2}'");
+                //}
 				
 				$num = count($filedata);
 				// Skip first row (Remove below comment if you want to skip the first row)
@@ -316,8 +322,8 @@ class TicketsController extends Controller
 				$j++;
 				$ticket_no = str_replace("'", "\'", $importData[0]);
 				$ticket_no = str_replace('"', "'+String.fromCharCode(34)+'", $importData[0]);
-				$serial_number = str_replace("'", "\'", $importData[1]);
-				$serial_number = str_replace('"', "'+String.fromCharCode(34)+'", $importData[1]);
+				$serial_number = str_replace("'", "\'", $serial_number);
+				$serial_number = str_replace('"', "'+String.fromCharCode(34)+'", $serial_number);
 				
 				
 				$ticket_no = addslashes(trim(ucwords(strtolower($ticket_no))));
@@ -327,8 +333,8 @@ class TicketsController extends Controller
 				
 				
 				
-				$valid_from = (isset($importData[2]))?$importData[2]:'';
-				$valid_till = (isset($importData[3]))?$importData[3]:'';
+				$d_from = date("Y-m-d",strtotime($valid_from));
+				$d_till = date("Y-m-d",strtotime($valid_till));
 
 				//echo "<pre>";
 				//print_r($importData);
@@ -344,8 +350,8 @@ class TicketsController extends Controller
 					'terms_and_conditions' => $terms_and_conditions,	
 					'ticket_no' => $ticket_no,
 					'serial_number' => $serial_number,
-                    'valid_from' => $valid_from,
-					'valid_till' => $valid_till,
+                    'valid_from' => $d_from,
+					'valid_till' => $d_till,
 				];
 				
 				}

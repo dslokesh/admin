@@ -502,7 +502,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			   <li class="nav-item">
                 <a href="{{ route('voucherActivtyCanceledReport') }}" class="nav-link {{$active}}">
                    <i class="nav-icon fas fa-file"></i>
-                  <p>Activty Canceled Report</p>
+                  <p>Activity Canceled Report</p>
                 </a>
               </li>
 			  
@@ -582,7 +582,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			  <li class="nav-item">
                 <a href="{{ route('ticketStockReport') }}" class="nav-link {{$active}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Ticket Stock Repor</p>
+                  <p>Ticket Stock Report</p>
                 </a>
 				
               </li>
