@@ -372,7 +372,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 			}
         if(isset($data['reference']) && !empty($data['reference'])) {
 			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('code', '=', $data['reference']);
+				$q->where('code', 'like', '%' . $data['reference'] . '%');
 			});
 		}
 		
@@ -434,6 +434,46 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
         return response()->json($response);
 	}
 
+public function voucherActivtyRefundedReport(Request $request)
+    {
+		$this->checkPermissionMethod('list.ActivityCanceledReport');
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		
+		$query = VoucherActivity::where('id','!=', null);
+		
+		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
+			
+			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+				 $query->where('canceled_date', '>=', $startDate);
+				 $query->where('canceled_date', '<=', $endDate);
+				}
+				}
+			}
+        if(isset($data['reference']) && !empty($data['reference'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('code', 'like', '%' . $data['reference'] . '%');
+			});
+		}
+		
+		$query->where('status', '=', 2);
+			
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		
+        return view('reports.activity-refunded-report', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
+
+    }
+	
 	public function ticketStockReport(Request $request)
     {
 		$data = $request->all();

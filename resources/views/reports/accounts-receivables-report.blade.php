@@ -45,7 +45,6 @@
                     <th>Name</th>
                     <th>Mobile</th>
                     <th>Email</th>
-                    
                     <th>City</th>
                     <th>Status</th>
 					<th width="10%">Credit Limit(AED)</th>
@@ -88,11 +87,11 @@
                   <tr>
 					<td>{{ $k+1}}</td>
                     <td>{{ $record->code}}</td>
-					 <td>{{ ($record->city)?$record->city->name:''}}</td>
+					 <td>{{ $record->company_name}}</td>
                     <td>{{ $record->name}}</td>
                     <td>{{ $record->mobile}}</td>
 					<td>{{ $record->email}}</td>
-                    <td>{{ $record->company_name}}</td>
+                    <td>{{ ($record->city)?$record->city->name:''}}</td>
                    
                     <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
 					<td>{{ number_format($record->agent_credit_limit,2)}}</td>
