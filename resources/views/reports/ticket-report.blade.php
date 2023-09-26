@@ -30,7 +30,7 @@
               <div class="card-header">
 				<div class="card-tools">
 				 <div class="row">
-				<!--<a href="{{ route('voucherReportExport', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a> -->
+				<a href="{{ route('ticketStockReportExportExcel', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>
 				   </div></div>
 				   
               </div>
@@ -132,9 +132,9 @@
 					<td>0</td>
 					<td>0</td>
 					</tr>
-                  </tbody>
+                 
                   @endforeach
-				
+				 </tbody>
 					
                 </table>
 				<div class="pagination pull-right mt-3"> 

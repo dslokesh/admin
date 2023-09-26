@@ -30,7 +30,7 @@
               <div class="card-header">
 				<div class="card-tools">
 				 <div class="row">
-				
+				<a href="{{ route('accountsReceivablesReportExcel', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>
 				   </div></div>
 				   
               </div>
@@ -39,7 +39,7 @@
                 <table id="" class="table table-bordered table-striped example3">
                   <thead>
                   <tr>
-				  <th>SN.</th>
+					<th>SN.</th>
 					<th>Code</th>
 					<th>Company</th>
                     <th>Name</th>

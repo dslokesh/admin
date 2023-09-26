@@ -578,7 +578,7 @@ class AgentVouchersController extends Controller
 			'childPrice' => $priceCal['childPrice'],
 			'infPrice' => $priceCal['infPrice'],
 			'discountPrice' => $discount[$k],
-			'totalprice' => number_format($priceCal['totalprice'],2),
+			'totalprice' => number_format($priceCal['totalprice'], 2, '.', ''),
 			'created_by' => Auth::user()->id,
 			'updated_by' => Auth::user()->id,	
                 ];

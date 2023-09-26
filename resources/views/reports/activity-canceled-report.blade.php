@@ -30,7 +30,7 @@
               <div class="card-header">
 				<div class="card-tools">
 				 <div class="row">
-				
+				<a href="{{ route('voucherActivtyCanceledReportExportExcel', request()->input()) }}" class="btn btn-info mb-2">Export to CSV</a>
 				   </div></div>
 				   
               </div>
@@ -123,8 +123,9 @@
 					
 					
                   </tr>
-                  </tbody>
+                 
                   @endforeach
+				   </tbody>
                 </table></div>
 				<div class="pagination pull-right mt-3"> 
 				{!! $records->appends(request()->query())->links() !!}

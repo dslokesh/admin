@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Exports;
-use App\Models\VoucherActivity;
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Contracts\View\View;
 
-class SOAExport implements FromView
+class AccountsReceivablesReportExcelExport implements FromView
 {
     use Exportable;
 	
@@ -22,7 +22,7 @@ class SOAExport implements FromView
 	public function view(): View
     {
 		
-        return view('exports.soa-export', [
+        return view('exports.accounts-receivables-export', [
             'records' => $this->records
         ]);
 

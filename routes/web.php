@@ -135,9 +135,12 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::post('voucher-report-save', [ReporsController::class, 'voucherReportSave'])->name('voucherReportSave');
         Route::post('voucher-hotel-input-save', [VouchersController::class, 'voucherHotelInputSave'])->name('voucherHotelInputSave');
 		 Route::get('voucher-activity-canceled-report', [ReporsController::class, 'voucherActivtyCanceledReport'])->name('voucherActivtyCanceledReport');
+		 Route::get('voucher-activity-canceled-report-export', [ReporsController::class, 'voucherActivtyCanceledReportExportExcel'])->name('voucherActivtyCanceledReportExportExcel');
 		 Route::post('voucher-activity-refund-save', [ReporsController::class, 'activityRefundSave'])->name('activityRefundSave');
 		  Route::get('voucher-activity-refunded-report', [ReporsController::class, 'voucherActivtyRefundedReport'])->name('voucherActivtyRefundedReport');
+		  Route::get('voucher-activity-refunded-report-export', [ReporsController::class, 'voucherActivtyRefundedReportExportExcel'])->name('voucherActivtyRefundedReportExportExcel');
 		Route::get('tickets-stock-report', [ReporsController::class, 'ticketStockReport'])->name('ticketStockReport');
+		 Route::get('tickets-stock-report-export', [ReporsController::class, 'ticketStockReportExportExcel'])->name('ticketStockReportExportExcel');
 			
         Route::resource('agent-vouchers', AgentVouchersController::class);
         Route::get('agent-add-activity-vouchers/{vid?}', [AgentVouchersController::class, 'addActivityList'])->name('agent-vouchers.add.activity');
@@ -151,7 +154,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		 Route::get('agent-voucher-view/{vid?}', [AgentVouchersController::class, 'agentVoucherView'])->name('agentVoucherView');
 
         Route::get('accounts-receivables-report', [ReporsController::class, 'accountsReceivablesReport'])->name('accountsReceivablesReport');
-        Route::get('soa-report-export', [ReporsController::class, 'soaReportExcel'])->name('soaReportExcel');
+        Route::get('accounts-receivables-report-export', [ReporsController::class, 'accountsReceivablesReportExcel'])->name('accountsReceivablesReportExcel');
         Route::get('agent-ledger-report', [ReporsController::class, 'agentLedgerReport'])->name('agentLedgerReport');
 		Route::get('agent-ledger-with-vat-report', [ReporsController::class, 'agentLedgerReportWithVat'])->name('agentLedgerReportWithVat');
         

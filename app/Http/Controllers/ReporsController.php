@@ -25,10 +25,14 @@ use SPDF;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\VoucherActivityExport;
-use App\Exports\SOAExport;
+use App\Exports\AccountsReceivablesReportExcelExport;
+use App\Exports\VoucherActivityRefundExport;
+use App\Exports\VoucherActivityCancelExport;
+use App\Exports\TicketStockExport;
 
 class ReporsController extends Controller
 {
+	
     /**
      * Display a listing of the resource.
      *
@@ -187,54 +191,17 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 
     }
 	
-	 public function soaReportExcel(Request $request)
+	 public function accountsReceivablesReportExcel(Request $request)
     {
 		$this->checkPermissionMethod('list.accountsreceivables');
-		$data = $request->all();
-		$perPage = config("constants.ADMIN_PAGE_LIMIT");
-		$voucherStatus = config("constants.voucherStatus");
-		$query = VoucherActivity::with(["voucher",'activity','transferZone'])->where('id','!=', null);
-		
-		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
-			
-			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
-			$startDate = $data['from_date'];
-			$endDate =  $data['to_date'];
-				if($data['booking_type'] == 2) {
-				 $query->whereDate('tour_date', '>=', $startDate);
-				 $query->whereDate('tour_date', '<=', $endDate);
-				}
-				elseif($data['booking_type'] == 1) {
-					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
-				 $q->where('booking_date', '>=', $startDate);
-				 $q->where('booking_date', '<=', $endDate);
-				});
-		
-				}
-				}
-			}
-		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
-			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('status_main', '=', $data['booking_status']);
-			});
-		}
-		
-		if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
-			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('agent_id', '=', $data['agent_id_select']);
-			});
-		}
-		
-		$agetid = '';
-		$agetName = '';
-		if(old('agent_id')){
-		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
-		$agetid = $agentTBA->id;
-		$agetName = $agentTBA->company_name;
-		}
-		
+		 $data = $request->all();
+        $perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $query = User::with(['country', 'state', 'city']);
+		$query->where('role_id', 3);
+		$query->whereColumn('agent_credit_limit','!=','agent_amount_balance');
+       
         $records = $query->orderBy('created_at', 'DESC')->get();
-		return Excel::download(new SOAExport($records), 'accounts_receivables_records'.date('d-M-Y s').'.csv');
+		return Excel::download(new AccountsReceivablesReportExcelExport($records), 'accounts_receivables_records'.date('d-M-Y s').'.csv');
 
     }
 	
@@ -384,6 +351,43 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 
     }
 	
+	public function voucherActivtyCanceledReportExportExcel(Request $request)
+    {
+		$this->checkPermissionMethod('list.ActivityCanceledReport');
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		
+		$query = VoucherActivity::where('id','!=', null);
+		
+		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
+			
+			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+				 $query->where('canceled_date', '>=', $startDate);
+				 $query->where('canceled_date', '<=', $endDate);
+				}
+				}
+			}
+        if(isset($data['reference']) && !empty($data['reference'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('code', 'like', '%' . $data['reference'] . '%');
+			});
+		}
+		
+		$query->where('status', '=', 1);
+			
+        $records = $query->orderBy('created_at', 'DESC')->get();
+       return Excel::download(new VoucherActivityCancelExport($records), 'voucher_activity_cancel_records'.date('d-M-Y s').'.csv');
+
+    }
+	
 	public function activityRefundSave(Request $request)
     {
 		$data = $request->all();
@@ -436,7 +440,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 
 public function voucherActivtyRefundedReport(Request $request)
     {
-		$this->checkPermissionMethod('list.ActivityCanceledReport');
+		$this->checkPermissionMethod('list.ActivityRefundReport');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
@@ -471,6 +475,43 @@ public function voucherActivtyRefundedReport(Request $request)
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		
         return view('reports.activity-refunded-report', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
+
+    }
+	
+	public function voucherActivtyRefundedReportExportExcel(Request $request)
+    {
+		$this->checkPermissionMethod('list.ActivityRefundReport');
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		
+		$query = VoucherActivity::where('id','!=', null);
+		
+		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
+			
+			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+				 $query->where('canceled_date', '>=', $startDate);
+				 $query->where('canceled_date', '<=', $endDate);
+				}
+				}
+			}
+        if(isset($data['reference']) && !empty($data['reference'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('code', 'like', '%' . $data['reference'] . '%');
+			});
+		}
+		
+		$query->where('status', '=', 2);
+			
+        $records = $query->orderBy('created_at', 'DESC')->get();
+       return Excel::download(new VoucherActivityRefundExport($records), 'voucher_activity_refund_records'.date('d-M-Y s').'.csv');
 
     }
 	
@@ -515,6 +556,48 @@ public function voucherActivtyRefundedReport(Request $request)
 		
 	//dd($records);
 		return view('reports.ticket-report', compact('records','activities'));
+	}
+	
+	public function ticketStockReportExportExcel(Request $request)
+    {
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$activities = Activity::where('status', 1)->orderBy('title', 'ASC')->get();
+		$query = Ticket::with(['activity','voucheractivity'])
+            ->select(
+                'activity_id',
+                'activity_variant',
+                'valid_till',
+                DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "Adult" THEN 1 ELSE 0 END) as stock_uploaded_adult'),
+                DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "Child" THEN 1 ELSE 0 END) as stock_uploaded_child'),
+				DB::raw('SUM(CASE WHEN id != "0" AND ticket_for = "Both" THEN 1 ELSE 0 END) as stock_uploaded_both'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "Adult" THEN 1 ELSE 0 END) as stock_allotted_adult'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "Child" THEN 1 ELSE 0 END) as stock_allotted_child'),
+				DB::raw('SUM(CASE WHEN ticket_generated = "1" AND ticket_for = "Both" THEN 1 ELSE 0 END) as stock_allotted_both'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "Adult" THEN 1 ELSE 0 END) as stock_left_adult'),
+                DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "Child" THEN 1 ELSE 0 END) as stock_left_child'),
+				DB::raw('SUM(CASE WHEN ticket_generated = "0" AND ticket_for = "Both" THEN 1 ELSE 0 END) as stock_left_both')
+            );
+		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = date("Y-m-d",strtotime($data['from_date']));
+			$endDate =  date("Y-m-d",strtotime($data['to_date']));
+				 $query->whereDate('valid_till', '>=', $startDate);
+				 $query->whereDate('valid_till', '<=', $endDate);
+		}
+		
+		if (isset($data['activity_id']) && !empty($data['activity_id'])) {
+				 $query->where('activity_id',  $data['activity_id']);
+		}
+		
+		if (isset($data['activity_variant']) && !empty($data['activity_variant'])) {
+				 $query->where('activity_variant',  $data['activity_variant']);
+		}
+				
+            $query->groupBy('activity_id', 'activity_variant', 'valid_till');
+           $records = $query->get();
+			
+		
+	 return Excel::download(new TicketStockExport($records), 'ticket_stock_records'.date('d-M-Y s').'.csv');
 	}
    
 }
