@@ -547,7 +547,7 @@ class SiteHelpers
 		return $booking_window_text;
     }
 	
-	public function getActivityPriceSaveInVoucherActivity($activity_id,$agent_id,$voucher,$u_code,$adult,$child,$infent,$discount)
+	public function getActivityPriceSaveInVoucherActivity($transfer_option,$activity_id,$agent_id,$voucher,$u_code,$adult,$child,$infent,$discount)
     {
 		$totalPrice = 0;
 		$zonePrice = 0;
@@ -629,13 +629,13 @@ class SiteHelpers
 			
 			$markupPriceT  = ($adult_total_rate * $markup['ticket_only'])/100;
 			$ticketPrice = $adult_total_rate + $markupPriceT + $infentPriceTotal;
-			if($activity->entry_type=='Ticket Only'){
+			if($transfer_option == 'Ticket Only'){
 				$totalPrice = $ticketPrice;
 			} else {
-			if($activity->sic_TFRS==1){
+			if($transfer_option == 'Shared Transfer'){
 				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
 				$totalPrice =  $ticketPrice + $markupPriceS + $zonePrice;
-			}elseif($activity->pvt_TFRS==1){
+			}elseif($transfer_option == 'Pvt Transfer'){
 				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
 				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
 				  $totalPrice = $ticketPrice + + $markupPriceP +  $transferPrice;

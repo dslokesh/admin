@@ -905,13 +905,12 @@ class VouchersController extends Controller
 		foreach($activity_select as $k => $v)
 		{
 			$totalmember = $adult[$k] + $child[$k];
-			$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity($activity_id,$voucher->agent_id,$voucher,$variant_unique_code[$k],$adult[$k],$child[$k],$infant[$k],$discount[$k]);
+			$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity($transfer_option[$k],$activity_id,$voucher->agent_id,$voucher,$variant_unique_code[$k],$adult[$k],$child[$k],$infant[$k],$discount[$k]);
 			if($priceCal['totalprice'] > 0){
 				$tour_dt = date("Y-m-d",strtotime($tour_date[$k]));
 				if(!in_array($tour_dt,$getAvailableDateList)){
 				return redirect()->back()->with('error', 'This Tour is not available for Selected Date.');
 				}
-			
 			
 			
 			
