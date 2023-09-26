@@ -90,7 +90,7 @@
             </div>
             <div class="col-md-6">
               <h2 class="card-title" >
-			  <strong> <a class="" href="{{route('voucher.activity.view',[$record->id,$vid])}}">
+			  <strong> <a class="" href="{{route('voucher.activity.view',[$record->id,$vid])}}" target="_blank">
                             {{$record->title}}
                           </a></strong>
 			 </h2>

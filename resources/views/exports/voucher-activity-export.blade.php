@@ -6,32 +6,32 @@
 <body>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                  <tr>
-					<th>VOUCHER CODE</th>
-                    <th>SERVICE DATE</th>
-					<th>SERVICE</th>
-					<th>NAME</th>
-					<th>GUEST'S CONTACT</th>
-					<th>TRANSFER SUPPLIER REF NO.</th>
-					<th>TICKET SUPPLIER REF NO.</th>
-					<th>PICKUP LOCATION</th>
-					<th>DROPOFF LOCATION</th>
-                    <th>A</th>
+                   <tr>
+					<th>Booking #</th>
+                    <th>Service Date</th>
+					<th>Service</th>
+					<th>Service Type</th>
+					<th>Agency</th>
+					<th>Guest Name</th>
+					<th>Guest Contact No</th>
+					<th>A</th>
                     <th>C</th>
                     <th>I</th>
+					<th>TKT Supplier</th>
+					<th>TKT Supplier Ref #</th>
+					<th>TKT SP</th>
+					<th>TKT Net Cost</th>
 					<th>SIC/PVT</th>
-					<th>PICK UP TIME</th>
-					<th>DROP OFF TIME</th>
-					<th>DRIVER NAME</th>
-					<th>SUPPLIER TICKET</th>
-					<th>SUPPLIER TRANSFER</th>
-					<th>TOTAL TICKET COST</th>
-					<th>TOTAL TRANSFER COST</th>
-					<th>ACTUAL TOTAl COST</th>
-					<th>ACTUAL TRANSFER COST</th>
-					<th>AGENCY</th>
-					<th>REMARKS</th>
-					
+					<th>Pickup</th>
+					<th>Pickup Time</th>
+					<th>Dropoff</th>
+					<th>Dropoff Time</th>
+					<th>TFR Supplier</th>
+					<th>TFR Supplier Ref #</th>
+					<th>Driver name</th>
+					<th>TFR SP</th>
+					<th>TFR Net Cost</th>
+					<th>Remark</th>
                   </tr>
 				  
                   </thead>
@@ -42,30 +42,38 @@
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
                     <td>{{$record->tour_date}}</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
+					<td>{{$record->transfer_option}}</td>
+					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_phone:''}}</td>
-					<td>{{$record->transfer_supp_ref_no}}</td>
-					<td>{{$record->ticket_supp_ref_no}}</td>
-					<td>{{$record->pickup_location}}</td>
-					<td>{{$record->dropoff_location}}</td>
-                    <td>{{$record->adult}}</td>
+					<td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
                     <td>{{$record->infant}}</td>
+					<td>{{($record->supplierticket)?$record->supplierticket->name:''}}</td>
+					<td>{{$record->ticket_supp_ref_no}}</td>
+					<td>{{$record->totalprice}}</td>
+					<td>{{$record->actual_total_cost}}</td>
 					<td>
 					@if($record->transfer_option == "Shared Transfer")
 					SIC
+					@php
+					$zone = SiteHelpers::getZoneName($record->transfer_zone);
+					@endphp
+						- {{$zone->name}} 
+					
 					@endif
 					@if($record->transfer_option == 'Pvt Transfer')
 					PVT
 					@endif
 					
 				</td>
+				<td>{{$record->pickup_location}}</td>
 				<td>{{$record->actual_pickup_time}}</td>
-					<td>{{$record->dropoff_time}}</td>
-					<td>{{$record->driver_name}}</td>
-					<td>{{($record->supplierticket)?$record->supplierticket->name:''}}</td>
-					<td>{{($record->suppliertransfer)?$record->suppliertransfer->name:''}}</td>
-					<td>{{$record->totalprice}}</td>
+				<td>{{$record->dropoff_location}}</td>
+				<td>{{$record->dropoff_time}}</td>
+				<td>{{($record->suppliertransfer)?$record->suppliertransfer->name:''}}</td>
+				<td>{{$record->transfer_supp_ref_no}}</td>
+				<td>{{$record->driver_name}}</td>
 					<td>
 					@if($record->transfer_option == "Shared Transfer")
 					@php
@@ -77,11 +85,8 @@
 					{{$record->pvt_traf_val_with_markup}}
 					@endif
 					</td>
-					<td>{{$record->actual_total_cost}}</td>
 					<td>{{$record->actual_transfer_cost}}</td>
-					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{$record->remark}}</td>
-					
                   </tr>
 				  @endforeach
                   </tbody>
