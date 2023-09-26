@@ -638,7 +638,7 @@ class SiteHelpers
 			}elseif($transfer_option == 'Pvt Transfer'){
 				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
 				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
-				  $totalPrice = $ticketPrice + + $markupPriceP +  $transferPrice;
+				  $totalPrice = $ticketPrice + $markupPriceP +  $transferPrice;
 			}
 			}
 			
@@ -665,5 +665,11 @@ class SiteHelpers
 		return $data;
 		
     }
+	
+	public function dateDiffInDays($date1, $date2) 
+	{
+		$diff = strtotime($date2) - strtotime($date1);
+		return abs(round($diff / 86400));
+	}
 	
 }
