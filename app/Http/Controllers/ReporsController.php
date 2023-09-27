@@ -29,6 +29,7 @@ use App\Exports\AccountsReceivablesReportExcelExport;
 use App\Exports\VoucherActivityRefundExport;
 use App\Exports\VoucherActivityCancelExport;
 use App\Exports\TicketStockExport;
+use App\Exports\AgentLedgerExport;
 
 class ReporsController extends Controller
 {
@@ -308,6 +309,42 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$agetName = $agentTBA->company_name;
 		}
         return view('reports.agent-with-vat-ledger-report', compact('records','voucherStatus','agetid','agetName'));
+
+    }
+	
+	 public function agentLedgerReportWithVatExportExcel(Request $request)
+    {
+		$this->checkPermissionMethod('list.agent.ledger');
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		
+		$query = AgentAmount::where('id','!=', null);
+		if(Auth::user()->role_id == '3')
+		{
+			$query->where('agent_id', '=', Auth::user()->id);
+		}
+		else
+		{
+			if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+					$query->where('agent_id', '=', $data['agent_id_select']);
+			}
+		}
+		
+		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = date('Y-m-d', strtotime($data['from_date']));
+			$endDate = date('Y-m-d', strtotime($data['to_date']));
+			 $query->whereDate('date_of_receipt', '>=', $startDate);
+			 $query->whereDate('date_of_receipt', '<=', $endDate);
+		}
+		
+		
+		
+			
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		
+		
+		return Excel::download(new AgentLedgerExport($records), 'agent_ledger_export_records'.date('d-M-Y s').'.csv');
 
     }
 	
