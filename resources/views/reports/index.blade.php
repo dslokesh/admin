@@ -94,7 +94,7 @@
                   <thead>
                   <tr>
 					<th>Booking #</th>
-                    <th>Service Date</th>
+                    <th width="7%">Service Date</th>
 					<th>Service</th>
 					<th>Service Type</th>
 					<th>Agency</th>
@@ -126,7 +126,9 @@
 				  @foreach ($records as $record)
                   <tr>
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
-                    <td>{{$record->tour_date}}</td>
+                    <td>
+					<input type="text" readonly class="form-control inputsave datepicker" id="tour_date{{$record->id}}" data-name="tour_date"  data-id="{{$record->id}}" value="{{$record->tour_date}}" />
+					</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
 					<td>{{$record->transfer_option}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>

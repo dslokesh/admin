@@ -13,22 +13,33 @@
   <style>
 	body
 	{
-		margin:0 auto; 
+		/* background: url("{{asset('images/itinerary_bg.png')}}") repeat left top; */
+		margin:	0 auto; 
 		font-family: 'Rubik', Helvetica, Arial, sans-serif; 
+		font-weight:normal;
+		font-size: 14px;
 	}
 	.outter-div
 	{
 		width: 800px;
-		 margin: 0 auto;  
-		  padding: 40px; 
-		  clear:both;
+		margin: 0 auto;  
+		padding: 5px 10px 5px 10px; 
+		clear:both;
 	}
 	.inner-div
 	{
 		width:100%; 
-		padding: 10px 0px;
+		padding: 0px 0px 0px 0px;
 		margin-bottom:20px;
 		clear:both;
+	}
+	.col-1
+	{
+		width: 8.33%!important;
+	}
+	.col-2
+	{
+		width: 16.6%!important;
 	}
 	.col-3
 	{
@@ -79,66 +90,270 @@
 	{
 		text-align: right!important;
 	}
+	.hotel-outter-div
+	{
+		background: #dcedf7; 
+		border-radius: 15px; 
+		 margin-bottom: 20px;
+		 padding: 10px;
+	}
+	.hd-outter-div
+	{
+		background: #dcedf7; 
+		border-radius: 10px; 
+		 margin-bottom: 5px;
+		 font-size: 20px; 
+		 width: 100%;
+		
+	}
 	.activity-outter-div
 	{
-		background: #ddd; 
-		/* border-radius: 15px; */
-		/* margin-bottom: 30px; */
+		width:100%;
+		background: #F5F5F5; 
+		border-radius: 15px; 
+		 margin-bottom: 20px;
 	}
 	.activity-innter-div
 	{
 		background:#dcedf7; 
-		padding: 15px; 
-
-		width:96.16%;
+		border-radius: 10px; 
+		width:100%;
 	}
 	.font-bold
 	{
-		font-weight: bold;
+		/* font-weight: 300; */
 	}
 	.no-margin
 	{
 		margin: 0px;
 	}
-  </style>
+	.inclusion-div ul {
+  list-style: none;
+  padding-left: 10px;
+}
+.inclusion-div ul li {
+	background: url("{{asset('images/checkmark-16.png')}}") no-repeat left center;
+  min-height: 20px;
+  padding-top: 0px;
+  padding-left: 20px;
+  margin-bottom: 5px;
+  text-align: justify;
+  color: #808080 !important;
+  
+}
+
+.tnc-div ul {
+  list-style: none;
+  padding-left: 10px;
+}
+/* .tnc-div ul li {
+	background: url("{{asset('images/tnc-16.png')}}") no-repeat left center;
+  min-height: 20px;
+  padding-top: 0px;
+  padding-left: 20px;
+  margin-bottom: 5px;
+  text-align: justify;
+  color: #808080 !important;
+  
+} */
+.tnc-div  ul li:before {
+  content: '✓';
+  font-weight: bold;
+  color: green;
+  padding-right: 10px;
+  font-size: 16pt;
+  color: #808080 !important;
+}
+.tnc-div  ul li {
+	color: #808080 !important;
+}
+.bg-calender {
+	background: url("{{asset('images/calender-32.png')}}") no-repeat left center;
+  min-height: 32px;
+  padding-top: 0px;
+
+}
+.bg-calender-end {
+	background: url("{{asset('images/calender-32.png')}}") no-repeat right center;
+  min-height: 32px;
+  padding-top: 0px;
+
+}
+
+.text-grey
+{
+	color: #808080 !important;
+}
+.text-black
+{
+	color: #000000 !important;
+}
+.mb-20
+{
+	margin-bottom: 20px;
+}
+.agent-logo
+{
+	max-width: 120px;
+	max-height: 100px;
+	width: auto;
+	height: auto;
+}
+.mt-10
+{
+	margin-top: 10px;
+}
+.mt-5
+{
+	margin-top: 5px;
+}
+.mt-40
+{
+	margin-top: 40px!important;
+}
+.ml-20
+{
+	margin-left: 20px;
+}
+.ml-30
+{
+	margin-left: 30px;
+}
+.pl-30
+{
+	padding-left: 30px;
+}
+.pl-40
+{
+	padding-left: 40px;
+}
+.ml-40
+{
+	margin-left: 40px;
+}
+.pl-40
+{
+	padding-left: 40px;
+}
+.mr-10
+{
+	margin-right: 10px;
+}
+.pr-30
+{
+	padding-right: 30px;
+}
+.pr-40
+{
+	padding-right: 40px;
+}
+.clear
+{
+	clear:both;
+}
+.hotel-image
+{
+	border-radius: 10px;
+	max-width: 180px;
+	width: auto;
+	max-height: 180px;
+	 height: auto;
+}
+.p-10
+{
+	padding: 10px;
+}
+.p-15
+{
+	padding: 15px; 
+}
+.p-20
+{
+	padding: 20px;
+}
+.pt-40
+{
+	padding-top: 40px;
+}
+.text-center
+{
+	text-align:center;
+}
+.text-right
+{
+	text-algin: right;
+}
+div.footer {
+      display: block;
+      text-align: center;
+      position: running(footer);
+    }
+@page {
+        @bottom-center {
+            content: element(footer);
+        }
+    }
+
+</style>
 </head>
 <!-- font-family: 'Poppins', sans-serif; -->
 <body >
+
 	<div class="outter-div">
-		<div class="inner-div" style="margin-bottom: 20px;">
-			<div class="col-6 float-left">
-				<span style="display: block;font-size: 28px;">
-				<b>{{($voucher->guest_name)?$voucher->guest_name:''}}</b> Trip to
-				<span style="display:block;font-size: 66px;font-weight: bold;color: #1732bb;font-family: initial;">Dubai</span>
-			</div>
-			<div class="col-6 float-right text-right" >
+		<div class="inner-div mb-20" >
+			<div class="col-6 float-left text-left" >
 				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
-					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
+					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" class="agent-logo">
 				@else
 				{{-- Code to show a placeholder or alternate image --}}
-					<img src="{{ asset('uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+					<img src="{{asset('Abatera_logo.jpg')}}" class="agent-logo">
 				@endif
 			</div>
-		</div>
-		<div class="col-11" style="margin:20px auto;">
-			<img src="{{asset('images/2.jpg')}}" style="width: 100%;border-radius: 30px;margin-top: 20px;">
-		</div>
-		<div class="inner-div">
-			<div class="col-7 float-left">
-				<p style="margin-bottom: 0"><b>Start Date </b>: {{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
-				<p style="margin-top: 5px"><b>End Date </b>: {{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
+			<div class="col-6 float-right text-right">
+				<span class="pt-40">
+				<p class="no-margin mt-40"><i class="fa fa-headset mr-10" aria-hidden="true"></i> {{$voucher->agent->mobile}}</p>
+				<p class="no-margin" style=""><i class="fas fa-envelope mr-10" ></i> {{$voucher->agent->email}}</p>
+				</span>
 			</div>
-			<div class="col-4 float-right">
-				<p style="margin-bottom: 0"><b>Quote ID </b>: {{$voucher->code}}</p>
-				<p class="font-bold" style="margin-top: 5px;"></p>
-			</div>
+			<div class="clear"></div>
 		</div>
 		<div class="inner-div">
-			<div>
-				<img src="{{asset('images/2.jpg')}}" style="max-width: 40px" />
-				<span class="font-bold" style="font-size: 20px;">Inclusions</span>
+		<p class="col-12 mt-20 mb-20" style="text-align:center;font-size: 28px"><span class="text-grey">Voucher No.</span> : {{$voucher->code}}</p>
+		</div>
+		<div class="col-12 mb-20">
+			<img src="{{asset('images/2.jpg')}}" style="width: 100%;border-radius: 30px;">
+		</div>
+		
+		<div class="inner-div mb-20">
+			
+			<div class="col-4 float-left bg-calender " style="">
+				<div class="pl-40"> {{date("d-m-Y",strtotime($voucher->travel_from_date))}}
+					<br/><span class="text-grey">Start Date </span>
+				</div>
+				
+				
 			</div>
-			<ul style="padding-left: 20px; margin-bottom: 30px">
+			<div class="col-4 float-left text-center">
+				@php
+				$no_of_days = $no_of_nights =  0;
+					$no_of_days = SiteHelpers::dateDiffInDays($voucher->travel_from_date,$voucher->travel_to_date)
+				
+				@endphp
+				<p style=" text-center"> 
+				@if(($no_of_days-1) > 0) <i class="fa fa-moon " aria-hidden="true"></i>  {{$no_of_days-1}} Nights @endif <i class="fa fa-sun ml-10" aria-hidden="true"></i> {{$no_of_days}} Day(s)
+				<!-- {{$no_of_days-1}} Nights {{$no_of_days}} Days -->
+				</p>
+			</div>
+			
+			<div class="col-4 float-right text-right bg-calender-end">
+			<div class="pr-40"> {{date("d-m-Y",strtotime($voucher->travel_to_date))}}
+				<br/><span class="text-grey">End Date </span>
+			</div>
+			</div>
+		</div>
+		<div class="inner-div inclusion-div mt-40" style="padding-top: 20px;">
+				<span class="font-bold mt-40" style="">Inclusions</span>
+			<ul style="">
 				@if(!empty($voucherActivity))
 					@foreach($voucherActivity as $k => $ap1)
 						<li style="">{{$ap1->variant_name}}</li>
@@ -149,7 +364,8 @@
 				@endif
 			</ul>
 		</div>
-		<div class="width:95%; padding: 10px 0px;margin-bottom:20px;clear:both;">
+		
+		<!-- <div class="width:95%; padding: 10px 0px;margin-bottom:20px;clear:both;">
 			<div style="background: #2300c1; border-radius: 30px; border: dashed 3px #f1f1f1; display: block; align-items: center;clear:both;max-height:170px;height:auto;min-height: 130px;">
 				<div style="width:60%;float:left;background: #CFC7F1;border-radius: 30px;border: dashed 3px #f1f1f1;padding:20px;margin-top:-3px; margin-bottom: -3px; margin-left: -3px;min-height: 130px;max-height:170px;height:auto;display: block;">
 					<h6 style="margin:0  0 15px 0 !important; font-weight: 700;font-size: 18px">Adult : AED {{$dataArray['adultP']}} X {{$dataArray['adult']}}</h6>
@@ -167,212 +383,391 @@
 				</div>
 				<div style="width:100%;clear:both;"></div>
 			</div>
-		</div>
-	</div>
-	<div style = "display:block; clear:both; page-break-after:always;"></div>
-
-
-	@if(!empty($voucherHotel))
+		</div> -->
+	
+	
+	<!-- Hotel Block End -->
+	@if(count($voucherHotel) > 0)
 	<!-- Hotel Block Start -->
-	<div class="outter-div">
+	<div style = "display:block; clear:both; page-break-after:always;"></div>
+	
+	<div class="inner-div mb-20" >
+			<div class="col-6 float-left text-left" >
+				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
+					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" class="agent-logo">
+				@else
+				{{-- Code to show a placeholder or alternate image --}}
+					<img src="{{asset('Abatera_logo.jpg')}}" class="agent-logo">
+				@endif
+			</div>
+			<div class="col-6 float-right text-right">
+				<span class="pt-40">
+				<p class="no-margin mt-40"><i class="fa fa-headset mr-10" aria-hidden="true"></i> {{$voucher->agent->mobile}}</p>
+				<p class="no-margin" style=""><i class="fas fa-envelope mr-10" ></i> {{$voucher->agent->email}}</p>
+				</span>
+			</div>
+			<div class="clear"></div>
+		</div>
+			
 		
-		<div class="inner-div">
 		
+		@php
+			$sno = 0;
+			$thotel = count($voucherHotel);
+		@endphp
 			@foreach($voucherHotel as $vh)
-      		<div style="padding-top: 30px;display: block;">
-      			<div style="min-width:220px;width: 220px; height: 220px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;float:left;">
+				@php
+					$sno++;
+				@endphp
+      		<div class="hotel-outter-div">
+      			<div class="col-3 float-left" >
 					@if(file_exists(public_path('uploads/hotels/'.$vh->hotel->image))  && !empty($vh->hotel->image))
-					<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
+					<img src="{{asset('uploads/hotels/'.$vh->hotel->image)}}" alt=""  class="hotel-image">
 					@else
 					{{-- Code to show a placeholder or alternate image --}}
-					<img src="{{ asset('uploads/hotels/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+					<img src="{{ asset('uploads/hotels/thumb/no-image.png') }}" class="hotel-image" alt="no-image">
 					@endif
-	
-      				
       			</div>
-      			<div style="padding-left: 15px;width: 500px; float:right;">
-      				<span style="display: block; align-items: center;width:100%;">
-      					<h5 style="margin: 0;font-size:16px;float:left;">{{$vh->hotel->name}}</h5> 
-      					<span style="padding-left: 10px;"><!-- <img src="{{asset('images/6.png')}}"> -->{{$vh->hotel->hotelcategory->name}}</span>
-      				</span>
-      				<span style="display: block; align-items: center; gap: 10px; padding-top: 10px;width:100%;">
+      			<div class="col-9 float-right" >
+      				
+      					<p class="col-12 no-margin" style="font-size: 24px">
+							{{$vh->hotel->name}}
+							<span style="padding-left: 10px;">
+							@for($i=1;$i<=$vh->hotel->hotelcategory->name;$i++)
+								<img src="{{asset('images/star-24.png')}}">
+							@endfor
+							</span>
+						</p> 
+					<p class="col-12 no-margin mt-10">
 					  <i class="fas fa-map-marker-alt"></i> 
-						 {{$vh->hotel->address}},{{($vh->hotel->city)?$vh->hotel->city->name:''}},{{($vh->hotel->state)?$vh->hotel->state->name:''}},{{($vh->hotel->country)?$vh->hotel->country->name:''}}
+						 {{$vh->hotel->address}},{{($vh->hotel->city)?$vh->hotel->city->name:''}},{{($vh->hotel->country)?$vh->hotel->country->name:''}}
+      				
+					</p>
+      				<div class="col-12 mt-10" >
+      					<span class="col-6 float-left">
+      						<span ><span class="text-grey">Check in :</span></span>
+      						<p class="no-margin mt-5">{{date("d M- Y",strtotime($vh->check_in_date))}}</p>
+							 
+      					</span>
+      					<span class="col-6 float-right">
+      						<span ><span class="text-grey">Check out :</span></span>
+      						<p class="no-margin mt-5">{{date("d M- Y",strtotime($vh->check_out_date))}}</p>
+							  
+						</span>	
+      				</div>
+					  <div class="col-12 mt-10" >
+      					<span class="col-12 float-left">
+						 	 <p  class="no-margin mt-10" ><span class="text-grey">Guest Name </span>: {{$voucher->guest_name}}</p>
+							 
+      					</span>
       					
-      				</span>
-      				<div style="max-width: 350px; padding-top: 15px; display: flex;">
-      					<span>
-      						<span >Check in :</span>
-      						<p style="color: #121212; margin-top: 5px; margin-bottom: 0; font-weight: 500">{{date("d M- Y",strtotime($vh->check_in_date))}}</p>
-							  <div style="padding-top: 10px">
+								
+      				</div>
+					  <div class="col-12 mt-10" >
+      					<span class="col-6 float-left">
+      						  <div class="col-12">
 								@php
 								$room = SiteHelpers::hotelRoomsDetails($vh->hotel_other_details)
 								@endphp
-									<span style="font-size: 16px; display: block; margin-top: 5px"><b>Room Type </b>: {{$room['room_type']}}</span>
-									
-									<span style="font-size: 16px; display: block; margin-top: 5px"><b>Meal Plan </b>: {{$room['mealplan']}}</span>
-									
-								</div>
-      					</span>
-      					<span style="margin-left: auto;">
-      						<span >Check out :</span>
-      						<p style="color: #121212; margin-top: 5px; margin-bottom: 0; font-weight: 500">{{date("d M- Y",strtotime($vh->check_out_date))}}</p>
-							  <div style="padding-top: 10px">
+								
+								<p  class="no-margin mt-10" ><span class="text-grey">Room Type </span>: {{$room['room_type']}}</p>
 							
+								<p class="no-margin mt-10" ><span class="text-grey">Number of Rooms </span>: {{$room['number_of_rooms']}}</p>
 									
-									<span style="font-size: 16px; display: block; margin-top: 5px"><b>Number of Rooms </b>: {{$room['number_of_rooms']}}</span>
-									<span style="font-size: 16px; display: block; margin-top: 5px"><b>Occupancy </b>: {{$room['occupancy']}}</span>
+									
 									
 								</div>
       					</span>
+      					<span class="col-6 float-right">
+      						  <div class="col-12">
+							  <p  class="no-margin mt-10" ><span class="text-grey"> </span></p>
+							  <p  class="no-margin mt-10" ><span class="text-grey">Meal Plan </span>: {{$room['mealplan']}}</p>
+									
+									<p class="no-margin mt-10" ><span class="text-grey">Number of Guests </span>: {{$room['occupancy']}}</p>
+									
+								</div>
+      					</span>
+						  @if($vh->confirmation_number != '')
+						  <div style="clear:both;"></div>
+						  	<span class="col-12">
+						  		<p class="no-margin mt-10"><span class="text-grey">Hotel Confirmation No.</span> : {{$vh->confirmation_number}}</p>
+      						</span>
+						  @endif
+									
+								
       				</div>
       				
       			</div>
+				<div style="clear:both;"></div>
       		</div>
+			  @php
+			  $kn = ($sno%2);
+					
+					@endphp
+					@if(($kn == 0) && ($thotel > $sno))
+					<div class="inner-div mb-20" >
+						<div class="col-6 float-left text-left" >
+							@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
+								<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" class="agent-logo">
+							@else
+							{{-- Code to show a placeholder or alternate image --}}
+								<img src="{{asset('Abatera_logo.jpg')}}" class="agent-logo">
+							@endif
+						</div>
+						<div class="col-6 float-right text-right">
+							<span class="pt-40">
+							<p class="no-margin mt-40"><i class="fa fa-headset mr-10" aria-hidden="true"></i> {{$voucher->agent->mobile}}</p>
+							<p class="no-margin" style=""><i class="fas fa-envelope mr-10" ></i> {{$voucher->agent->email}}</p>
+							</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+					@endif
 			@endforeach
-			
-			
-		</div>
+			<div class="inner-div ">
+				<div class="hd-outter-div">
+					<!-- <img src="{{asset('images/2.jpg')}}" style="max-width: 40px" /> -->
+					<p class="font-bold p-10" >Check-in/Check-out Policy</p>
+				</div>
+				<ul style="padding-left: 20px; margin-bottom: 30px;text-align: justify" class="text-grey">
+					<li>The usual check-in time is 2:00 PM and checkout time is at 12:00 hours however this might vary from hotel to hotel and with different destinations.</li>
+					<li>Early Check in and Late Check out is not guaranteed and additional charges may be applicable. However, luggage may be deposited at the hotel reception.</li>
+					<li>Note that reservation may be canceled automatically after 18:00 hours if hotel is not informed about the approximate time of late arrivals.</li>
+					<li>For any specific queries related to a particular hotel, kindly reach out to local support team for further assistance.</li>
+				</ul>
+				<div class="hd-outter-div">
+					<!-- <img src="{{asset('images/2.jpg')}}" style="max-width: 40px" /> -->
+					<p class="font-bold p-10">Booking Notes</p>
+				</div>
+				<div>
+					<!-- <img src="{{asset('images/2.jpg')}}" style="max-width: 40px" /> -->
+					<p style="text-align: justify" class="text-grey">Booking payable as per reservation details.Please collect all extras directly from clients prior to departure.All vouchers issued are on the condition that all arrangements operated by person or bodies are made as agents only and that they shall not be responsible for any damage, loss, injury, delay or inconvenience caused to passengers as a result of any such arrangements. We will not accept any responsibility for additional expenses due to the changes or delays in air, road, rail, sea or indeed any other causes, all such expenses will have to be borne by passengers.</p>
+				</div>
+			</div>
 		
-	</div>
-	<div style = "display:block; clear:both; page-break-after:always;"></div>
+		
+	
+	
 	<!-- Hotel Block End -->
 	@endif	
 
 
 
-	
-	@if(!empty($voucherActivity))
+	@if(count($voucherActivity) > 0)
+	<div style = "display:block; clear:both; page-break-after:always;"></div>
 	<!-- Activity Block Start -->
-	<div class="outter-div">
-		<div class="inner-div">
+	
+		<div class="inner-div mb-20" >
+			<div class="col-6 float-left text-left" >
+				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
+					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" class="agent-logo">
+				@else
+				{{-- Code to show a placeholder or alternate image --}}
+					<img src="{{asset('Abatera_logo.jpg')}}" class="agent-logo">
+				@endif
+			</div>
+			<div class="col-6 float-right text-right">
+				<span class="pt-40">
+				<p class="no-margin mt-40" style="margin-top: 40px;"><i class="fa fa-headset mr-10" aria-hidden="true"></i> {{$voucher->agent->mobile}}</p>
+				<p class="no-margin" style=""><i class="fas fa-envelope mr-10" ></i> {{$voucher->agent->email}}</p>
+				</span>
+			</div>
+			<div class="clear"></div>
+		</div>
+			
+		
+		
 		@php
 			$old_day_no = 0;
 			$tr_dt = "";
 			$day_no = 0;
+			$avt_no = 0;
+			$sno = 0;
+			$tact = count($voucherActivity);
 		@endphp
 		@foreach($voucherActivity as $k => $ap)
 		@php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
 					$pickup_time = SiteHelpers::getPickupTimeByZone($activity->zones,$ap->transfer_zone);
 					if($tr_dt != $ap->tour_date)
+					{
+						$avt_no = 0;
 						$day_no++;
+					}
+					$sno++;
+					$avt_no++;
 					@endphp
 
       		<div class="activity-outter-div">
-			  @if($day_no != $old_day_no)
-			  	<h3 style="padding: 20px 20px 0px 20px;">Day {{$day_no}} : <span class="col-6 float-right text-right">{{date("d M- Y",strtotime($ap->tour_date))}}</span></h3>
-				  <div class="activity-innter-div">
-				  @else
-				  <div class="activity-innter-div">
-				  @endif
-	      		
-	      			<div style="width: 170px; height: 150px; border-radius: 30px; border: solid 5px #0096e0; overflow: hidden;float:left;">
-			@if(file_exists(public_path('uploads/activities/'.$activity->image)) && !empty($activity->image))
-			<img src="{{asset('uploads/activities/'.$activity->image)}}" alt="" style="width:100%;max-width: 100%; height: 100%">
-			@else
-			{{-- Code to show a placeholder or alternate image --}}
-			<img src="{{ asset('uploads/activities/thumb/no-image.png') }}" alt="" style="width:100%;max-width: 100%; height: 100%"  alt="no-image">
-			@endif
-	      			</div>
-	      			<div style="width: 530px;float:right;padding-left: 15px">
-	      				<div style="display: block;">
-	      					<h5 style="margin:0px;font-size: 18px; ">{{$activity->title}} - {{$ap->variant_name}}</h5>
-	      					<h5  style="margin-left: auto !important; margin:0px;font-size: 16px; "></h5>
-	      				</div>
-	      				<div style="height: 150px;overflow:hidden;text-align:justify!important;font-size: 14px;line-height: 22px;"> {!!$activity->description!!}</div>
-	      			</div>
-					<div style="width:100%;clear:both;"></div>
-	      		</div>
-	      		<div style="padding: 10px;display: block;width:100%;">
-	      			<span style="width: 45%;float:left;">
-			  			<span style=""><b>Transfer Type </b>: {{$ap->transfer_option}}</span>
-			  			<span style="display: block;padding-top: 6px">
-						
-						   <span class="color-black"><b>Adult</b> : {{$ap->adult}}</span>@if($ap->child > 0) | <span class="color-black"><b>Child</b> : {{$ap->child}}</span>@endif @if($ap->infant > 0) | <b>Infant</b> :  <span class="color-black">{{$ap->infant}}</span>@endif
-						</span>
-			  		</span>
-					  <span style="margin-left: auto;width: 45%;float:left;">
-						@if((($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer')) && ($ap->pickup_time != ''))
-			  				<p class="no-margin"><b>Pick Up Timings</b> : {{$pickup_time}}</p>
+			
+			  	<div class=" col-12 font-bold no-margin p-10">
+				  <img src="{{asset('images/time-span-50.png')}}" style="float:left;margin-right: 10px;margin-top: 2px; width: 32px; height: 32px;"/>
+						<div class="col-5 float-left" style="padding-top: 7px;">Day {{$day_no}} :  {{date("d M Y l",strtotime($ap->tour_date))}} </div>
+						<div class="col-5 float-right"  style="padding-top: 7px;">
+							@if(($ap->transfer_option == 'Shared Transfer') && ($pickup_time != ''))
+							 <span class="text-grey">Pickup Timing</span> : {{$pickup_time}} * 
+							@endif
+							@if(($ap->transfer_option == 'Pvt Transfer'))
+								@if($ap->actual_pickup_time != '')
+								<span class="text-grey">Pickup Timing</span> : {{$ap->actual_pickup_time}}*
+								@elseif($activity->pvt_TFRS_text != '')
+								<span class="text-grey">Pickup Timing</span> : {{$activity->pvt_TFRS_text}}*
+								@endif
+							@endif
+						</div>
+				</div>
+				<div class="clear"></div>
+				<div class="activity-innter-div mt-10 ">
+	      			<div class="col-3 float-left p-15" >
+						@if(file_exists(public_path('uploads/activities/'.$activity->image)) && !empty($activity->image))
+						<img src="{{asset('uploads/activities/'.$activity->image)}}" alt="" class="hotel-image">
+						@else
+						{{-- Code to show a placeholder or alternate image --}}
+						<img src="{{ asset('uploads/activities/thumb/no-image.png') }}" alt="" class="hotel-image"  alt="no-image">
 						@endif
+	      			</div>
+	      			<div class="col-8 float-left p-15">
+						<div class="col-12 mo-margin" style="font-size: 14px; ">{{$activity->title}}</div>
+						<div  class="col-12 mo-margin"" style="font-size: 14px; "><span  class="text-grey">Tour Option</span> : {{$ap->variant_name}}</div>
+						<div  class="col-12 mo-margin text-grey" style="height: 67px;overflow:hidden;text-align:justify!important;"> {!!$activity->description!!}</div>...
+						<div class="clear"></div>
+	      			</div>
+					<div class="clear"></div>
+	      		</div>
+	      		<div class="col-12 mt-10">
+	      			<span class="col-5 float-left"style="padding: 15px 0px 15px 15px;">
+					  	<p class="no-margin"><span  class="text-grey">Transfer Type </span>: @if(($ap->transfer_option == 'Pvt Transfer')) Private Transfer @else {{$ap->transfer_option}} @endif</p>	
+					 	 <p class="no-margin">
+							<span class="text-grey">Adult</span> : {{$ap->adult}} 
+							@if($ap->child > 0) | <span  class="text-grey">Child</span> : {{$ap->child}} @endif 
+							@if($ap->infant > 0) | <span  class="text-grey">Infant</span> :  {{$ap->infant}} @endif
+						</p>
+			  		</span>
+					  <span class="col-5 float-right" style="padding: 15px 15px 15px 15px;">
+						
 						@if($ap->flight_no != '')
 			  				<p class="no-margin">
-								<b>Flight Details</b> : {{$ap->flight_no}}
+								<span  class="text-grey">Flight Details</span> : {{$ap->flight_no}}
 							</p>
 						@endif
 						@if($ap->passenger_name != '')
-			  				<p class="no-margin"><b>Passenger Name</b> : {{$ap->passenger_name}}</p>
+			  				<p class="no-margin"><span  class="text-grey">Passenger Name</span> : {{$ap->passenger_name}}</p>
 						@endif
 						@if($ap->pickup_location != '')
-			  				<p class="no-margin"><b>Pickup Location</b> : {{$ap->pickup_location}}</p>
+			  				<p class="no-margin"><span  class="text-grey">Pickup Location</span> : {{$ap->pickup_location}}</p>
 						@endif
 						@if($ap->dropoff_location != '')
-			  				<p class="no-margin"><b>Dropoff Location</b> : {{$ap->dropoff_location}}</p>
+			  				<p class="no-margin"><span  class="text-grey">Dropoff Location</span> : {{$ap->dropoff_location}}</p>
 						@endif
 			  		</span>
-					<div style="clear:both;"></div>
-			  		
+					  <div class="clear"></div>
+					@if($ap->remark != '')
+					
+						<p class="col-12 no-margin " style="padding: 0px 15px 15px 15px;"><span  class="text-grey">Remark</span> : {{$ap->remark}}</p>
+					@endif
+					<div class="clear"></div>
 	      		</div>
 	      	</div>
+			
 			  @php
+			  $kn = ($sno%3);
 					$tr_dt = $ap->tour_date;
 					$old_day_no = $day_no;
 					@endphp
+					@if(($kn == 0) && ($tact > $sno))
+					<div style = "display:block; clear:both; page-break-after:always;"></div>
+					<div class="inner-div mb-20" >
+						<div class="col-6 float-left text-left" >
+							@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
+								<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" class="agent-logo">
+							@else
+							{{-- Code to show a placeholder or alternate image --}}
+								<img src="{{asset('Abatera_logo.jpg')}}" class="agent-logo">
+							@endif
+						</div>
+						<div class="col-6 float-right text-right">
+							<span class="pt-40">
+							<p class="no-margin mt-40"><i class="fa fa-headset mr-10" aria-hidden="true"></i> {{$voucher->agent->mobile}}</p>
+							<p class="no-margin" style=""><i class="fas fa-envelope mr-10" ></i> {{$voucher->agent->email}}</p>
+							</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+					
+					@endif
 			@endforeach
 			
 			
 		</div>
 		
-	</div>
 	<div style = "display:block; clear:both; page-break-after:always;"></div>
+	
 	<!-- Activity Block End -->
 	@endif	
-	<div class="outter-div">
-		<div class="inner-div" style="margin-bottom: 20px;">
-			<div class="col-6 float-left">
-				<span style="display: block;font-size: 28px;">
-				<b>{{($voucher->guest_name)?$voucher->guest_name:''}}</b> Trip to
-				<span style="display:block;font-size: 66px;font-weight: bold;color: #1732bb;font-family: initial;">Dubai</span>
-			</div>
-			<div class="col-6 float-right text-right" >
+		<div class="inner-div mb-20" >
+			<div class="col-6 float-left text-left" >
 				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
-					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" style="max-width: 150px;width: 120px;height: 120px">
+					<img src="{{asset('uploads/users/thumb/'.$voucher->agent->image)}}" class="agent-logo">
 				@else
 				{{-- Code to show a placeholder or alternate image --}}
-					<img src="{{ asset('uploads/users/thumb/no-image.png') }}" style="max-width: 150px;width: 120px;height: 120px" alt="no-image">
+					<img src="{{asset('Abatera_logo.jpg')}}" class="agent-logo">
 				@endif
 			</div>
-		</div>
-		<div class="col-11" style="margin:20px auto;">
-			<img src="{{asset('images/2.jpg')}}" style="width: 100%;border-radius: 30px;margin-top: 20px;">
+			<div class="col-6 float-right text-right">
+				<span class="pt-40">
+				<p class="no-margin mt-40"><i class="fa fa-headset mr-10" aria-hidden="true"></i> {{$voucher->agent->mobile}}</p>
+				<p class="no-margin" style=""><i class="fas fa-envelope mr-10" ></i> {{$voucher->agent->email}}</p>
+				</span>
+			</div>
+			<div class="clear"></div>
 		</div>
 		<div class="inner-div">
-			<div class="col-7 float-left">
-				<p style="margin-bottom: 0"><b>Start Date </b>: {{date("d-m-Y",strtotime($voucher->travel_from_date))}}</p>
-				<p style="margin-top: 5px"><b>End Date </b>: {{date("d-m-Y",strtotime($voucher->travel_to_date))}}</p>
+		<p class="col-12 mt-20 mb-20" style="text-align:center;font-size: 28px"><span class="text-grey">Voucher No.</span> : {{$voucher->code}}</p>
+		</div>
+	
+		<div class="inner-div mb-20">
+			
+			<div class="col-4 float-left bg-calender " style="">
+				<div class="pl-40"> {{date("d-m-Y",strtotime($voucher->travel_from_date))}}
+					<br/><span class="text-grey">Start Date </span>
+				</div>
+				
+				
 			</div>
-			<div class="col-4 float-right">
-				<p style="margin-bottom: 0"><b>Quote ID </b>: {{$voucher->code}}</p>
-				<p class="font-bold" style="margin-top: 5px;"></p>
+			<div class="col-4 float-left text-center">
+				@php
+				$no_of_days = $no_of_nights =  0;
+					$no_of_days = SiteHelpers::dateDiffInDays($voucher->travel_from_date,$voucher->travel_to_date)
+				
+				@endphp
+				<p style=" text-center"> 
+				@if(($no_of_days-1) > 0) <i class="fa fa-moon " aria-hidden="true"></i>  {{$no_of_days-1}} Nights @endif <i class="fa fa-sun ml-10" aria-hidden="true"></i> {{$no_of_days}} Day(s)
+				<!-- {{$no_of_days-1}} Nights {{$no_of_days}} Days -->
+				</p>
+			</div>
+			
+			<div class="col-4 float-right text-right bg-calender-end">
+			<div class="pr-40"> {{date("d-m-Y",strtotime($voucher->travel_to_date))}}
+				<br/><span class="text-grey">End Date </span>
+			</div>
 			</div>
 		</div>
-		<div class="inner-div">
+		<div class="inner-div tnc-div">
 			<div>
-				<img src="{{asset('images/2.jpg')}}" style="max-width: 40px" />
-				<span class="font-bold" style="font-size: 20px;">Inclusions</span>
+				<!-- <img src="{{asset('images/2.jpg')}}" style="max-width: 40px" /> -->
+				<span class="font-bold mt-40" style="">Terms & Conditions</span>
 			</div>
-			<ul style="padding-left: 20px; margin-bottom: 30px">
-					<li style="">After the confirmation of the booking below conditions are applicable</li>
-		<li style="">Transfer options are made available for the Tour if the With Transfer option is been selected at the time of Booking.</li>
-		<li style="">All entrance tickets are non - refundable.</li>
-		<li style="">Any amendments to the tour date have to be informed to the agent via email.</li>
-		<li style="">Amendment(s) are subject to the Cancellation policy.</li>
-		<li style="">Agent reserves the right to reject/cancel the amendment request from you.</li>
-		<li style="">Any entry tickets for any show/event/ museum/ amusement park or whatsoever are Non- Cancellable & cannot be refunded under any circumstances. There will be no refund for unused or partially used services.</li>
-		<li style="">There is certain waiting time for the Guests to Pick up. If in case the Guests fail to turn on time it will be a No Show and there would be No Refund or Rescheduling. Refer to individual Tour Voucher for pickup time, Cancellation policy.</li>
-		<li style="">Pick Up time advised are tentative and the exact timings will be notified a day prior.</li>
-		<li style="">Shared Transfers waiting time is 5 minutes and Private transfers waiting time is 15 minutes</li>
+			<ul style="">
+				<li style="">After the confirmation of the booking below conditions are applicable</li>
+				<li style="">Transfer options are made available for the Tour if the With Transfer option is been selected at the time of Booking.</li>
+				<li style="">All entrance tickets are non - refundable.</li>
+				<li style="">Any amendments to the tour date have to be informed to the agent via email.</li>
+				<li style="">Amendment(s) are subject to the Cancellation policy.</li>
+				<li style="">Agent reserves the right to reject/cancel the amendment request from you.</li>
+				<li style="">Any entry tickets for any show/event/ museum/ amusement park or whatsoever are Non- Cancellable & cannot be refunded under any circumstances. There will be no refund for unused or partially used services.</li>
+				<li style="">There is certain waiting time for the Guests to Pick up. If in case the Guests fail to turn on time it will be a No Show and there would be No Refund or Rescheduling. Refer to individual Tour Voucher for pickup time, Cancellation policy.</li>
+				<li style="">Pick Up time advised are tentative and the exact timings will be notified a day prior.</li>
+				<li style="">Shared Transfers waiting time is 5 minutes and Private transfers waiting time is 15 minutes</li>
 			</ul>
 		</div>
 		
