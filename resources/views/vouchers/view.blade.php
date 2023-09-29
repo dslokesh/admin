@@ -513,7 +513,7 @@ $stepNameSize: 1.6rem;
                        
                       </div>
                       <div class="col-8">
-            <input type="text" class="form-control inputsavehotel" id="remark{{$vah->id}}{{$vah->voucher_id}}"  data-name="remark"  data-id="{{$vah->id}}" value="{{$vah->remark}}" placeholder="Remark" required />
+            <input type="text" class="form-control inputsavehotel" id="remark{{$vah->id}}{{$vah->voucher_id}}"  data-name="remark"  data-id="{{$vah->id}}" value="{{$vah->remark}}" placeholder="Remark"  />
                        
                       </div>
                     </div>

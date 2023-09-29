@@ -406,7 +406,8 @@ class VouchersController extends Controller
     {
 		$this->checkPermissionMethod('list.voucher');
 		$data = $request->all();
-		
+		$hotelPriceTotal = 0;
+		$grandTotal = 0;
 		$record = Voucher::where('id',$id)->first();
 		
 		if (empty($record)) {
@@ -427,9 +428,17 @@ class VouchersController extends Controller
 		{
 			
 			$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->get();
+			$voucherHotel = VoucherHotel::where('voucher_id',$record->id)->get();
+			if(!empty($voucherHotel)){
+				foreach($voucherHotel as $vh){
+					$room = SiteHelpers::hotelRoomsDetails($vh->hotel_other_details);
+					$hotelPriceTotal += $room['price'];
+				}
+			}
 			$agentAmountBalance = $agent->agent_amount_balance;
 			$total_activity_amount = $record->voucheractivity->sum('totalprice');
-			if($agentAmountBalance >= $total_activity_amount)
+			$grandTotal = $total_activity_amount + $hotelPriceTotal;
+			if($agentAmountBalance >= $grandTotal)
 			{
 			
 			if($record->vat_invoice == 1)
@@ -451,12 +460,12 @@ class VouchersController extends Controller
 			$record->status_main = 5;
 			$record->payment_date = $paymentDate;
 			$record->save();
-			$agent->agent_amount_balance -= $total_activity_amount;
+			$agent->agent_amount_balance -= $grandTotal;
 			$agent->save();
 			
 			$agentAmount = new AgentAmount();
 			$agentAmount->agent_id = $record->agent_id;
-			$agentAmount->amount = $total_activity_amount;
+			$agentAmount->amount = $grandTotal;
 			$agentAmount->date_of_receipt = date("Y-m-d");
 			$agentAmount->transaction_type = "Debit";
 			$agentAmount->transaction_from = 2;
@@ -793,7 +802,7 @@ class VouchersController extends Controller
 	
 		
 		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->orderBy('tour_date','DESC')->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->orderBy('tour_date','ASC')->get();
 		
 		$voucherActivityCount = VoucherActivity::where('voucher_id',$vid)->count();
         return view('vouchers.activities-list', compact('records','typeActivities','vid','voucher','voucherActivityCount','voucherHotel','voucherActivity'));
