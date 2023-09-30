@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\AgentAmount;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VoucheredBookingEmailMailable;
 
 class VouchersController extends Controller
 {
@@ -414,8 +416,10 @@ class VouchersController extends Controller
             return abort(404); //record not found
         }
 
-		$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->count();
-		if($voucherActivity == 0){
+		$voucherActivity = VoucherActivity::where('voucher_id',$record->id);
+		$voucherActivityRecord = $voucherActivity->get();
+		
+		if($voucherActivity->count() == 0){
 			return redirect()->back()->with('error', 'Please add activity this booking.');
 	   }
 	   
@@ -429,6 +433,8 @@ class VouchersController extends Controller
 			
 			$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->get();
 			$voucherHotel = VoucherHotel::where('voucher_id',$record->id)->get();
+			
+			
 			if(!empty($voucherHotel)){
 				foreach($voucherHotel as $vh){
 					$room = SiteHelpers::hotelRoomsDetails($vh->hotel_other_details);
@@ -476,6 +482,17 @@ class VouchersController extends Controller
 			$recordUser->receipt_no = $code;
 			$recordUser->is_vat_invoice = $record->vat_invoice;
 			$recordUser->save(); 
+			
+			$emailData = [
+			'voucher'=>$record,
+			'voucherActivity'=>$voucherActivityRecord,
+			'voucherHotel'=>$voucherHotel,
+			];
+			if(!empty($record->guest_email)){
+			Mail::to($record->guest_email,'Booking Confirmation.')->cc($agent->email)->send(new VoucheredBookingEmailMailable($emailData)); 
+			} else{
+			Mail::to($agent->email,'Booking Confirmation.')->send(new VoucheredBookingEmailMailable($emailData)); 	
+			}
 			
 			}else{
 				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');

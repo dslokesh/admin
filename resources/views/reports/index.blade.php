@@ -45,8 +45,8 @@
                     <div class="input-group-text">Search Result</div>
                   </div>
                  <select name="booking_type" id="booking_type" class="form-control">
-                    <option value = "1">Booking Date</option>
-					<option value = "2">Travel Date</option>
+                    <option value = "1" @if(request('booking_type')==1) selected="selected" @endif>Booking Date</option>
+					<option value = "2" @if(request('booking_type')==2) selected="selected" @endif>Travel Date</option>
 					<!--<option value = "3">Deadline Date</option>-->
                  </select>
                 </div>
@@ -65,8 +65,8 @@
                 </div>
                 <div class="col-auto col-md-3">
                   <div class="input-group mb-2">
-                    <div class="input-group-prepend"><div class="input-group-text">Reference Number</div></div>
-                    <input type="text" name="reference" value="{{ request('reference') }}" class="form-control"  placeholder="Reference Number" />
+                    <div class="input-group-prepend"><div class="input-group-text">Voucher Code</div></div>
+                    <input type="text" name="vouchercode" value="{{ request('vouchercode') }}" class="form-control"  placeholder="Voucher Code" />
                   </div>
                 </div>
                 <div class="col-auto col-md-3" style="display:none">

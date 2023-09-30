@@ -20,6 +20,8 @@ use Carbon\Carbon;
 use SPDF;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AgentAmount;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VoucheredBookingEmailMailable;
 
 class AgentVouchersController extends Controller
 {
@@ -652,8 +654,9 @@ class AgentVouchersController extends Controller
             return abort(404); //record not found
         }
 
-		$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->count();
-		if($voucherActivity == 0){
+		$voucherActivity = VoucherActivity::where('voucher_id',$record->id);
+		$voucherActivityRecord = $voucherActivity->get();
+		if($voucherActivity->count() == 0){
 			return redirect()->back()->with('error', 'Please add activity this booking.');
 	   }
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
@@ -704,6 +707,19 @@ class AgentVouchersController extends Controller
 			$recordUser->receipt_no = $code;
 			$recordUser->is_vat_invoice = $record->vat_invoice;
 			$recordUser->save(); 
+			
+			$voucherHotel = VoucherHotel::where('voucher_id',$record->id)->get();
+			
+			$emailData = [
+			'voucher'=>$record,
+			'voucherActivity'=>$voucherActivityRecord,
+			'voucherHotel'=>$voucherHotel,
+			];
+			if(!empty($record->guest_email)){
+			Mail::to($record->guest_email,'Booking Confirmation.')->cc($agent->email)->send(new VoucheredBookingEmailMailable($emailData)); 
+			} else{
+			Mail::to($agent->email,'Booking Confirmation.')->send(new VoucheredBookingEmailMailable($emailData)); 	
+			}
 			
 			}else{
 				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');

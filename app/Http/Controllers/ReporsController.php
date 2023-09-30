@@ -68,9 +68,9 @@ class ReporsController extends Controller
 				}
 				}
 			}
-        if(isset($data['reference']) && !empty($data['reference'])) {
+        if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
 			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('agent_ref_no', '=', $data['reference']);
+				$q->where('code', '=', $data['vouchercode']);
 			});
 		}
 		
