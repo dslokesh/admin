@@ -97,7 +97,7 @@
 				
 
 				<p>Today's</p>
-				<h3>AED {{($vouchersCurrentDate->totalVoucherActivityAmount)?$vouchersCurrentDate->totalVoucherActivityAmount:0}}</h3>
+				<h3>AED {{number_format(($vouchersCurrentDate->totalVoucherActivityAmount)?$vouchersCurrentDate->totalVoucherActivityAmount:0,2)}}</h3>
 				</div>
 				<div class="row">
 				<div class="col-6">
@@ -116,7 +116,7 @@
 				
 
 				<p>MTY</p>
-				<h3>AED {{$vouchersMonth->totalVoucherActivityAmount}}</h3>
+				<h3>AED {{number_format(($vouchersMonth->totalVoucherActivityAmount)?$vouchersMonth->totalVoucherActivityAmount:0,2)}}</h3>
 				</div>
 				<div class="row">
 				<div class="col-6">
@@ -135,7 +135,7 @@
 				
 
 				<p>YTD</p>
-				<h3>AED {{$vouchersYear->totalVoucherActivityAmount}}</h3>
+				<h3>AED {{number_format(($vouchersYear->totalVoucherActivityAmount)?$vouchersYear->totalVoucherActivityAmount:0,2)}}</h3>
 				</div>
 				<div class="row">
 				<div class="col-6">
