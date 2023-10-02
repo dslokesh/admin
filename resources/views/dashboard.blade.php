@@ -89,6 +89,63 @@
 				<a href="{{ route('hotels.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
+		
+		<div class="col-lg-3 col-6">
+        <!-- small box -->
+			<div class="small-box bg-success">
+				<div class="inner">
+				
+
+				<p>Today's</p>
+				<h3>AED {{($vouchersCurrentDate->totalVoucherActivityAmount)?$vouchersCurrentDate->totalVoucherActivityAmount:0}}</h3>
+				</div>
+				<div class="row">
+				<div class="col-6">
+				<p>No. Of Booking :  {{$vouchersCurrentDate->totalVouchers}}</p>
+				</div>
+				<div class="col-6">
+				<p>No. Of Pax : {{$vouchersCurrentDate->totalAdult+$vouchersCurrentDate->totalChild}}</p>
+				</div></div>
+			</div>
+        </div>
+		
+		<div class="col-lg-3 col-6">
+        <!-- small box -->
+			<div class="small-box bg-warning">
+				<div class="inner">
+				
+
+				<p>MTY</p>
+				<h3>AED {{$vouchersMonth->totalVoucherActivityAmount}}</h3>
+				</div>
+				<div class="row">
+				<div class="col-6">
+				<p>No. Of Booking :  {{$vouchersMonth->totalVouchers}}</p>
+				</div>
+				<div class="col-6">
+				<p>No. Of Pax : {{$vouchersMonth->totalAdult+$vouchersMonth->totalChild}}</p>
+				</div></div>
+			</div>
+        </div>
+		
+		<div class="col-lg-3 col-6">
+        <!-- small box -->
+			<div class="small-box bg-success">
+				<div class="inner">
+				
+
+				<p>YTD</p>
+				<h3>AED {{$vouchersYear->totalVoucherActivityAmount}}</h3>
+				</div>
+				<div class="row">
+				<div class="col-6">
+				<p>No. Of Booking :  {{$vouchersYear->totalVouchers}}</p>
+				</div>
+				<div class="col-6">
+				<p>No. Of Pax : {{$vouchersYear->totalAdult+$vouchersYear->totalChild}}</p>
+				</div></div>
+			</div>
+        </div>
 		<div class="col-lg-12 col-6">
 		<div class="card">
 		<div class="card-body">

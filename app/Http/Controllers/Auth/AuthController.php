@@ -210,7 +210,7 @@ class AuthController extends Controller
 
         if(Auth::check()){
             
-
+				$todayDate = date("Y-m-d");
 				$userId = Auth::user()->id;
 				$totalUserRecords = User::select('count(*) as allcount')->where('role_id',2)->count();
 				$totalAgentRecords = User::select('count(*) as allcount')->where('role_id',3)->count();
@@ -218,11 +218,48 @@ class AuthController extends Controller
 				$totalCustomerRecords = Customer::select('count(*) as allcount')->count();
 				$totalActivityRecords = Activity::select('count(*) as allcount')->count();
                 $totalHotelRecords = Hotel::select('count(*) as allcount')->count();
+				$currentDate = Carbon::now();
+				$dateOneMonth = $currentDate->copy()->subMonth();
+				$dateOneYearAgo = $currentDate->copy()->subYear();
+
+				$vouchersCurrentDate = Voucher::select(
+        DB::raw('COUNT(*) as totalVouchers'),
+        DB::raw('SUM((SELECT SUM(totalprice) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalVoucherActivityAmount'),
+		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalAdult'),
+		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalChild')
+    )
+    ->where('status_main', '5')
+    ->whereDate('created_at',  $currentDate)
+    ->first();
+			
+			$vouchersMonth =Voucher::select(
+        DB::raw('COUNT(*) as totalVouchers'),
+        DB::raw('SUM((SELECT SUM(totalprice) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalVoucherActivityAmount'),
+		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalAdult'),
+		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalChild')
+    )
+    ->where('status_main', '5')
+    ->whereDate('created_at', '>=', $dateOneMonth)
+    ->whereDate('created_at', '<=', $currentDate)
+    ->first();
+			
+			 $vouchersYear = Voucher::select(
+        DB::raw('COUNT(*) as totalVouchers'),
+        DB::raw('SUM((SELECT SUM(totalprice) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalVoucherActivityAmount'),
+		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalAdult'),
+		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalChild')
+    )
+    ->where('status_main', '5')
+    ->whereDate('created_at', '>=', $dateOneYearAgo)
+    ->whereDate('created_at', '<=', $currentDate)
+    ->first();
+			
+			  //print_r($vouchersCurrentDate);
+			  //exit;
 				
 				if(Auth::user()->role_id == '3'){
 					 return view('dashboard-agent', compact('totalUserRecords','totalAgentRecords','totalSupplierRecords','totalCustomerRecords','totalActivityRecords','totalHotelRecords'));
 				}else{
-					$todayDate = date("Y-m-d");
 					$query = Voucher::where('id','!=', null);
 					$query->whereDate('created_at', $todayDate);
 					$query->where(function ($q) {
@@ -232,7 +269,7 @@ class AuthController extends Controller
 					
           
 					$vouchers = $query->orderBy('created_at', 'DESC')->paginate(10);
-                return view('dashboard', compact('totalUserRecords','totalAgentRecords','totalSupplierRecords','totalCustomerRecords','totalActivityRecords','totalHotelRecords','vouchers'));
+                return view('dashboard', compact('totalUserRecords','totalAgentRecords','totalSupplierRecords','totalCustomerRecords','totalActivityRecords','totalHotelRecords','vouchers','vouchersCurrentDate','vouchersMonth','vouchersYear'));
 				}
            
         }
