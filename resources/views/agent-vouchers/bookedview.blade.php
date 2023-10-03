@@ -60,11 +60,14 @@
               <div class="card-header">
                  <h3 class="card-title"><i class="nav-icon fas fa-user" style="color:black"></i> Passenger Details</h3>
 				 <h3 class="card-title" style="float:right">
+				  @if($voucher->status_main == 5)
           <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$voucher->id)}}" >
                               Download Invoice <i class="fas fa-download">
                               </i>
                              
                           </a>
+						  @endif
+         
 						  </h3>
               </div>
               <!-- /.card-header -->

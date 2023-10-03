@@ -62,7 +62,7 @@ body
                             <h3>Abatera Tourism LLC</h3>
                         </td>
                         <td  align="center" valign="middle" > <h1>
-						@if($voucher->vat_invoice == 1)
+						@if($voucher->status_main == 5)
 							VAT INVOICE
 						@else
 							PROFORMA INVOICE
@@ -99,7 +99,7 @@ body
 						 @endif
                         </td>
                         <td align="right" valign="top">
-                          <p>Invoice No.:  {{$voucher->invoice_number}}</p>
+                          <p>Invoice No.:  {{($voucher->status_main == 5)?$voucher->invoice_number:$voucher->code}}</p>
                           <p>Invoice Date.: {{date("d-M-Y")}}</p>
                          
                          </td>
