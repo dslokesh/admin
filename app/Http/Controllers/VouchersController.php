@@ -60,18 +60,18 @@ class VouchersController extends Controller
         }
 		
 		if (isset($data['status']) && !empty($data['status'])) {
-            if ($data['status_main'] == 1)
-                $query->where('status', 1);
-            if ($data['status_main'] == 2)
-                $query->where('status', 2);
-			if ($data['status_main'] == 3)
-                $query->where('status', 3);
-			if ($data['status_main'] == 4)
-                $query->where('status', 4);
-			if ($data['status_main'] == 6)
-                $query->where('status', 5);
-			if ($data['status_main'] == 6)
-                $query->where('status', 6);
+            if ($data['status'] == 1)
+                $query->where('status_main', 1);
+            if ($data['status'] == 2)
+                $query->where('status_main', 2);
+			if ($data['status'] == 3)
+                $query->where('status_main', 3);
+			if ($data['status'] == 4)
+                $query->where('status_main', 4);
+			if ($data['status'] == 6)
+                $query->where('status_main', 5);
+			if ($data['status'] == 6)
+                $query->where('status_main', 6);
         }
 		
 		if (isset($data['is_hotel']) && !empty($data['is_hotel'])) {
