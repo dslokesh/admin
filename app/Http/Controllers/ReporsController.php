@@ -282,13 +282,14 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 					$s = 1;
 			}
 		}
-		
+		$openingBalance = 0;
 		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
 			$startDate = date('Y-m-d', strtotime($data['from_date']));
 			$endDate = date('Y-m-d', strtotime($data['to_date']));
 			 $query->whereDate('date_of_receipt', '>=', $startDate);
 			 $query->whereDate('date_of_receipt', '<=', $endDate);
 		$s = 1;
+		$openingBalance = AgentAmount::whereDate('date_of_receipt', '<=', $startDate)->sum('amount');	
 		}
 		
 		
@@ -308,7 +309,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$agetid = $agentTBA->id;
 		$agetName = $agentTBA->company_name;
 		}
-        return view('reports.agent-with-vat-ledger-report', compact('records','voucherStatus','agetid','agetName'));
+        return view('reports.agent-with-vat-ledger-report', compact('records','voucherStatus','agetid','agetName','openingBalance'));
 
     }
 	

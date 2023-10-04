@@ -89,8 +89,8 @@
 				<a href="{{ route('hotels.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 			</div>
         </div>
-		
-		<div class="col-lg-3 col-6">
+		@if(Auth::user()->role_id == '1')
+		<div class="col-lg-4 col-6">
         <!-- small box -->
 			<div class="small-box bg-success">
 				<div class="inner">
@@ -100,52 +100,62 @@
 				<h3>AED {{number_format(($vouchersCurrentDate->totalVoucherActivityAmount)?$vouchersCurrentDate->totalVoucherActivityAmount:0,2)}}</h3>
 				</div>
 				<div class="row">
-				<div class="col-6">
+				<div class="col-4">
 				<p>No. Of Booking :  {{$vouchersCurrentDate->totalVouchers}}</p>
 				</div>
-				<div class="col-6">
+				<div class="col-4">
+				<p>No. Of Activity :  {{($vouchersCurrentDate->totalActivity)?$vouchersCurrentDate->totalActivity:0}}</p>
+				</div>
+				<div class="col-4">
 				<p>No. Of Pax : {{$vouchersCurrentDate->totalAdult+$vouchersCurrentDate->totalChild}}</p>
 				</div></div>
 			</div>
         </div>
 		
-		<div class="col-lg-3 col-6">
+		<div class="col-lg-4 col-6">
         <!-- small box -->
 			<div class="small-box bg-warning">
 				<div class="inner">
 				
 
-				<p>MTY</p>
+				<p>MTY ({{date('F Y')}})</p>
 				<h3>AED {{number_format(($vouchersMonth->totalVoucherActivityAmount)?$vouchersMonth->totalVoucherActivityAmount:0,2)}}</h3>
 				</div>
 				<div class="row">
-				<div class="col-6">
+				<div class="col-4">
 				<p>No. Of Booking :  {{$vouchersMonth->totalVouchers}}</p>
 				</div>
-				<div class="col-6">
+				<div class="col-4">
+				<p>No. Of Activity :  {{($vouchersMonth->totalActivity)?$vouchersMonth->totalActivity:0}}</p>
+				</div>
+				<div class="col-4">
 				<p>No. Of Pax : {{$vouchersMonth->totalAdult+$vouchersMonth->totalChild}}</p>
 				</div></div>
 			</div>
         </div>
 		
-		<div class="col-lg-3 col-6">
+		<div class="col-lg-4 col-6">
         <!-- small box -->
 			<div class="small-box bg-success">
 				<div class="inner">
 				
 
-				<p>YTD</p>
+				<p>YTD (April {{date('Y')}})-March {{date('Y')+1}})</p>
 				<h3>AED {{number_format(($vouchersYear->totalVoucherActivityAmount)?$vouchersYear->totalVoucherActivityAmount:0,2)}}</h3>
 				</div>
 				<div class="row">
-				<div class="col-6">
+				<div class="col-4">
 				<p>No. Of Booking :  {{$vouchersYear->totalVouchers}}</p>
 				</div>
-				<div class="col-6">
+				<div class="col-4">
+				<p>No. Of Activity :  {{($vouchersYear->totalActivity)?$vouchersYear->totalActivity:0}}</p>
+				</div>
+				<div class="col-4">
 				<p>No. Of Pax : {{$vouchersYear->totalAdult+$vouchersYear->totalChild}}</p>
 				</div></div>
 			</div>
         </div>
+		@endif
 		<div class="col-lg-12 col-6">
 		<div class="card">
 		<div class="card-body">

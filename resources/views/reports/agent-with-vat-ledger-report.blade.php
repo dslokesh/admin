@@ -81,6 +81,7 @@
 					<th>Transaction From</th>
 					<th>Debit Amount</th>
 					<th>Credit Amount</th>
+					<th>Opening Balance</th>
                   </tr>
 				  
                   </thead>
@@ -89,8 +90,9 @@
 				  $totalCredit = 0;
 				  $totalDebit = 0;
 				  @endphp
-				  @foreach ($records as $record)
+				  @foreach ($records as $k => $record)
                   <tr>
+				  
                     <td>{{($record->agent)?$record->agent->company_name:''}}</td>
 					<td>{{ $record->date_of_receipt ? date(config('app.date_format'),strtotime($record->date_of_receipt)) : null }}</td>
 					<td>
@@ -121,24 +123,24 @@
 					
 					{{$record->amount}}
 					@endif</td>
-					
+					 <th>{{($k==0)?$openingBalance:''}}</th>
 					</tr>
                   </tbody>
                   @endforeach
 				  <tr>
                     <th colspan="3"></th>
-					<th>Total</th>
+					<th >Total</th>
 					<th>
 					{{$totalDebit}}
 					
 				</th>
 					<th>{{$totalCredit}}</th>
-           
+					<th></th>
 					</tr>
 					<tr>
                     <th colspan="3"></th>
 					<th>Balance</th>
-					<th colspan="2">
+					<th colspan="3">
 					{{$totalCredit - $totalDebit}}
 					
 				</th>
