@@ -103,7 +103,7 @@ class TicketsController extends Controller
 		$child = $voucherActivity->child;
 		$totalTicketNeed = $adult+$child;
 		$countTotalTicketNeed = $totalTicketNeed;
-		$ticketQuery = Ticket::where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date);
+		$ticketQuery = Ticket::where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code);
 		
 		$totalTickets =$ticketQuery->get();
 		$totalTicketCount =$totalTickets->count();
@@ -135,7 +135,7 @@ class TicketsController extends Controller
 			}
 			
 			if(($totalTicketNeed == 0) && (count($tcArray) == $countTotalTicketNeed)){
-				$tcCountEx = Ticket::where("id",$ta)->where("voucher_id",'=',$voucherActivity->voucher_id)->count();
+				$tcCountEx = Ticket::where("voucher_id",'=',$voucherActivity->voucher_id)->count();
 				if($tcCountEx > 0){
 				return redirect()->route('ticket.dwnload',$voucherActivity->id);	
 				} else {
