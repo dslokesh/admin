@@ -135,10 +135,16 @@ class TicketsController extends Controller
 			}
 			
 			if(($totalTicketNeed == 0) && (count($tcArray) == $countTotalTicketNeed)){
+				$tcCountEx = Ticket::where("id",$ta)->where("voucher_id",'=',$voucherActivity->voucher_id)->count();
+				if($tcCountEx > 0){
+				return redirect()->route('ticket.dwnload',$voucherActivity->id);	
+				} else {
 				foreach($tcArray as $ta){
 					$tc = Ticket::find($ta);
 					$tc->voucher_activity_id = $voucherActivity->id;
 					$tc->ticket_generated = 1;
+					$tc->ticket_generated_by = Auth::user()->id;
+					$tc->generated_time = date("d-m-Y h:i:s");
 					$tc->voucher_id = $voucherActivity->voucher_id;
 					$tc->save();
 				}
@@ -146,6 +152,7 @@ class TicketsController extends Controller
 				$voucherActivity->ticket_generated = 1;
 				$voucherActivity->save();
 				return redirect()->route('ticket.dwnload',$voucherActivity->id);	
+				}
 			} else {
 			return redirect()->back()->with('error', 'API Connection Timeout. Kindly contact Customer Service.');
 			}	
@@ -167,9 +174,12 @@ class TicketsController extends Controller
         $voucherActivity->ticket_downloaded = 1;
 		$voucherActivity->save();
 		foreach($tickets as $ticket){
+		$ticket->ticket_downloaded_by = Auth::user()->id;
+		$ticket->downloaded_time = date("d-m-Y h:i:s");
 		$ticket->ticket_downloaded = 1;
 		$ticket->save();
 		}
+		return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
         $pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
        $pdf->setPaper('A4')->setOrientation('portrait');
         return $pdf->download('Ticket'.$voucher->code.'-'.$voucherActivity->variant_unique_code.'.pdf');

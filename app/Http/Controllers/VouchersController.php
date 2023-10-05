@@ -478,9 +478,9 @@ class VouchersController extends Controller
 			'voucherHotel'=>$voucherHotel,
 			];
 			if(!empty($record->guest_email)){
-			Mail::to($record->guest_email,'Booking Confirmation.')->cc($agent->email)->send(new VoucheredBookingEmailMailable($emailData)); 
+			//Mail::to($record->guest_email,'Booking Confirmation.')->cc($agent->email)->send(new VoucheredBookingEmailMailable($emailData)); 
 			} else{
-			Mail::to($agent->email,'Booking Confirmation.')->send(new VoucheredBookingEmailMailable($emailData)); 	
+			//Mail::to($agent->email,'Booking Confirmation.')->send(new VoucheredBookingEmailMailable($emailData)); 	
 			}
 			
 			}else{
