@@ -10,6 +10,7 @@
 					<th>Booking #</th>
                     <th>Service Date</th>
 					<th>Service</th>
+					<th>Variant</th>
 					<th>Service Type</th>
 					<th>Agency</th>
 					<th>Guest Name</th>
@@ -42,6 +43,7 @@
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
                     <td>{{$record->tour_date}}</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
+					<td>{{($record->variant_name)?$record->variant_name:''}}</td>
 					<td>{{$record->transfer_option}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>

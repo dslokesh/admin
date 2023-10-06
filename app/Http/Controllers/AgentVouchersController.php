@@ -660,7 +660,13 @@ class AgentVouchersController extends Controller
 			return redirect()->back()->with('error', 'Please add activity this booking.');
 	   }
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
-		
+		$record->guest_name = $data['fname'].' '.$data['lname'];
+		$record->guest_email = $data['customer_email'];
+		$record->guest_phone = $data['customer_mobile'];
+		$record->agent_ref_no = $data['agent_ref_no'];
+		$record->remark = $data['remark'];
+		$record->updated_by = Auth::user()->id;
+		$record->payment_date = $paymentDate;
 
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
@@ -681,15 +687,8 @@ class AgentVouchersController extends Controller
 			}
 			
 			$record->booking_date = date("Y-m-d");
-			$record->guest_name = $data['fname'].' '.$data['lname'];
-			$record->guest_email = $data['customer_email'];
-			$record->guest_phone = $data['customer_mobile'];
-			$record->agent_ref_no = $data['agent_ref_no'];
-			$record->remark = $data['remark'];
 			$record->invoice_number = $code;
-			$record->updated_by = Auth::user()->id;
 			$record->status_main = 5;
-			$record->payment_date = $paymentDate;
 			$record->save();
 			$agent->agent_amount_balance -= $total_activity_amount;
 			$agent->save();
@@ -734,12 +733,7 @@ class AgentVouchersController extends Controller
 		else if ($request->has('btn_hold')) {
 		
 			$record->booking_date = date("Y-m-d");
-			$record->guest_name = $data['fname'].' '.$data['lname'];
-			$record->agent_ref_no = $data['agent_ref_no'];
-			$record->remark = $data['remark'];
-			$record->updated_by = Auth::user()->id;
 			$record->status_main = 4;
-			$record->payment_date = $paymentDate;
 			$record->save();
 		}
 		

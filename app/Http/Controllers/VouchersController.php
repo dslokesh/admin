@@ -414,9 +414,18 @@ class VouchersController extends Controller
 	   
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
 		
+		$record->guest_name = $data['fname'].' '.$data['lname'];
+		$record->guest_email = $data['customer_email'];
+		$record->guest_phone = $data['customer_mobile'];
+		$record->agent_ref_no = $data['agent_ref_no'];
+		$record->remark = $data['remark'];
+		$record->updated_by = Auth::user()->id;
+		$record->payment_date = $paymentDate;
 		
 		if ($request->has('btn_paynow')) {
 		$agent = User::find($record->agent_id);
+		
+		
 		if(!empty($agent))
 		{
 			
@@ -444,16 +453,8 @@ class VouchersController extends Controller
 			}
 			
 			$record->booking_date = date("Y-m-d");
-			$record->guest_name = $data['fname'].' '.$data['lname'];
-			$record->guest_email = $data['customer_email'];
-			$record->guest_phone = $data['customer_mobile'];
-			$record->guest_name = $data['fname'].' '.$data['lname'];
-			$record->agent_ref_no = $data['agent_ref_no'];
-			$record->remark = $data['remark'];
 			$record->invoice_number = $code;
-			$record->updated_by = Auth::user()->id;
 			$record->status_main = 5;
-			$record->payment_date = $paymentDate;
 			$record->save();
 			$agent->agent_amount_balance -= $grandTotal;
 			$agent->save();
@@ -495,30 +496,15 @@ class VouchersController extends Controller
 		}
 		else if ($request->has('btn_hold')) {
 			$record->booking_date = date("Y-m-d");
-			$record->guest_name = $data['fname'].' '.$data['lname'];
-			$record->agent_ref_no = $data['agent_ref_no'];
-			$record->remark = $data['remark'];
-			$record->updated_by = Auth::user()->id;
 			$record->status_main = 4;
-			$record->payment_date = $paymentDate;
 			$record->save();
 		}
 		else if ($request->has('btn_quotation')) {
-			$record->guest_name = $data['fname'].' '.$data['lname'];
-			$record->agent_ref_no = $data['agent_ref_no'];
-			$record->remark = $data['remark'];
-			$record->updated_by = Auth::user()->id;
 			$record->status_main = 2;
-			$record->payment_date = $paymentDate;
 			$record->save();
 		}
 		else if ($request->has('btn_process')) {
-			$record->guest_name = $data['fname'].' '.$data['lname'];
-			$record->agent_ref_no = $data['agent_ref_no'];
-			$record->remark = $data['remark'];
-			$record->updated_by = Auth::user()->id;
 			$record->status_main = 3;
-			$record->payment_date = $paymentDate;
 			$record->save();
 		}
 		

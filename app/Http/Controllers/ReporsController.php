@@ -127,6 +127,52 @@ class ReporsController extends Controller
 return Excel::download(new VoucherActivityExport($records), 'logistic_records'.date('d-M-Y s').'.csv');        //return Excel::download(new VoucherActivityExport($records), 'records.csv');
     }
 	
+	 public function voucherTicketOnlyReport(Request $request)
+    {
+		$this->checkPermissionMethod('list.voucherTicketOnlyReport');
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		
+		$query = VoucherActivity::where('id','!=', null);
+		
+		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
+			
+			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
+				 $q->where('booking_date', '>=', $startDate);
+				 $q->where('booking_date', '<=', $endDate);
+				});
+		
+				}
+				}
+			}
+        if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('code', '=', $data['vouchercode']);
+			});
+		}
+		
+		$query->whereHas('voucher', function($q)  use($data){
+				$q->where('status_main', '=', 5);
+			});
+			
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		//$records = $query->orderBy('created_at', 'DESC')->get();
+		
+        return view('reports.voucher-ticket-only-report', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
+
+    }
+	
 	public function voucherReportSave(Request $request)
     {
 		$data = $request->all();

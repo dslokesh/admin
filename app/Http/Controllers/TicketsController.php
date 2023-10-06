@@ -34,9 +34,9 @@ class TicketsController extends Controller
 		 $data = $request->all();
 		$query = Ticket::where('id','!=', null);
 		if (isset($data['ticket_no']) && !empty($data['ticket_no'])) {
-            $query->where('ticket_no', $data['ticket_no']);
+            $query->where('ticket_no','like','%'.$data['ticket_no'].'%');
         } if (isset($data['serial_number']) && !empty($data['serial_number'])) {
-             $query->where('serial_number', $data['serial_number']);
+			$query->where('serial_number','like','%'.$data['serial_number'].'%');
         }if (isset($data['valid_from']) && !empty($data['valid_from'])) {
             $query->whereDate('valid_from', '>=',$data['valid_from']);
         }if (isset($data['valid_till']) && !empty($data['valid_till'])) {
