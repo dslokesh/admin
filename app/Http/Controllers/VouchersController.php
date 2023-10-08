@@ -58,6 +58,9 @@ class VouchersController extends Controller
 		if (isset($data['code']) && !empty($data['code'])) {
             $query->where('code', 'like', '%' . $data['code'] . '%');
         }
+		if (isset($data['guest_name']) && !empty($data['guest_name'])) {
+            $query->where('guest_name', 'like', '%' . $data['guest_name'] . '%');
+        }
 		
 		if (isset($data['status']) && !empty($data['status'])) {
                 $query->where('status_main', $data['status']);
@@ -235,7 +238,7 @@ class VouchersController extends Controller
     {
 		$this->checkPermissionMethod('list.voucher');
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
 		if($voucher->status_main  > 4)
 		{
 			return redirect()->route('voucherView',$voucher->id);
@@ -261,7 +264,7 @@ class VouchersController extends Controller
 		if (empty($voucher)) {
             return abort(404); //record not found
         }
-		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
 		$voucherStatus = config("constants.voucherStatus");
         return view('vouchers.bookedview', compact('voucher','voucherActivity','voucherStatus','voucherHotel'));
@@ -407,9 +410,9 @@ class VouchersController extends Controller
 
 		$voucherActivity = VoucherActivity::where('voucher_id',$record->id);
 		$voucherActivityRecord = $voucherActivity->get();
-		
-		if($voucherActivity->count() == 0){
-			return redirect()->back()->with('error', 'Please add activity this booking.');
+		$voucherHotels = VoucherHotel::where('voucher_id',$record->id);
+		if(($voucherActivity->count() == 0) && ($voucherHotels->count() == 0)){
+			return redirect()->back()->with('error', 'Please add Activity or Hotel this booking.');
 	   }
 	   
 		$paymentDate = date('Y-m-d', strtotime('-2 days', strtotime($record->travel_from_date)));
@@ -532,7 +535,7 @@ class VouchersController extends Controller
 					})->get();
 		$response = array();
       foreach($users as $user){
-		   $agentDetails = '<b>Code:</b> '.$user->code.' <b>Email:</b>'.$user->email.' <b> Mobile No:</b>'.$user->mobile.' <b>Address:</b>'.$user->address. " ".$user->postcode;
+		   $agentDetails = '<b>Address: </b>'.$user->address. " ".$user->postcode.'<br/><b>Mobile No: </b>'.$user->mobile.'<br/><b>Tin No: </b>'.$user->vat.'<br/><b>Available Limit: </b> AED '.$user->agent_amount_balance;
          $response[] = array("value"=>$user->id,"label"=>$user->company_name.'('.$user->code.')',"agentDetails"=>$agentDetails);
       }
 	}
@@ -993,7 +996,7 @@ class VouchersController extends Controller
             return abort(404); //record not found
         }
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->orderBy("check_in_date","ASC")->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->orderBy("tour_date","ASC")->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
 		$discountTotal = 0;
 		$subTotal = 0;
 		$dataArray = [

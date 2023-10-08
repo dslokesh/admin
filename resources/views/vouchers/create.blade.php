@@ -77,8 +77,8 @@
                 <label for="inputName">Hotel: <span class="red">*</span></label>
                 <select name="is_hotel" id="is_hotel" class="form-control">
 				@if(!old('is_hotel'))
-				<option value="1" selected="selected">Yes</option>
-				<option value="0" >No</option>
+				<option value="1" >Yes</option>
+				<option value="0" selected="selected">No</option>
 				@else
 				<option value="1" @if(old('is_hotel') ==1) {{'selected="selected"'}} @endif >Yes</option>	
 				 <option value="0" @if(old('is_hotel') ==0) {{'selected="selected"'}} @endif >No</option>
@@ -119,8 +119,14 @@
 			   <div class="form-group col-md-3">
                 <label for="inputName">Vat Invoice:</label>
                <select name="vat_invoice" id="vat_invoice" class="form-control">
-                    <option value="1" @if(old('vat_invoice') ==1) {{'selected="selected"'}} @endif>Yes</option>
-					<option value="0" @if(old('vat_invoice') ==0) {{'selected="selected"'}} @endif >No</option>
+               @if(!old('vat_invoice'))
+				<option value="1" selected="selected">Yes</option>
+				<option value="0" >No</option>
+				@else
+				<option value="1" @if(old('vat_invoice') ==1) {{'selected="selected"'}} @endif >Yes</option>	
+				 <option value="0" @if(old('vat_invoice') ==0) {{'selected="selected"'}} @endif >No</option>
+                   @endif
+                 
                  </select>
 				  @if ($errors->has('vat_invoice'))
                     <span class="text-danger">{{ $errors->first('vat_invoice') }}</span>

@@ -202,35 +202,35 @@
                   </tr>
 				   <tr>
                     <th>Number of Pax</th>
-					<td><input type="text" id="nop_s1"  name="nop_s[]"  class="form-control onlynumbrf psingle" data-inputnumber="1" required  /></td>
-					<td><input type="text" id="nop_d1"  name="nop_d[]"  class="form-control onlynumbrf pdouble" data-inputnumber="1" value="0"  /></td>
-					<td><input type="text" id="nop_eb1"  name="nop_eb[]"  class="form-control onlynumbrf peb" data-inputnumber="1" value="0"   /></td>
-                    <td><input type="text" id="nop_cwb1" name="nop_cwb[]"  class="form-control onlynumbrf pcwb" data-inputnumber="1" value="0" /></td>
-                    <td><input type="text" id="nop_cnb1"  name="nop_cnb[]"  class="form-control onlynumbrf pcnb" data-inputnumber="1" value="0"  /></td>
+					<td><input type="text" id="nop_s1"  name="nop_s[]" tabindex="0"  class="form-control onlynumbrf psingle" data-inputnumber="1" value="0" required  /></td>
+					<td><input type="text" id="nop_d1"  name="nop_d[]"  tabindex="2" class="form-control onlynumbrf pdouble" data-inputnumber="1" required  /></td>
+					<td><input type="text" id="nop_eb1"  name="nop_eb[]" tabindex="4" class="form-control onlynumbrf peb" data-inputnumber="1" value="0" required  /></td>
+                    <td><input type="text" id="nop_cwb1" name="nop_cwb[]" tabindex="6" class="form-control onlynumbrf pcwb" data-inputnumber="1" value="0" required /></td>
+                    <td><input type="text" id="nop_cnb1"  name="nop_cnb[]"  tabindex="7" class="form-control onlynumbrf pcnb" data-inputnumber="1" value="0" required  /></td>
                   </tr>
 				  <tr>
                     <th>Net Rate</th>
-					<td><input type="text" id="nr_s1"  name="nr_s[]" required class="form-control onlynumbrf psingle" data-inputnumber="1" /></td>
-					<td><input type="text" id="nr_d1"  name="nr_d[]" value="0"  class="form-control onlynumbrf pdouble" data-inputnumber="1"  /></td>
-					<td><input type="text" id="nr_eb1"  name="nr_eb[]" value="0"  class="form-control onlynumbrf peb "  data-inputnumber="1" /></td>
-                    <td><input type="text" id="nr_cwb1" name="nr_cwb[]" value="0"  class="form-control onlynumbrf pcwb" data-inputnumber="1" /></td>
-                    <td><input type="text" id="nr_cnb1"  name="nr_cnb[]" value="0"  class="form-control onlynumbrf pcnb" data-inputnumber="1" /></td>
+					<td><input type="text" id="nr_s1"  name="nr_s[]" value="0"  tabindex="1" required class="form-control onlynumbrf psingle" data-inputnumber="1" /></td>
+					<td><input type="text" id="nr_d1"  name="nr_d[]"  required tabindex="3" class="form-control onlynumbrf pdouble" data-inputnumber="1" required  /></td>
+					<td><input type="text" id="nr_eb1"  name="nr_eb[]" value="0"  tabindex="5" required class="form-control onlynumbrf peb "  data-inputnumber="1" /></td>
+                    <td><input type="text" id="nr_cwb1" name="nr_cwb[]" value="0" tabindex="7" required class="form-control onlynumbrf pcwb" data-inputnumber="1" /></td>
+                    <td><input type="text" id="nr_cnb1"  name="nr_cnb[]" value="0"  tabindex="9" required  class="form-control onlynumbrf pcnb" data-inputnumber="1" /></td>
                   </tr>
 				   <tr>
                     <th>Per Pax to be autocalculated</th>
-					<td><input type="text" id="ppa_s1"  name="ppa_s[]" value="0"  readonly class="form-control onlynumbrf " data-inputnumber="1" /></td>
-					<td><input type="text" id="ppa_d1"  name="ppa_d[]" value="0"  readonly class="form-control onlynumbrf "  data-inputnumber="1" /></td>
-					<td><input type="text" id="ppa_eb1"  name="ppa_eb[]" value="0"  readonly class="form-control onlynumbrf" data-inputnumber="1"  /></td>
-                    <td><input type="text" id="ppa_cwb1" name="ppa_cwb[]" value="0"  readonly class="form-control onlynumbrf" data-inputnumber="1" /></td>
-                    <td><input type="text" id="ppa_cnb1"  name="ppa_cnb[]" value="0"  readonly class="form-control onlynumbrf" data-inputnumber="1" /></td>
+					<td><input type="text" id="ppa_s1"  name="ppa_s[]" value="0" required readonly class="form-control onlynumbrf " data-inputnumber="1" /></td>
+					<td><input type="text" id="ppa_d1"  name="ppa_d[]" value="0" required readonly class="form-control onlynumbrf "  data-inputnumber="1" /></td>
+					<td><input type="text" id="ppa_eb1"  name="ppa_eb[]" value="0" required readonly class="form-control onlynumbrf" data-inputnumber="1"  /></td>
+                    <td><input type="text" id="ppa_cwb1" name="ppa_cwb[]" value="0" required readonly class="form-control onlynumbrf" data-inputnumber="1" /></td>
+                    <td><input type="text" id="ppa_cnb1"  name="ppa_cnb[]" value="0" required readonly class="form-control onlynumbrf" data-inputnumber="1" /></td>
                   </tr>
 				   <tr>
                     <th>Mark Up in % (Default Value (5%)</th>
-					<td><input type="text" id="markup_p_s1"  name="markup_p_s[]"  class="form-control onlynumbrf psingle" value="5" data-inputnumber="1" required /></td>
-					<td><input type="text" id="markup_p_d1" value="5" name="markup_p_d[]"  class="form-control onlynumbrf pdouble" data-inputnumber="1"  /></td>
-					<td><input type="text" id="markup_p_eb1" value="5"  name="markup_p_eb[]"  class="form-control onlynumbrf peb" data-inputnumber="1"  /></td>
-                    <td><input type="text" id="markup_p_cwb1" value="5" name="markup_p_cwb[]"  class="form-control onlynumbrf pcwb" data-inputnumber="1" /></td>
-                    <td><input type="text" id="markup_p_cnb1" value="5" name="markup_p_cnb[]"  class="form-control onlynumbrf pcnb" data-inputnumber="1" /></td>
+					<td><input type="text" id="markup_p_s1"  name="markup_p_s[]" required  class="form-control onlynumbrf psingle" value="5" data-inputnumber="1" required /></td>
+					<td><input type="text" id="markup_p_d1" value="5" name="markup_p_d[]" required class="form-control onlynumbrf pdouble" data-inputnumber="1"  /></td>
+					<td><input type="text" id="markup_p_eb1" value="5"  name="markup_p_eb[]"  required class="form-control onlynumbrf peb" data-inputnumber="1"  /></td>
+                    <td><input type="text" id="markup_p_cwb1" value="5" name="markup_p_cwb[]" required class="form-control onlynumbrf pcwb" data-inputnumber="1" /></td>
+                    <td><input type="text" id="markup_p_cnb1" value="5" name="markup_p_cnb[]" required class="form-control onlynumbrf pcnb" data-inputnumber="1" /></td>
                   </tr>
 				   <tr>
                     <th>Mark up Value</th>

@@ -5,257 +5,16 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <h1>Booking Confirmation( {{$voucher->code}})</h1>
           </div>
 		 
-						  <div class="col-sm-3 text-right">
-						  </div>
+						
         </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content-header -->
 
-    <style type="text/css">
-    /* Multistep */
-/* See below for SASS (allows you easily set dot radius and progress bar thickness and adjusts everything else! */
-.multistep .multistep-step {
-    padding: 0;
-    position: relative;
-    margin-bottom: 10px;
-}
-
-    .multistep .multistep-step .multistep-stepname {
-        margin-bottom: 16px;
-        color: #595959;
-        font-size: 1.6rem;
-        white-space: nowrap;
-    }
-
-    .multistep .multistep-step .multistep-dot {
-        position: absolute;
-        right: 50%;
-        left: 50%;
-        width: 32px;
-        height: 32px;
-        display: block;
-        margin-top: -16px;
-        margin-left: -15.5px;
-        border-radius: 50%;
-        background: #f5f5f5;
-        /* Inner Dot */
-    }
-
-        .multistep .multistep-step .multistep-dot:after {
-            content: ' ';
-            border-radius: 50px;
-            position: absolute;
-            top: 8px;
-            bottom: 8px;
-            left: 8px;
-            right: 8px;
-            background: #e0e0e0;
-        }
-
-    .multistep .multistep-step .progress {
-        position: absolute;
-        width: 100%;
-        height: 10.56px;
-        margin-top: -5.28px;
-        box-shadow: none;
-        border-radius: 0;
-    }
-
-        .multistep .multistep-step .progress .progress-bar {
-            width: 0px;
-            box-shadow: none;
-            background: #808080;
-        }
-
-    .multistep .multistep-step:first-child > .progress {
-        left: 50%;
-        width: 50%;
-    }
-
-    .multistep .multistep-step:last-child > .progress {
-        width: 50%;
-    }
-
-    .multistep .multistep-step.complete .multistep-dot {
-        background: #808080;
-    }
-
-        .multistep .multistep-step.complete .multistep-dot:after {
-            /*  /* background: #fbbd19; */ */
-        }
-
-    .multistep .multistep-step.complete .progress > .progress-bar {
-        width: 100%;
-    }
-
-    .multistep .multistep-step.next:hover .multistep-dot {
-        background: #808080;
-    }
-
-        .multistep .multistep-step.next:hover .multistep-dot:after {
-             /* background: #fbbd19; */
-        }
-
-    .multistep .multistep-step.current .multistep-dot {
-        background: #808080;
-    }
-
-        .multistep .multistep-step.current .multistep-dot:after {
-             /* background: #fbbd19; */
-        }
-
-    .multistep .multistep-step.current .progress > .progress-bar {
-        width: 50%;
-    }
-
-    .multistep .multistep-step.current:first-child > .progress > .progress-bar {
-        width: 0%;
-    }
-
-    .multistep .multistep-step.current:last-child > .progress > .progress-bar {
-        width: 100%;
-    }
-
-    .multistep .multistep-step a.multistep-dot {
-        pointer-events: none;
-    }
-
-    .multistep .multistep-step.next a.multistep-dot {
-        pointer-events: all;
-    }
-    
-    
-/* SASS
-$inactiveColor: #f5f5f5;
-$inactiveDotColor: #e0e0e0;
-$activeColor: #808080;
-$activeDotColor: #fbbd19;
-$stepNameColor: #595959;
-$dotRadius: 16px;
-$barThickness: $dotRadius * .66;
-$stepNameSize: 1.6rem;
-
-.multistep {
-    .multistep-step {
-        padding: 0;
-        position: relative;
-        margin-bottom: 10px;
-
-        .multistep-stepname {
-            margin-bottom: $dotRadius;
-            color: $stepNameColor;
-            font-size: $stepNameSize;
-            white-space: nowrap;
-        }
-
-        .multistep-dot {
-            position: absolute;
-            right: 50%;
-            left: 50%;
-            width: $dotRadius * 2;
-            height: $dotRadius * 2;
-            display: block;
-            margin-top: -$dotRadius;
-            margin-left: -$dotRadius + .5;
-            border-radius: 50%;
-            background: $inactiveColor;
-            &:after {
-                content: ' ';
-                border-radius: 50px;
-                position: absolute;
-                top: $dotRadius / 2;
-                bottom: $dotRadius / 2;
-                left: $dotRadius / 2;
-                right: $dotRadius / 2;
-                background: $inactiveDotColor;
-            }
-        }
-
-        .progress {
-            position: absolute;
-            width: 100%;
-            height: $barThickness;
-            margin-top: -$barThickness / 2;
-            box-shadow: none;
-            border-radius: 0;
-
-            .progress-bar {
-                width: 0px;
-                box-shadow: none;
-                background: $activeColor;
-            }
-        }
-
-        &:first-child > .progress {
-            left: 50%;
-            width: 50%;
-        }
-
-        &:last-child > .progress {
-            width: 50%;
-        }
-
-        &.complete {
-            .multistep-dot {
-                background: $activeColor;
-
-                &:after {
-                    background: $activeDotColor;
-                }
-            }
-
-            .progress > .progress-bar {
-                width: 100%;
-            }
-        }
-
-        &.next:hover {
-            .multistep-dot {
-                background: $activeColor;
-            }
-
-            .multistep-dot:after {
-                background: $activeDotColor;
-            }
-        }
-
-        &.current {
-            .multistep-dot {
-                background: $activeColor;
-
-                &:after {
-                    background: $activeDotColor;
-                }
-            }
-
-            .progress > .progress-bar {
-                width: 50%;
-            }
-
-            &:first-child > .progress > .progress-bar {
-                width: 0%;
-            }
-
-            &:last-child > .progress > .progress-bar {
-                width: 100%;
-            }
-        }
-
-        a.multistep-dot {
-            pointer-events: none;
-        }
-
-        &.next a.multistep-dot {
-            pointer-events: all;
-        }
-    }
-}
-*/    </style>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -298,15 +57,65 @@ $stepNameSize: 1.6rem;
             <!-- general form elements -->
             <div class="card card-default">
               <div class="card-header">
-                 <h3 class="card-title"><i class="nav-icon fas fa-user" style="color:black"></i> Passenger Details</h3>
+                 <h3 class="card-title"><i class="nav-icon fas fa-user" style="color:black"></i> Agent Details</h3>
 				 <h3 class="card-title" style="float:right">
 				 @if(($voucher->status_main == 4) OR ($voucher->status_main == 5))
-          <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$voucher->id)}}" >
-                              Download Invoice <i class="fas fa-download">
+
+         <a class="btn btn-success btn-sm" href="{{route('voucherActivityItineraryPdf',$voucher->id)}}" >
+                              Itinerary <i class="fas fa-download">
                               </i>
                              
                           </a>
+                          @if(($voucher->status_main == 4))
+          <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$voucher->id)}}" >
+                              Proforma Invoice <i class="fas fa-download">
+                              </i>
+                             
+                          </a>
+                          @else
+
+                          <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$voucher->id)}}" >
+                               Invoice <i class="fas fa-download">
+                              </i>
+                             
+                          </a>
+
 						  @endif
+              @endif
+						  </h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+            
+                <div class="card-body">
+                  <div class="row" style="margin-bottom: 15px;">
+                    
+                    <div class="col-6">
+					<label for="inputName">Agency Name:</label>
+          {{ ($voucher->agent)?$voucher->agent->company_name:''}}
+                    </div>
+                   
+                
+                   
+                   
+                    <div class="col-6">
+					  <label for="inputName">Mobile No.:</label>
+                     {{$voucher->mobile}}
+                    </div>
+                    
+                  </div>
+                 
+                </div>
+                <!-- /.card-body -->
+				
+               
+            </div>
+
+            <div class="card card-default">
+              <div class="card-header">
+                 <h3 class="card-title"><i class="nav-icon fas fa-user" style="color:black"></i> Passenger Details</h3>
+				 <h3 class="card-title" style="float:right">
+				
 						  </h3>
               </div>
               <!-- /.card-header -->

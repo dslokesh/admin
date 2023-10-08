@@ -65,6 +65,7 @@ body p
 									: {{(empty($voucher->guest_name))?$voucher->agent->name:$voucher->guest_name}}
                                     </td>
                                    </tr>
+                                   @if($ticket->ticket_for != 'Both')
                                    <tr >
                    <td style="text-align: left;width:200px">
                                        Ticket Type
@@ -73,7 +74,7 @@ body p
                                     : {{$ticket->ticket_for}} 
                                     </td>
 									 </tr>
-								   
+								   @endif
 								   <tr >
 									<td style="text-align: left;width:200px">
                                        Travel Date

@@ -38,124 +38,152 @@
   <div class="container-fluid"> 
     <!-- Small boxes (Stat box) -->
     <div class="row"> 
-      
+		<div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+				<span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
+              	<div class="info-box-content">
+					<span class="info-box-text"><a href="{{ route('agents.index') }}">Agents</a></span>
+					<span class="info-box-number">
+					{{$totalAgentRecords}}
+					</span>
+              	</div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+		<div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+				<span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
+              	<div class="info-box-content">
+					<span class="info-box-text"><a href="{{ route('suppliers.index') }}">Suppliers</a></span>
+					<span class="info-box-number">
+					{{$totalSupplierRecords}}
+					</span>
+              	</div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
 		
-		<div class="col-lg-3 col-6">
-        <!-- small box -->
-			<div class="small-box bg-warning">
-				<div class="inner">
-				<h3>{{$totalAgentRecords}}</h3>
-
-				<p>Agents</p>
-				</div>
-				
-				<a href="{{ route('agents.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-			</div>
+		<div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+				<span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
+              	<div class="info-box-content">
+					<span class="info-box-text"><a href="{{ route('activities.index') }}">Activities</a></span>
+					<span class="info-box-number">
+					{{$totalActivityRecords}}
+					</span>
+              	</div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
         </div>
-		<div class="col-lg-3 col-6">
-        <!-- small box -->
-			<div class="small-box bg-success">
-				<div class="inner">
-				<h3>{{$totalSupplierRecords}}</h3>
-
-				<p>Suppliers</p>
-				</div>
-				
-				<a href="{{ route('suppliers.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-			</div>
+		<div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+				<span class="info-box-icon bg-info elevation-1"><i class="fas fa-hotel"></i></span>
+              	<div class="info-box-content">
+					<span class="info-box-text"><a href="{{ route('hotels.index') }}">Hotels</a></span>
+					<span class="info-box-number">
+					{{$totalHotelRecords}}
+					</span>
+              	</div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
         </div>
-		
-		<div class="col-lg-3 col-6">
-        <!-- small box -->
-			<div class="small-box bg-success">
-				<div class="inner">
-				<h3>{{$totalActivityRecords}}</h3>
-
-				<p>Activities</p>
-				</div>
-				
-				<a href="{{ route('activities.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-			</div>
-        </div>
-		<div class="col-lg-3 col-6">
-        <!-- small box -->
-			<div class="small-box bg-warning">
-				<div class="inner">
-				<h3>{{$totalHotelRecords}}</h3>
-
-				<p>Hotels</p>
-				</div>
-				
-				<a href="{{ route('hotels.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-			</div>
-        </div>
+	
+		</div>
 		@if(Auth::user()->role_id == '1')
-		<div class="col-lg-4 col-6">
-        <!-- small box -->
-			<div class="small-box bg-success">
-				<div class="inner">
-				
+		<div class="row"> 
+		<div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+			<span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
-				<p>Today's</p>
-				<h3>AED {{number_format(($vouchersCurrentDate->totalVoucherActivityAmount)?$vouchersCurrentDate->totalVoucherActivityAmount:0,2)}}</h3>
-				</div>
-				<div class="row">
-				<div class="col-4">
-				<p>No. Of Booking :  {{$vouchersCurrentDate->totalVouchers}}</p>
-				</div>
-				<div class="col-4">
-				<p>No. Of Activity :  {{($vouchersCurrentDate->totalActivity)?$vouchersCurrentDate->totalActivity:0}}</p>
-				</div>
-				<div class="col-4">
-				<p>No. Of Pax : {{$vouchersCurrentDate->totalAdult+$vouchersCurrentDate->totalChild}}</p>
-				</div></div>
-			</div>
-        </div>
+              <div class="info-box-content">
+                <span class="info-box-text">Total Amount (Today)</span>
+                <span class="info-box-number">
+					AED {{number_format(($vouchersCurrentDate->totalVoucherActivityAmount)?$vouchersCurrentDate->totalVoucherActivityAmount:0,2)}}
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+		  <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+			<span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">No. Of Booking(s) / Pax(s) (Today) </span>
+                <span class="info-box-number">
+				{{$vouchersCurrentDate->totalVouchers}} / {{$vouchersCurrentDate->totalAdult+$vouchersCurrentDate->totalChild}}
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
 		
-		<div class="col-lg-4 col-6">
-        <!-- small box -->
-			<div class="small-box bg-warning">
-				<div class="inner">
-				
+		</div>
+		<div class="row"> 
+		<div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+			<span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
-				<p>MTY ({{date('F Y')}})</p>
-				<h3>AED {{number_format(($vouchersMonth->totalVoucherActivityAmount)?$vouchersMonth->totalVoucherActivityAmount:0,2)}}</h3>
-				</div>
-				<div class="row">
-				<div class="col-4">
-				<p>No. Of Booking :  {{$vouchersMonth->totalVouchers}}</p>
-				</div>
-				<div class="col-4">
-				<p>No. Of Activity :  {{($vouchersMonth->totalActivity)?$vouchersMonth->totalActivity:0}}</p>
-				</div>
-				<div class="col-4">
-				<p>No. Of Pax : {{$vouchersMonth->totalAdult+$vouchersMonth->totalChild}}</p>
-				</div></div>
-			</div>
-        </div>
-		
-		<div class="col-lg-4 col-6">
-        <!-- small box -->
-			<div class="small-box bg-success">
-				<div class="inner">
-				
+              <div class="info-box-content">
+                <span class="info-box-text">Total Amount (MTD)</span>
+                <span class="info-box-number">
+					AED {{number_format(($vouchersMonth->totalVoucherActivityAmount)?$vouchersMonth->totalVoucherActivityAmount:0,2)}}
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+		  <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+			<span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
 
-				<p>YTD (April {{date('Y')}})-March {{date('Y')+1}})</p>
-				<h3>AED {{number_format(($vouchersYear->totalVoucherActivityAmount)?$vouchersYear->totalVoucherActivityAmount:0,2)}}</h3>
-				</div>
-				<div class="row">
-				<div class="col-4">
-				<p>No. Of Booking :  {{$vouchersYear->totalVouchers}}</p>
-				</div>
-				<div class="col-4">
-				<p>No. Of Activity :  {{($vouchersYear->totalActivity)?$vouchersYear->totalActivity:0}}</p>
-				</div>
-				<div class="col-4">
-				<p>No. Of Pax : {{$vouchersYear->totalAdult+$vouchersYear->totalChild}}</p>
-				</div></div>
-			</div>
-        </div>
-		@endif
+              <div class="info-box-content">
+                <span class="info-box-text">No. Of Booking(s) / Pax(s) (MTD) </span>
+                <span class="info-box-number">
+				{{$vouchersMonth->totalVouchers}} / {{$vouchersMonth->totalAdult+$vouchersMonth->totalChild}}
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+	
+		<div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+			<span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Total Amount (YTD)</span>
+                <span class="info-box-number">
+					AED {{number_format(($vouchersYear->totalVoucherActivityAmount)?$vouchersYear->totalVoucherActivityAmount:0,2)}}
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+		  <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+			<span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">No. Of Booking(s) / Pax(s) (YTD) </span>
+                <span class="info-box-number">
+				{{$vouchersYear->totalVouchers}} / {{$vouchersYear->totalAdult+$vouchersYear->totalChild}}
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+		  @endif
 		<div class="col-lg-12 col-6">
 		<div class="card">
 		<div class="card-body">

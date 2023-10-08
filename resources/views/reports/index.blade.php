@@ -96,7 +96,7 @@
 					<th>Booking #</th>
                     <th width="7%">Service Date</th>
 					<th>Service</th>
-					<th>Variant</th>
+          <th>Varaint</th>
 					<th>Service Type</th>
 					<th>Agency</th>
 					<th>Guest Name</th>

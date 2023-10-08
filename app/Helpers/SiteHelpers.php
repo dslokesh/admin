@@ -367,12 +367,14 @@ class SiteHelpers
 		$number_of_rooms = 0;
 		$occupancy = 0;
 		$price = 0;
+		$child = 0;
 		if(count($rooms) > 0) {
 			
 			foreach($rooms as $room) {
 				$room_type.=$room->room_type.',';
-				$number_of_rooms+=1;
-				$occupancy +=$room->nop_s + $room->nop_d;
+				$number_of_rooms += $room->nom_of_room ;
+				$occupancy +=$room->nop_s + $room->nop_d+ $room->nop_eb;
+				$child +=$room->nop_cwb + $room->nop_cnb;
 				$mealplan =(!empty($room->mealplan))?$room->mealplan:'';
 				$price +=$room->nr_s + $room->nr_d + $room->nr_eb + $room->nr_cwb + $room->nr_cnb;
 			}
@@ -383,6 +385,7 @@ class SiteHelpers
 		'number_of_rooms' => $number_of_rooms,
 		'occupancy' => $occupancy,
 		'mealplan' => $mealplan,
+		'childs' => $child,
 		'price' => $price,
 		];
 		
@@ -643,12 +646,12 @@ class SiteHelpers
 			}
 			
 		
-		$grandTotal = $totalPrice - $discount;
+		$grandTotal = $totalPrice;
 		if($vat_invoice == 1){
 		$vatPrice = (($avat/100) * $grandTotal);
 		}
 		
-		$total = $grandTotal+$vatPrice;
+		$total = round(($grandTotal+$vatPrice - $discount),2);
 		$data = [
 		'adultPrice' =>$adultPrice,
 		'childPrice' =>$childPrice,
@@ -669,7 +672,8 @@ class SiteHelpers
 	public function dateDiffInDays($date1, $date2) 
 	{
 		$diff = strtotime($date2) - strtotime($date1);
-		return abs(round($diff / 86400));
+		$days =  (abs(round($diff / 86400)))+1;
+		return $days;
 	}
 	
 }

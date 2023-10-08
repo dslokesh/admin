@@ -70,7 +70,7 @@ class ReporsController extends Controller
 			}
         if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
 			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('code', '=', $data['vouchercode']);
+				$q->where('code', 'like', '%' . $data['vouchercode']);
 			});
 		}
 		
@@ -626,6 +626,14 @@ public function voucherActivtyRefundedReport(Request $request)
 				 $query->whereDate('valid_till', '<=', $endDate);
 		}
 		
+		if(isset($data['ticket_no']) && !empty($data['ticket_no'])) {
+				$query->where('ticket_no', 'like', '%' . $data['ticket_no']);
+		}
+
+		if(isset($data['serial_number']) && !empty($data['serial_number'])) {
+			$query->where('serial_number', 'like', '%' . $data['serial_number']);
+	}
+
 		if (isset($data['activity_id']) && !empty($data['activity_id'])) {
 				 $query->where('activity_id',  $data['activity_id']);
 		}

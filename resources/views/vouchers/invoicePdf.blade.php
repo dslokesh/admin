@@ -63,7 +63,7 @@ body
                         </td>
                         <td  align="center" valign="middle" > <h1>
 						@if($voucher->status_main == 5)
-							VAT INVOICE
+							TAX INVOICE
 						@else
 							PROFORMA INVOICE
 						@endif

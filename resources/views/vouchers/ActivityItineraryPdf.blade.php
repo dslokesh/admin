@@ -298,8 +298,12 @@ div.footer {
 </head>
 <!-- font-family: 'Poppins', sans-serif; -->
 <body >
-
+@php
+			
+			$total_activites = count($voucherActivity);
+		@endphp
 	<div class="outter-div">
+		@if($total_activites > 0)
 		<div class="inner-div mb-20" >
 			<div class="col-6 float-left text-left" >
 				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
@@ -337,11 +341,10 @@ div.footer {
 				@php
 				$no_of_days = $no_of_nights =  0;
 					$no_of_days = SiteHelpers::dateDiffInDays($voucher->travel_from_date,$voucher->travel_to_date)
-				
+					
 				@endphp
 				<p style=" text-center"> 
-				@if(($no_of_days-1) > 0) <i class="fa fa-moon " aria-hidden="true"></i>  {{$no_of_days-1}} Nights @endif <i class="fa fa-sun ml-10" aria-hidden="true"></i> {{$no_of_days}} Day(s)
-				<!-- {{$no_of_days-1}} Nights {{$no_of_days}} Days -->
+				@if(($no_of_days-1) > 0) <i class="fa fa-moon " aria-hidden="true"></i>  {{$no_of_days-1}} Nights @endif <i class="fa fa-sun ml-10" aria-hidden="true"></i> {{$no_of_days}} Days
 				</p>
 			</div>
 			
@@ -364,7 +367,8 @@ div.footer {
 				@endif
 			</ul>
 		</div>
-		
+		<div style = "display:block; clear:both; page-break-after:always;"></div>
+		@endif
 		<!-- <div class="width:95%; padding: 10px 0px;margin-bottom:20px;clear:both;">
 			<div style="background: #2300c1; border-radius: 30px; border: dashed 3px #f1f1f1; display: block; align-items: center;clear:both;max-height:170px;height:auto;min-height: 130px;">
 				<div style="width:60%;float:left;background: #CFC7F1;border-radius: 30px;border: dashed 3px #f1f1f1;padding:20px;margin-top:-3px; margin-bottom: -3px; margin-left: -3px;min-height: 130px;max-height:170px;height:auto;display: block;">
@@ -389,7 +393,7 @@ div.footer {
 	<!-- Hotel Block End -->
 	@if(count($voucherHotel) > 0)
 	<!-- Hotel Block Start -->
-	<div style = "display:block; clear:both; page-break-after:always;"></div>
+	
 	
 	<div class="inner-div mb-20" >
 			<div class="col-6 float-left text-left" >
@@ -406,6 +410,13 @@ div.footer {
 				<p class="no-margin" style=""><i class="fas fa-envelope mr-10" ></i> {{$voucher->agent->email}}</p>
 				</span>
 			</div>
+			@if($total_activites == 0)
+				<div class="col-12 float-right text-right">
+					<div class="inner-div">
+						<p class="col-12 mt-20 mb-20" style="text-align:center;font-size: 28px"><span class="text-grey">Voucher No.</span> : {{$voucher->code}}</p>
+					</div>
+				</div>
+			@endif
 			<div class="clear"></div>
 		</div>
 			
@@ -468,6 +479,8 @@ div.footer {
       						  <div class="col-12">
 								@php
 								$room = SiteHelpers::hotelRoomsDetails($vh->hotel_other_details)
+	
+								
 								@endphp
 								
 								<p  class="no-margin mt-10" ><span class="text-grey">Room Type </span>: {{$room['room_type']}}</p>
@@ -480,17 +493,23 @@ div.footer {
       					</span>
       					<span class="col-6 float-right">
       						  <div class="col-12">
-							  <p  class="no-margin mt-10" ><span class="text-grey"> </span></p>
-							  <p  class="no-margin mt-10" ><span class="text-grey">Meal Plan </span>: {{$room['mealplan']}}</p>
-									
-									<p class="no-margin mt-10" ><span class="text-grey">Number of Guests </span>: {{$room['occupancy']}}</p>
-									
+							  		<p  class="no-margin mt-10" ><span class="text-grey">Meal Plan </span>: {{$room['mealplan']}}</p>
+									<p class="no-margin mt-10" ><span class="text-grey">Number of Adult(s) </span>: {{$room['occupancy']}}</p>
+									@if($room['childs'] > 0)
+									<p class="no-margin mt-10" ><span class="text-grey">Number of Child(s) </span>: {{$room['childs']}}</p>
+									@endif
 								</div>
       					</span>
 						  @if($vh->confirmation_number != '')
 						  <div style="clear:both;"></div>
 						  	<span class="col-12">
 						  		<p class="no-margin mt-10"><span class="text-grey">Hotel Confirmation No.</span> : {{$vh->confirmation_number}}</p>
+      						</span>
+						  @endif
+						  @if($vh->remark != '')
+						  <div style="clear:both;"></div>
+						  	<span class="col-12">
+						  		<p class="no-margin mt-10"><span class="text-grey">Remark.</span> : {{$vh->remark}}</p>
       						</span>
 						  @endif
 									
@@ -704,6 +723,10 @@ div.footer {
 	
 	<!-- Activity Block End -->
 	@endif	
+
+	@if($total_activites > 0)
+	
+	
 		<div class="inner-div mb-20" >
 			<div class="col-6 float-left text-left" >
 				@if(file_exists(public_path('uploads/users/thumb/'.$voucher->agent->image)) && !empty($voucher->agent->image))
@@ -721,37 +744,7 @@ div.footer {
 			</div>
 			<div class="clear"></div>
 		</div>
-		<div class="inner-div">
-		<p class="col-12 mt-20 mb-20" style="text-align:center;font-size: 28px"><span class="text-grey">Voucher No.</span> : {{$voucher->code}}</p>
-		</div>
-	
-		<div class="inner-div mb-20">
-			
-			<div class="col-4 float-left bg-calender " style="">
-				<div class="pl-40"> {{date("d-m-Y",strtotime($voucher->travel_from_date))}}
-					<br/><span class="text-grey">Start Date </span>
-				</div>
-				
-				
-			</div>
-			<div class="col-4 float-left text-center">
-				@php
-				$no_of_days = $no_of_nights =  0;
-					$no_of_days = SiteHelpers::dateDiffInDays($voucher->travel_from_date,$voucher->travel_to_date)
-				
-				@endphp
-				<p style=" text-center"> 
-				@if(($no_of_days-1) > 0) <i class="fa fa-moon " aria-hidden="true"></i>  {{$no_of_days-1}} Nights @endif <i class="fa fa-sun ml-10" aria-hidden="true"></i> {{$no_of_days}} Day(s)
-				<!-- {{$no_of_days-1}} Nights {{$no_of_days}} Days -->
-				</p>
-			</div>
-			
-			<div class="col-4 float-right text-right bg-calender-end">
-			<div class="pr-40"> {{date("d-m-Y",strtotime($voucher->travel_to_date))}}
-				<br/><span class="text-grey">End Date </span>
-			</div>
-			</div>
-		</div>
+		
 		<div class="inner-div tnc-div">
 			<div>
 				<!-- <img src="{{asset('images/2.jpg')}}" style="max-width: 40px" /> -->
@@ -770,7 +763,7 @@ div.footer {
 				<li style="">Shared Transfers waiting time is 5 minutes and Private transfers waiting time is 15 minutes</li>
 			</ul>
 		</div>
-		
+		@endif	
 	</div>
 
 </body>

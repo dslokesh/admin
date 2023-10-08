@@ -43,6 +43,7 @@
                   <tr>
 					<th>Code</th>
                     <th>Agency</th>
+                    <th>Guest Name</th>
                     <th>Status</th>
                     <th>Travel Date</th>
                     <th>Created On</th>
@@ -60,6 +61,7 @@
 				   <tr>
 					<th><input type="text" name="code" value="{{request('code')}}" autocomplete="off" class="form-control"  placeholder="Code" /></th>
                     <th><input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
+                    <th><input type="text" id="guest_name" name="guest_name" value="{{ request('guest_name') ?: '' }}" class="form-control"  placeholder="Guest Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  /></th>
 					
 					
@@ -89,6 +91,7 @@
                   <tr>
 				  <td>{{ ($record->code)}}</td>
                     <td>{{ ($record->agent)?$record->agent->company_name:''}}</td>
+                    <td>{{ $record->guest_name}}</td>
                      <td>{!! SiteHelpers::voucherStatus($record->status_main) !!}</td>
 					   <td>{{ $record->travel_from_date ? date("M d Y, H:i:s",strtotime($record->travel_from_date)) : null }} <b>To</b> {{ $record->travel_to_date ? date(config('app.date_format'),strtotime($record->travel_to_date)) : null }}</td>
                     <td>{{ $record->created_at ? date("M d Y, H:i:s",strtotime($record->created_at)) : null }}</td>
@@ -118,7 +121,7 @@
 						  @endif
 						  </td>
 						  <td>
-						   @if($record->status_main == 5)
+						   @if($record->status_main >= 4)
 					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}" >
                               <i class="fas fa-download">
                               </i>
@@ -127,7 +130,7 @@
 						  @endif
 						  </td>
 						   <td>
-					 @if($record->is_activity == 1)
+					 
 						 @if($record->status_main > 1)
 					 <a class="btn btn-info btn-sm" href="{{route('voucherActivityItineraryPdf',$record->id)}}">
                               <i class="fas fa-download">
@@ -135,7 +138,7 @@
                              
                           </a>
 						  @endif
-						  @endif
+						
 						  </td>
                      <td>
 					  @if($record->status_main < 5)

@@ -5,15 +5,10 @@
     <section class="content-header" >
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Activities & Tours (Ageny : {{$voucher->agent->company_name}})</h1>
+          <div class="col-sm-12">
+            <h1>Activities & Tours (Ageny : {{$voucher->agent->company_name}}) (<i class="fa fa-wallet" aria-hidden="true"></i> : AED {{$voucher->agent->agent_amount_balance}})</h1>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Activities & Tours</li>
-            </ol>
-          </div>
+          
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -368,9 +363,9 @@ $(document).on('click', '.loadvari', function(evt) {
    waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
      var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
      
-     grandTotal = ( (totalPrice - discount));
+     grandTotal = ( (totalPrice));
      let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
-     grandTotalAfterDis = parseFloat(grandTotal+vatPrice);
+     grandTotalAfterDis = parseFloat(grandTotal+vatPrice-discount);
         
      if(isNaN(grandTotalAfterDis))
      {
@@ -407,17 +402,17 @@ $(document).on('click', '.loadvari', function(evt) {
        var sic_transfer_markupamt = ((zonevalueTotal *  mpst)/100);
        var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
        
-       grandTotal = ( (totalPrice - discount));
+       grandTotal = ( (totalPrice));
         let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
-        grandTotalAfterDis = parseFloat(vatPrice + grandTotal);
+        grandTotalAfterDis = parseFloat(vatPrice + grandTotal-discount);
      }
      else
      {
        var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt);
        
-        grandTotal = ( (totalPrice - discount));
+        grandTotal = ( (totalPrice));
        let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
-        grandTotalAfterDis = parseFloat(vatPrice + grandTotal);
+        grandTotalAfterDis = parseFloat(vatPrice + grandTotal-discount);
        
      }
      

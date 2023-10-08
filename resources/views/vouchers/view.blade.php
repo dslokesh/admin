@@ -19,246 +19,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-     <style type="text/css">
-    /* Multistep */
-/* See below for SASS (allows you easily set dot radius and progress bar thickness and adjusts everything else! */
-.multistep .multistep-step {
-    padding: 0;
-    position: relative;
-    margin-bottom: 10px;
-}
-
-    .multistep .multistep-step .multistep-stepname {
-        margin-bottom: 16px;
-        color: #595959;
-        font-size: 1.6rem;
-        white-space: nowrap;
-    }
-
-    .multistep .multistep-step .multistep-dot {
-        position: absolute;
-        right: 50%;
-        left: 50%;
-        width: 32px;
-        height: 32px;
-        display: block;
-        margin-top: -16px;
-        margin-left: -15.5px;
-        border-radius: 50%;
-        background: #f5f5f5;
-        /* Inner Dot */
-    }
-
-        .multistep .multistep-step .multistep-dot:after {
-            content: ' ';
-            border-radius: 50px;
-            position: absolute;
-            top: 8px;
-            bottom: 8px;
-            left: 8px;
-            right: 8px;
-            background: #e0e0e0;
-        }
-
-    .multistep .multistep-step .progress {
-        position: absolute;
-        width: 100%;
-        height: 10.56px;
-        margin-top: -5.28px;
-        box-shadow: none;
-        border-radius: 0;
-    }
-
-        .multistep .multistep-step .progress .progress-bar {
-            width: 0px;
-            box-shadow: none;
-            background: #808080;
-        }
-
-    .multistep .multistep-step:first-child > .progress {
-        left: 50%;
-        width: 50%;
-    }
-
-    .multistep .multistep-step:last-child > .progress {
-        width: 50%;
-    }
-
-    .multistep .multistep-step.complete .multistep-dot {
-        background: #808080;
-    }
-
-        .multistep .multistep-step.complete .multistep-dot:after {
-            /*  /* background: #fbbd19; */ */
-        }
-
-    .multistep .multistep-step.complete .progress > .progress-bar {
-        width: 100%;
-    }
-
-    .multistep .multistep-step.next:hover .multistep-dot {
-        background: #808080;
-    }
-
-        .multistep .multistep-step.next:hover .multistep-dot:after {
-             /* background: #fbbd19; */
-        }
-
-    .multistep .multistep-step.current .multistep-dot {
-        background: #808080;
-    }
-
-        .multistep .multistep-step.current .multistep-dot:after {
-             /* background: #fbbd19; */
-        }
-
-    .multistep .multistep-step.current .progress > .progress-bar {
-        width: 50%;
-    }
-
-    .multistep .multistep-step.current:first-child > .progress > .progress-bar {
-        width: 0%;
-    }
-
-    .multistep .multistep-step.current:last-child > .progress > .progress-bar {
-        width: 100%;
-    }
-
-    .multistep .multistep-step a.multistep-dot {
-        pointer-events: none;
-    }
-
-    .multistep .multistep-step.next a.multistep-dot {
-        pointer-events: all;
-    }
-    
-    
-/* SASS
-$inactiveColor: #f5f5f5;
-$inactiveDotColor: #e0e0e0;
-$activeColor: #808080;
-$activeDotColor: #fbbd19;
-$stepNameColor: #595959;
-$dotRadius: 16px;
-$barThickness: $dotRadius * .66;
-$stepNameSize: 1.6rem;
-
-.multistep {
-    .multistep-step {
-        padding: 0;
-        position: relative;
-        margin-bottom: 10px;
-
-        .multistep-stepname {
-            margin-bottom: $dotRadius;
-            color: $stepNameColor;
-            font-size: $stepNameSize;
-            white-space: nowrap;
-        }
-
-        .multistep-dot {
-            position: absolute;
-            right: 50%;
-            left: 50%;
-            width: $dotRadius * 2;
-            height: $dotRadius * 2;
-            display: block;
-            margin-top: -$dotRadius;
-            margin-left: -$dotRadius + .5;
-            border-radius: 50%;
-            background: $inactiveColor;
-            &:after {
-                content: ' ';
-                border-radius: 50px;
-                position: absolute;
-                top: $dotRadius / 2;
-                bottom: $dotRadius / 2;
-                left: $dotRadius / 2;
-                right: $dotRadius / 2;
-                background: $inactiveDotColor;
-            }
-        }
-
-        .progress {
-            position: absolute;
-            width: 100%;
-            height: $barThickness;
-            margin-top: -$barThickness / 2;
-            box-shadow: none;
-            border-radius: 0;
-
-            .progress-bar {
-                width: 0px;
-                box-shadow: none;
-                background: $activeColor;
-            }
-        }
-
-        &:first-child > .progress {
-            left: 50%;
-            width: 50%;
-        }
-
-        &:last-child > .progress {
-            width: 50%;
-        }
-
-        &.complete {
-            .multistep-dot {
-                background: $activeColor;
-
-                &:after {
-                    background: $activeDotColor;
-                }
-            }
-
-            .progress > .progress-bar {
-                width: 100%;
-            }
-        }
-
-        &.next:hover {
-            .multistep-dot {
-                background: $activeColor;
-            }
-
-            .multistep-dot:after {
-                background: $activeDotColor;
-            }
-        }
-
-        &.current {
-            .multistep-dot {
-                background: $activeColor;
-
-                &:after {
-                    background: $activeDotColor;
-                }
-            }
-
-            .progress > .progress-bar {
-                width: 50%;
-            }
-
-            &:first-child > .progress > .progress-bar {
-                width: 0%;
-            }
-
-            &:last-child > .progress > .progress-bar {
-                width: 100%;
-            }
-        }
-
-        a.multistep-dot {
-            pointer-events: none;
-        }
-
-        &.next a.multistep-dot {
-            pointer-events: all;
-        }
-    }
-}
-*/    </style>
+  
 <div class="row multistep">
         <div class="col-md-3 multistep-step complete">
             <div class="text-center multistep-stepname" style="font-size: 16px;">Add to Cart</div>
@@ -285,6 +46,7 @@ $stepNameSize: 1.6rem;
 					@endif
 								  @endif
 				</div>
+        
         
     </div>
 	
@@ -346,7 +108,7 @@ $stepNameSize: 1.6rem;
 					@endphp
 			@if(!empty($voucherActivity) && $voucher->is_activity == 1)
 				@foreach($voucherActivity as $ap)
-				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
+				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer') || ($ap->transfer_option == 'Ticket Only'))
 				  @php
 					$ii = 1;
 					@endphp
@@ -366,7 +128,7 @@ $stepNameSize: 1.6rem;
 					$c=0;
 					@endphp
 					  @foreach($voucherActivity as $ap)
-				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer'))
+				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer') || ($ap->transfer_option == 'Ticket Only'))
 				  @php
 					$c++;
 					$activity = SiteHelpers::getActivity($ap->activity_id);
@@ -379,6 +141,17 @@ $stepNameSize: 1.6rem;
 					@endphp
 					- Zone :{{$zone->name}}
 					@endif</strong></p></div>
+           
+			      <div class="form-group col-md-6 ">
+                <label>Tour Date</label>
+                 <input type="text" id="tour_date{{$ap->id}}" value="{{$ap->tour_date}}" readonly='readonly' required="required" class="form-control datepicker inputsave"  placeholder="Tour Date*" required data-id="{{$ap->id}}" data-name="tour_date" />
+				
+              </div>
+              <div class="form-group col-md-6 ">
+              <label>Tour Sequence</label>
+                 <input type="text" id="serial_no{{$ap->id}}" value="{{$ap->serial_no}}"  required="required" class="form-control inputsave"  placeholder="Tour Sequence" required data-id="{{$ap->id}}" data-name="serial_no" />
+				
+              </div>
 					@if($activity->entry_type=='Arrival')
 						<div class="form-group col-md-6">
 						 
@@ -393,7 +166,7 @@ $stepNameSize: 1.6rem;
               </div>
 			 
 			   <div class="form-group col-md-6 ">
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave" required placeholder="Arrival Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave" required placeholder="Arrival Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
 			 
@@ -425,7 +198,7 @@ $stepNameSize: 1.6rem;
                     </div>
 					 <div class="form-group col-md-6 ">
                
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
                     <div class="form-group col-md-6">
@@ -444,7 +217,7 @@ $stepNameSize: 1.6rem;
 					
 					 <div class="form-group col-md-6 ">
                 
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
 			  <div class="form-group col-md-6 ">
@@ -456,7 +229,7 @@ $stepNameSize: 1.6rem;
 					
 					<input type="text" class="form-control inputsave" id="remark{{$ap->id}}" data-name="remark"  data-id="{{$ap->id}}" value="{{$ap->remark}}"  placeholder="Remark" />
                     </div>
-					@else
+					@elseif($ap->transfer_option != 'Ticket Only')
 						<div class="form-group col-md-6">
 					
 					 
@@ -467,8 +240,8 @@ $stepNameSize: 1.6rem;
 					
                      @if(($activity->pvt_TFRS=='1') && ($activity->pick_up_required=='1'))
 					<div class="form-group col-md-6 ">
-                <label for="inputName"></label>
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control inputsave" required placeholder="Pickup Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave" required placeholder="Pickup Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
                     @endif
@@ -484,11 +257,12 @@ $stepNameSize: 1.6rem;
                  @endif
 				  
                 </div>
+                </div>
 				@endif
                 <!-- /.card-body -->
 
                
-            </div>
+           
 			
             <!-- /.card -->
             
@@ -923,7 +697,7 @@ $stepNameSize: 1.6rem;
 
 $('#cusDetails').validate({});
 
-	 $(document).on('change', '.inputsave', function(evt) {
+	 $(document).on('blur', '.inputsave', function(evt) {
 		
 		$("#loader-overlay").show();
 		$.ajaxSetup({
