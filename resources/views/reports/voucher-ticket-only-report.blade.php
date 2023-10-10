@@ -101,7 +101,7 @@
             </form>
           </div>
         </div><div class="col-md-12" style="overflow-x:auto">
-                <table id="example1" class="table rounded-corners">
+                <table id="example3" class="table rounded-corners">
                   <thead>
                   <tr>
 					<th>Booking #</th>
@@ -179,7 +179,6 @@
                   @endforeach
                 </table></div>
 				<div class="pagination pull-right mt-3"> 
-				{!! $records->appends(request()->query())->links() !!}
 				</div> 
 				
               </div>

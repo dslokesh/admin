@@ -136,7 +136,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::post('voucher-hotel-input-save', [VouchersController::class, 'voucherHotelInputSave'])->name('voucherHotelInputSave');
 		Route::get('voucher-ticket-only-report', [ReporsController::class, 'voucherTicketOnlyReport'])->name('voucherTicketOnlyReport');
 		Route::post('ticket-upload-save', [TicketsController::class, 'uploadTicketFromReport'])->name('uploadTicketFromReport');
-		 
+		Route::get('voucher-activity-report', [ReporsController::class, 'voucherActivityReport'])->name('voucherActivityReport'); 
 		Route::get('voucher-activity-canceled-report', [ReporsController::class, 'voucherActivtyCanceledReport'])->name('voucherActivtyCanceledReport');
 		Route::get('voucher-activity-canceled-report-export', [ReporsController::class, 'voucherActivtyCanceledReportExportExcel'])->name('voucherActivtyCanceledReportExportExcel');
 		Route::post('voucher-activity-refund-save', [ReporsController::class, 'activityRefundSave'])->name('activityRefundSave');
