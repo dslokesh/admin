@@ -25,7 +25,16 @@
     <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-
+ @if ($errors->has('pdf_file'))
+	  <div class="box no-border">
+        <div class="box-tools">
+            <p class="alert alert-danger alert-dismissible">
+			{{$errors->first('pdf_file')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </p>
+        </div>
+    </div>
+                @endif
             <div class="card">
               <div class="card-header">
 				<div class="card-tools">
@@ -36,7 +45,9 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+			  
 			  <div class="row">
+			  
             <form id="filterForm" class="form-inline" method="get" action="{{ route('voucherTicketOnlyReport') }}" >
               <div class="form-row align-items-center">
 			   <div class="col-auto col-md-3">
@@ -110,6 +121,7 @@
 					<th>TKT Net Cost</th>
 					<th>Remark</th>
 					<th>Status</th>
+					<th>Ticket</th>
                   </tr>
 				  
                   </thead>
@@ -156,6 +168,12 @@
 						@endforeach
                  </select>
 					</td>
+					<td>
+					@if($record->ticket_generated=='0')
+					 <a class="btn btn-info btn-sm uploadTicketbtn" href="javascript:void(0)" data-vaid="{{$record->id}}" data-vid="{{$record->voucher_id}}" ><i class="fas fa-upload"></i></a>
+					@endif
+					</td>
+					
                   </tr>
                   </tbody>
                   @endforeach
@@ -175,10 +193,49 @@
       </div>
       <!-- /.container-fluid -->
     </section>
+	
+	<div class="modal fade" id="ticketUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	 <form id="ticketUploadForm" method="post" action="{{route('uploadTicketFromReport')}}" enctype="multipart/form-data">
+	 @csrf
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Ticket Upload</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="file"  class="form-control" name="ticketFile" accept=".pdf" />
+		 <input type="text"  id="vaid" name="vaid"   value="" />
+	  <input type="text"  id="vid" name="vid"   value="" />
+      </div>
+	  
+	 
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <!-- /.content -->
 @endsection
 @section('scripts')
  <!-- Script -->
+ <script type="text/javascript">
+    $(function () {
+        $(".uploadTicketbtn").click(function () {
+            $("#ticketUploadModal").modal("show");
+			var vid= $(this).data('vid');
+			var vaid= $(this).data('vaid');
+			$("#vaid").val(vaid);
+			$("#vid").val(vid);
+        });
+    });
+</script>
+
  <script type="text/javascript">
 $(document).ready(function() {
 	

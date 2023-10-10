@@ -135,7 +135,7 @@ class TicketsController extends Controller
 			}
 			
 			if(($totalTicketNeed == 0) && (count($tcArray) == $countTotalTicketNeed)){
-				$tcCountEx = Ticket::where("voucher_id",'=',$voucherActivity->voucher_id)->count();
+				$tcCountEx = Ticket::where("voucher_id",'=',$voucherActivity->voucher_id)->where("voucher_activity_id",'=',$voucherActivity->id)->count();
 				if($tcCountEx > 0){
 				return redirect()->route('ticket.dwnload',$voucherActivity->id);	
 				} else {
@@ -167,6 +167,9 @@ class TicketsController extends Controller
 	public function ticketDwnload(Request $request, $id)
     {
 		$voucherActivity = VoucherActivity::find($id);
+		if(!empty($voucherActivity->ticket_pdf)){
+			return redirect($voucherActivity->ticket_pdf);
+		} else {
 		$voucher = Voucher::where('id',$voucherActivity->voucher_id)->first();;
 		$tickets = Ticket::where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->where('voucher_activity_id',$voucherActivity->id)->where('ticket_generated','1')->get();
 		//dd($voucherActivity->activity);
@@ -183,8 +186,43 @@ class TicketsController extends Controller
         $pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
        $pdf->setPaper('A4')->setOrientation('portrait');
         return $pdf->download('Ticket'.$voucher->code.'-'.$voucherActivity->variant_code.'.pdf');
+		}
 	}
     
+	
+	public function uploadTicketFromReport(Request $request){
+		$request->validate([
+        'ticketFile' => 'required|mimes:pdf|max:5120', // Adjust the max size as needed
+		], [
+			'ticketFile.required' => 'The Ticket PDF file is required.',
+			'ticketFile.mimes' => 'Please upload a valid Ticket PDF file.',
+			'ticketFile.max' => 'The Ticket PDF file must not exceed 5 MB.',
+		]);
+		
+		$data = $request->all();
+		/** Below code for save image **/
+		$destinationPath = public_path('/uploads/tickets/');
+		//$newName = '';
+        //pr($request->all()); die;
+        $input = $request->all();
+		if ($request->hasFile('ticketFile')) {
+
+			$voucherActivity = VoucherActivity::where('id',$data['vaid'])->where('voucher_id',$data['vid'])->first();
+			$fileName = $input['ticketFile']->getClientOriginalName();
+			$file = request()->file('ticketFile');
+			$fileNameArr = explode('.', $fileName);
+			$fileNameExt = end($fileNameArr);
+			$newName = date('His').rand() . time() . '.' . $fileNameExt;
+			$file->move($destinationPath, $newName);
+            $voucherActivity->ticket_pdf = asset("/uploads/tickets/".$newName);
+			$voucherActivity->ticket_generated = 1;
+			$voucherActivity->ticket_downloaded = 1;
+			$voucherActivity->save();
+		}
+		
+		return redirect(route('voucherTicketOnlyReport'))->with('success','Ticket uploaded.');
+		
+    }
     
     public function create(){
 		//
