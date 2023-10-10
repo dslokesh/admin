@@ -99,6 +99,9 @@ class TicketsController extends Controller
     {
 		
 		$voucherActivity = VoucherActivity::find($id);
+		if(!empty($voucherActivity->ticket_pdf)){
+			return redirect($voucherActivity->ticket_pdf);
+		} else {
 		$adult = $voucherActivity->adult;
 		$child = $voucherActivity->child;
 		$totalTicketNeed = $adult+$child;
@@ -159,6 +162,7 @@ class TicketsController extends Controller
 					
 			} else{
 			return redirect()->back()->with('error', 'API Connection Timeout. Kindly contact Customer Service.');
+		}
 		}
 		
 		
