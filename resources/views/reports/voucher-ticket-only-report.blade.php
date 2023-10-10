@@ -207,8 +207,8 @@
       </div>
       <div class="modal-body">
         <input type="file"  class="form-control" name="ticketFile" accept=".pdf" />
-		 <input type="text"  id="vaid" name="vaid"   value="" />
-	  <input type="text"  id="vid" name="vid"   value="" />
+		 <input type="hidden"  id="vaid" name="vaid"   value="" />
+	  <input type="hidden"  id="vid" name="vid"   value="" />
       </div>
 	  
 	 

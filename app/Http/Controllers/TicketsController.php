@@ -185,7 +185,7 @@ class TicketsController extends Controller
 	//	return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
         $pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
        $pdf->setPaper('A4')->setOrientation('portrait');
-        return $pdf->download('Ticket'.$voucher->code.'-'.$voucherActivity->variant_code.'.pdf');
+        return $pdf->download('Ticket'.$voucher->code.'-'.$voucherActivity->variant_code.'-'.$voucherActivity->id .'.pdf');
 		}
 	}
     
@@ -207,12 +207,12 @@ class TicketsController extends Controller
         $input = $request->all();
 		if ($request->hasFile('ticketFile')) {
 
-			$voucherActivity = VoucherActivity::where('id',$data['vaid'])->where('voucher_id',$data['vid'])->first();
+			$voucherActivity = VoucherActivity::with('voucher')->where('id',$data['vaid'])->where('voucher_id',$data['vid'])->first();
 			$fileName = $input['ticketFile']->getClientOriginalName();
 			$file = request()->file('ticketFile');
 			$fileNameArr = explode('.', $fileName);
 			$fileNameExt = end($fileNameArr);
-			$newName = date('His').rand() . time() . '.' . $fileNameExt;
+			$newName = $voucherActivity->voucher->code.'-'.$voucherActivity->variant_code .'-' .$voucherActivity->id .'.' . $fileNameExt;
 			$file->move($destinationPath, $newName);
             $voucherActivity->ticket_pdf = asset("/uploads/tickets/".$newName);
 			$voucherActivity->ticket_generated = 1;
