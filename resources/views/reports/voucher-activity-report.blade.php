@@ -129,7 +129,7 @@
 				  @foreach ($records as $record)
                   <tr>
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
-                    <td>{{$record->tour_date}}
+                    <td>{{date("d-m-Y",strtotime($record->tour_date))}}
 					</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
 					<td>{{($record->variant_name)?$record->variant_name:''}}</td>
