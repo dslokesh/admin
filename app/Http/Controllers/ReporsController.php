@@ -68,6 +68,9 @@ class ReporsController extends Controller
 		
 				}
 				}
+				else{
+			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			}
 			}
 			else{
 			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
@@ -113,7 +116,9 @@ class ReporsController extends Controller
 				});
 		
 				}
-				}
+				}else{
+			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			}
 			}
 			else{
 			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
@@ -163,7 +168,9 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 				});
 		
 				}
-				}
+				}else{
+			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			}
 			}
 		else{
 			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
