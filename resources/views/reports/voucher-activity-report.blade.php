@@ -105,22 +105,14 @@
                 <table id="example11" class="table rounded-corners">
                   <thead>
                   <tr>
-					<th>Booking #</th>
-                    <th width="7%">Service Date</th>
-					<th>Service</th>
-					<th>Variant</th>
-					<th>Service Type</th>
+					<th>Booking Date</th>
+					<th>Invoice Number</th>
+                    <th>Service Date</th>
+					<th>Ref No.</th>
 					<th>Agency</th>
-					<th>Guest Name</th>
-					<th>Guest Contact No</th>
-					<th>A</th>
-                    <th>C</th>
-                    <th>I</th>
-					<th>TKT Supplier</th>
-					<th>TKT Supplier Ref #</th>
-					<th>TKT SP</th>
-					<th>TKT Net Cost</th>
-					<th>Remark</th>
+					<th>Pax Name</th>
+					<th>Service</th>
+					<th>Total Cost</th>
 					<th>Status</th>
                   </tr>
 				  
@@ -128,32 +120,18 @@
                   <tbody>
 				  @foreach ($records as $record)
                   <tr>
-					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
+				  <td>{{(!empty($record->voucher->booking_date))?date("d-m-Y",strtotime($record->voucher->booking_date)):''}} </td>
+				   <td>{{@$record->voucher->invoice_number}} </td>
                     <td>{{date("d-m-Y",strtotime($record->tour_date))}}
 					</td>
-					<td>{{($record->activity)?$record->activity->title:''}}</td>
-					<td>{{($record->variant_name)?$record->variant_name:''}}</td>
-					<td>{{$record->transfer_option}}</td>
+					<td>{{$record->ticket_supp_ref_no}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
-					<td>{{($record->voucher)?$record->voucher->guest_phone:''}}</td>
-					 <td>{{$record->adult}}</td>
-                    <td>{{$record->child}}</td>
-                    <td>{{$record->infant}}</td>
-					<td>
-					{{@$record->supplierticket->name}}
-                 </select>
-					</td>
-					<td>{{$record->ticket_supp_ref_no}}</td>
+					<td>{{($record->activity)?$record->activity->title:''}}</td>
 					<td>{{$record->totalprice}}</td>
-					<td>{{$record->actual_total_cost}}</td>
-					
-					
-					<td>{{$record->remark}}</td>
 					<td>
 					{!! SiteHelpers::voucherStatus($record->voucher->status_main) !!}
 					</td>
-					
 					
                   </tr>
                   </tbody>
