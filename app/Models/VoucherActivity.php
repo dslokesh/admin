@@ -21,12 +21,12 @@ class VoucherActivity extends Model
 	
 	public function supplierticket()
     {
-        return $this->belongsTo(Supplier::class,'supplier_ticket','id');
+        return $this->belongsTo(User::class,'supplier_ticket','id');
     }
 	
 	public function suppliertransfer()
     {
-        return $this->belongsTo(Supplier::class,'supplier_transfer','id');
+        return $this->belongsTo(User::class,'supplier_transfer','id');
     }
 	
 	 public function createdBy()

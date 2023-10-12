@@ -33,7 +33,7 @@
 			
 			
 			<header class="profile-header">
-          <div class="profile-image"> @if(!empty($supplier->logo))<img src="{{asset('uploads/suppliers/thumb/'.$supplier->logo)}}"  />@endif </div>
+          <div class="profile-image"> @if(!empty($supplier->image))<img src="{{asset('uploads/suppliers/thumb/'.$supplier->image)}}"  />@endif </div>
 			
 				<div class="profile-content">
 					<div class="row">
@@ -48,7 +48,7 @@
               </div>
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Code:</label>
-                {{ $supplier->code }}
+                {{ $supplier->supplier_code }}
               </div>
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Mobile:</label>
@@ -64,7 +64,7 @@
               </div>
 			   <div class="col-lg-6 mb-3">
                 <label for="inputName">Phone Number:</label>
-                {{ $supplier->phone_number }}
+                {{ $supplier->phone }}
               </div>
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Address:</label>
@@ -91,7 +91,7 @@
              
               <div class="form-group col-lg-6 mb-3">
 			        <label for="inputName">Status:</label>
-					{!! SiteHelpers::statusColor($supplier->status) !!}
+					{!! SiteHelpers::statusColor($supplier->is_active) !!}
               </div>
             
           </div>	

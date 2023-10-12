@@ -43,20 +43,21 @@
                     <span class="text-danger">{{ $errors->first('service_type') }}</span>
                 @endif
               </div>
-               <div class="form-group col-md-6">
-                <label for="inputName">Name: <span class="red">*</span></label>
-                <input type="text" id="name" name="name" value="{{ old('name') ?: $record->name }}" class="form-control"  placeholder="Name" />
-                @if ($errors->has('name'))
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                <div class="form-group col-md-6">
+                <label for="inputName">First Name: <span class="red">*</span></label>
+                <input type="text" id="first_name" name="first_name" value="{{ old('first_name') ?: $record->name }}" class="form-control"  placeholder="First Name" />
+                @if ($errors->has('first_name'))
+                    <span class="text-danger">{{ $errors->first('first_name') }}</span>
                 @endif
               </div>
-			   <div class="form-group col-md-6">
-                <label for="inputName">Code: <span class="red">*</span></label>
-                <input type="text" readonly value="{{ old('code') ?: $record->code }}" class="form-control"  placeholder="Code" />
-                @if ($errors->has('code'))
-                    <span class="text-danger">{{ $errors->first('code') }}</span>
+			<div class="form-group col-md-6">
+                <label for="inputName">Last Name: <span class="red">*</span></label>
+                <input type="text" id="last_name" name="last_name" value="{{ old('last_name') ?: $record->lname }}" class="form-control"  placeholder="Last Name" />
+                @if ($errors->has('last_name'))
+                    <span class="text-danger">{{ $errors->first('last_name') }}</span>
                 @endif
               </div>
+			   
                <div class="form-group col-md-6">
                 <label for="inputName">Mobile: <span class="red">*</span></label>
                 <input type="text" id="mobile" name="mobile" value="{{ old('mobile') ?: $record->mobile }}" class="form-control"  placeholder="Mobile" />
@@ -71,7 +72,7 @@
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
               </div>
-			  @if($record->logo)
+			  @if($record->image)
 			  <div class="form-group col-md-4">
 			@else
 				<div class="form-group col-md-6">
@@ -82,9 +83,9 @@
                     <span class="text-danger">{{ $errors->first('logo') }}</span>
                 @endif
               </div>
-			   @if($record->logo)
+			   @if($record->image)
               <div class="form-group col-md-2">
-                <img src="{{ url('/uploads/suppliers/thumb/'.$record->logo) }}" width="50"  alt="airlines-logo" />
+                <img src="{{ url('/uploads/suppliers/thumb/'.$record->image) }}" width="50"  alt="airlines-logo" />
               </div>
               @endif
 			  <div class="form-group col-md-6">
@@ -151,7 +152,7 @@
               </div>
                <div class="form-group col-md-6">
                 <label for="inputName">Zip Code: <span class="red">*</span></label>
-                <input type="text" id="zip_code" name="zip_code"  value="{{ old('zip_code') ?: $record->zip_code }}" class="form-control"   />
+                <input type="text" id="zip_code" name="zip_code"  value="{{ old('zip_code') ?: $record->postcode }}" class="form-control"   />
                 @if ($errors->has('zip_code'))
                     <span class="text-danger">{{ $errors->first('zip_code') }}</span>
                 @endif
@@ -160,8 +161,8 @@
               <div class="form-group col-md-6">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">
-                    <option value="1" @if($record->status ==1) {{'selected="selected"'}} @endif>Active</option>
-					          <option value="0" @if($record->status ==0) {{'selected="selected"'}} @endif >Inactive</option>
+                    <option value="1" @if($record->is_active ==1) {{'selected="selected"'}} @endif>Active</option>
+					          <option value="0" @if($record->is_active ==0) {{'selected="selected"'}} @endif >Inactive</option>
                  </select>
               </div>
             </div>

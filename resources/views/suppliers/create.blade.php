@@ -43,13 +43,19 @@
                 @endif
               </div>
                 <div class="form-group col-md-6">
-                <label for="inputName">Name: <span class="red">*</span></label>
-                <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control"  placeholder="Name" />
-                @if ($errors->has('name'))
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                <label for="inputName">First Name: <span class="red">*</span></label>
+                <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" class="form-control"  placeholder="First Name" />
+                @if ($errors->has('first_name'))
+                    <span class="text-danger">{{ $errors->first('first_name') }}</span>
                 @endif
               </div>
-			  
+			   <div class="form-group col-md-6">
+                <label for="inputName">Last Name: <span class="red">*</span></label>
+                <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" class="form-control"  placeholder="Last Name" />
+                @if ($errors->has('last_name'))
+                    <span class="text-danger">{{ $errors->first('last_name') }}</span>
+                @endif
+              </div>
                 <div class="form-group col-md-6">
                 <label for="inputName">Mobile: <span class="red">*</span></label>
                 <input type="text" id="mobile" name="mobile" value="{{ old('mobile') }}" class="form-control"  placeholder="Mobile" />
@@ -62,6 +68,14 @@
                 <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control"  placeholder="Email" />
                 @if ($errors->has('email'))
                     <span class="text-danger">{{ $errors->first('email') }}</span>
+                @endif
+              </div>
+			  <div class="form-group col-md-6">
+                <label for="inputName">Password: <span class="red">*</span></label>
+                <input type="button" class="generate-pass button" value="Generate" onClick="randomPassword(10);" />
+                <input type="password" id="password" name="password" value="{{ old('password') }}" class="form-control pass"  placeholder="Password" /><i class="far fa-eye" id="togglePassword"></i>
+                @if ($errors->has('password'))
+                    <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
               </div>
 			    <div class="form-group col-md-6">
@@ -159,5 +173,32 @@
 @endsection
 
 @section('scripts')
+<script type="text/javascript">
+    function randomPassword(length) {
+        var chars = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890";
+        var pass = "";
+        for (var x = 0; x < length; x++) {
+            var i = Math.floor(Math.random() * chars.length);
+            pass += chars.charAt(i);
+        }
+       // myform.row_password.value = pass;
+        $('#password').val(pass);
+    }
+	
+	$(document).ready(function(){
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+  
+    togglePassword.addEventListener('click', function (e) {
+      // toggle the type attribute
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      // toggle the eye slash icon
+      this.classList.toggle('fa-eye-slash');
+  });
+   });    
+
+   
+  </script> 
  @include('inc.citystatecountryjs')
 @endsection

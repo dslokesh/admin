@@ -17,7 +17,6 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\Country;
 use App\Models\Hotel;
-use App\Models\Supplier;
 use App\Models\Activity;
 use App\Models\Agent;
 use App\Models\Voucher;
@@ -214,7 +213,7 @@ class AuthController extends Controller
 				$userId = Auth::user()->id;
 				$totalUserRecords = User::select('count(*) as allcount')->where('role_id',2)->count();
 				$totalAgentRecords = User::select('count(*) as allcount')->where('role_id',3)->count();
-				$totalSupplierRecords = Supplier::select('count(*) as allcount')->count();
+				$totalSupplierRecords = User::select('count(*) as allcount')->where('role_id',9)->count();
 				$totalCustomerRecords = Customer::select('count(*) as allcount')->count();
 				$totalActivityRecords = Activity::select('count(*) as allcount')->count();
                 $totalHotelRecords = Hotel::select('count(*) as allcount')->count();

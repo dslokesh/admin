@@ -96,7 +96,7 @@
                     <td>{{ $record->company_name}}</td>
                     <td>{{ ($record->city)?$record->city->name:''}}</td>
                     <td>{{ $record->zip_code}}</td>
-                     <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
+                     <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
                      <td>

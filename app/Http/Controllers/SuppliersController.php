@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
-use App\Models\Supplier;
+use App\Models\User;
 use App\Models\Activity;
 use App\Models\ActivityPrices;
 use App\Models\SupplierDetails;
-use App\Models\SupplierPriceMarkup;
+use App\Models\AgentPriceMarkup;
 use Illuminate\Http\Request;
 use DB;
 use Image;
 use Illuminate\Support\Facades\Auth;
+use jeremykenedy\LaravelRoles\Models\Role;
+use jeremykenedy\LaravelRoles\Models\Permission;
 
 class SuppliersController extends Controller
 {
@@ -27,7 +29,7 @@ class SuppliersController extends Controller
 		$this->checkPermissionMethod('list.supplier');
         $data = $request->all();
         $perPage = config("constants.ADMIN_PAGE_LIMIT");
-        $query = Supplier::with(['country', 'state', 'city']);
+        $query = User::with(['country', 'state', 'city'])->where('role_id',9);
         if (isset($data['name']) && !empty($data['name'])) {
             $query->where('name', 'like', '%' . $data['name'] . '%');
         }
@@ -73,10 +75,12 @@ class SuppliersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:255|sanitizeScripts',
+           'first_name' => 'required|max:255|sanitizeScripts',
+            'last_name' => 'required|max:255|sanitizeScripts',
             'mobile' => 'required',
             'address' => 'required',
 			'email' => 'required|max:255|sanitizeScripts|email|unique:suppliers|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
+			'password' => 'required|min:6|max:255|sanitizeScripts',
             'city_id' => 'required',
             'state_id' => 'required',
             'country_id' => 'required',
@@ -84,14 +88,14 @@ class SuppliersController extends Controller
 			//'code' => 'required',
 			'service_type' => 'required'
         ], [
-            'name.sanitize_scripts' => 'Invalid value entered for Name field.',
+            //'name.sanitize_scripts' => 'Invalid value entered for Name field.',
             'country_id.required' => 'The country field is required.',
             'state_id.required' => 'The state field is required.',
         ]);
 
 
 		$input = $request->all();
-        $record = new Supplier();
+        $record = new User();
 		 /** Below code for save image **/
 		$destinationPath = public_path('/uploads/suppliers/');
        
@@ -109,30 +113,33 @@ class SuppliersController extends Controller
 				$constraint->aspectRatio();
 			});
 			$img->save(public_path('/uploads/suppliers/thumb/'.$newName));
-            $record->logo = $newName;
+            $record->image = $newName;
 		}
 		
-        $record->name = $request->input('name');
-		//$record->code = $request->input('code');
+       $record->name = $request->input('first_name');
+        $record->lname = $request->input('last_name');
+		
         $record->mobile = $request->input('mobile');
 		$record->email = $request->input('email');
 		$record->company_name = $request->input('company_name');
 		$record->department = $request->input('department');
-		$record->phone_number = $request->input('phone_number');
+		$record->phone = $request->input('phone_number');
         $record->address = $request->input('address');
-        $record->zip_code = $request->input('zip_code');
+        $record->postcode = $request->input('zip_code');
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
 		$record->service_type = $request->input('service_type');
-        $record->status = $request->input('status');
+        $record->is_active = $request->input('status');
 		$record->created_by = Auth::user()->id;
+		$record->password = bcrypt($request->input('password'));
+		$record->role_id = 9; 
         $record->save();
-		
-		
-		$code = 'SP-900'.$record->id;
-		$recordUser = Supplier::find($record->id);
-		$recordUser->code = $code;
+		$record->attachRole('9');
+		$count = User::where("role_id",9)->count();
+		$code = 'SP-900'.$count;
+		$recordUser = User::find($record->id);
+		$recordUser->supplier_code = $code;
 		$recordUser->save();
 		
         return redirect('suppliers')->with('success', 'Supplier Created Successfully.');
@@ -144,7 +151,7 @@ class SuppliersController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show(User $supplier)
     {
 		$this->checkPermissionMethod('list.supplier');
 		$activity_ids = explode(",",$supplier->activity_id);
@@ -158,7 +165,7 @@ class SuppliersController extends Controller
 			
 			foreach($variants[$aid] as $variant)
 			{
-				$m = SupplierPriceMarkup::where('supplier_id',  $supplier->id)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
+				$m = AgentPriceMarkup::where('agent_id',  $supplier->id)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
 				
 				if(!empty($m))
 				{
@@ -185,7 +192,7 @@ class SuppliersController extends Controller
     public function edit($id)
     {
 		$this->checkPermissionMethod('list.supplier');
-        $record = Supplier::find($id);
+        $record = User::find($id);
         $countries = Country::where('status', 1)->orderBy('name', 'ASC')->get();
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
@@ -202,7 +209,8 @@ class SuppliersController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|max:255|sanitizeScripts',
+           'first_name' => 'required|max:255|sanitizeScripts',
+            'last_name' => 'required|max:255|sanitizeScripts',
             'mobile' => 'required',
             'address' => 'required',
             'city_id' => 'required',
@@ -212,13 +220,13 @@ class SuppliersController extends Controller
 			//'code' => 'required',
 			'service_type' => 'required'
         ], [
-            'name.sanitize_scripts' => 'Invalid value entered for Name field.',
+            //'name.sanitize_scripts' => 'Invalid value entered for Name field.',
             'country_id.required' => 'The country field is required.',
             'state_id.required' => 'The state field is required.',
         ]);
 		
 		$input = $request->all();
-        $record = Supplier::find($id);
+        $record = User::find($id);
 		 /** Below code for save image **/
 		$destinationPath = public_path('/uploads/suppliers/');
        
@@ -236,33 +244,33 @@ class SuppliersController extends Controller
 				$constraint->aspectRatio();
 			});
 			$img->save(public_path('/uploads/suppliers/thumb/'.$newName));
-			if($record->logo != 'no-image.png'){
+			if($record->image != 'no-image.png'){
             //** Below code for unlink old image **//
-			$oldImage = public_path('/uploads/suppliers/'.$record->logo);
-			$oldImageThumb = public_path('/uploads/suppliers/thumb/'.$record->logo);
+			$oldImage = public_path('/uploads/suppliers/'.$record->image);
+			$oldImageThumb = public_path('/uploads/suppliers/thumb/'.$record->image);
 			
-			if(!empty($record->logo) && @getimagesize($oldImage) && file_exists($oldImage)) {
+			if(!empty($record->image) && @getimagesize($oldImage) && file_exists($oldImage)) {
 				unlink($oldImage);
 				unlink($oldImageThumb);
 			}
 			}
 			
-            $record->logo = $newName;
+            $record->image = $newName;
 		}
-        $record->name = $request->input('name');
-		//$record->code = $request->input('code');
+         $record->name = $request->input('first_name');
+        $record->lname = $request->input('last_name');
         $record->mobile = $request->input('mobile');
 		$record->email = $request->input('email');
 		$record->company_name = $request->input('company_name');
 		$record->department = $request->input('department');
-		$record->phone_number = $request->input('phone_number');
+		$record->phone = $request->input('phone_number');
         $record->address = $request->input('address');
-        $record->zip_code = $request->input('zip_code');
+        $record->postcode = $request->input('zip_code');
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
         $record->city_id = $request->input('city_id');
 		$record->service_type = $request->input('service_type');
-        $record->status = $request->input('status');
+        $record->is_active = $request->input('status');
 		$record->updated_by = Auth::user()->id;
         $record->save();
         return redirect('suppliers')->with('success', 'Supplier Updated.');
@@ -276,7 +284,7 @@ class SuppliersController extends Controller
      */
     public function destroy($id)
     {
-        $record = Supplier::find($id);
+        $record = User::find($id);
         $record->delete();
         return redirect('suppliers')->with('success', 'Supplier Deleted.');
     }
@@ -287,7 +295,7 @@ class SuppliersController extends Controller
 		$supplierId = $id;
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
         $records = Activity::where('status', 1)->where('is_price', 1)->orderBy('title', 'ASC')->paginate($perPage);
-		$supplier = Supplier::find($supplierId);
+		$supplier = User::find($supplierId);
 		$activity_ids = explode(",",$supplier->activity_id);
         return view('suppliers.priceActivities', compact('records','supplierId','activity_ids'));
     }
@@ -296,7 +304,7 @@ class SuppliersController extends Controller
     {
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
         $input = $request->all();
-        $supplier = Supplier::find($request->input('supplier_id'));
+        $supplier = User::find($request->input('supplier_id'));
 		
 		$activity_id = $request->input('activity_id');
 		$data = [];
@@ -327,7 +335,7 @@ class SuppliersController extends Controller
     {
 		$this->checkPermissionMethod('list.supplier');
 		$supplierId = $id;
-		$supplier = Supplier::find($supplierId);
+		$supplier = User::find($supplierId);
 		$activity_ids = explode(",",$supplier->activity_id);
 		$activities = Activity::whereIn('id', $activity_ids)->where(['status'=> 1,'is_price'=> 1])->get();
 		$variants = [];
@@ -338,7 +346,7 @@ class SuppliersController extends Controller
 			
 			foreach($variants[$aid] as $variant)
 			{
-				$m = SupplierPriceMarkup::where('supplier_id',  $supplierId)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
+				$m = AgentPriceMarkup::where('agent_id',  $supplierId)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
 				
 				if(!empty($m))
 				{
@@ -363,8 +371,8 @@ class SuppliersController extends Controller
     {
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
         $input = $request->all();
-        $record = new SupplierPriceMarkup();
-		$supplier_id = $request->input('supplier_id');
+        $record = new AgentPriceMarkup();
+		$agent_id = $request->input('supplier_id');
 		$ticket_only = $request->input('ticket_only');
 		$sic_transfer = $request->input('sic_transfer');
 		$pvt_transfer = $request->input('pvt_transfer');
@@ -376,12 +384,12 @@ class SuppliersController extends Controller
 				foreach($acv as $variant_code => $ac)
 				{
 				$data[] = [
-				'supplier_id' => $supplier_id,
+				'agent_id' => $agent_id,
 				'activity_id' => $activity_id,
 				'variant_code' => $variant_code,
-				'ticket_only' => $ac,
-				'sic_transfer' => $sic_transfer[$activity_id][$variant_code],
-				'pvt_transfer' => $pvt_transfer[$activity_id][$variant_code],
+				'ticket_only' => number_format($ac,2),
+				'sic_transfer' => number_format($sic_transfer[$activity_id][$variant_code],2),
+				'pvt_transfer' => number_format($pvt_transfer[$activity_id][$variant_code],2),
 				'created_by' => Auth::user()->id,
 				'updated_by' => Auth::user()->id,
 				];
@@ -391,8 +399,8 @@ class SuppliersController extends Controller
         
 		if(count($data) > 0)
 		{
-			SupplierPriceMarkup::where("supplier_id",$supplier_id)->delete();
-			SupplierPriceMarkup::insert($data);
+			AgentPriceMarkup::where("agent_id",$agent_id)->delete();
+			AgentPriceMarkup::insert($data);
 			 return redirect('suppliers')->with('success', 'Markup saved successfully.');
 		}
 		else

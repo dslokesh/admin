@@ -32,7 +32,7 @@ class UsersController extends Controller
 		$this->checkPermissionMethod('list.subadmin');
         $data = $request->all();
         $user = Auth::user();
-        $query = User::where('role_id','!=', '1')->where('role_id','!=', '3');
+        $query = User::whereNotIN('id', [1,3,9]);
         $query->select('users.*');
         
         if(isset($data['user_name']) && !empty($data['user_name']))
@@ -197,7 +197,7 @@ class UsersController extends Controller
     {
 		$this->checkPermissionMethod('list.subadmin');
         $hashed_random_password = Str::random( 12 );
-        $roles = Role::where('id', '!=' , '1')->where('id', '!=' , '3')->orderBy('name', 'ASC')->get();
+        $roles = Role::whereNotIN('id', [1,3,9])->orderBy('name', 'ASC')->get();
         //pr($roles); die;
         return view('users.create', compact('roles','hashed_random_password'));
     }

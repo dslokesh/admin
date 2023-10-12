@@ -12,7 +12,6 @@ use App\Models\TransferData;
 use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
 use App\Models\AgentAmount;
-use App\Models\Supplier;
 use App\Models\Ticket;
 use App\Models\Country;
 use App\Models\State;
@@ -46,8 +45,8 @@ class ReporsController extends Controller
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
 		$twoDaysAgo = date("Y-m-d", strtotime(date("Y-m-d") . " -2 days"));
-		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
-		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
 		
 		$query = VoucherActivity::where('id','!=', null);
 		
@@ -147,8 +146,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
-		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
-		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
 		
 		$query = VoucherActivity::where('id','!=', null);
 		$twoDaysAgo = date("Y-m-d", strtotime(date("Y-m-d") . " -2 days"));
@@ -421,8 +420,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
-		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
-		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
 		
 		$query = VoucherActivity::where('id','!=', null);
 		
@@ -548,8 +547,8 @@ public function voucherActivtyRefundedReport(Request $request)
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
-		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
-		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
 		
 		$query = VoucherActivity::where('id','!=', null);
 		
@@ -719,8 +718,8 @@ public function voucherActivtyRefundedReport(Request $request)
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
-		$supplier_ticket = Supplier::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
-		$supplier_transfer = Supplier::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
 		
 		$query = VoucherActivity::where('id','!=', null);
 		
