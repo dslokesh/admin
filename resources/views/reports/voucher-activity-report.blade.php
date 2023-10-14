@@ -111,6 +111,8 @@
 					<th>Ref No.</th>
 					<th>Agency</th>
 					<th>Pax Name</th>
+					<th>A</th>
+                    <th>C</th>
 					<th>Service</th>
 					<th>Total Cost</th>
 					<th>Status</th>
@@ -127,6 +129,8 @@
 					<td>{{$record->ticket_supp_ref_no}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
+					 <td>{{$record->adult}}</td>
+                    <td>{{$record->child}}</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
 					<td>{{$record->totalprice}}</td>
 					<td>
