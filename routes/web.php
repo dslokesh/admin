@@ -112,6 +112,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('transfers', TransfersController::class);
         Route::resource('vouchers', VouchersController::class);
         Route::get('auto-agent', [VouchersController::class, 'autocompleteAgent'])->name('auto.agent');
+		Route::get('auto-agent-supp', [AgentsController::class, 'autocompleteAgentSupp'])->name('auto.agent.supp');
         Route::get('auto-customer', [VouchersController::class, 'autocompleteCustomer'])->name('auto.customer');
         Route::get('add-hotels-vouchers/{vid?}', [VouchersController::class, 'addHotelsList'])->name('voucher.add.hotels');
         Route::get('hotel-view-vouchers/{hid?}/{vid?}', [VouchersController::class, 'addHotelsView'])->name('voucher.hotel.view');

@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Agent Amount Debit/Credit</h1>
+            <h1>Agent/Supplier Amount Payment/Receipt</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Agent Amount Debit/Credit</li>
+              <li class="breadcrumb-item active">Agent/Supplier Amount Payment/Receipt</li>
             </ol>
           </div>
         </div>
@@ -28,7 +28,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Agent Amount Debit/Credit</h3>
+                <h3 class="card-title">Agent/Supplier Amount Payment/Receipt</h3>
 				<div class="card-tools">
 				 <a href="{{ route('agentamounts.create') }}" class="btn btn-sm btn-info">
                       <i class="fas fa-plus"></i>
@@ -42,7 +42,7 @@
                   <thead>
                   <tr>
 					<th>Receipt No.</th>
-					<th>Agency Name</th>
+					<th>Agency/Supplier Name</th>
 					<th>Amount</th>
 					<th>Date of Receipt</th>
 					<th>Transaction Type</th>
@@ -59,8 +59,8 @@
 					<th><input type="text" name="date_of_receipt" value="{{request('date_of_receipt')}}" class="form-control datepicker" autocomplete="off" placeholder="Date of Receipt" /></th>
 					<th><select name="transaction_type" id="transaction_type" class="form-control">
                     <option value="" @if(request('transaction_type') =='') {{'selected="selected"'}} @endif>Select</option>
-                    <option value="Debit" @if(request('transaction_type') == 'Debit') {{'selected="selected"'}} @endif>Debit</option>
-					          <option value="Credit" @if(request('transaction_type') == 'Credit') {{'selected="selected"'}} @endif >Credit</option>
+                    <option value="Payment" @if(request('transaction_type') == 'Payment') {{'selected="selected"'}} @endif>Payment</option>
+					          <option value="Receipt" @if(request('transaction_type') == 'Receipt') {{'selected="selected"'}} @endif >Receipt</option>
                  </select></th>
 					<th></th>
 					<th><button class="btn btn-info btn-sm" type="submit">Filter</button>
@@ -104,7 +104,7 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
-    var path = "{{ route('auto.agent') }}";
+    var path = "{{ route('auto.agent.supp') }}";
   
     $( "#agent_id" ).autocomplete({
         source: function( request, response ) {

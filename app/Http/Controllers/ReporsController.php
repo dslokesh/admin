@@ -283,7 +283,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
 		$s = 0;
-		$query = AgentAmount::where('is_vat_invoice','=', '0');
+		$query = AgentAmount::where('is_vat_invoice','=', '0')->where("role_user",3);
 		if(Auth::user()->role_id == '3')
 		{
 			$query->where('agent_id', '=', Auth::user()->id);
@@ -335,26 +335,30 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$voucherStatus = config("constants.voucherStatus");
 		
 		$s = 0;
-		$query = AgentAmount::where('id','!=', null);
+		$openingBalance = 0;
+		$query = AgentAmount::where("id","!=",NULL);
 		if(Auth::user()->role_id == '3')
 		{
+			$agent_id  = Auth::user()->id;
 			$query->where('agent_id', '=', Auth::user()->id);
 		}
 		else
 		{
 			if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+				$agent_id  = $data['agent_id_select'];
 					$query->where('agent_id', '=', $data['agent_id_select']);
 					$s = 1;
 			}
 		}
-		$openingBalance = 0;
+		
 		if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
 			$startDate = date('Y-m-d', strtotime($data['from_date']));
 			$endDate = date('Y-m-d', strtotime($data['to_date']));
 			 $query->whereDate('date_of_receipt', '>=', $startDate);
 			 $query->whereDate('date_of_receipt', '<=', $endDate);
 		$s = 1;
-		$openingBalance = AgentAmount::whereDate('date_of_receipt', '<=', $startDate)->sum('amount');	
+		$openingBalance = AgentAmount::where('agent_id',  $agent_id)->whereDate('date_of_receipt', '<=', $startDate)->sum('amount');
+	
 		}
 		
 		
@@ -374,6 +378,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$agetid = $agentTBA->id;
 		$agetName = $agentTBA->company_name;
 		}
+		
+		
         return view('reports.agent-with-vat-ledger-report', compact('records','voucherStatus','agetid','agetName','openingBalance'));
 
     }
@@ -385,7 +391,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
 		
-		$query = AgentAmount::where('id','!=', null);
+		$query = AgentAmount::where("id","!=",NULL);
 		if(Auth::user()->role_id == '3')
 		{
 			$query->where('agent_id', '=', Auth::user()->id);
@@ -515,7 +521,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 				$agentAmount->agent_id = $agent->id;
 				$agentAmount->amount = $data['val'];
 				$agentAmount->date_of_receipt = date("Y-m-d");
-				$agentAmount->transaction_type = "Credit";
+				$agentAmount->transaction_type = "Receipt";
+				$agentAmount->role_user = 3;
 				$agentAmount->transaction_from = 2;
 				$agentAmount->created_by = Auth::user()->id;
 				$agentAmount->updated_by = Auth::user()->id;

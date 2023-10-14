@@ -520,7 +520,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			   <li class="nav-item">
                 <a href="{{ route('agentLedgerReportWithVat') }}" class="nav-link {{$active}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Agent Ledger</p>
+                  <p>Agent/Supplier Ledger</p>
                 </a>
 				
               </li>
@@ -584,7 +584,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			 <li class="nav-item">
                 <a href="{{ route('agentamounts.index') }}" class="nav-link {{$active}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Agent Amounts</p>
+                  <p>Agent/Supplier Amounts</p>
                 </a>
 				
               </li>

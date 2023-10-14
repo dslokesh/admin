@@ -139,7 +139,7 @@ class SuppliersController extends Controller
 		$count = User::where("role_id",9)->count();
 		$code = 'SP-900'.$count;
 		$recordUser = User::find($record->id);
-		$recordUser->supplier_code = $code;
+		$recordUser->code = $code;
 		$recordUser->save();
 		
         return redirect('suppliers')->with('success', 'Supplier Created Successfully.');

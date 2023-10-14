@@ -596,4 +596,48 @@ class AgentsController extends Controller
 		
     }
 	
+	public function autocompleteAgentSupp(Request $request)
+    {
+		$search  = $request->get('search');
+		$nameOrCompany  = ($request->get('nameorcom'))?$request->get('nameorcom'):'Company';
+		if($nameOrCompany == 'Company'){
+        $users = User::whereIn('role_id', [3,9])
+					->where('is_active', 1)
+					->where(function ($query) use($search) {
+						$query->where('company_name', 'LIKE', '%'. $search. '%')
+						->orWhere('code', 'LIKE', '%'. $search. '%')
+						->orWhere('mobile', 'LIKE', '%'. $search. '%');
+					})->get();
+		$response = array();
+      foreach($users as $user){
+		  if($user->role_id == 3){
+		   $agentDetails = '<b>Address: </b>'.$user->address. " ".$user->postcode.'<br/><b>Mobile No: </b>'.$user->mobile.'<br/><b>Tin No: </b>'.$user->vat.'<br/><b>Available Limit: </b> AED '.$user->agent_amount_balance;
+		  } else {
+			 $agentDetails = '<b>Address: </b>'.$user->address. " ".$user->postcode.'<br/><b>Mobile No: </b>'.$user->mobile;  
+			}
+         $response[] = array("value"=>$user->id,"label"=>$user->company_name.'('.$user->code.')',"agentDetails"=>$agentDetails);
+      }
+	}
+	elseif($nameOrCompany == 'Name'){
+        $users = User::whereIn('role_id', [3,9])
+					->where('is_active', 1)
+					->where(function ($query) use($search) {
+						$query->where('name', 'LIKE', '%'. $search. '%')
+						->orWhere('code', 'LIKE', '%'. $search. '%')
+						->orWhere('mobile', 'LIKE', '%'. $search. '%');
+					})->get();
+		$response = array();
+      foreach($users as $user){
+		   if($user->role_id == 3){
+		  $agentDetails = '<b>Code:</b> '.$user->code.' <b>Email:</b>'.$user->email.' <b> Mobile No:</b>'.$user->mobile.' <b>Address:</b>'.$user->address. " ".$user->postcode;
+		  } else {
+			 $agentDetails = '<b>Address: </b>'.$user->address. " ".$user->postcode.'<br/><b>Mobile No: </b>'.$user->mobile;  
+			}
+		   
+         $response[] = array("value"=>$user->id,"label"=>$user->full_name.'('.$user->code.')',"agentDetails"=>$agentDetails);
+      }
+	}	  
+        return response()->json($response);
+    }
+	
 }

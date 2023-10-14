@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Agent Amount Add</h1>
+            <h1>Agent/Supplier Amount Add</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('agentamounts.index') }}">Agent Amounts</a></li>
-              <li class="breadcrumb-item active">Agent Amount Add</li>
+              <li class="breadcrumb-item"><a href="{{ route('agentamounts.index') }}">Agent/Supplier Amounts</a></li>
+              <li class="breadcrumb-item active">Agent/Supplier Amount Add</li>
             </ol>
           </div>
         </div>
@@ -27,11 +27,11 @@
         <div class="col-md-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Add Agent Amount</h3>
+              <h3 class="card-title">Add Agent/Supplier Amount</h3>
             </div>
             <div class="card-body row">
               <div class="form-group col-md-12">
-                <label for="inputName">Agency Name: <span class="red">*</span></label>
+                <label for="inputName">Agency / Supplier Name: <span class="red">*</span></label>
                 <input type="text" id="agent_id" name="agent_id" value="{{ old('agent_id') }}" class="form-control"  placeholder="Agency Name" />
                 @if ($errors->has('agent_id'))
                     <span class="text-danger">{{ $errors->first('agent_id') }}</span>
@@ -59,8 +59,8 @@
 			   <div class="form-group col-md-4">
                 <label for="inputName">Transaction Type:</label>
                 <select name="transaction_type" id="transaction_type" class="form-control">
-                    <option value="Debit" @if(old('transaction_type') == 'Debit') {{'selected="selected"'}} @endif>Debit</option>
-					<option value="Credit" @if(old('transaction_type') == 'Credit') {{'selected="selected"'}} @endif >Credit</option>
+                    <option value="Payment" @if(old('transaction_type') == 'Payment') {{'selected="selected"'}} @endif>Payment</option>
+					<option value="Receipt" @if(old('transaction_type') == 'Receipt') {{'selected="selected"'}} @endif >Receipt</option>
                  </select>
               </div>
 			   <div class="form-group col-md-6">
@@ -99,7 +99,7 @@
 @section('scripts')
 @include('inc.citystatecountryjs')
 <script type="text/javascript">
-    var path = "{{ route('auto.agent') }}";
+    var path = "{{ route('auto.agent.supp') }}";
   
     $( "#agent_id" ).autocomplete({
         source: function( request, response ) {

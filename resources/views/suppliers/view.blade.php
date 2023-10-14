@@ -48,7 +48,7 @@
               </div>
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Code:</label>
-                {{ $supplier->supplier_code }}
+                {{ $supplier->code }}
               </div>
 			  <div class="col-lg-6 mb-3">
                 <label for="inputName">Mobile:</label>

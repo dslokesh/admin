@@ -83,13 +83,14 @@ class AgentAmountController extends Controller
 		
 		
 		$date_of_receipt = $request->input('date_of_receipt'); 
-		
+		$agent = User::find($request->input('agent_id_select'));
         $record = new AgentAmount();
         $record->agent_id = $request->input('agent_id_select');
 		$record->amount = $request->input('amount');
 		$record->date_of_receipt = $date_of_receipt;
 		$record->transaction_type = $request->input('transaction_type');
 		$record->transaction_from = 1;
+		$record->role_user = $agent->role_id;
 		$record->remark = $request->input('remark');
         $record->is_vat_invoice = $request->input('is_vat_invoice');
 		$record->created_by = Auth::user()->id;
@@ -100,23 +101,22 @@ class AgentAmountController extends Controller
 		$recordUser = AgentAmount::find($record->id);
 		$recordUser->receipt_no = $receipt_no;
 		
-		
-		if(($request->input('transaction_type') == "Credit"))
-		{
-			$agent = User::find($record->agent_id);
-			$agent->agent_amount_balance += $request->input('amount');
-			$agent->save();
-			$recordUser->save();
-		}else if(($request->input('transaction_type') == "Debit"))
-		{
-			$agent = User::find($record->agent_id);
-			if($agent->agent_amount_balance >= $request->input('amount')){
-			$agent->agent_amount_balance -= $request->input('amount');
-			$agent->save();
-			$recordUser->save();
-			}
-			else{
-				return redirect()->route('agentamounts.index')->with('error', 'Agency amount cannot be set to 0.');
+		if(Auth::user()->role_id == '3'){
+			if(($request->input('transaction_type') == "Receipt"))
+			{
+				$agent->agent_amount_balance += $request->input('amount');
+				$agent->save();
+				$recordUser->save();
+			}else if(($request->input('transaction_type') == "Payment"))
+			{
+				if($agent->agent_amount_balance >= $request->input('amount')){
+				$agent->agent_amount_balance -= $request->input('amount');
+				$agent->save();
+				$recordUser->save();
+				}
+				else{
+					return redirect()->route('agentamounts.index')->with('error', 'Agency amount cannot be set to 0.');
+				}
 			}
 		}
 		

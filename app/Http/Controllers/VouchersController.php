@@ -466,8 +466,9 @@ class VouchersController extends Controller
 			$agentAmount->agent_id = $record->agent_id;
 			$agentAmount->amount = $grandTotal;
 			$agentAmount->date_of_receipt = date("Y-m-d");
-			$agentAmount->transaction_type = "Debit";
+			$agentAmount->transaction_type = "Payment";
 			$agentAmount->transaction_from = 2;
+			$agentAmount->role_user = 3;
 			$agentAmount->created_by = Auth::user()->id;
 			$agentAmount->updated_by = Auth::user()->id;
 			$agentAmount->save();

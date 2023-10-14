@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Agent Ledger</h1>
+            <h1>Agent/Supplier Ledger</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Agent Ledger</li>
+              <li class="breadcrumb-item active">Agent/Supplier Ledger</li>
             </ol>
           </div>
         </div>
@@ -43,9 +43,9 @@
 			   <div class="col-auto col-md-3">
                 <div class="input-group mb-2">
                   <div class="input-group-prepend">
-                    <div class="input-group-text">Agency</div>
+                    <div class="input-group-text">Agency/Supplier</div>
                   </div>
-                <input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency Name" />
+                <input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency/Supplier Name" />
 					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />
                 </div>
               </div>
@@ -75,12 +75,12 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Agency Name</th>
+                    <th>Agency/Supplier Name</th>
 					<th>Date</th>
 					<th>Receipt No/ Inovice No.</th>
 					<th>Transaction From</th>
-					<th>Debit Amount</th>
-					<th>Credit Amount</th>
+					<th>Payment</th>
+					<th>Receipt</th>
 					<th>Opening Balance</th>
                   </tr>
 				  
@@ -108,7 +108,7 @@
 					{{($record->transaction_from == '3')?'Canceled':''}}
 					</td>
 					<td>
-					@if($record->transaction_type == 'Debit')
+					@if($record->transaction_type == 'Payment')
 					{{$record->amount}}
 					@php
 						$totalDebit += $record->amount;
@@ -116,14 +116,14 @@
 					@endif
 					
 				</td>
-					<td>@if($record->transaction_type == 'Credit')
+					<td>@if($record->transaction_type == 'Receipt')
 						@php
 						$totalCredit += $record->amount;
 						@endphp
 					
 					{{$record->amount}}
 					@endif</td>
-					 <th>{{($k==0)?$openingBalance:''}}</th>
+					 <th>{{($k==0)?$openingBalance:'0'}}</th>
 					</tr>
                   </tbody>
                   @endforeach
@@ -170,7 +170,7 @@
  <script type="text/javascript">
 $(document).ready(function() {
 	
-var path = "{{ route('auto.agent') }}";
+var path = "{{ route('auto.agent.supp') }}";
   
     $( "#agent_id" ).autocomplete({
         source: function( request, response ) {
