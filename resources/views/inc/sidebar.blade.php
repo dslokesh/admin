@@ -382,6 +382,22 @@ $controller = preg_replace('/.*\\\/', '', $controller);
             </a>
           </li>
 		   @endpermission
+		    @permission('list.TicketStockReport') 
+		   @php
+          $class=''; $active='';
+          if($controller == 'ReporsController' and in_array($action,array('ticketStockReport'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+			  <li class="nav-item">
+                <a href="{{ route('ticketStockReport') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ticket Stock Report</p>
+                </a>
+				
+              </li>
+			@endpermission  
 		  <li class="nav-item has-treeview">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-user"></i>
@@ -620,20 +636,7 @@ $controller = preg_replace('/.*\\\/', '', $controller);
                 </a>
 				
               </li>
-			 @php
-          $class=''; $active='';
-          if($controller == 'ReporsController' and in_array($action,array('ticketStockReport'))){
-            $class = 'menu-open';
-            $active = 'active';
-          }
-          @endphp     
-			  <li class="nav-item">
-                <a href="{{ route('ticketStockReport') }}" class="nav-link {{$active}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Ticket Stock Report</p>
-                </a>
-				
-              </li>
+			 
 			 	@php
         $class=''; $active='';
         if($controller == 'TicketsController' and in_array($action,array('generatedTickets'))){

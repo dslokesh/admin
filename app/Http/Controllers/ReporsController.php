@@ -627,6 +627,7 @@ public function voucherActivtyRefundedReport(Request $request)
 	
 	public function ticketStockReport(Request $request)
     {
+		$this->checkPermissionMethod('list.TicketStockReport');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$activities = Activity::where('status', 1)->orderBy('title', 'ASC')->get();
