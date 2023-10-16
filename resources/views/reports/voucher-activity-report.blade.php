@@ -39,7 +39,7 @@
               <div class="card-header">
 				<div class="card-tools">
 				 <div class="row">
-				 <!--<a href="{{ route('voucherReportExport', request()->input()) }}" class="btn btn-info btn-sm mb-2 mr-4">Export to CSV</a>-->
+				<a href="{{ route('voucherActivityReportExcelReport', request()->input()) }}" class="btn btn-info btn-sm mb-2 mr-4">Export to CSV</a>
 				   </div></div>
 				   
               </div>

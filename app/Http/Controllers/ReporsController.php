@@ -29,6 +29,7 @@ use App\Exports\VoucherActivityRefundExport;
 use App\Exports\VoucherActivityCancelExport;
 use App\Exports\TicketStockExport;
 use App\Exports\AgentLedgerExport;
+use App\Exports\VoucherActivityVouchredExport;
 
 class ReporsController extends Controller
 {
@@ -61,18 +62,18 @@ class ReporsController extends Controller
 				}
 				elseif($data['booking_type'] == 1) {
 					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
-				 $q->where('booking_date', '>=', $startDate);
-				 $q->where('booking_date', '<=', $endDate);
+				 $q->whereDate('booking_date', '>=', $startDate);
+				 $q->whereDate('booking_date', '<=', $endDate);
 				});
 		
 				}
 				}
 				else{
-			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			// $query->whereDate('tour_date', '>=', $twoDaysAgo);
 			}
 			}
 			else{
-			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			 //$query->whereDate('tour_date', '>=', $twoDaysAgo);
 		}
         if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
 			$query->whereHas('voucher', function($q)  use($data){
@@ -110,8 +111,8 @@ class ReporsController extends Controller
 				}
 				elseif($data['booking_type'] == 1) {
 					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
-				 $q->where('booking_date', '>=', $startDate);
-				 $q->where('booking_date', '<=', $endDate);
+				 $q->whereDate('booking_date', '>=', $startDate);
+				 $q->whereDate('booking_date', '<=', $endDate);
 				});
 		
 				}
@@ -162,8 +163,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 				}
 				elseif($data['booking_type'] == 1) {
 					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
-				 $q->where('booking_date', '>=', $startDate);
-				 $q->where('booking_date', '<=', $endDate);
+				 $q->whereDate('booking_date', '>=', $startDate);
+				 $q->whereDate('booking_date', '<=', $endDate);
 				});
 		
 				}
@@ -199,6 +200,18 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$record = VoucherActivity::find($data['id']);
         $record->{$data['inputname']} = $data['val'];
         $record->save();
+		$response[] = array("status"=>1);
+        return response()->json($response);
+	}
+	
+	public function voucherReportSaveInVoucher(Request $request)
+    {
+		$data = $request->all();
+		$record = Voucher::find($data['id']);
+        $record->{$data['inputname']} = $data['val'];
+		if(($data['inputname'] == 'guest_name') OR ($data['inputname'] == 'guest_phone')){
+        $record->save();
+		}
 		$response[] = array("status"=>1);
         return response()->json($response);
 	}
@@ -727,7 +740,7 @@ public function voucherActivtyRefundedReport(Request $request)
    
    public function voucherActivityReport(Request $request)
     {
-		$this->checkPermissionMethod('list.voucherTicketOnlyReport');
+		$this->checkPermissionMethod('list.voucherActivityReport');
 		$data = $request->all();
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
@@ -747,8 +760,8 @@ public function voucherActivtyRefundedReport(Request $request)
 				}
 				elseif($data['booking_type'] == 1) {
 					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
-				 $q->where('booking_date', '>=', $startDate);
-				 $q->where('booking_date', '<=', $endDate);
+				 $q->whereDate('booking_date', '>=', $startDate);
+				 $q->whereDate('booking_date', '<=', $endDate);
 				});
 		
 				}
@@ -770,6 +783,52 @@ public function voucherActivtyRefundedReport(Request $request)
 		//$records = $query->orderBy('created_at', 'DESC')->get();
 		
         return view('reports.voucher-activity-report', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
+
+    }
+	
+	 public function voucherActivityReportExcelReport(Request $request)
+    {
+		$this->checkPermissionMethod('list.voucherActivityReport');
+		$data = $request->all();
+		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$voucherStatus = config("constants.voucherStatus");
+		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
+		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
+		
+		$query = VoucherActivity::where('id','!=', null);
+		
+		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
+			
+			if (isset($data['from_date']) && !empty($data['from_date']) &&  isset($data['to_date']) && !empty($data['to_date'])) {
+			$startDate = $data['from_date'];
+			$endDate =  $data['to_date'];
+				if($data['booking_type'] == 2) {
+				 $query->whereDate('tour_date', '>=', $startDate);
+				 $query->whereDate('tour_date', '<=', $endDate);
+				}
+				elseif($data['booking_type'] == 1) {
+					$query->whereHas('voucher', function($q)  use($startDate,$endDate){
+				 $q->whereDate('booking_date', '>=', $startDate);
+				 $q->whereDate('booking_date', '<=', $endDate);
+				});
+		
+				}
+				}
+			}
+        if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('code', '=', $data['vouchercode']);
+			});
+		}
+		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
+		$query->whereHas('voucher', function($q) use ($data) {
+			$statuses = is_array($data['booking_status']) ? $data['booking_status'] : [$data['booking_status']];
+				$q->whereIn('status_main', $statuses);
+		});
+		}
+		
+		$records = $query->orderBy('created_at', 'DESC')->get();
+		return Excel::download(new VoucherActivityVouchredExport($records), 'voucher_activity_report'.date('d-M-Y s').'.csv');
 
     }
 }

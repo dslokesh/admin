@@ -679,11 +679,13 @@ class AgentVouchersController extends Controller
 			if($agentAmountBalance >= $total_activity_amount)
 			{
 			
+			$voucherCount = Voucher::where('status_main',5)->count();
+			$voucherCountNumber = $voucherCount +1;
 			if($record->vat_invoice == 1)
 			{
-			$code = 'VIN-100'.$record->id;
+			$code = 'VIN-100'.$voucherCountNumber;
 			}else{
-			$code = 'WVIN-100'.$record->id;
+			$code = 'WVIN-100'.$voucherCountNumber;
 			}
 			
 			$record->booking_date = date("Y-m-d");

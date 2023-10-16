@@ -135,7 +135,8 @@
 					<td>{{$record->transfer_option}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
-					<td>{{($record->voucher)?$record->voucher->guest_phone:''}}</td>
+					<td>
+					<input type="text"  class="form-control inputsaveV" id="guest_phone{{$record->id}}" data-name="guest_phone"  data-id="{{$record->voucher_id}}" value="{{($record->voucher)?$record->voucher->guest_phone:''}}" /></td>
 					 <td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
                     <td>{{$record->infant}}</td>
@@ -278,6 +279,29 @@ $(document).ready(function() {
             }
           });
 	 });
+	 
+	 $(document).on('change', '.inputsaveV', function(evt) {
+		$("#loader-overlay").show();
+		$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+		$.ajax({
+            url: "{{route('voucherReportSaveInVoucher')}}",
+            type: 'POST',
+            dataType: "json",
+            data: {
+               id: $(this).data('id'),
+			   inputname: $(this).data('name'),
+			   val: $(this).val()
+            },
+            success: function( data ) {
+               //console.log( data );
+			  $("#loader-overlay").hide();
+            }
+          });
+	 });	
 });
 
   </script> 
