@@ -366,7 +366,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 	
 		}
 		
-		
+		$openingBalance =number_format($openingBalance,2);
 		
 		if($s == 1){	
         $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
