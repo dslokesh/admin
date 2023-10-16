@@ -336,6 +336,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		
 		$s = 0;
 		$openingBalance = 0;
+		$agent_id = '';
 		$query = AgentAmount::where("id","!=",NULL);
 		if(Auth::user()->role_id == '3')
 		{
@@ -357,7 +358,11 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 			 $query->whereDate('date_of_receipt', '>=', $startDate);
 			 $query->whereDate('date_of_receipt', '<=', $endDate);
 		$s = 1;
+		if($agent_id!=''){
 		$openingBalance = AgentAmount::where('agent_id',  $agent_id)->whereDate('date_of_receipt', '<=', $startDate)->sum('amount');
+		} else {
+			$openingBalance = AgentAmount::whereDate('date_of_receipt', '<=', $startDate)->sum('amount');
+		}
 	
 		}
 		
