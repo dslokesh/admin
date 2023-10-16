@@ -448,12 +448,13 @@ class VouchersController extends Controller
 			if($agentAmountBalance >= $grandTotal)
 			{
 				
-			$voucherCount = Voucher::where('status_main',"5")->count();
+			$voucherCount = Voucher::where('status_main',5)->count();
+			$voucherCountNumber = $voucherCount +1;
 			if($record->vat_invoice == 1)
 			{
-			$code = 'VIN-100'.$voucherCount+1;
+			$code = 'VIN-100'.$voucherCountNumber;
 			}else{
-			$code = 'WVIN-100'.$voucherCount+1;
+			$code = 'WVIN-100'.$voucherCountNumber;
 			}
 			
 			$record->booking_date = date("Y-m-d");
