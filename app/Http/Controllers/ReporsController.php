@@ -372,9 +372,13 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 			 $query->whereDate('date_of_receipt', '<=', $endDate);
 		$s = 1;
 		if($agent_id!=''){
-		$openingBalance = AgentAmount::where('agent_id',  $agent_id)->whereDate('date_of_receipt', '<=', $startDate)->sum('amount');
+		$payment = AgentAmount::where('agent_id',  $agent_id)->whereDate('date_of_receipt', '<=', $startDate)->where("transaction_type","Payment")->sum('amount');
+		$receipt = AgentAmount::where('agent_id',  $agent_id)->whereDate('date_of_receipt', '<=', $startDate)->where("transaction_type","Receipt")->sum('amount');
+		$openingBalance = $receipt - $payment;
 		} else {
-			$openingBalance = AgentAmount::whereDate('date_of_receipt', '<=', $startDate)->sum('amount');
+			$payment = AgentAmount::whereDate('date_of_receipt', '<=', $startDate)->where("transaction_type","Payment")->sum('amount');
+		$receipt = AgentAmount::whereDate('date_of_receipt', '<=', $startDate)->where("transaction_type","Receipt")->sum('amount');
+		$openingBalance = $receipt - $payment;
 		}
 	
 		}
