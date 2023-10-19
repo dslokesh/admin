@@ -16,6 +16,7 @@ use App\Models\TransferData;
 use App\Models\Activity;
 use App\Models\Voucher;
 use App\Models\Ticket;
+use App\Models\VoucherActivityLog;
 
 class SiteHelpers
 {
@@ -252,8 +253,9 @@ class SiteHelpers
 			$color = '<span class="badge bg-success">Vouchered</span>';
 		} else if($val == 6) {
 			$color = '<span class="badge bg-danger">Canceled</span>';
+		} else if($val == 7) {
+			$color = '<span class="badge bg-danger">Invoice Edit Requested</span>';
 		}
-		 
 		 return $color;
 	}
 	
@@ -675,5 +677,22 @@ class SiteHelpers
 		$days =  (abs(round($diff / 86400)))+1;
 		return $days;
 	}
+	
+	
+	public function voucherActivityLog($vid,$vaid,$discount,$priceTotal,$voucherstatus)
+    {
+		$data = [
+			'voucher_id'=>$vid,
+			'voucher_activity_id'=>$vaid,
+			'discount'=>$discount,
+			'priceTotal'=>$priceTotal,
+			'voucher_status'=>$voucherstatus,
+			'created_by'=> auth()->user()->id,
+		];
+		
+		$voucherActivity = VoucherActivityLog::create($data);
+		
+		return $voucherActivity;
+    }
 	
 }

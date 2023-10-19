@@ -20,6 +20,7 @@ use App\Models\AgentPriceMarkup;
 use App\Models\TransferData;
 use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
+use App\Models\VoucherActivityLog;
 use DB;
 use SiteHelpers;
 use Carbon\Carbon;
@@ -514,6 +515,9 @@ class VouchersController extends Controller
 			$record->save();
 		}
 		
+		foreach($voucherActivityRecord as $vac){
+			SiteHelpers::voucherActivityLog($record->id,$vac->id,$vac->discountPrice,$vac->totalprice,$record->status_main);
+		}
 		
 		if($record->status_main > 3){
 			return redirect()->route('voucherView',$record->id)->with('success', 'Voucher Created Successfully.');
@@ -1186,6 +1190,216 @@ class VouchersController extends Controller
 		return redirect()->back()->with('error', "Ticket already downloaded you can not cancel this.");		
 		}
 	}
+	
+	
+	public function invoiceStatusChange(Request $request,$id)
+    {
+		$this->checkPermissionMethod('list.invoiceEditButton');
+		$data = $request->all();
+		$hotelPriceTotal = 0;
+		$grandTotal = 0;
+		$record = Voucher::where('id',$id)->first();
+		
+		if (empty($record)) {
+            return abort(404); //record not found
+        }
+
+		$voucherActivity = VoucherActivity::where('voucher_id',$record->id);
+		$voucherActivityRecord = $voucherActivity->get();
+		$agent = User::find($record->agent_id);
+		
+		if(!empty($agent))
+		{
+			
+			$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->get();
+			
+			$agentAmountBalance = $agent->agent_amount_balance;
+			$total_activity_amount = $record->voucheractivity->sum('totalprice');
+			$total_discountPrice = $record->voucheractivity->sum('discountPrice');
+			$grandTotal = $total_activity_amount;
+		
+			$record->status_main = 7;
+			$record->save();
+			$agent->agent_amount_balance += $grandTotal;
+			$agent->save();
+			
+			$agentAmount = new AgentAmount();
+			$agentAmount->agent_id = $record->agent_id;
+			$agentAmount->amount = $grandTotal;
+			$agentAmount->date_of_receipt = date("Y-m-d");
+			$agentAmount->transaction_type = "Receipt";
+			$agentAmount->transaction_from = 2;
+			$agentAmount->role_user = 3;
+			$agentAmount->created_by = Auth::user()->id;
+			$agentAmount->updated_by = Auth::user()->id;
+			$agentAmount->save();
+			foreach($voucherActivity as $vac){
+			SiteHelpers::voucherActivityLog($record->id,$vac->id,$vac->discountPrice,$vac->totalprice,$record->status_main);
+			}
+			 return redirect()->back()->with('success', 'Request processed successfully.');
+		}
+		else{
+				 return redirect()->back()->with('error', 'Agency  Name not found this voucher.');
+			}
+		
+		}
+		
+		
+	public function invoicePriceStatusList(Request $request)
+    {
+		
+		$this->checkPermissionMethod('list.invoiceEditList');
+		 $perPage = config("constants.ADMIN_PAGE_LIMIT");
+		 $data = $request->all();
+		$query = Voucher::where('id','!=', null);
+		if (isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+            $query->where('agent_id', $data['agent_id_select']);
+        }
+		
+		if (isset($data['code']) && !empty($data['code'])) {
+            $query->where('code', 'like', '%' . $data['code'] . '%');
+        }
+		if (isset($data['guest_name']) && !empty($data['guest_name'])) {
+            $query->where('guest_name', 'like', '%' . $data['guest_name'] . '%');
+        }
+		
+		
+                $query->where('status_main', 7);
+        
+		
+		if (isset($data['is_hotel']) && !empty($data['is_hotel'])) {
+            if ($data['is_hotel'] == 1)
+                $query->where('is_hotel', 1);
+            if ($data['is_hotel'] == 2)
+                $query->where('is_hotel', 0);
+        }
+		
+		if (isset($data['is_flight']) && !empty($data['is_flight'])) {
+            if ($data['is_flight'] == 1)
+                $query->where('is_flight', 1);
+            if ($data['is_flight'] == 2)
+                $query->where('is_flight', 0);
+        }
+		
+		if (isset($data['is_activity']) && !empty($data['is_activity'])) {
+            if ($data['is_activity'] == 1)
+                $query->where('is_activity', 1);
+            if ($data['is_activity'] == 2)
+                $query->where('is_activity', 0);
+        }
+		
+        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+		$agetid = '';
+		$agetName = '';
+		
+		if(old('agent_id')){
+		$agentTBA = User::where('id', old('agent_id_select'))->where('status', 1)->first();
+		$agetid = $agentTBA->id;
+		$agetName = $agentTBA->company_name;
+		}
+		
+        return view('vouchers.invoice-price-status-list', compact('records','agetid','agetName'));
+
+    }
+	
+	
+	public function invoicePriceChangeView(Voucher $voucher)
+    {
+		$this->checkPermissionMethod('list.invoiceEditList');
+		$this->checkPermissionMethod('list.voucher');
+		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
+		
+		if($voucher->status_main != 7)
+		{
+			 return redirect()->back()->with('error', 'Something went wrong. please try again');
+		}
+		$voucherStatus = config("constants.voucherStatus");
+	
+		$name = explode(' ',$voucher->guest_name);
+		
+		$fname = '';
+		$lname = '';
+		if(!empty($name)){
+			$fname = trim($name[0]);
+			unset($name[0]);
+			$lname = trim(implode(' ', $name));
+		}
+
+        return view('vouchers.invoice-price-change-view-from', compact('voucher','voucherHotel','voucherActivity','voucherStatus','fname','lname'));
+    }
+	
+	
+	public function invoicePriceChangeSave(Request $request,$id)
+    {
+		$this->checkPermissionMethod('list.invoiceEditList');
+		$data = $request->all();
+		$hotelPriceTotal = 0;
+		$grandTotal = 0;
+		$record = Voucher::where('id',$id)->first();
+		
+		if (empty($record)) {
+            return abort(404); //record not found
+        }
+
+		$voucherActivity = VoucherActivity::where('voucher_id',$record->id);
+		$voucherActivityRecord = $voucherActivity->get();
+		$agent = User::find($record->agent_id);
+		$aData = [];
+		if(!empty($agent))
+		{
+			$discountRecord = $data['discount'];
+			foreach($voucherActivityRecord as $var){
+				$dis = $discountRecord[$var->id];
+				$tPrice = $var->totalprice + $var->discountPrice;
+				if($dis > $tPrice){
+					 return redirect()->back()->with('error', 'Discount not greater than total amount.');
+				}
+				$aData[] =[
+				"id" => $var->id,
+				"totalprice" => $tPrice - $dis,
+				"discountPrice" => $dis,
+				];
+				
+			}
+			
+			foreach($aData as $var1){
+				$vA = VoucherActivity::find($var1['id']);
+				$vA->totalprice = $var1['totalprice'];
+				$vA->discountPrice = $var1['discountPrice'];
+				$vA->save();
+				SiteHelpers::voucherActivityLog($record->id,$var1['id'],$var1['discountPrice'],$var1['totalprice'],5);
+			}
+			$total_activity_amount = VoucherActivity::where('voucher_id',$record->id)->sum('totalprice');
+			$agentAmountBalance = $agent->agent_amount_balance;
+			$grandTotal = $total_activity_amount;
+		
+			$record->status_main = 5;
+			$record->save();
+			$agent->agent_amount_balance -= $grandTotal;
+			$agent->save();
+			
+			$agentAmount = new AgentAmount();
+			$agentAmount->agent_id = $record->agent_id;
+			$agentAmount->amount = $grandTotal;
+			$agentAmount->date_of_receipt = date("Y-m-d");
+			$agentAmount->transaction_type = "Payment";
+			$agentAmount->transaction_from = 2;
+			$agentAmount->role_user = 3;
+			$agentAmount->created_by = Auth::user()->id;
+			$agentAmount->updated_by = Auth::user()->id;
+			$agentAmount->save();
+			foreach($voucherActivity as $vac){
+			SiteHelpers::voucherActivityLog($record->id,$vac->id,$vac->discountPrice,$vac->totalprice,$record->status_main);
+			}
+			return redirect()->route('vouchers.index')->with('success', 'Voucher '.$record->code.' Invoice Successfully Updated.');
+		}
+		else{
+				 return redirect()->back()->with('error', 'Agency  Name not found this voucher.');
+			}
+		
+		}
+	
 }
 
 	

@@ -331,6 +331,23 @@ $controller = preg_replace('/.*\\\/', '', $controller);
             </a>
           </li>
 		   @endpermission
+		   @permission('list.invoiceEditList')
+		   @php
+          $class=''; $active='';
+          if($controller == 'VouchersController' and in_array($action,array('aoucherActivityPriceStatusList'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp     
+		   <li class="nav-item">
+                <a href="{{ route('invoicePriceStatusList') }}" class="nav-link {{$active}}">
+               <i class="nav-icon fas fa-gift"></i>
+              <p>
+                Edit Invoice
+              </p>
+            </a>
+          </li>
+		  @endpermission
 		  @permission('list.logisticreport') 
 			    @php
           $class=''; $active='';

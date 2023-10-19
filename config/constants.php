@@ -31,6 +31,7 @@ return [
 	4 => 'Confirm',
 	5 => 'Vouchered',
 	6 => 'Canceled',
+	7 => 'Invoice Edit Requested',
 	],
 	'voucherActivityStatus' => [
 	0 => 'Booked',

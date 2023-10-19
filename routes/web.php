@@ -156,6 +156,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::delete('agent-voucher-activity-delete/{id}', [AgentVouchersController::class, 'destroyActivityFromVoucher'])->name('agent.voucher.activity.delete');
 		Route::post('agent-voucher-activity-cancel/{id}', [AgentVouchersController::class, 'cancelActivityFromVoucher'])->name('agent-voucher.activity.cancel');
         Route::post('agent-voucher-status-change/{id}', [AgentVouchersController::class, 'statusChangeVoucher'])->name('agent.vouchers.status.change');
+		
         Route::get('auto-hotel', [AgentVouchersController::class, 'autocompleteHotel'])->name('auto.hotel');
 		Route::get('agent-voucher-view/{vid?}', [AgentVouchersController::class, 'agentVoucherView'])->name('agentVoucherView');
 
@@ -178,6 +179,11 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		Route::get('generated-tickets', [TicketsController::class, 'generatedTickets'])->name('tickets.generated.tickets');
         Route::get('permissions', [PermissionRoleController::class, 'index'])->name('permrole.index');
         Route::post('permissions/save', [PermissionRoleController::class, 'postSave'])->name('permrole.save');
+		
+		Route::post('invoice-status-change/{id}', [VouchersController::class, 'invoiceStatusChange'])->name('invoice.status.change');
+		Route::get('invoice-price-chnage-list', [VouchersController::class, 'invoicePriceStatusList'])->name('invoicePriceStatusList');
+		Route::get('invoice-price-change-view/{voucher}', [VouchersController::class, 'invoicePriceChangeView'])->name('invoicePriceChangeView');
+		Route::post('invoice-price-change-save/{vid}', [VouchersController::class, 'invoicePriceChangeSave'])->name('invoicePriceChangeSave');
     });
 });
 

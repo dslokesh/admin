@@ -68,12 +68,12 @@
                     <th><select name="status" id="status" class="form-control">
                     <option value="" @if(request('status') =='') {{'selected="selected"'}} @endif>Select</option>
                     <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Draft</option>
-					          <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Create Quotation</option>
+					 <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Create Quotation</option>
 					 <option value="3" @if(request('status') ==3) {{'selected="selected"'}} @endif >In Process</option>
 					 <option value="4" @if(request('status') ==4) {{'selected="selected"'}} @endif >Confirmed</option>
 					 <option value="5" @if(request('status') ==5) {{'selected="selected"'}} @endif >Vouchered</option>
 					 <option value="6" @if(request('status') ==6) {{'selected="selected"'}} @endif >Canceled</option>
-					
+					<option value="7" @if(request('status') ==7) {{'selected="selected"'}} @endif >Invoice Edit Requested</option>
                  </select></th>
                     <th width="17%"></th>
                     <th></th>
@@ -152,11 +152,36 @@
                               </i>
                               
                           </a>
+						  @if($record->status_main < 5)
 					 <a class="btn btn-info btn-sm" href="{{route('vouchers.edit',$record->id)}}">
                               <i class="fas fa-pencil-alt">
                               </i>
                               
                           </a>
+						  @endif
+						   @permission('list.invoiceEditButton')
+						   @if($record->status_main ==  5)
+							   <form id="status-form-{{$record->id}}" method="post" action="{{route('invoice.status.change',$record->id)}}" style="display:none;">
+                                {{csrf_field()}}
+                            </form>
+                            <a class="btn btn-danger btn-sm bg-danger" href="javascript:void(0)" onclick="
+                                if(confirm('Are you sure, You want to delete this?'))
+                                {
+                                    event.preventDefault();
+                                    document.getElementById('status-form-{{$record->id}}').submit();
+                                }
+                                else
+                                {
+                                    event.preventDefault();
+                                }
+                            
+                            "> <i class="fas fa-exclamation-triangle">
+                              </i>
+                              Edit Invoice</i></a>
+							
+					
+						  @endif
+						  @endpermission
 						   <form id="delete-form-{{$record->id}}" method="post" action="{{route('vouchers.destroy',$record->id)}}" style="display:none;">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
@@ -173,6 +198,7 @@
                                 }
                             
                             "><i class="fas fa-trash"></i></a>
+							
                          </td>
                   </tr>
 				 
