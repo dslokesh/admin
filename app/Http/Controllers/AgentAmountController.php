@@ -100,19 +100,18 @@ class AgentAmountController extends Controller
 		$receipt_no = 'A-'.date("Y")."-00".$record->id;
 		$recordUser = AgentAmount::find($record->id);
 		$recordUser->receipt_no = $receipt_no;
-		
+		$recordUser->save();
 		if(Auth::user()->role_id == '3'){
 			if(($request->input('transaction_type') == "Receipt"))
 			{
 				$agent->agent_amount_balance += $request->input('amount');
 				$agent->save();
-				$recordUser->save();
 			}else if(($request->input('transaction_type') == "Payment"))
 			{
 				if($agent->agent_amount_balance >= $request->input('amount')){
 				$agent->agent_amount_balance -= $request->input('amount');
 				$agent->save();
-				$recordUser->save();
+				
 				}
 				else{
 					return redirect()->route('agentamounts.index')->with('error', 'Agency amount cannot be set to 0.');
