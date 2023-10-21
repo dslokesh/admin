@@ -113,7 +113,7 @@
 					<th>Pax Name</th>
 					<th>A</th>
                     <th>C</th>
-					<th>Service</th>
+					<th>Variant Name</th>
 					<th>Total Cost</th>
 					<th>Status</th>
                   </tr>
@@ -131,7 +131,7 @@
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
 					 <td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
-					<td>{{($record->activity)?$record->activity->title:''}}</td>
+					<td>{{$record->variant_name}}</td>
 					<td>{{$record->totalprice}}</td>
 					<td>
 					{!! SiteHelpers::voucherStatus($record->voucher->status_main) !!}

@@ -165,7 +165,7 @@
                                 {{csrf_field()}}
                             </form>
                             <a class="btn btn-danger btn-sm bg-danger" href="javascript:void(0)" onclick="
-                                if(confirm('Are you sure, You want to delete this?'))
+                                if(confirm('Are you sure, You want to Edit invoice this?'))
                                 {
                                     event.preventDefault();
                                     document.getElementById('status-form-{{$record->id}}').submit();

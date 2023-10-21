@@ -383,14 +383,14 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 	
 		}
 		
-		$openingBalance = number_format($openingBalance,2);
+		$openingBalance = number_format($openingBalance,2, '.', '');
 		
 		if($s == 1){	
-        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
+        $records = $query->orderBy('created_at', 'DESC')->get();
 		}
 		else
 		{
-		$records = AgentAmount::where('id','=', null)->orderBy('created_at', 'DESC')->paginate($perPage);	
+		$records = AgentAmount::where('id','=', null)->orderBy('created_at', 'DESC')->get();	
 		}
 		$agetid = '';
 		$agetName = '';
@@ -545,7 +545,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 				$agentAmount->date_of_receipt = date("Y-m-d");
 				$agentAmount->transaction_type = "Receipt";
 				$agentAmount->role_user = 3;
-				$agentAmount->transaction_from = 2;
+				$agentAmount->transaction_from = 4;
 				$agentAmount->created_by = Auth::user()->id;
 				$agentAmount->updated_by = Auth::user()->id;
 				$agentAmount->receipt_no = $voucher->invoice_number;

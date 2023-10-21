@@ -40,7 +40,7 @@
         </div>
 		 <div class="col-md-3">
 		  @if($voucher->is_activity == 1)
-								 @if($voucher->status_main < 4)
+								 @if($voucher->status_main < 5)
 					 <a class="btn btn-info btn-sm float-left" style=" margin-top: 20px;margin-left: 120px;" href="{{route('voucher.add.activity',$voucher->id)}}" >Add More</a>
 					
 					@endif

@@ -116,7 +116,14 @@
 	   $(document).on('change', '.priceChange', function(evt) {
 	var inputnumber = $(this).data('inputnumber');
 	var amt = parseFloat($("body #totalprice"+inputnumber).val());
-	var discount = parseFloat($("body #discount"+inputnumber).val());
+	var discount = parseFloat($(this).val());
+	if(discount == null || isNaN(discount) || discount <0)
+	{
+		discount = 0;
+		$(this).val(0);
+		return true;
+	}
+	
 	if(discount > amt){
 		alert("Discount not greater than total amount.");
 		$("body #discount"+inputnumber).val(0);
@@ -128,16 +135,9 @@
 	$("body #price"+inputnumber).text(totalPrice);
 	$("body #newPrice"+inputnumber).val(totalPrice);
 	});
-	});
 	
-	$(document).on('blur','.priceChange',function(){
-	let inputnumber = $(this).data('inputnumber');
-	let inputvale = parseFloat($(this).val());
-	if(inputvale == null || isNaN(inputvale))
-	{
-		inputvale = 0;
-		$(this).val(0);
-	}
+	
+	
 });
 </script>
 @endsection

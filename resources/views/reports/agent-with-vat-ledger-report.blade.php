@@ -81,7 +81,6 @@
 					<th>Transaction From</th>
 					<th>Payment</th>
 					<th>Receipt</th>
-					<th>Opening Balance</th>
                   </tr>
 				  
                   </thead>
@@ -106,6 +105,8 @@
 					<td>
 					{{($record->transaction_from == '2')?'Vouchered':''}}
 					{{($record->transaction_from == '3')?'Canceled':''}}
+					{{($record->transaction_from == '4')?'Refund':''}}
+					{{($record->transaction_from == '5')?'Invoice Edit':''}}
 					</td>
 					<td>
 					@if($record->transaction_type == 'Payment')
@@ -123,7 +124,7 @@
 					
 					{{$record->amount}}
 					@endif</td>
-					 <th>{{($k==0)?$openingBalance:'0'}}</th>
+					
 					</tr>
                   </tbody>
                   @endforeach
@@ -139,9 +140,36 @@
 					</tr>
 					<tr>
                     <th colspan="3"></th>
-					<th>Balance</th>
+					<th>Closing</th>
 					<th colspan="3">
-					{{$totalCredit - $totalDebit}}
+					@php
+					$closing = $totalCredit - $totalDebit;
+					@endphp
+					{{$closing}}
+					
+				</th>
+					
+           
+					</tr>
+					<tr>
+                    <th colspan="3"></th>
+					<th>Opening Balance</th>
+					<th colspan="3">
+					{{$openingBalance}}
+					
+				</th>
+					
+           
+					</tr>
+					<tr>
+                    <th colspan="3"></th>
+					<th>Closing Balance</th>
+					<th colspan="3">
+					@php
+					$closing = (float)str_replace(',', '', $closing);
+					$openingBalance = (float)str_replace(',', '', $openingBalance);
+					@endphp
+					{{$openingBalance+$closing}}
 					
 				</th>
 					
@@ -149,7 +177,7 @@
 					</tr>
                 </table>
 				<div class="pagination pull-right mt-3"> 
-				{!! $records->appends(request()->query())->links() !!}
+				
 				</div> 
 				
               </div>

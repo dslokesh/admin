@@ -101,7 +101,7 @@ body
                         <td align="right" valign="top">
                           <p>Invoice No.:  {{($voucher->status_main == 5)?$voucher->invoice_number:$voucher->code}}</p>
                           <p>Invoice Date.: {{date("d-M-Y")}}</p>
-                         
+                         <p>Guest Name: {{$voucher->guest_name}}</p>
                          </td>
                     </tr>
                     <tr>

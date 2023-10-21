@@ -432,6 +432,11 @@ class VouchersController extends Controller
 		
 		if(!empty($agent))
 		{
+			$voucherCnt = Voucher::where('agent_id',$agent->id)->where('status_main',7)->count();
+			if($voucherCnt > 0)
+			{
+				return redirect()->back()->with('error', 'Booking is already in the process of being edited in an invoice. Please complete that process first before proceeding with this one.');
+			}
 			
 			$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->get();
 			$voucherHotel = VoucherHotel::where('voucher_id',$record->id)->get();
@@ -475,6 +480,7 @@ class VouchersController extends Controller
 			$agentAmount->created_by = Auth::user()->id;
 			$agentAmount->updated_by = Auth::user()->id;
 			$agentAmount->save();
+			
 			$recordUser = AgentAmount::find($agentAmount->id);
 			$recordUser->receipt_no = $code;
 			$recordUser->is_vat_invoice = $record->vat_invoice;
@@ -1153,7 +1159,7 @@ class VouchersController extends Controller
 //return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','totalAmount','subTotal','vatTotal'));
         $pdf = SPDF::loadView('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotal','vatTotal','totalAmount'));
        $pdf->setPaper('A4')->setOrientation('portrait');
-        return $pdf->download('Invoice'.$vid.'.pdf');
+        return $pdf->download('Invoice'.$voucher->booking_date.'.pdf');
 		
 	
 	
@@ -1210,6 +1216,11 @@ class VouchersController extends Controller
 		
 		if(!empty($agent))
 		{
+			$voucherCnt = Voucher::where('agent_id',$agent->id)->where('status_main',7)->count();
+			if($voucherCnt > 0)
+			{
+				return redirect()->back()->with('error', 'Booking is already in the process of being edited in an invoice. Please complete that process first before proceeding with this one.');
+			}
 			
 			$voucherActivity = VoucherActivity::where('voucher_id',$record->id)->get();
 			
@@ -1217,7 +1228,8 @@ class VouchersController extends Controller
 			$total_activity_amount = $record->voucheractivity->sum('totalprice');
 			$total_discountPrice = $record->voucheractivity->sum('discountPrice');
 			$grandTotal = $total_activity_amount;
-		
+			if($agentAmountBalance >= $grandTotal)
+			{
 			$record->status_main = 7;
 			$record->save();
 			$agent->agent_amount_balance += $grandTotal;
@@ -1226,17 +1238,29 @@ class VouchersController extends Controller
 			$agentAmount = new AgentAmount();
 			$agentAmount->agent_id = $record->agent_id;
 			$agentAmount->amount = $grandTotal;
-			$agentAmount->date_of_receipt = date("Y-m-d");
+			$agentAmount->date_of_receipt = $record->booking_date;
 			$agentAmount->transaction_type = "Receipt";
-			$agentAmount->transaction_from = 2;
+			$agentAmount->transaction_from = 5;
 			$agentAmount->role_user = 3;
 			$agentAmount->created_by = Auth::user()->id;
 			$agentAmount->updated_by = Auth::user()->id;
 			$agentAmount->save();
+			$receipt_no = 'A-'.date("Y")."-00".$agentAmount->id;
+			$recordUser = AgentAmount::find($agentAmount->id);
+			$recordUser->receipt_no = $receipt_no;
+			$recordUser->save();
+		
 			foreach($voucherActivity as $vac){
 			SiteHelpers::voucherActivityLog($record->id,$vac->id,$vac->discountPrice,$vac->totalprice,$record->status_main);
 			}
+			
 			 return redirect()->back()->with('success', 'Request processed successfully.');
+			}
+			else{
+				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');
+			}
+			
+			
 		}
 		else{
 				 return redirect()->back()->with('error', 'Agency  Name not found this voucher.');
@@ -1349,20 +1373,28 @@ class VouchersController extends Controller
 		if(!empty($agent))
 		{
 			$discountRecord = $data['discount'];
+			
 			foreach($voucherActivityRecord as $var){
 				$dis = $discountRecord[$var->id];
 				$tPrice = $var->totalprice + $var->discountPrice;
 				if($dis > $tPrice){
 					 return redirect()->back()->with('error', 'Discount not greater than total amount.');
 				}
+				$tP= $tPrice - $dis;
 				$aData[] =[
 				"id" => $var->id,
-				"totalprice" => $tPrice - $dis,
+				"totalprice" => $tP,
 				"discountPrice" => $dis,
 				];
 				
+				
+				$grandTotal +=$tP;
 			}
 			
+			$agentAmountBalance = $agent->agent_amount_balance;
+			
+			if($agentAmountBalance >= $grandTotal)
+			{
 			foreach($aData as $var1){
 				$vA = VoucherActivity::find($var1['id']);
 				$vA->totalprice = $var1['totalprice'];
@@ -1370,9 +1402,7 @@ class VouchersController extends Controller
 				$vA->save();
 				SiteHelpers::voucherActivityLog($record->id,$var1['id'],$var1['discountPrice'],$var1['totalprice'],5);
 			}
-			$total_activity_amount = VoucherActivity::where('voucher_id',$record->id)->sum('totalprice');
-			$agentAmountBalance = $agent->agent_amount_balance;
-			$grandTotal = $total_activity_amount;
+			
 		
 			$record->status_main = 5;
 			$record->save();
@@ -1382,17 +1412,27 @@ class VouchersController extends Controller
 			$agentAmount = new AgentAmount();
 			$agentAmount->agent_id = $record->agent_id;
 			$agentAmount->amount = $grandTotal;
-			$agentAmount->date_of_receipt = date("Y-m-d");
+			$agentAmount->date_of_receipt = $record->booking_date;
 			$agentAmount->transaction_type = "Payment";
-			$agentAmount->transaction_from = 2;
+			$agentAmount->transaction_from = 5;
 			$agentAmount->role_user = 3;
 			$agentAmount->created_by = Auth::user()->id;
 			$agentAmount->updated_by = Auth::user()->id;
 			$agentAmount->save();
+			$receipt_no = 'A-'.date("Y")."-00".$agentAmount->id;
+			$recordUser = AgentAmount::find($agentAmount->id);
+			$recordUser->receipt_no = $receipt_no;
+			$recordUser->save();
+			
 			foreach($voucherActivity as $vac){
 			SiteHelpers::voucherActivityLog($record->id,$vac->id,$vac->discountPrice,$vac->totalprice,$record->status_main);
 			}
+			
 			return redirect()->route('vouchers.index')->with('success', 'Voucher '.$record->code.' Invoice Successfully Updated.');
+			}
+			else{
+				 return redirect()->back()->with('error', 'Agency amount balance not sufficient for this booking.');
+			}
 		}
 		else{
 				 return redirect()->back()->with('error', 'Agency  Name not found this voucher.');
