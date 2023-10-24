@@ -522,6 +522,10 @@ class VouchersController extends Controller
 		}
 		
 		foreach($voucherActivityRecord as $vac){
+			if($record->status_main == 5){
+				$vac->status = 3;
+				$vac->save();
+			}
 			SiteHelpers::voucherActivityLog($record->id,$vac->id,$vac->discountPrice,$vac->totalprice,$record->status_main);
 		}
 		

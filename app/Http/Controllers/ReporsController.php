@@ -150,7 +150,9 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
 		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
 		
-		$query = VoucherActivity::where('id','!=', null);
+		$query = VoucherActivity::with("activity")->where('id','!=', null)->whereHas('activity', function ($query)  {
+           $query->where('entry_type',  "Ticket Only");
+       });
 		$twoDaysAgo = date("Y-m-d", strtotime(date("Y-m-d") . " -2 days"));
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
 			

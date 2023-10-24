@@ -13,9 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-       Commands\ProductSyncFromSf::class,
-	   Commands\PushNotificationsExpiringCertificate::class,
-	   Commands\PushNotificationsExpiringPPE::class,
+       Commands\TicketAutoGenerate::class,
     ];
 
     /**
@@ -26,9 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-       $schedule->command('productSync')->everySixHours();
-	   $schedule->command('expiringCertificate')->dailyAt('13:00');
-	   $schedule->command('expiringPPE')->dailyAt('13:00');
+       $schedule->command('ticketAutoGenerate')->everyMinute();
     }
 
     /**
