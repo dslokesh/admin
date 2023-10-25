@@ -101,13 +101,13 @@ class TicketAutoGenerate extends Command
 					$tc->ticket_generated_by = Auth::user()->id;
 					$tc->generated_time = date("d-m-Y h:i:s");
 					$tc->voucher_id = $voucherActivity->voucher_id;
-					//$tc->save();
+					$tc->save();
 				}
 				
 				$voucherActivity->ticket_generated = 1;
 				$voucherActivity->supplier_ticket = '947d43d9-c999-446c-a841-a1aee22c7257';
 				$voucherActivity->status = 4;
-				//$voucherActivity->save();
+				$voucherActivity->save();
 				}
 			}
 			
