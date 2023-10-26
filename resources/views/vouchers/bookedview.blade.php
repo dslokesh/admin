@@ -388,7 +388,7 @@
 				 
 				  
 				<div class="col-md-4 text-right pl-5">
-				@if(($ap->status == '0') && ($validTime['btm'] =='1') && ($ap->ticket_downloaded == '0'))
+				@if(($ap->status == '4') && ($validTime['btm'] =='1') && ($ap->ticket_downloaded == '0'))
 						
 						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.cancel',$ap->id)}}" style="display:none;">
 						{{csrf_field()}}
@@ -407,7 +407,7 @@
 
 							"><i class="fas fa-times"></i> Cancel </a>
 						@endif
-                    @if(($voucher->status_main == 5) and ($ap->ticket_generated == '0') and ($ticketCount > '0') and ($ap->status == '0'))
+                    @if(($voucher->status_main == 5) and ($ap->ticket_generated == '0') and ($ticketCount > '0') and ($ap->status == '3'))
 						<form id="tickets-generate-form-{{$ap->id}}" method="post" action="{{route('tickets.generate',$ap->id)}}" style="display:none;">
                                 {{csrf_field()}}
 								<input type="hidden" id="statusv" value="2" name="statusv"  /> 
@@ -427,7 +427,7 @@
                             
                             "><i class="fas fa-download"></i> Ticket</a>
 							
-							@elseif(($ap->ticket_generated == '1') and ($ap->status == '0'))
+							@elseif(($ap->ticket_generated == '1') and ($ap->status == '4'))
 							<a class="btn btn-success float-right  btn-sm  d-pdf" href="#" onclick='window.open("{{route('ticket.dwnload',$ap->id)}}");return false;'  ><i class="fas fa-download"></i> Ticket</a>
 							@endif
 							@if($ap->status > 0)
