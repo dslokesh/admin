@@ -430,8 +430,8 @@
 							@elseif(($ap->ticket_generated == '1') and ($ap->status == '4'))
 							<a class="btn btn-success float-right  btn-sm  d-pdf" href="#" onclick='window.open("{{route('ticket.dwnload',$ap->id)}}");return false;'  ><i class="fas fa-download"></i> Ticket</a>
 							@endif
-							@if($ap->status > 0)
-							<span class=" btn-danger float-right  btn-sm"   >{{ config('constants.voucherActivityStatus')[$ap->status] }}</span>
+							@if($ap->status == 1)
+							<span style="color:red"  >{{ config('constants.voucherActivityStatus')[$ap->status] }}</span>
 							@endif
                    
                     

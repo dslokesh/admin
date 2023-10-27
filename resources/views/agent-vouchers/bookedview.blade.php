@@ -339,8 +339,8 @@
                          
                           @endif
 						  
-						  @if($ap->status > 0)
-							<span class=" btn-danger float-right  btn-sm"  >{{ config('constants.voucherActivityStatus')[$ap->status] }}</span>
+						  @if($ap->status == 1)
+							<span style="color:red"  >{{ config('constants.voucherActivityStatus')[$ap->status] }}</span>
 							@endif
                           
                                 

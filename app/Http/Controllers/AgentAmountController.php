@@ -21,7 +21,7 @@ class AgentAmountController extends Controller
 		$this->checkPermissionMethod('list.agentamount');
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$data = $request->all();
-		$query = AgentAmount::with('agent')->where('transaction_from',1);
+		$query = AgentAmount::with('agent')->whereIn('transaction_from',[1,6]);
 		if (isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
             $query->where('agent_id', $data['agent_id_select']);
         }
@@ -89,35 +89,44 @@ class AgentAmountController extends Controller
 		$record->amount = $request->input('amount');
 		$record->date_of_receipt = $date_of_receipt;
 		$record->transaction_type = $request->input('transaction_type');
-		$record->transaction_from = 1;
+		$record->transaction_from = $request->input('transaction_from');
 		$record->role_user = $agent->role_id;
 		$record->remark = $request->input('remark');
         $record->is_vat_invoice = $request->input('is_vat_invoice');
 		$record->created_by = Auth::user()->id;
 		$record->updated_by = Auth::user()->id;
 		
-        $record->save();
-		$receipt_no = 'A-'.date("Y")."-00".$record->id;
-		$recordUser = AgentAmount::find($record->id);
-		$recordUser->receipt_no = $receipt_no;
-		$recordUser->save();
-		if(Auth::user()->role_id == '3'){
+        
+		
+		
+		//if(Auth::user()->role_id == '3'){
 			if(($request->input('transaction_type') == "Receipt"))
 			{
 				$agent->agent_amount_balance += $request->input('amount');
 				$agent->save();
+				
+				$record->save();
+				$receipt_no = 'A-'.date("Y")."-00".$record->id;
+				$recordUser = AgentAmount::find($record->id);
+				$recordUser->receipt_no = $receipt_no;
+				$recordUser->save();
 			}else if(($request->input('transaction_type') == "Payment"))
 			{
 				if($agent->agent_amount_balance >= $request->input('amount')){
 				$agent->agent_amount_balance -= $request->input('amount');
 				$agent->save();
 				
+				$record->save();
+				$receipt_no = 'A-'.date("Y")."-00".$record->id;
+				$recordUser = AgentAmount::find($record->id);
+				$recordUser->receipt_no = $receipt_no;
+				$recordUser->save();
 				}
 				else{
 					return redirect()->route('agentamounts.index')->with('error', 'Agency amount cannot be set to 0.');
 				}
 			}
-		}
+		//}
 		
 		
         return redirect()->route('agentamounts.index')->with('success', 'Data Created Successfully.');

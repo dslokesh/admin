@@ -382,15 +382,7 @@ class AgentsController extends Controller
 		$record->vat = $request->input('vat');
 		$record->updated_by = Auth::user()->id;
 		
-		if(($request->input('credit_limit_type') == 1) && ($request->input('credit_amount') > 0))
-		{
-			$record->agent_credit_limit +=$request->input('credit_amount');
-			$record->agent_amount_balance +=$request->input('credit_amount');
-		}elseif(($request->input('credit_limit_type') == 2) && ($request->input('credit_amount') > 0))
-		{
-			$record->agent_credit_limit -=$request->input('credit_amount');
-			$record->agent_amount_balance -=$request->input('credit_amount');
-		}
+		
 		
         $record->save();
 		

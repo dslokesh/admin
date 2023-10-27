@@ -81,6 +81,7 @@
 					<th>Transaction From</th>
 					<th>Payment</th>
 					<th>Receipt</th>
+					<th>Remark</th>
                   </tr>
 				  
                   </thead>
@@ -107,6 +108,7 @@
 					{{($record->transaction_from == '3')?'Canceled':''}}
 					{{($record->transaction_from == '4')?'Refund':''}}
 					{{($record->transaction_from == '5')?'Invoice Edit':''}}
+					{{($record->transaction_from == '6')?'Credit Given':''}}
 					</td>
 					<td>
 					@if($record->transaction_type == 'Payment')
@@ -124,19 +126,19 @@
 					
 					{{$record->amount}}
 					@endif</td>
-					
+					<td>{{$record->remark}}</td>
 					</tr>
                   </tbody>
                   @endforeach
 				  <tr>
-                    <th colspan="3"></th>
+                    <th colspan="2"></th>
 					<th >Total</th>
-					<th>
+					<th >
 					{{$totalDebit}}
 					
 				</th>
 					<th>{{$totalCredit}}</th>
-					<th></th>
+					<th colspan="2"></th>
 					</tr>
 					<tr>
                     <th colspan="3"></th>
