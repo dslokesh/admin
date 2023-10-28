@@ -15,6 +15,7 @@ use App\Models\ActivityPrices;
 use App\Models\TransferData;
 use Illuminate\Http\Request;
 use App\Models\VoucherActivity;
+use App\Models\Ticket;
 use SiteHelpers;
 use Carbon\Carbon;
 use SPDF;
@@ -764,6 +765,16 @@ class AgentVouchersController extends Controller
 		$record->status = 1;
 		$record->canceled_date = Carbon::now()->toDateTimeString();
 		$record->save();
+		$tc = Ticket::where("voucher_activity_id",$record->id)->where("voucher_id",$record->voucher_id)->where("activity_id",$record->activity_id)->where("ticket_generated",'1')->where("ticket_downloaded",'0')->first();
+		if(!empty($tc)){
+		$tc->voucher_activity_id = '0';
+		$tc->ticket_generated = '0';
+		$tc->ticket_generated_by = '';
+		$tc->generated_time = '';
+		$tc->voucher_id = '0';
+		$tc->save();
+		}
+		
 		$recordCount = VoucherActivity::where("voucher_id",$record->voucher_id)->where("status",'0')->count();
 		if($recordCount == '0'){
 			$voucher = Voucher::find($record->voucher_id);

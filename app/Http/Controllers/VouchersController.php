@@ -1192,13 +1192,14 @@ class VouchersController extends Controller
 		$record->save();
 		
 		$tc = Ticket::where("voucher_activity_id",$record->id)->where("voucher_id",$record->voucher_id)->where("activity_id",$record->activity_id)->where("ticket_generated",'1')->where("ticket_downloaded",'0')->first();
-		
-		$tc->voucher_activity_id = '';
-		$tc->ticket_generated = 0;
+		if(!empty($tc)){
+		$tc->voucher_activity_id = '0';
+		$tc->ticket_generated = '0';
 		$tc->ticket_generated_by = '';
 		$tc->generated_time = '';
-		$tc->voucher_id = '';
+		$tc->voucher_id = 0;
 		$tc->save();
+		}
 		
 		$recordCount = VoucherActivity::where("voucher_id",$record->voucher_id)->where("status",'3')->count();
 		if($recordCount == '0'){
