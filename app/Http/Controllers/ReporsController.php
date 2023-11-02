@@ -171,11 +171,11 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		
 				}
 				}else{
-			// $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			$query->whereDate('tour_date', '>=', $twoDaysAgo);
 			}
 			}
 		else{
-			// $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
 		}
 		
         if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
