@@ -11,11 +11,12 @@ class AgentLedgerExport implements FromView
     use Exportable;
 	
 	protected $records;
+	protected $openingBalance;
 
-
-    public function __construct($records)
+    public function __construct($records,$openingBalance)
     {
 		$this->records = $records;
+		$this->openingBalance = $openingBalance;
     }
 	
 	
@@ -23,7 +24,8 @@ class AgentLedgerExport implements FromView
     {
 		
         return view('exports.agent-ledger-export', [
-            'records' => $this->records
+            'records' => $this->records,
+			'openingBalance' => $this->openingBalance
         ]);
 
     }

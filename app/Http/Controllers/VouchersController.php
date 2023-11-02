@@ -459,9 +459,9 @@ class VouchersController extends Controller
 			$voucherCountNumber = $voucherCount +1;
 			if($record->vat_invoice == 1)
 			{
-			$code = 'VIN-100'.$voucherCountNumber;
+			$code = 'VIN-1100001'.$voucherCountNumber;
 			}else{
-			$code = 'WVIN-100'.$voucherCountNumber;
+			$code = 'WVIN-1100001'.$voucherCountNumber;
 			}
 			
 			$record->booking_date = date("Y-m-d");
@@ -1015,7 +1015,7 @@ class VouchersController extends Controller
             return abort(404); //record not found
         }
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->orderBy("check_in_date","ASC")->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->whereIn('status',[0,4])->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
 		$discountTotal = 0;
 		$subTotal = 0;
 		$dataArray = [
@@ -1075,7 +1075,7 @@ class VouchersController extends Controller
 		$agent = User::where('id',$voucher->agent_id)->first();
 		$customer = Customer::where('id',$voucher->customer_id)->first();
 		
-       $voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->where('status','!=','1')->get();
+       $voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->whereIn('status',[0,4])->get();
 	  
 		
         $dataArray = [];

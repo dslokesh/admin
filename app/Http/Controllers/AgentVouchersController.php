@@ -684,9 +684,9 @@ class AgentVouchersController extends Controller
 			$voucherCountNumber = $voucherCount +1;
 			if($record->vat_invoice == 1)
 			{
-			$code = 'VIN-100'.$voucherCountNumber;
+			$code = 'VIN-1100001'.$voucherCountNumber;
 			}else{
-			$code = 'WVIN-100'.$voucherCountNumber;
+			$code = 'WVIN-1100001'.$voucherCountNumber;
 			}
 			
 			$record->booking_date = date("Y-m-d");

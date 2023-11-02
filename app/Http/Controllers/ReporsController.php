@@ -171,11 +171,11 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		
 				}
 				}else{
-			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			// $query->whereDate('tour_date', '>=', $twoDaysAgo);
 			}
 			}
 		else{
-			 $query->whereDate('tour_date', '>=', $twoDaysAgo);
+			// $query->whereDate('tour_date', '>=', $twoDaysAgo);
 		}
 		
         if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
@@ -201,6 +201,12 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		
 		$record = VoucherActivity::find($data['id']);
         $record->{$data['inputname']} = $data['val'];
+		if(($data['inputname'] == 'supplier_ticket') && !empty($data['val'])){
+		$record->actual_total_cost = $record->totalprice;
+		} else if(($data['inputname'] == 'supplier_ticket') && empty($data['val'])){
+		$record->actual_total_cost = 0;
+		}
+		
         $record->save();
 		$response[] = array("status"=>1);
         return response()->json($response);
@@ -415,15 +421,23 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		$perPage = config("constants.ADMIN_PAGE_LIMIT");
 		$voucherStatus = config("constants.voucherStatus");
 		
+		
+		
+		$s = 0;
+		$openingBalance = 0;
+		$agent_id = '';
 		$query = AgentAmount::where("id","!=",NULL);
 		if(Auth::user()->role_id == '3')
 		{
+			$agent_id  = Auth::user()->id;
 			$query->where('agent_id', '=', Auth::user()->id);
 		}
 		else
 		{
 			if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
+				$agent_id  = $data['agent_id_select'];
 					$query->where('agent_id', '=', $data['agent_id_select']);
+					$s = 1;
 			}
 		}
 		
@@ -432,15 +446,30 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 			$endDate = date('Y-m-d', strtotime($data['to_date']));
 			 $query->whereDate('date_of_receipt', '>=', $startDate);
 			 $query->whereDate('date_of_receipt', '<=', $endDate);
+		$s = 1;
+		if($agent_id!=''){
+		$payment = AgentAmount::where('agent_id',  $agent_id)->whereDate('date_of_receipt', '<=', $startDate)->where("transaction_type","Payment")->sum('amount');
+		$receipt = AgentAmount::where('agent_id',  $agent_id)->whereDate('date_of_receipt', '<=', $startDate)->where("transaction_type","Receipt")->sum('amount');
+		$openingBalance = $receipt - $payment;
+		} else {
+			$payment = AgentAmount::whereDate('date_of_receipt', '<=', $startDate)->where("transaction_type","Payment")->sum('amount');
+		$receipt = AgentAmount::whereDate('date_of_receipt', '<=', $startDate)->where("transaction_type","Receipt")->sum('amount');
+		$openingBalance = $receipt - $payment;
+		}
+	
 		}
 		
+		$openingBalance = number_format($openingBalance,2, '.', '');
 		
+		if($s == 1){	
+        $records = $query->orderBy('created_at', 'DESC')->get();
+		}
+		else
+		{
+		$records = AgentAmount::where('id','=', null)->orderBy('created_at', 'DESC')->get();	
+		}
 		
-			
-        $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
-		
-		
-		return Excel::download(new AgentLedgerExport($records), 'agent_ledger_export_records'.date('d-M-Y s').'.csv');
+		return Excel::download(new AgentLedgerExport($records,$openingBalance), 'agent_ledger_export_records'.date('d-M-Y s').'.csv');
 
     }
 	

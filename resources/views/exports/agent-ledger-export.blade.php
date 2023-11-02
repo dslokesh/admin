@@ -11,8 +11,9 @@
 					<th>Date</th>
 					<th>Receipt No/ Inovice No.</th>
 					<th>Transaction From</th>
-					<th>Debit Amount</th>
-					<th>Credit Amount</th>
+					<th>Payment</th>
+					<th>Receipt</th>
+					<th>Remark</th>
                   </tr>
 				  
                   </thead>
@@ -36,9 +37,12 @@
 					<td>
 					{{($record->transaction_from == '2')?'Vouchered':''}}
 					{{($record->transaction_from == '3')?'Canceled':''}}
+					{{($record->transaction_from == '4')?'Refund':''}}
+					{{($record->transaction_from == '5')?'Invoice Edit':''}}
+					{{($record->transaction_from == '6')?'Credit Given':''}}
 					</td>
 					<td>
-					@if($record->transaction_type == 'Debit')
+					@if($record->transaction_type == 'Payment')
 					{{$record->amount}}
 					@php
 						$totalDebit += $record->amount;
@@ -46,32 +50,59 @@
 					@endif
 					
 				</td>
-					<td>@if($record->transaction_type == 'Credit')
+					<td>@if($record->transaction_type == 'Receipt')
 						@php
 						$totalCredit += $record->amount;
 						@endphp
 					
 					{{$record->amount}}
 					@endif</td>
-					
+					<td>{{$record->remark}}</td>
 					</tr>
                  
                   @endforeach
-				  <tr>
+				<tr>
                     <th colspan="3"></th>
-					<th>Total</th>
-					<th>
+					<th >Total</th>
+					<th >
 					{{$totalDebit}}
 					
 				</th>
 					<th>{{$totalCredit}}</th>
+					<th colspan="2"></th>
+					</tr>
+					<tr>
+                    <th colspan="3"></th>
+					<th>Closing</th>
+					<th colspan="3">
+					@php
+					$closing = $totalCredit - $totalDebit;
+					@endphp
+					{{$closing}}
+					
+				</th>
+					
            
 					</tr>
 					<tr>
                     <th colspan="3"></th>
-					<th>Balance</th>
-					<th colspan="2">
-					{{$totalCredit - $totalDebit}}
+					<th>Opening Balance</th>
+					<th colspan="3">
+					{{$openingBalance}}
+					
+				</th>
+					
+           
+					</tr>
+					<tr>
+                    <th colspan="3"></th>
+					<th>Closing Balance</th>
+					<th colspan="3">
+					@php
+					$closing = (float)str_replace(',', '', $closing);
+					$openingBalance = (float)str_replace(',', '', $openingBalance);
+					@endphp
+					{{$openingBalance+$closing}}
 					
 				</th>
 					
