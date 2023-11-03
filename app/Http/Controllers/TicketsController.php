@@ -106,7 +106,7 @@ class TicketsController extends Controller
 		$child = $voucherActivity->child;
 		$totalTicketNeed = $adult+$child;
 		$countTotalTicketNeed = $totalTicketNeed;
-		$ticketQuery = Ticket::where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date);
+		$ticketQuery = Ticket::where('ticket_generated','0')->where('activity_id',$voucherActivity->activity_id)->where('activity_variant',$voucherActivity->variant_unique_code)->whereDate('valid_from', '<=',$voucherActivity->tour_date)->whereDate('valid_till', '>=',$voucherActivity->tour_date)->orderBy("valid_till","ASC");
 		
 		$totalTickets =$ticketQuery->get();
 		$totalTicketCount =$totalTickets->count();
