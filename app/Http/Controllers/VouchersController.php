@@ -455,7 +455,7 @@ class VouchersController extends Controller
 			if($agentAmountBalance >= $grandTotal)
 			{
 				
-			$voucherCount = Voucher::where('status_main',5)->count();
+			$voucherCount = Voucher::where('status_main',5)->whereDate('booking_date','2023-10-31')->count();
 			$voucherCountNumber = $voucherCount +1;
 			if($record->vat_invoice == 1)
 			{
