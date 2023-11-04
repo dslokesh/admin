@@ -39,7 +39,9 @@
               <div class="card-header">
 				<div class="card-tools">
 				 <div class="row">
+				 @if(auth()->user()->role_id == '1')
 				 <a href="{{ route('voucherTicketOnlyReportExport', request()->input()) }}" class="btn btn-info btn-sm mb-2 mr-4">Export to CSV</a>
+			 @endif
 				   </div></div>
 				   
               </div>
