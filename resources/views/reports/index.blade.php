@@ -95,30 +95,28 @@
                   <tr>
 					<th>Booking #</th>
                     <th width="7%">Service Date</th>
-					<th>Service</th>
-          <th>Varaint</th>
-					<th>Service Type</th>
-					<th>Agency</th>
 					<th>Guest Name</th>
 					<th>Guest Contact No</th>
-					<th>A</th>
+					<th>Pickup</th>
+					<th>Service</th>
+					  <th>Varaint</th>
+					  <th>Dropoff</th>
+					  <th>A</th>
                     <th>C</th>
                     <th>I</th>
+					<th>SIC/PVT</th>
+					<th>Pickup Time</th>
+					<th>Dropoff Time</th>
+					<th>Driver name</th>
 					<th>TKT Supplier</th>
 					<th>TKT Supplier Ref #</th>
-					<th>TKT SP</th>
-					<th>TKT Net Cost</th>
-					<th>SIC/PVT</th>
-					<th>Pickup</th>
-					<th>Pickup Time</th>
-					<th>Dropoff</th>
-					<th>Dropoff Time</th>
+					<th>Agency</th>
+					<th>Remark</th>
+					
 					<th>TFR Supplier</th>
-					<th>TFR Supplier Ref #</th>
-					<th>Driver name</th>
 					<th>TFR SP</th>
 					<th>TFR Net Cost</th>
-					<th>Remark</th>
+					
 					<th>Status</th>
                   </tr>
 				  
@@ -130,28 +128,16 @@
                     <td>
 					<input type="text" readonly class="form-control inputsave datepicker" id="tour_date{{$record->id}}" data-name="tour_date"  data-id="{{$record->id}}" value="{{$record->tour_date}}" />
 					</td>
-					<td>{{($record->activity)?$record->activity->title:''}}</td>
-					<td>{{($record->variant_name)?$record->variant_name:''}}</td>
-					<td>{{$record->transfer_option}}</td>
-					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
 					<td>
 					<input type="text"  class="form-control inputsaveV" id="guest_phone{{$record->id}}" data-name="guest_phone"  data-id="{{$record->voucher_id}}" value="{{($record->voucher)?$record->voucher->guest_phone:''}}" /></td>
+					<td><input type="hidden" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  />{{$record->pickup_location}}</td>
+					<td>{{($record->activity)?$record->activity->title:''}}</td>
+					<td>{{($record->variant_name)?$record->variant_name:''}}</td>
+					<td><input type="text" class="form-control inputsave" id="dropoff_location{{$record->id}}" data-name="dropoff_location"  data-id="{{$record->id}}" value="{{$record->dropoff_location}}" /></td>
 					 <td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
                     <td>{{$record->infant}}</td>
-					<td>
-					 <select name="supplier_ticket{{$record->id}}" id="supplier_ticket{{$record->id}}" class="form-control inputsaveSp">
-						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value="">All</option>
-						@foreach($supplier_ticket as  $stv)
-						
-						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value = "{{$stv->id}}" @if($record->supplier_ticket==$stv->id) selected="selected" @endif >{{$stv->name}}</option>
-						@endforeach
-                 </select>
-					</td>
-					<td><input type="text" class="form-control inputsave" id="ticket_supp_ref_no{{$record->id}}" data-name="ticket_supp_ref_no"  data-id="{{$record->id}}" value="{{$record->ticket_supp_ref_no}}" /></td>
-					<td>{{$record->totalprice}}</td>
-					<td><input type="text" class="form-control inputsave" id="actual_total_cost{{$record->id}}" data-name="actual_total_cost"  data-id="{{$record->id}}" value="{{$record->actual_total_cost}}" /></td>
 					<td>
 					@if($record->transfer_option == "Shared Transfer")
 					SIC
@@ -166,20 +152,43 @@
 					@endif
 					
 				</td>
-				<td><input type="hidden" class="form-control inputsave" id="pickup_location{{$record->id}}" data-name="pickup_location" data-id="{{$record->id}}" value="{{$record->pickup_location}}"  />{{$record->pickup_location}}</td>
 				<td><input type="text" class="form-control inputsave" id="actual_pickup_time{{$record->id}}" data-name="actual_pickup_time"  data-id="{{$record->id}}" value="{{$record->actual_pickup_time}}" /></td>
-				<td><input type="text" class="form-control inputsave" id="dropoff_location{{$record->id}}" data-name="dropoff_location"  data-id="{{$record->id}}" value="{{$record->dropoff_location}}" /></td>
-				<td><input type="text" class="form-control inputsave" id="dropoff_time{{$record->id}}" data-name="dropoff_time"  data-id="{{$record->id}}" value="{{$record->dropoff_time}}" /></td>
+				
+				<td><input type="text" class="form-control inputsave" id="dropoff_time{{$record->id}}" data-name="dropoff_time"  data-id="{{$record->id}}" value="{{$record->dropoff_time}}" /></td>	
+					<td><input type="text" class="form-control inputsave" id="driver_name{{$record->id}}" data-name="driver_name"  data-id="{{$record->id}}" value="{{$record->driver_name}}" /></td>
+					
+					
+					
+					<td>
+					 <select name="supplier_ticket{{$record->id}}" id="supplier_ticket{{$record->id}}" class="form-control inputsaveSp">
+						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value="">All</option>
+						@foreach($supplier_ticket as  $stv)
+						
+						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value = "{{$stv->id}}" @if($record->supplier_ticket==$stv->id) selected="selected" @endif >{{$stv->company_name}}</option>
+						@endforeach
+                 </select>
+					</td>
+					<td><input type="text" class="form-control inputsave" id="ticket_supp_ref_no{{$record->id}}" data-name="ticket_supp_ref_no"  data-id="{{$record->id}}" value="{{$record->ticket_supp_ref_no}}" /></td>
+					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
+					<td><input type="text" class="form-control inputsave" id="remark{{$record->id}}" data-name="remark"  data-id="{{$record->id}}" value="{{$record->remark}}" /></td>
+					
+					
+					
+					
+					
+					
+					
+				
+				
 				<td>
 					 <select name="supplier_transfer{{$record->id}}" id="supplier_transfer{{$record->id}}" class="form-control inputsaveSp">
 						<option data-name="supplier_transfer"  data-id="{{$record->id}}" value="">All</option>
 						@foreach($supplier_transfer as  $stt)
-						<option data-name="supplier_transfer"  data-id="{{$record->id}}" value = "{{$stt->id}}" @if($record->supplier_transfer==$stt->id) selected="selected" @endif >{{$stt->name}}</option>
+						<option data-name="supplier_transfer"  data-id="{{$record->id}}" value = "{{$stt->id}}" @if($record->supplier_transfer==$stt->id) selected="selected" @endif >{{$stt->company_name}}</option>
 						@endforeach
                  </select>
 					</td>
-				<td><input type="text" class="form-control inputsave" id="transfer_supp_ref_no{{$record->id}}" data-name="transfer_supp_ref_no"  data-id="{{$record->id}}" value="{{$record->transfer_supp_ref_no}}" /></td>
-				<td><input type="text" class="form-control inputsave" id="driver_name{{$record->id}}" data-name="driver_name"  data-id="{{$record->id}}" value="{{$record->driver_name}}" /></td>
+				
 				
 					<td>
 					@if($record->transfer_option == "Shared Transfer")
@@ -196,7 +205,7 @@
 					<td><input type="text" class="form-control inputsave" id="actual_transfer_cost{{$record->id}}" data-name="actual_transfer_cost"  data-id="{{$record->id}}" value="{{$record->actual_transfer_cost}}" /></td>
 					
 					
-					<td><input type="text" class="form-control inputsave" id="remark{{$record->id}}" data-name="remark"  data-id="{{$record->id}}" value="{{$record->remark}}" /></td>
+					
 					<td>
 					@php
 					$actStatus = config('constants.voucherActivityStatus');

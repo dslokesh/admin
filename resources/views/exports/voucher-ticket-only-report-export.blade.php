@@ -40,7 +40,7 @@
 					 <td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
                     <td>{{$record->infant}}</td>
-					<td>{{($record->supplierticket)?@$record->supplierticket->name:''}}</td>
+					<td>{{($record->supplierticket)?@$record->supplierticket->company_name:''}}</td>
 					<td>{{$record->ticket_supp_ref_no}}</td>
 					<td>{{$record->totalprice}}</td>
 					<td>{{$record->actual_total_cost}}</td>

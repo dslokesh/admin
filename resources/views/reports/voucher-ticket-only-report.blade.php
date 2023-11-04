@@ -146,7 +146,7 @@
 						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value="">All</option>
 						@foreach($supplier_ticket as  $stv)
 						
-						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value = "{{$stv->id}}" @if($record->supplier_ticket==$stv->id) selected="selected" @endif >{{$stv->name}}</option>
+						<option data-name="supplier_ticket"  data-id="{{$record->id}}" value = "{{$stv->id}}" @if($record->supplier_ticket==$stv->id) selected="selected" @endif >{{$stv->company_name}}</option>
 						@endforeach
                  </select>
 					</td>
