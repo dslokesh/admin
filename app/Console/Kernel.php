@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('ticketAutoGenerate')->everyMinute();
+	   $schedule->command('supplierActualTotalCostAutoUpdate')->dailyAt('0:01');
     }
 
     /**
