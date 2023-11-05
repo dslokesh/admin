@@ -52,6 +52,7 @@ class TicketAutoGenerate extends Command
            $query->where('entry_type',  "Ticket Only");
        })->get();
 	   
+	   $totalprice =0;
 		foreach($voucherActivities as $voucherActivity){
 			
 		$adult = $voucherActivity->adult;
@@ -104,9 +105,15 @@ class TicketAutoGenerate extends Command
 					$tc->save();
 				}
 				
+				$voucher = Voucher::find($voucherActivity->voucher_id);
+				$agentsupplierId = '947d43d9-c999-446c-a841-a1aee22c7257';
+				$voucher = Voucher::find($voucherActivity->voucher_id);
+				$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity("Ticket Only",$voucherActivity->activity_id,$agentsupplierId,$voucher,$voucherActivity->variant_unique_code,$voucherActivity->adult,$voucherActivity->child,$voucherActivity->infant,$voucherActivity->discount);
+				$totalprice = $priceCal['totalprice'];
+				
 				$voucherActivity->ticket_generated = 1;
-				$voucherActivity->supplier_ticket = '947d43d9-c999-446c-a841-a1aee22c7257';
-				$voucherActivity->actual_total_cost = $voucherActivity->totalprice;
+				$voucherActivity->supplier_ticket = $agentsupplierId;
+				$voucherActivity->actual_total_cost = $totalprice;
 				$voucherActivity->status = 4;
 				$voucherActivity->save();
 				}

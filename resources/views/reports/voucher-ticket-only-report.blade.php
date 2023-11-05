@@ -266,6 +266,9 @@ $(document).ready(function() {
 	 
 	 $(document).on('change', '.inputsaveSp', function(evt) {
 		$("#loader-overlay").show();
+		var id = $(this).find(':selected').data('id');
+		var inputname = $(this).find(':selected').data('name');
+		//alert(inputname);
 		$.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -276,12 +279,14 @@ $(document).ready(function() {
             type: 'POST',
             dataType: "json",
             data: {
-               id: $(this).find(':selected').data('id'),
-			   inputname: $(this).find(':selected').data('name'),
+               id: id,
+			   inputname: inputname,
 			   val: $(this).val()
             },
             success: function( data ) {
-               //console.log( data );
+			   if(inputname == 'supplier_ticket'){
+				   $("#actual_total_cost"+id).val(data[0].totalprice);
+			   }
 			  $("#loader-overlay").hide();
             }
           });

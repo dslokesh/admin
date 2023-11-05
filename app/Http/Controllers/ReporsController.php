@@ -254,14 +254,18 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		
 		$record = VoucherActivity::find($data['id']);
         $record->{$data['inputname']} = $data['val'];
+		$totalprice = 0;
 		if(($data['inputname'] == 'supplier_ticket') && !empty($data['val'])){
-		$record->actual_total_cost = $record->totalprice;
+		$voucher = Voucher::find($record->voucher_id);
+		$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity("Ticket Only",$record->activity_id,$data['val'],$voucher,$record->variant_unique_code,$record->adult,$record->child,$record->infant,$record->discount);
+		$record->actual_total_cost = $priceCal['totalprice'];
+		$totalprice = $priceCal['totalprice'];
 		} else if(($data['inputname'] == 'supplier_ticket') && empty($data['val'])){
 		$record->actual_total_cost = 0;
 		}
 		
         $record->save();
-		$response[] = array("status"=>1);
+		$response[] = array("status"=>1,'totalprice'=>$totalprice);
         return response()->json($response);
 	}
 	
