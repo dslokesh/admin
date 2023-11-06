@@ -21,7 +21,7 @@ use App\Models\VoucherActivityLog;
 class SiteHelpers
 {
     
-	public function statusColor($val)
+	public static function statusColor($val)
     {
 		$color ='';
 		if($val ==1) {
@@ -34,7 +34,7 @@ class SiteHelpers
         return $color;
     }
 	
-	public function statusColorYesNo($val)
+	public static function statusColorYesNo($val)
     {
 		$color = '';
 		if($val ==1) {
@@ -47,7 +47,7 @@ class SiteHelpers
         return $color;
     }
 	
-	public function getAgentMarkup($agent_id,$activity_id,$variant_code)
+	public static function getAgentMarkup($agent_id,$activity_id,$variant_code)
     {
 		$markup = [];
 		$markup['ticket_only'] = 0;
@@ -76,7 +76,7 @@ class SiteHelpers
         return $markup;
     }
 	
-	public function getZone($activity_zones,$sic_TFRS)
+	public static function getZone($activity_zones,$sic_TFRS)
     {
 		$zoneArray = [];
 		
@@ -104,7 +104,7 @@ class SiteHelpers
 		return $zoneArray;
     }
 	
-	public function getPickupTimeByZone($activity_zones,$zoneId)
+	public static function getPickupTimeByZone($activity_zones,$zoneId)
     {
 		$pickup_time = '';
 		
@@ -123,21 +123,21 @@ class SiteHelpers
 		return $pickup_time;
     }
 	
-	public function getActivity($activity_id)
+	public static function getActivity($activity_id)
     {
 		
 		$activity = Activity::where('status', 1)->where('id', $activity_id)->first();
 		return $activity;
     }
 	
-	public function getZoneName($zoneId)
+	public static function getZoneName($zoneId)
     {
 				$zone = Zone::where('status', 1)->where('id', $zoneId)->first();
 				
 		return $zone;
     }
 	
-	public function getDateList($startDate,$endDate,$blackoutDates='')
+	public static function getDateList($startDate,$endDate,$blackoutDates='')
     {
 			$blackDate = [];
 			if(!empty($blackoutDates)){
@@ -166,7 +166,7 @@ class SiteHelpers
 		return $dates;
     }
 	
-	public function getDateListBoth($startDate,$endDate,$blackoutDates='')
+	public static function getDateListBoth($startDate,$endDate,$blackoutDates='')
     {
 			$blackDate = [];
 			if(!empty($blackoutDates)){
@@ -200,7 +200,7 @@ class SiteHelpers
 		return $dateData;
     }
 	
-	public function getNovableActivityDays($availability)
+	public static function getNovableActivityDays($availability)
     {
 		$days = [];
 			$notAvDay = [];
@@ -237,7 +237,7 @@ class SiteHelpers
     }
 	
 	
-	public function voucherStatus($val)
+	public static function voucherStatus($val)
     {
 		$color = '';
 		$voucherStatus = config("constants.voucherStatus");
@@ -259,7 +259,7 @@ class SiteHelpers
 		 return $color;
 	}
 	
-	public function getActivityLowPrice($activity_id,$agent_id,$voucher)
+	public static function getActivityLowPrice($activity_id,$agent_id,$voucher)
     {
 		$minPrice = 0;
 		$zonePrice = 0;
@@ -362,7 +362,7 @@ class SiteHelpers
 		return number_format($total, 2, '.', "");
     }
 	
-	public function hotelRoomsDetails($data)
+	public static function hotelRoomsDetails($data)
     {
 		$rooms = json_decode($data);
 		$room_type = '';
@@ -403,14 +403,14 @@ class SiteHelpers
     }
 	
 	
-	public function getTicketCountByCode($code)
+	public static function getTicketCountByCode($code)
     {
 		
 		$ticketCount = Ticket::where('activity_variant', $code)->count();
 		return $ticketCount;
     }
 
-	public function voucherActivityCount($vid)
+	public static function voucherActivityCount($vid)
     {
 		
 		$voucherActivity = VoucherActivity::where('voucher_id',$vid)->count();
@@ -418,7 +418,7 @@ class SiteHelpers
 		return $voucherActivity;
     }
 
-	public function voucherHotelCount($vid)
+	public static function voucherHotelCount($vid)
     {
 		
 		$voucherHotel = VoucherHotel::where('voucher_id',$vid)->count();
@@ -426,7 +426,7 @@ class SiteHelpers
 		return $voucherHotel;
     }
 	
-	public function checkPermissionMethod($p)
+	public static function checkPermissionMethod($p)
     {
 		$user = auth()->user();
 		$role = $user->role;
@@ -440,7 +440,7 @@ class SiteHelpers
     }
 	
 	
-	public function checkAvailableBookingTimeSlot($u_code,$activity_id,$tourDt,$transfer_option,$is_opendated)
+	public static function checkAvailableBookingTimeSlot($u_code,$activity_id,$tourDt,$transfer_option,$is_opendated)
     {
 		
 		$activityPrice = ActivityPrices::where(['u_code'=>$u_code,'activity_id'=>$activity_id])->select('start_time','end_time','booking_window_valueto','booking_window_valueSIC','booking_window_valuePVT')->first();
@@ -477,7 +477,7 @@ class SiteHelpers
 		
     }
 	
-	public function getAgentlastVoucher()
+	public static function getAgentlastVoucher()
     {
 		$user = auth()->user();
 		$startDate = date("Y-m-d");
@@ -491,7 +491,7 @@ class SiteHelpers
 		
     }
 	
-	public function checkCancelBookingTime($u_code,$activity_id,$tourDt,$transfer_option)
+	public static function checkCancelBookingTime($u_code,$activity_id,$tourDt,$transfer_option)
     {
 		
 		$activityPrice = ActivityPrices::where(['u_code'=>$u_code,'activity_id'=>$activity_id])->select('start_time','end_time','cancellation_value_to','cancellation_valueSIC','cancellation_valuePVT')->first();
@@ -533,7 +533,7 @@ class SiteHelpers
 		
     }
 	
-	public function getActivityVarByCutoffCancellation($activity_id)
+	public static function getActivityVarByCutoffCancellation($activity_id)
     {
 		
 		$activityPrice = ActivityPrices::where(['activity_id'=>$activity_id])->where(function ($query) {
@@ -552,7 +552,7 @@ class SiteHelpers
 		return $booking_window_text;
     }
 	
-	public function getActivityPriceSaveInVoucherActivity($transfer_option,$activity_id,$agent_id,$voucher,$u_code,$adult,$child,$infent,$discount)
+	public static function getActivityPriceSaveInVoucherActivity($transfer_option,$activity_id,$agent_id,$voucher,$u_code,$adult,$child,$infent,$discount)
     {
 		$totalPrice = 0;
 		$zonePrice = 0;
@@ -671,7 +671,7 @@ class SiteHelpers
 		
     }
 	
-	public function dateDiffInDays($date1, $date2) 
+	public static function dateDiffInDays($date1, $date2) 
 	{
 		$diff = strtotime($date2) - strtotime($date1);
 		$days =  (abs(round($diff / 86400)))+1;
@@ -679,7 +679,7 @@ class SiteHelpers
 	}
 	
 	
-	public function voucherActivityLog($vid,$vaid,$discount,$priceTotal,$voucherstatus)
+	public static function voucherActivityLog($vid,$vaid,$discount,$priceTotal,$voucherstatus)
     {
 		$data = [
 			'voucher_id'=>$vid,
