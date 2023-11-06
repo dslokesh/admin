@@ -117,12 +117,12 @@
 	var inputnumber = $(this).data('inputnumber');
 	var amt = parseFloat($("body #totalprice"+inputnumber).val());
 	var discount = parseFloat($(this).val());
-	if(discount == null || isNaN(discount) || discount <0)
+	/* if(discount == null || isNaN(discount) || discount <0)
 	{
 		discount = 0;
 		$(this).val(0);
 		return true;
-	}
+	} */
 	
 	if(discount > amt){
 		alert("Discount not greater than total amount.");

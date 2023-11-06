@@ -50,7 +50,7 @@ class ReporsController extends Controller
 		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
 		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
 		
-		$query = VoucherActivity::where('id','!=', null);
+		$query = VoucherActivity::where('id','!=', null)->whereIn('status',[3,4]);
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
 			
