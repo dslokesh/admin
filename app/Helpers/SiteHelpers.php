@@ -259,6 +259,25 @@ class SiteHelpers
 		 return $color;
 	}
 	
+	public static function voucherActivityStatus($val,$status)
+    {
+		$color = '';
+		$voucherStatus = config("constants.voucherStatus");
+		if($val ==1){
+			$color = '<span class="badge bg-danger">Canceled</span>';
+		}
+		else if($val ==3){
+			$color = '<span class="badge bg-warning">In Process</span>';
+		} 
+		else if($val ==3){
+			$color = '<span class="badge bg-success">Confirmed</span>';
+		} 
+		else{
+			$color = '<span class="badge bg-default">'.$status.'</span>';
+		} 
+		 return $color;
+	}
+	
 	public static function getActivityLowPrice($activity_id,$agent_id,$voucher)
     {
 		$minPrice = 0;

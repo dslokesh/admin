@@ -229,10 +229,10 @@ class AuthController extends Controller
 
 				$vouchersCurrentDate = Voucher::select(
         DB::raw('COUNT(*) as totalVouchers'),
-        DB::raw('SUM((SELECT SUM(totalprice) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalVoucherActivityAmount'),
-		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalAdult'),
-		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalChild'),
-		DB::raw('SUM((SELECT COUNT(id) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalActivity')
+        DB::raw('SUM((SELECT SUM(totalprice) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalVoucherActivityAmount'),
+		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2)))  as totalAdult'),
+		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalChild'),
+		DB::raw('SUM((SELECT COUNT(id) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalActivity')
     )
     ->where('status_main', '5')
     ->whereDate('created_at',  $currentDate)
@@ -241,9 +241,9 @@ class AuthController extends Controller
 			$vouchersMonth =Voucher::select(
         DB::raw('COUNT(*) as totalVouchers'),
         DB::raw('SUM((SELECT SUM(totalprice) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalVoucherActivityAmount'),
-		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalAdult'),
-		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalChild'),
-		DB::raw('SUM((SELECT COUNT(id) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalActivity')
+		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalAdult'),
+		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalChild'),
+		DB::raw('SUM((SELECT COUNT(id) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalActivity')
     )
     ->where('status_main', '5')
     ->whereDate('created_at', '>=', $currentMonthStartDate)
@@ -252,10 +252,10 @@ class AuthController extends Controller
 			
 			 $vouchersYear = Voucher::select(
         DB::raw('COUNT(*) as totalVouchers'),
-        DB::raw('SUM((SELECT SUM(totalprice) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalVoucherActivityAmount'),
-		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalAdult'),
-		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalChild'),
-		DB::raw('SUM((SELECT COUNT(id) FROM  voucher_activity WHERE voucher_id = vouchers.id)) as totalActivity')
+        DB::raw('SUM((SELECT SUM(totalprice) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalVoucherActivityAmount'),
+		DB::raw('SUM((SELECT SUM(adult) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalAdult'),
+		DB::raw('SUM((SELECT SUM(child) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalChild'),
+		DB::raw('SUM((SELECT COUNT(id) FROM  voucher_activity WHERE voucher_id = vouchers.id AND status NOT IN (1,2))) as totalActivity')
     )
     ->where('status_main', '5')
     ->whereDate('created_at', '>=', $startDateOfApril)

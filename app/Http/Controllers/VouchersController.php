@@ -1349,7 +1349,7 @@ class VouchersController extends Controller
 		$this->checkPermissionMethod('list.invoiceEditList');
 		$this->checkPermissionMethod('list.voucher');
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->whereNotIn('status',[1,2])->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
 		
 		if($voucher->status_main != 7)
 		{
