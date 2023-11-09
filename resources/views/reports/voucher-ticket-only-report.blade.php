@@ -129,7 +129,10 @@
                   </thead>
                   <tbody>
 				  @foreach ($records as $record)
-                  <tr>
+                 @php
+				  $class = SiteHelpers::voucherActivityStatus($record->status);
+				  @endphp
+                  <tr class="{{$class}}">
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
                     <td>
 					<input type="text" readonly class="form-control inputsave datepicker" id="tour_date{{$record->id}}" data-name="tour_date"  data-id="{{$record->id}}" value="{{$record->tour_date}}" />

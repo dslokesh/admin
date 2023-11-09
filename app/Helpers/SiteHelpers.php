@@ -259,21 +259,21 @@ class SiteHelpers
 		 return $color;
 	}
 	
-	public static function voucherActivityStatus($val,$status)
+	public static function voucherActivityStatus($val)
     {
 		$color = '';
 		$voucherStatus = config("constants.voucherStatus");
 		if($val ==1){
-			$color = '<span class="badge bg-danger">Canceled</span>';
+			$color = 'bg-danger';
 		}
 		else if($val ==3){
-			$color = '<span class="badge bg-warning">In Process</span>';
+			$color = 'bg-warning';
 		} 
-		else if($val ==3){
-			$color = '<span class="badge bg-success">Confirmed</span>';
+		else if($val ==4){
+			$color = 'bg-success';
 		} 
 		else{
-			$color = '<span class="badge bg-default">'.$status.'</span>';
+			$color = 'bg-default';
 		} 
 		 return $color;
 	}
@@ -712,6 +712,13 @@ class SiteHelpers
 		$voucherActivity = VoucherActivityLog::create($data);
 		
 		return $voucherActivity;
+    }
+	
+	public static function getVoucherTotalPrice($voucherId)
+    {
+		$user = auth()->user();
+		$totalprice = VoucherActivity::where('voucher_id',$voucherId)->sum("totalprice");
+		return $totalprice;
     }
 	
 }
