@@ -455,14 +455,27 @@ class VouchersController extends Controller
 			if($agentAmountBalance >= $grandTotal)
 			{
 				
-			$voucherCount = Voucher::where('status_main',5)->whereDate('booking_date','2023-10-31')->count();
+			$voucherCount = Voucher::where('status_main',5)->count();
 			$voucherCountNumber = $voucherCount +1;
 			if($record->vat_invoice == 1)
 			{
-			$code = 'VIN-1100001'.$voucherCountNumber;
+			$code = 'VIN-100'.$voucherCountNumber;
 			}else{
-			$code = 'WVIN-1100001'.$voucherCountNumber;
+			$code = 'WVIN-100'.$voucherCountNumber;
 			}
+			
+			// if($record->vat_invoice == 1)
+			// {
+			// 	$voucherCount = Voucher::where('status_main',5)->where('vat_invoice',1)->whereDate('booking_date', '>', '2023-10-31')->count();
+			// 	$voucherCountNumber = $voucherCount +1;
+			// 	$code = 'VIN-1100001'.$voucherCountNumber;
+			// }
+			// else
+			// {
+			// 	$voucherCount = Voucher::where('status_main',5)->where('vat_invoice',0)->whereDate('booking_date', '>', '2023-10-31')->count();
+			// 	$voucherCountNumber = $voucherCount +1;
+			// 	$code = 'WVIN-1100001'.$voucherCountNumber;
+			// }
 			
 			$record->booking_date = date("Y-m-d");
 			$record->invoice_number = $code;
@@ -546,7 +559,7 @@ class VouchersController extends Controller
 		$nameOrCompany  = ($request->get('nameorcom'))?$request->get('nameorcom'):'Company';
 		if($nameOrCompany == 'Company'){
         $users = User::where('role_id', 3)
-					->where('is_active', 1)
+					// ->where('is_active', 1)
 					->where(function ($query) use($search) {
 						$query->where('company_name', 'LIKE', '%'. $search. '%')
 						->orWhere('code', 'LIKE', '%'. $search. '%')
@@ -793,7 +806,8 @@ class VouchersController extends Controller
 		$this->checkPermissionMethod('list.voucher');
        $data = $request->all();
 		$typeActivities = config("constants.typeActivities"); 
-        $perPage = config("constants.ADMIN_PAGE_LIMIT");
+        //$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$perPage = "1000";
 		$voucher = Voucher::find($vid);
 		$startDate = $voucher->travel_from_date;
 		$endDate = $voucher->travel_to_date;
@@ -853,7 +867,29 @@ class VouchersController extends Controller
 			
     }
 	
-	public function addActivityView($aid,$vid)
+// 	public function addActivityView($aid,$vid)
+//     {
+// 		$query = Activity::with('images')->where('id', $aid);
+// 		$activity = $query->where('status', 1)->first();
+		
+// 		$voucher = Voucher::find($vid);
+// 		$startDate = $voucher->travel_from_date;
+// 		$endDate = $voucher->travel_to_date;
+		
+
+// 		$activityPrices = ActivityPrices::where('activity_id', $aid)
+// ->where('rate_valid_from', '<=', $startDate)->where('rate_valid_to', '>=', $endDate)->get();
+
+		
+// 		$typeActivities = config("constants.typeActivities"); 
+		
+			
+			
+//        return view('vouchers.activities-add-details', compact('activity','aid','vid','voucher','typeActivities','activityPrices'));
+//     }
+	
+
+public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
     {
 		$query = Activity::with('images')->where('id', $aid);
 		$activity = $query->where('status', 1)->first();
@@ -868,10 +904,24 @@ class VouchersController extends Controller
 
 		
 		$typeActivities = config("constants.typeActivities"); 
-		
-			
-			
-       return view('vouchers.activities-add-details', compact('activity','aid','vid','voucher','typeActivities','activityPrices'));
+		$is_edit = 0;
+		$prev_vals = [];
+
+		$prev_vals['d'] = "";
+		$prev_vals['a'] = "0";
+		$prev_vals['c'] = "0";
+		$prev_vals['i'] = "0";
+		$prev_vals['tt'] = "";
+		if($d != '')
+		{
+			$prev_vals['d'] = $d;
+			$prev_vals['a'] = $a;
+			$prev_vals['c'] = $c;
+			$prev_vals['i'] = $i;
+			$prev_vals['tt'] = $tt;
+			$is_edit = "1";
+		}
+       return view('vouchers.activities-add-details', compact('activity','aid','vid','voucher','typeActivities','activityPrices','prev_vals','is_edit'));
     }
 	
 	
@@ -892,7 +942,10 @@ class VouchersController extends Controller
 		}
 		
 		$totalPrice  = $price*$request->adult;
-		$markup = (($markupPer/100) * $totalPrice);
+		if($request->markupT == '1')
+			$markup = (($markupPer/100) * $totalPrice);
+		else
+		$markup = $markupPer;
 		$total = ($markup + $totalPrice);
 		return $total;
     }
@@ -1075,7 +1128,7 @@ class VouchersController extends Controller
 		$agent = User::where('id',$voucher->agent_id)->first();
 		$customer = Customer::where('id',$voucher->customer_id)->first();
 		
-       $voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->whereIn('status',[0,4])->get();
+       $voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->whereIn('status',[0,3,4])->get();
 	  
 		
         $dataArray = [];

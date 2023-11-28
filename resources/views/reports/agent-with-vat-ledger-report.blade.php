@@ -77,7 +77,7 @@
                   <tr>
                     <th>Agency/Supplier Name</th>
 					<th>Date</th>
-					<th>Receipt No/ Inovice No.</th>
+					<th>Receipt No/ Invoice No.</th>
 					<th>Transaction From</th>
 					<th>Payment</th>
 					<th>Receipt</th>

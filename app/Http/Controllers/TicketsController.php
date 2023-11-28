@@ -86,6 +86,16 @@ class TicketsController extends Controller
 		if (isset($data['ticket_for']) && !empty($data['ticket_for'])) {
 				 $query->where('ticket_for',  $data['ticket_for']);
 		}
+		if (isset($data['code']) && !empty($data['code'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+		$q->where('code', 'like', '%' . $data['code'] . '%');
+		});
+	}
+	if (isset($data['invcode']) && !empty($data['invcode'])) {
+		$query->whereHas('voucher', function($q)  use($data){
+	$q->where('invoice_number', 'like', '%' . $data['invcode'] . '%');
+	});
+}
 		
         $records = $query->where('ticket_generated','1')->orderBy('created_at', 'DESC')->paginate($perPage);
 		$agetid = '';
@@ -142,7 +152,8 @@ class TicketsController extends Controller
 				if($tcCountEx > 0){
 				return redirect()->route('ticket.dwnload',$voucherActivity->id);	
 				} else {
-				foreach($tcArray as $ta){
+				foreach($tcArray as $ta)
+				{
 					$tc = Ticket::find($ta);
 					$tc->voucher_activity_id = $voucherActivity->id;
 					$tc->ticket_generated = 1;
@@ -154,12 +165,23 @@ class TicketsController extends Controller
 				
 				$agentsupplierId = '947d43d9-c999-446c-a841-a1aee22c7257';
 				$voucher = Voucher::find($voucherActivity->voucher_id);
-				$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity("Ticket Only",$voucherActivity->activity_id,$agentsupplierId,$voucher,$voucherActivity->variant_unique_code,$voucherActivity->adult,$voucherActivity->child,$voucherActivity->infant,$voucherActivity->discount);
+				$priceCal = SiteHelpers::getActivitySupplierCost($voucherActivity->activity_id,$agentsupplierId,$voucher,$voucherActivity->variant_code,$voucherActivity->adult,$voucherActivity->child,$voucherActivity->infant,$voucherActivity->discount);
+				// $temp_array = array();
+				// $temp_array['activity_id'] = $voucherActivity->activity_id;
+				// $temp_array['agentsupplierId'] = $agentsupplierId;
+				// $temp_array['variant'] = $voucher;
+				// $temp_array['variant_code'] = $voucherActivity->variant_code;
+				// $temp_array['adult'] = $voucherActivity->adult;
+				// $temp_array['child'] = $voucherActivity->child;
+				// $temp_array['infant'] = $voucherActivity->infant;
+				// $temp_array['discount'] = $voucherActivity->discount;
+				
 				$totalprice = $priceCal['totalprice'];
 				$voucherActivity->ticket_generated = 1;
 				$voucherActivity->supplier_ticket = $agentsupplierId;
 				$voucherActivity->actual_total_cost = $totalprice;
 				$voucherActivity->status = 4;
+				
 				$voucherActivity->save();
 				return redirect()->route('ticket.dwnload',$voucherActivity->id);	
 				}

@@ -181,7 +181,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		
         if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
 			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('code', '=', $data['vouchercode']);
+				$q->where('code', 'like', '%' . $data['vouchercode']);
 			});
 		}
 		
@@ -235,7 +235,7 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		
         if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
 			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('code', '=', $data['vouchercode']);
+				$q->where('code', 'like', '%' . $data['vouchercode']);
 			});
 		}
 		
@@ -254,20 +254,44 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 		
 		$record = VoucherActivity::find($data['id']);
         $record->{$data['inputname']} = $data['val'];
-		$totalprice = 0;
-		if(($data['inputname'] == 'supplier_ticket') && !empty($data['val'])){
-		$voucher = Voucher::find($record->voucher_id);
-		$priceCal = SiteHelpers::getActivityPriceSaveInVoucherActivity("Ticket Only",$record->activity_id,$data['val'],$voucher,$record->variant_unique_code,$record->adult,$record->child,$record->infant,$record->discount);
-		$record->actual_total_cost = $priceCal['totalprice'];
-		$totalprice = $priceCal['totalprice'];
-		} else if(($data['inputname'] == 'supplier_ticket') && empty($data['val'])){
-		$record->actual_total_cost = 0;
-		}
 		
-        $record->save();
-		$response[] = array("status"=>1,'totalprice'=>$totalprice);
-        return response()->json($response);
+		
+		
+		if(($data['inputname'] == 'supplier_ticket') && !empty($data['val']))
+		{
+			$totalprice = 0;
+			$voucher = Voucher::find($record->voucher_id);
+			$priceCal = SiteHelpers::getActivitySupplierCost($record->activity_id,$data['val'],$voucher,$record->variant_code,$record->adult,$record->child,$record->infant,$record->discount);
+			$totalprice = $priceCal['totalprice'];
+			$record->actual_total_cost = $totalprice;
+       		
+			$response[] = array("status"=>2,'cost'=>$totalprice);
+		}
+		else
+		{
+			$response[] = array("status"=>1,'cost'=>"0");
+		}
+		$record->save();
+		return response()->json($response);
 	}
+
+	// public function voucherReportSave(Request $request)
+    // {
+	// 	$data = $request->all();
+	// 	$record = VoucherActivity::find($data['id']);
+    //     $record->{$data['inputname']} = $data['val'];
+    //     $record->save();
+	// 	if($data['inputname'] == 'supplier_ticket')
+	// 	{
+	// 		$cost = 0;
+	// 		$cost = SiteHelpers::voucherActivityValue($data['id'],$data['val']);
+	// 		$record->{'actual_total_cost'} = $cost;
+    //    		 $record->save();
+	// 			$response[] = array("status"=>"1",'cost'=>$cost);
+	// 			return response()->json($response);
+	// 	}
+		
+	// }
 	
 	public function voucherReportSaveInVoucher(Request $request)
     {
@@ -861,7 +885,12 @@ public function voucherActivtyRefundedReport(Request $request)
 			}
         if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
 			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('code', '=', $data['vouchercode']);
+				$q->where('code', 'like', '%' . $data['vouchercode']);
+			});
+		}
+		if(isset($data['invoicecode']) && !empty($data['invoicecode'])) {
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('invoice_number', 'like', '%' . $data['invoicecode']);
 			});
 		}
 		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
@@ -907,11 +936,16 @@ public function voucherActivtyRefundedReport(Request $request)
 				}
 				}
 			}
-        if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
-			$query->whereHas('voucher', function($q)  use($data){
-				$q->where('code', '=', $data['vouchercode']);
-			});
-		}
+			if(isset($data['vouchercode']) && !empty($data['vouchercode'])) {
+				$query->whereHas('voucher', function($q)  use($data){
+					$q->where('code', 'like', '%' . $data['vouchercode']);
+				});
+			}
+			if(isset($data['invoicecode']) && !empty($data['invoicecode'])) {
+				$query->whereHas('voucher', function($q)  use($data){
+					$q->where('invoice_number', 'like', '%' . $data['invoicecode']);
+				});
+			}
 		if(isset($data['booking_status']) && !empty($data['booking_status'])) {
 		$query->whereHas('voucher', function($q) use ($data) {
 			$statuses = is_array($data['booking_status']) ? $data['booking_status'] : [$data['booking_status']];

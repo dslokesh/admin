@@ -106,24 +106,25 @@
                 <table id="example3" class="table rounded-corners">
                   <thead>
                   <tr>
-					<th>Booking #</th>
+					          <th>Booking #</th>
+                    <th width="7%">Booking Date</th>
                     <th width="7%">Service Date</th>
-					<th>Service</th>
-					<th>Variant</th>
-					<th>Service Type</th>
-					<th>Agency</th>
-					<th>Guest Name</th>
-					<th>Guest Contact No</th>
-					<th>A</th>
+                    <th>Service</th>
+                    <th>Variant</th>
+                    <th>Service Type</th>
+                    <th>Agency</th>
+                    <th>Guest Name</th>
+                    <th>Guest Contact No</th>
+                    <th>A</th>
                     <th>C</th>
                     <th>I</th>
-					<th>TKT Supplier</th>
-					<th>TKT Supplier Ref #</th>
-					<th>TKT SP</th>
-					<th>TKT Net Cost</th>
-					<th>Remark</th>
-					<th>Status</th>
-					<th>Ticket</th>
+                    <th>TKT Supplier</th>
+                    <th>TKT Supplier Ref #</th>
+                    <th>TKT SP</th>
+                    <th>TKT Net Cost</th>
+                    <th>Remark</th>
+                    <th>Status</th>
+                    <th>Ticket</th>
                   </tr>
 				  
                   </thead>
@@ -134,7 +135,10 @@
 				  @endphp
                   <tr class="{{$class}}">
 					<td>{{($record->voucher)?$record->voucher->code:''}}</td>
-                    <td>
+          <td>
+					{{$record->voucher->booking_date}}
+					</td>          
+          <td>
 					<input type="text" readonly class="form-control inputsave datepicker" id="tour_date{{$record->id}}" data-name="tour_date"  data-id="{{$record->id}}" value="{{$record->tour_date}}" />
 					</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
@@ -288,7 +292,8 @@ $(document).ready(function() {
             },
             success: function( data ) {
 			   if(inputname == 'supplier_ticket'){
-				   $("#actual_total_cost"+id).val(data[0].totalprice);
+          
+				   $("#actual_total_cost"+id).val(data[0].cost);
 			   }
 			  $("#loader-overlay").hide();
             }

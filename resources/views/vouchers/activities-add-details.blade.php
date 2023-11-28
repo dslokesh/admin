@@ -179,7 +179,7 @@
 				 
 				  @endphp
 				   <tr>
-                    <td><input type="checkbox"  name="activity_select[{{ $ap->u_code }}]" id="activity_select{{$kk}}" value="{{ $aid }}" class="actcsk" data-inputnumber="{{$kk}}" /> <strong>{{$ap->variant_name}}</strong>
+                    <td><input type="checkbox" name="activity_select[{{ $ap->u_code }}]" id="activity_select{{$kk}}" value="{{ $aid }}" class="actcsk" data-inputnumber="{{$kk}}" /> <strong>{{$ap->variant_name}}</strong>
 					<input type="hidden"  name="variant_unique_code[{{ $ap->u_code }}]" id="variant_unique_code{{$kk}}" value="{{ $ap->u_code }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_name[{{ $ap->u_code }}]" id="variant_name{{$kk}}" value="{{ $ap->variant_name }}" data-inputnumber="{{$kk}}" /> 
 					<input type="hidden"  name="variant_code[{{ $ap->u_code }}]" id="variant_code{{$kk}}" value="{{ $ap->variant_code }}" data-inputnumber="{{$kk}}" /> 
@@ -187,13 +187,13 @@
 					<td> <select name="transfer_option[{{ $ap->u_code }}]" id="transfer_option{{$kk}}" class="form-control t_option" data-inputnumber="{{$kk}}" disabled="disabled">
 						<option value="">--Select--</option>
 						@if($activity->entry_type=='Ticket Only')
-						<option value="Ticket Only" data-id="1">Ticket Only</option>
+						<option value="Ticket Only"  @php if($prev_vals['tt'] == 'Ticket Only') echo "selected='selected'"; @endphp data-id="1">Ticket Only</option>
 						@endif
 						@if($activity->sic_TFRS==1)
-						<option value="Shared Transfer" data-id="2">Shared Transfer</option>
+						<option value="Shared Transfer" @php if($prev_vals['tt'] == 'Shared Transfer') echo "selected='selected'"; @endphp data-id="2">Shared Transfer</option>
 						@endif
 						@if($activity->pvt_TFRS==1)
-						<option value="Pvt Transfer" data-id="3">Pvt Transfer</option>
+						<option value="Pvt Transfer" @php if($prev_vals['tt'] == 'Pvt Transfer') echo "selected='selected'"; @endphp data-id="3">Pvt Transfer</option>
 						@endif
 						</select>
 						<input type="hidden" id="pvt_traf_val{{$kk}}" value="0"  name="pvt_traf_val[{{ $ap->u_code }}]"    />
@@ -221,23 +221,23 @@
 					</td>
 							<input type="text" style="display:none"  id="pickup_location{{$kk}}" value=""  name="pickup_location[{{ $ap->u_code }}]" placeholder="Pickup Location" class="form-control "   />
 					<td>
-					<input type="text"id="tour_date{{$kk}}" value="{{date('d-m-Y',strtotime($voucher->travel_from_date))}}" name="tour_date[{{ $ap->u_code }}]" required disabled="disabled"  placeholder="Tour Date" class="form-control tour_datepicker"   />
+					<input type="text"id="tour_date{{$kk}}" value=" {{ $prev_vals['d'] ? date('d-m-Y',strtotime($prev_vals['d'])): date('d-m-Y',strtotime($voucher->travel_from_date))}}" name="tour_date[{{ $ap->u_code }}]" required disabled="disabled"  placeholder="Tour Date" class="form-control tour_datepicker"   />
 					
 					</td>
 					<td><select name="adult[{{ $ap->u_code }}]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" disabled="disabled">
 						<option value="">0</option>
 						@for($a=$ap->adult_min_no_allowed; $a<=$ap->adult_max_no_allowed; $a++)
-						<option value="{{$a}}">{{$a}}</option>
+						<option value="{{$a}}" @php if($prev_vals['a'] == $a) echo "selected='selected'"; @endphp >{{$a}}</option>
 						@endfor
 						</select></td>
                     <td><select name="child[{{ $ap->u_code }}]" id="child{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
 						@for($child=$ap->chield_min_no_allowed; $child<=$ap->chield_max_no_allowed; $child++)
-						<option value="{{$child}}">{{$child}}</option>
+						<option value="{{$child}}" @php if($prev_vals['c'] == $child) echo "selected='selected'"; @endphp >{{$child}}</option>
 						@endfor
 						</select></td>
                     <td><select name="infant[{{ $ap->u_code }}]" id="infant{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
 						@for($inf=$ap->infant_min_no_allowed; $inf<=$ap->infant_max_no_allowed; $inf++)
-						<option value="{{$inf}}">{{$inf}}</option>
+						<option value="{{$inf}}"  @php if($prev_vals['i'] == $inf) echo "selected='selected'"; @endphp  >{{$inf}}</option>
 						@endfor
 						</select></td>
 						<td>
@@ -545,6 +545,7 @@ $(document).on('change', '.actcsk', function(evt) {
 	  $("body #infant"+inputnumber).prop('disabled',true);
 	  $("body #discount"+inputnumber).prop('disabled',true);
     }
+	$("#adult"+inputnumber).trigger("change");
 });
 
 $(document).on('change', '.t_option', function(evt) {

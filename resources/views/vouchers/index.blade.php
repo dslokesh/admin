@@ -107,6 +107,11 @@
                               </i> {{(SiteHelpers::voucherHotelCount($record->id) > 0)?'('.SiteHelpers::voucherHotelCount($record->id).')':''}}
                              
                           </a>
+                          @else
+        <a class="btn btn-success btn-sm" href="#">
+                           {{(SiteHelpers::voucherHotelCount($record->id) > 0)?SiteHelpers::voucherHotelCount($record->id):''}}
+                             
+                          </a>
 						   @endif
 						  @endif
 						  </td>
@@ -119,13 +124,18 @@
                               </i> {{(SiteHelpers::voucherActivityCount($record->id) > 0)?'('.SiteHelpers::voucherActivityCount($record->id).')':''}}
                              
                           </a>
+                          @else
+                          <a class="btn btn-success btn-sm" href="#">
+                           {{(SiteHelpers::voucherActivityCount($record->id) > 0)?SiteHelpers::voucherActivityCount($record->id):''}}
+                             
+                          </a>
 						  @endif
 						  @endif
 						  </td>
 						  <td>
 						   @if($record->status_main >= 4)
 					 <a class="btn btn-info btn-sm" href="{{route('voucherInvoicePdf',$record->id)}}" >
-                              <i class="fas fa-download">
+           <i class="fas fa-file">
                               </i>
                              
                           </a>
@@ -166,7 +176,7 @@
 							   <form id="status-form-{{$record->id}}" method="post" action="{{route('invoice.status.change',$record->id)}}" style="display:none;">
                                 {{csrf_field()}}
                             </form>
-                            <a class="btn btn-danger btn-sm bg-danger" href="javascript:void(0)" onclick="
+                            <a class="btn btn-danger btn-sm bg-danger"  href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to Edit invoice this?'))
                                 {
                                     event.preventDefault();
@@ -177,9 +187,9 @@
                                     event.preventDefault();
                                 }
                             
-                            "> <i class="fas fa-exclamation-triangle">
-                              </i>
-                              Edit Invoice</i></a>
+                            ">  <i class="fas fa-pencil-alt">
+                              </i><i class="fas fa-file">
+                              </i></a>
 							
 					
 						  @endif

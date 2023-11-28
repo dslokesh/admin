@@ -32,7 +32,7 @@ class UsersController extends Controller
 		$this->checkPermissionMethod('list.subadmin');
         $data = $request->all();
         $user = Auth::user();
-        $query = User::whereNotIN('id', [1,3,9]);
+        $query = User::whereNotIN('role_id', [1,3,9]);
         $query->select('users.*');
         
         if(isset($data['user_name']) && !empty($data['user_name']))
@@ -43,6 +43,10 @@ class UsersController extends Controller
         {
             $query->where('users.email','like', '%'.$data['user_email'].'%');
         }
+        if(isset($data['role_id']) && !empty($data['role_id']))
+        {
+            $query->where('users.role_id','=', $data['role_id']);
+        }
 
         if(isset($data['status']) && !empty($data['status']))
         {
@@ -51,9 +55,9 @@ class UsersController extends Controller
             if($data['status']==2)
             $query->where('is_active',0);
         }
-
+        $roles = Role::whereNotIN('id', [1,3,9])->orderBy('name', 'ASC')->get();
           $records = $query->paginate(25);
-        return view('users.index',compact('records')); 
+        return view('users.index',compact('records','roles')); 
     }
 
    

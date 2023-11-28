@@ -76,8 +76,14 @@
                 </div>
                 <div class="col-auto col-md-4">
                   <div class="input-group mb-2">
-                    <div class="input-group-prepend"><div class="input-group-text">Voucher Code</div></div>
-                    <input type="text" name="vouchercode" value="{{ request('vouchercode') }}" class="form-control"  placeholder="Voucher Code" />
+                    <div class="input-group-prepend"><div class="input-group-text">Booking No</div></div>
+                    <input type="text" name="vouchercode" value="{{ request('vouchercode') }}" class="form-control"  placeholder="Booking No" />
+                  </div>
+                </div>
+                <div class="col-auto col-md-4">
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend"><div class="input-group-text">Invoice No</div></div>
+                    <input type="text" name="invoicecode" value="{{ request('invoicecode') }}" class="form-control"  placeholder="Invoice No" />
                   </div>
                 </div>
                 <div class="col-auto col-md-4">
@@ -106,6 +112,7 @@
                   <thead>
                   <tr>
 					<th>Booking Date</th>
+          <th>Booking No</th>
 					<th>Invoice Number</th>
                     <th>Service Date</th>
 					<th>Ref No.</th>
@@ -115,7 +122,8 @@
                     <th>C</th>
 					<th>Variant Name</th>
 					<th>Total Cost</th>
-					<th>Status</th>
+          <th>Status</th>
+					<th>Booking Status</th>
                   </tr>
 				  
                   </thead>
@@ -123,16 +131,22 @@
 				  @foreach ($records as $record)
                   <tr>
 				  <td>{{(!empty($record->voucher->booking_date))?date("d-m-Y",strtotime($record->voucher->booking_date)):''}} </td>
+          <td>
+            {{$record->voucher->code}}</td>
 				   <td>{{@$record->voucher->invoice_number}} </td>
                     <td>{{date("d-m-Y",strtotime($record->tour_date))}}
 					</td>
-					<td>{{$record->ticket_supp_ref_no}}</td>
+					<td>
+            {{$record->voucher->agent_ref_no}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
 					 <td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
 					<td>{{$record->variant_name}}</td>
 					<td>{{$record->totalprice}}</td>
+          <td>
+					{!! SiteHelpers::voucherStatus($record->status) !!}
+					</td>
 					<td>
 					{!! SiteHelpers::voucherStatus($record->voucher->status_main) !!}
 					</td>

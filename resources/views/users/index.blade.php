@@ -48,9 +48,8 @@
                     <th>Email Address</th>
                     <th>Role</th>
                     <th>Status</th>
-					<th>Password</th>
                     <th>Created On</th>
-					
+                    <th>Password</th>
                     <!--th>Updated On</th-->
                     <th class="nowrap" width="20%"></th>
                   </tr>
@@ -60,7 +59,12 @@
                     <th><input type="text" name="user_name" value="{{request('user_name')}}" class="form-control"  placeholder="Name" /></th>
                     
                     <th><input type="text" name="user_email" value="{{request('user_email')}}" class="form-control"  placeholder="Email" /></th>
-					<th></th>
+					<th> <select name="role_id" id="role_id" class="form-control">
+                    <option value = "">-Select Role-</option>
+                    @foreach($roles as $role)
+                      <option value="{{ $role->id }}" @if($role->id == request('role_id')) selected="selected" @endif >{{ $role->name }}</option>
+                    @endforeach
+                 </select></th>
                    
                     <th><select name="status" id="status" class="form-control">
                     <option value="" @if(request('status') =='') {{'selected="selected"'}} @endif>Select</option>

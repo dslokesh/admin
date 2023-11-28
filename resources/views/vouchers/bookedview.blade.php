@@ -372,23 +372,42 @@
             <div class="card card-default">
               <div class="card-header">
                 <div class="row">
-				<div class="col-md-5 text-left">
+				<div class="col-md-6 text-left">
                     <h3 class="card-title">
                       <strong> {{$activity->title}}</strong></h3>
+
+                      <span class="badge bg-warning" style="margin-left: 5px;">
+  @if($ap->status == '1')
+ Cancellation Requested
+  @elseif($ap->status == '2')
+  Cancelled
+   @elseif($ap->status == '3')
+    In Process
+   @elseif($ap->status == '4')
+    Confirm
+   @elseif($ap->status == '5')
+    Vouchered
+     @endif 
+     </span> 
                   </div>
-				  <div class="col-md-3 text-rihgt">
+                  <div class="col-md-2 text-rihgt">
                     <h6 class="card-title" style="font-size:10px">
 					@if($validTime['btm'] == '0')
                       <strong> Non - Refundable</strong>
 					@else
-						 <strong> Cancellation upto {{$validTime['validuptoTime']}}</strong>
+						 <strong> Cancellation upto<br/>{{$validTime['validuptoTime']}}</strong>
 					@endif
 				  </h6>
                   </div>
 				 
 				  
-				<div class="col-md-4 text-right pl-5">
-				@if(($ap->status == '4') && ($validTime['btm'] =='1') && ($ap->ticket_downloaded == '0'))
+                
+        
+     
+   
+
+        <div class="col-md-4 text-right ">
+				@if((($ap->status == '3') || ($ap->status == '4')) && ($ap->ticket_downloaded == '0'))
 						
 						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.cancel',$ap->id)}}" style="display:none;">
 						{{csrf_field()}}

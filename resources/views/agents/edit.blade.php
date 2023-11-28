@@ -198,13 +198,31 @@
 					          <option value="0" @if($record->is_active ==0) {{'selected="selected"'}} @endif >Inactive</option>
                  </select>
               </div>
-			   <div class="form-group col-md-6">
+              <div class="form-group col-md-6">
                 <label for="inputName"> Agent Crrent Credit Limit (Amount):</label>
                <br/>{{ $record->agent_credit_limit}}
 			   <br/>
-			  
-				
+			   @permission('list.credit.limit') 
+                <a href="javascript:;" id="c_limit_btn" class="btn btn-secondary btn-sm">Change Limit</a>
+				@endpermission
+				<div id="credit_limit_div" class="hide">
+				<div class="row">
+			   <div class="form-group col-md-4">
+                <label for="inputName">Type: <span class="red">*</span></label>
+                <select name="credit_limit_type" id="credit_limit_type" class="form-control">
+					<option value="">Select</option>
+                    <option value="1">Plus (+)</option>
+					<option value="2" >Minus (-)</option>
+                 </select>
               </div>
+			  <div class="form-group col-md-8">
+                <label for="inputName">Amount: <span class="red">*</span></label>
+                 <input type="text" id="credit_amount" name="credit_amount"  value="0" class="form-control"   />
+              </div>
+			  </div>
+			   </div>
+              </div>
+			   
 			   
 			   <div class="form-group col-md-12">
                 <label for="inputName">Additional Contact:</label>

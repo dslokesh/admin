@@ -382,7 +382,18 @@ class AgentsController extends Controller
 		$record->vat = $request->input('vat');
 		$record->updated_by = Auth::user()->id;
 		
-		
+		if(($request->input('credit_limit_type') == 1) && ($request->input('credit_amount') > 0))
+		{
+			$record->agent_credit_limit +=$request->input('credit_amount');
+			$record->agent_amount_balance +=$request->input('credit_amount');
+		}elseif(($request->input('credit_limit_type') == 2) && ($request->input('credit_amount') > 0))
+		{
+			if($record->agent_amount_balance >= $request->input('credit_amount'))
+			{
+				$record->agent_credit_limit -= $request->input('credit_amount');
+				$record->agent_amount_balance -= $request->input('credit_amount');
+			}
+		}
 		
         $record->save();
 		
@@ -471,11 +482,13 @@ class AgentsController extends Controller
     {
 		$this->checkPermissionMethod('list.agent');
 		$agentId = $id;
-		$perPage = config("constants.ADMIN_PAGE_LIMIT");
-        $records = Activity::where('status', 1)->where('is_price', 1)->orderBy('title', 'ASC')->paginate($perPage);
+		//$perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $perPage = "1000";
+		$records = Activity::where('status', 1)->where('is_price', 1)->orderBy('title', 'ASC')->paginate($perPage);
 		$agent = User::find($agentId);
 		$activity_ids = explode(",",$agent->activity_id);
-        return view('agents.priceActivities', compact('records','agentId','activity_ids'));
+		$agentCompany =$agent->company_name;
+        return view('agents.priceActivities', compact('records','agentId','activity_ids','agentCompany'));
     }
 	
 	public function priceMarkupActivitySave(Request $request)
@@ -515,20 +528,23 @@ class AgentsController extends Controller
 		$agentId = $id;
 		$agent = User::find($agentId);
 		$activity_ids = explode(",",$agent->activity_id);
+		$agentCompany = $agent->company_name;
 		$activities = Activity::whereIn('id', $activity_ids)->where(['status'=> 1,'is_price'=> 1])->get();
 		$variants = [];
 		$markups = [];
 		foreach($activity_ids as $aid)
 		{
-			$variants[$aid] = ActivityPrices::select('variant_code')->distinct()->where('activity_id',  $aid)->get()->toArray();
+			$variants[$aid] = ActivityPrices::select('variant_code','adult_rate_with_vat')->distinct()->where('activity_id',  $aid)->get()->toArray();
 			
 			foreach($variants[$aid] as $variant)
 			{
+				
 				$m = AgentPriceMarkup::where('agent_id',  $agentId)->where('activity_id',  $aid)->where('variant_code',  $variant['variant_code'])->first();
 				
 				if(!empty($m))
 				{
 					$markups[$variant['variant_code']] = [
+						'variant_cost'=>$variant['adult_rate_with_vat'],
 						'ticket_only'=>$m->ticket_only,
 						'sic_transfer'=>$m->sic_transfer,
 						'pvt_transfer'=>$m->pvt_transfer,
@@ -538,11 +554,12 @@ class AgentsController extends Controller
 			
 		}
 		
+		// print_r($markups);
+		// exit; 
 		
+		 
 		
-		/* print_r($markups);
-		exit; */
-        return view('agents.agentPriceMarkup', compact('agentId','activities','variants','markups'));
+        return view('agents.agentPriceMarkup', compact('agentId','activities','variants','markups','agentCompany'));
     }
 	
 	public function markupPriceSave(Request $request)
@@ -594,7 +611,7 @@ class AgentsController extends Controller
 		$nameOrCompany  = ($request->get('nameorcom'))?$request->get('nameorcom'):'Company';
 		if($nameOrCompany == 'Company'){
         $users = User::whereIn('role_id', [3,9])
-					->where('is_active', 1)
+					//->where('is_active', 1)
 					->where(function ($query) use($search) {
 						$query->where('company_name', 'LIKE', '%'. $search. '%')
 						->orWhere('code', 'LIKE', '%'. $search. '%')
@@ -612,7 +629,7 @@ class AgentsController extends Controller
 	}
 	elseif($nameOrCompany == 'Name'){
         $users = User::whereIn('role_id', [3,9])
-					->where('is_active', 1)
+					// ->where('is_active', 1)
 					->where(function ($query) use($search) {
 						$query->where('name', 'LIKE', '%'. $search. '%')
 						->orWhere('code', 'LIKE', '%'. $search. '%')

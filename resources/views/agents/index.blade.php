@@ -44,9 +44,7 @@
 					<th>SN.</th>
 					<th>Code</th>
 					<th>Company</th>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
+                  
                     
                     <th>City</th>
                     <th>Status</th>
@@ -55,6 +53,9 @@
                     <th>Created</th>
                     <th>Updated</th>
 					<th width="17%"></th>
+          <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
                   </tr>
 				  <!-- <tr style="display:none">
                     <form id="filterForm" method="get" action="{{route('agents.index')}}" >
@@ -92,11 +93,9 @@
 				  
                   <tr>
 					<td>{{ $k+1}}</td>
-                    <td>{{ $record->code}}</td>
+                    <td><a class="badge bg-success" href="{{route('agents.show',$record->id)}}">{{ $record->code}}</a></td>
 					<td>{{ $record->company_name}}</td>
-                    <td>{{ $record->name}}</td>
-                    <td>{{ $record->mobile}}</td>
-					<td>{{ $record->email}}</td>
+                   
                     
                     <td>{{ ($record->city)?$record->city->name:''}}</td>
                      <td>{!! SiteHelpers::statusColor($record->is_active) !!}</td>
@@ -107,7 +106,7 @@
                                 {{csrf_field()}}
                                <input type="hidden" name="user" value="agent">
                             </form>
-                            <a class="btn btn-warning btn-sm " href="javascript:void(0)" onclick="
+                            <a class="badge bg-warning" href="javascript:void(0)" onclick="
                                 if(confirm('Are you sure, You want to reset password this user?'))
                                 {
                                     event.preventDefault();
@@ -125,14 +124,11 @@
 					
                      <td  style="padding:0px">
 					  <a class="btn btn-info btn-sm"  href="{{route('agents.markup.activity',$record->id)}}">
-                              Markup
-                              
+            <i class="fas fa-file-alt">
+            </i>
+                               
                           </a>
-					  <a class="btn btn-info btn-sm" href="{{route('agents.show',$record->id)}}">
-                              <i class="fas fa-eye">
-                              </i>
-                              
-                          </a>
+					  
 					 <a class="btn btn-info btn-sm" href="{{route('agents.edit',$record->id)}}">
                               <i class="fas fa-pencil-alt">
                               </i>
@@ -154,6 +150,10 @@
                                 }
                             
                             "><i class="fas fa-trash"></i></a></td>
+
+<td>{{ $record->name}}</td>
+                    <td>{{ $record->mobile}}</td>
+					<td>{{ $record->email}}</td>
                   </tr>
 				 
                   @endforeach

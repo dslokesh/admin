@@ -224,8 +224,9 @@
                  </select>
 					</td>
                   </tr>
-                  </tbody>
+                
                   @endforeach
+                  </tbody>
                 </table></div>
 				<div class="pagination pull-right mt-3"> 
 				</div> 

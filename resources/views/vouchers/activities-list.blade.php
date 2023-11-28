@@ -28,7 +28,7 @@
                
 
        <div class="row">
-       <div class="col-md-12 card card-default">
+       <div class="col-md-12 card card-default d-none">
               <!-- form start -->
               <form id="filterForm" class="form-inline" method="get" action="{{ route('voucher.add.activity',$vid) }}" >
                 <div class="card-body">
@@ -70,12 +70,18 @@
                 </form>
                 </div>
              <div class="card-body @if($voucherActivityCount > 0) col-md-9 @else offset-1 col-md-10 @endif">
-             
+             <table id="tbl-activites" class="dataTable" style="width:100%" cellpadding="0px;" cellspaccing="0px" aria-describedby="example2_info">
+              <thead>
+                <tr>
+                <th class=" " tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="" aria-sort=""></th>
+                </tr>
+              </thead>
                   @foreach ($records as $record)
 				  @php
             $minPrice = SiteHelpers::getActivityLowPrice($record->id,$voucher->agent_id,$voucher);
 			$cutoffTime = SiteHelpers::getActivityVarByCutoffCancellation($record->id);
           @endphp
+          <tr><td>
                    <!-- Default box -->
       <div class="card collapsed-card ">
         <div class="card-header">
@@ -134,7 +140,9 @@
       </div>
       <!-- /.card -->
 				 
+      </td></tr>
                   @endforeach
+</table> 
                  
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
 </div>
@@ -318,6 +326,13 @@ $(document).on('click', '.loadvari', function(evt) {
 });
 });
 </script>  
+<script>
+        $(document).ready(function ()
+        {   
+            var table = $('#tbl-activites').DataTable();
+        });
+
+    </script> 
 <script type="text/javascript">
   $(document).ready(function() {
    
@@ -341,6 +356,11 @@ $(document).on('click', '.loadvari', function(evt) {
    let mpt = parseFloat($("body #mpt"+inputnumber).val());
    let mpst = parseFloat($("body #mpst"+inputnumber).val());
    let mppt = parseFloat($("body #mppt"+inputnumber).val());
+
+
+   let mptt = parseFloat($("body #mptt"+inputnumber).val());
+   let mpstt = parseFloat($("body #mpstt"+inputnumber).val());
+   let mpptt = parseFloat($("body #mpptt"+inputnumber).val());
    
    let adultPrice = $("body #adultPrice"+inputnumber).val();
    let childPrice = $("body #childPrice"+inputnumber).val();
@@ -348,8 +368,10 @@ $(document).on('click', '.loadvari', function(evt) {
    var ad_price = (adult*adultPrice) ;
    var chd_price = (child*childPrice) ;
    var ad_ch_TotalPrice = ad_price + chd_price;
-   var ticket_only_markupamt = ((ad_ch_TotalPrice*mpt)/100);
-   
+   if(mptt == '1')
+    var ticket_only_markupamt = ((ad_ch_TotalPrice*mpt)/100);
+   else
+    var ticket_only_markupamt = mpt;
    
    let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
    //$("body #pickup_location"+inputnumber).val('');
@@ -358,7 +380,7 @@ $(document).on('click', '.loadvari', function(evt) {
    if(t_option_val == 3)
    {
      var totaladult = parseInt(adult + child);
-   getPVTtransfer(activity_id,totaladult,mppt,inputnumber);
+   getPVTtransfer(activity_id,totaladult,mppt,inputnumber,mpptt);
    $("body #loader-overlay").show();	
    waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
      var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
@@ -399,7 +421,10 @@ $(document).on('click', '.loadvari', function(evt) {
        var totaladult = parseInt(adult + child);
        let zonevalueTotal = (totaladult * zonevalue);
        $("body #zonevalprice"+inputnumber).val(zonevalueTotal);
-       var sic_transfer_markupamt = ((zonevalueTotal *  mpst)/100);
+       if(mpstt == '1')
+        var sic_transfer_markupamt = ((zonevalueTotal *  mpst)/100);
+      else
+        var sic_transfer_markupamt =  mpst;
        var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
        
        grandTotal = ( (totalPrice));
@@ -449,6 +474,28 @@ $(document).on('click', '.loadvari', function(evt) {
    }
    $("body #adult"+inputnumber).trigger("change");
  });
+
+ 
+
+ $(document).on('blur','.priceChangenp',function(){
+  let inputnumber = $(this).data('inputnumber');
+
+
+  let tptice = parseFloat($("body #totalprice"+inputnumber).val());
+   let inputvale = parseFloat($(this).val());
+   if(inputvale == null || isNaN(inputvale))
+   {
+     inputvale = 0;
+     $(this).val("");
+   }
+   else
+   {
+      grandTotalAfterDis = parseFloat(tptice-inputvale).toFixed(2);
+      $("body #discount"+inputnumber).val(grandTotalAfterDis);
+   }
+  
+   $("body #adult"+inputnumber).trigger("change");
+ });
  $(document).on('change', '.actcsk', function(evt) {
    let inputnumber = $(this).data('inputnumber');
    if ($(this).is(':checked')) {
@@ -461,6 +508,7 @@ $(document).on('click', '.loadvari', function(evt) {
      $("body #child"+inputnumber).prop('disabled',false);
      $("body #infant"+inputnumber).prop('disabled',false);
      $("body #discount"+inputnumber).prop('disabled',false);
+     $("body #net_price"+inputnumber).prop('disabled',false);
 	 $("body #adult"+inputnumber).trigger("change");
      } else {
        $("body #transfer_option"+inputnumber).prop('required',false);
@@ -472,7 +520,8 @@ $(document).on('click', '.loadvari', function(evt) {
      $("body #child"+inputnumber).prop('disabled',true);
      $("body #infant"+inputnumber).prop('disabled',true);
      $("body #discount"+inputnumber).prop('disabled',true);
-	 $("body #totalprice"+inputnumber).val(0);
+     $("body #discount"+inputnumber).prop('disabled',true);
+	 $("body #net_price"+inputnumber).val(0);
      $("body #price"+inputnumber).text(0);
      }
  });
@@ -507,7 +556,7 @@ $(document).on('click', '.loadvari', function(evt) {
      var totaladult = parseInt(adult + child);
      //alert(totaladult);
      let mppt = parseFloat($("body #mppt"+inputnumber).val());
-     getPVTtransfer(activity_id,totaladult,mppt,inputnumber);
+     getPVTtransfer(activity_id,totaladult,mppt,inputnumber,mpptt);
      $("body #adult"+inputnumber).trigger("change");
    }
  });
@@ -524,7 +573,7 @@ $(document).on('click', '.loadvari', function(evt) {
      $("body #adult"+inputnumber).trigger("change");
  });
  
- function getPVTtransfer(acvt_id,adult,markupPer,inputnumber)
+ function getPVTtransfer(acvt_id,adult,markupPer,inputnumber,mpptt)
  {
      $.ajaxSetup({
                  headers: {
@@ -538,7 +587,8 @@ $(document).on('click', '.loadvari', function(evt) {
              data: {
                 acvt_id: acvt_id,
           adult: adult,
-          markupPer: markupPer
+          markupPer: markupPer,
+          markupT:mpptt
              },
              success: function( data ) {
                 //console.log( data );
@@ -569,6 +619,8 @@ $(document).on('click', '.loadvari', function(evt) {
    return true;
  
  });
+
+ 
  
    </script> 
 @endsection

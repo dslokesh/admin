@@ -104,12 +104,12 @@
                
 			  <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Agent Category:</label>
-                {{$agent->agent_category}}%
+                {{$agent->agent_category}}
               </div>
                
 			  <div class="form-group col-lg-6 mb-3">
                 <label for="inputName">Agent Credit Limit (Amount):</label>
-                {{$agent->agent_credit_limit}}%
+                {{$agent->agent_credit_limit}}
               </div>
                
 			  <div class="form-group col-lg-6 mb-3">
@@ -200,13 +200,13 @@
 						<tr>
 						<td>{{ $variant_code }}</td>
 						<td>
-						{{$ticket_only}}%
+						{{$ticket_only}}
 						</td>
 						<td>
-						{{$sic_transfer}}%
+						{{$sic_transfer}}
 						</td>
 						<td>
-						{{$pvt_transfer}}%
+						{{$pvt_transfer}}
 						</td>
 						</tr>
 						@endforeach

@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Markup</h1>
+            <h1>Markup for {{ $agentCompany }}</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Markup</li>
+              <li class="breadcrumb-item active">Markup for {{ $agentCompany }}</li>
             </ol>
           </div>
         </div>
@@ -42,7 +42,7 @@
                   <thead>
                   <tr>
                     <th>Activity Name</th>
-					<th>Price</th>
+					          <th>Price</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -56,15 +56,16 @@
 						<table class="table table-bordered table-striped">
 						<tr>
 							<th>Variant Code</th>
-							<th>Ticket Only</th>
+              <th>Adult Cost With VAT </th>
+							<th>Ticket Only (Markup Value)</th>
 							 @if($record->sic_TFRS==1)
 							<th>SIC Transfer</th>
 							@else
-							<th style="display:none">SIC Transfer</th>
+							<th style="display:none">SIC Transfer  (Markup Value)</th>
 							@endif
 							
 							 @if($record->pvt_TFRS==1)
-							<th>PVT Transfer</th>
+							<th>PVT Transfer  (Markup Value)</th>
 							@else
 							<th style="display:none">PVT Transfer</th>
 							@endif
@@ -75,9 +76,13 @@
 						$ticket_only = (isset($markups[$variant['variant_code']]))?$markups[$variant['variant_code']]['ticket_only']:'';
 						$sic_transfer = (isset($markups[$variant['variant_code']]))?$markups[$variant['variant_code']]['sic_transfer']:'';
 						$pvt_transfer = (isset($markups[$variant['variant_code']]))?$markups[$variant['variant_code']]['pvt_transfer']:'';
+
+             $variant_cost = (isset($markups[$variant['variant_code']]))?$markups[$variant['variant_code']]['variant_cost']:'';
+
 						@endphp
 						<tr>
 						<td>{{ $variant['variant_code']}}</td>
+            <td>{{ $variant_cost}}</td>
 						<td>
 						<input type="text"  name="ticket_only[{{ $record->id}}][{{$variant['variant_code']}}]" value="{{$ticket_only}}" min="0" max="100" class="form-control onlynumbr" required  />
 						</td>

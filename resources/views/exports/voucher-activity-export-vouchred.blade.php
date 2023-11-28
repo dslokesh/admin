@@ -8,6 +8,7 @@
                   <thead>
                      <tr>
 					<th>Booking Date</th>
+					<th>Booking No</th>
 					<th>Invoice Number</th>
                     <th>Service Date</th>
 					<th>Ref No.</th>
@@ -18,6 +19,7 @@
 					<th>Service</th>
 					<th>Total Cost</th>
 					<th>Status</th>
+					<th>Booking Status</th>
                   </tr>
 				  
                   </thead>
@@ -25,6 +27,7 @@
 				 @foreach ($records as $record)
                   <tr>
 				  <td>{{@(!empty($record->voucher->booking_date))?$record->voucher->booking_date:''}} </td>
+				  <td>{{@$record->voucher->code}} </td>
 				   <td>{{@$record->voucher->invoice_number}} </td>
                     <td>{{$record->tour_date}}
 					</td>
@@ -35,6 +38,9 @@
                     <td>{{$record->child}}</td>
 					<td>{{($record->activity)?$record->activity->title:''}}</td>
 					<td>{{$record->totalprice}}</td>
+					<td>
+					{!! SiteHelpers::voucherStatus($record->status) !!}
+					</td>
 					<td>
 					{!! SiteHelpers::voucherStatus($record->voucher->status_main) !!}
 					</td>

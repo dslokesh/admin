@@ -42,6 +42,7 @@
                     <th>#</th>
                     <th>Created</th>
                     <th>Booking #</th>
+                    <th>Invoice No</th>
                     <th>Agency</th>
                     <th>Guest Name</th>
 					<th>Ticket No.</th>
@@ -60,7 +61,8 @@
                     <form id="filterForm" method="get" action="{{route('tickets.generated.tickets')}}" >
 					 <th></th>
            <th></th>
-				    <th></th>
+				   <th><input type="text" name="code" value="{{request('code')}}" class="form-control"  placeholder="Voucher Code" autocomplete="off" /></th>
+           <th><input type="text" name="invcode" value="{{request('invcode')}}" class="form-control"  placeholder="Invoice No" autocomplete="off" /></th>
                    <th></th>
                    <th></th>
                     <th><input type="text" name="ticket_no" value="{{request('ticket_no')}}" class="form-control"  placeholder="Ticket Number" autocomplete="off" /></th>
@@ -96,6 +98,7 @@
                   <td>{{ $loop->index + 1 }}</td>
                   <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                   <td> <a class="btn btn-info btn-xs" target="_blank" href="{{route('voucherView',$record->voucher->id)}}">{{ ($record->voucher)?$record->voucher->code:''}}</a></td>
+                  <td> {{ ($record->voucher)?$record->voucher->invoice_number:''}}</td>
                   <td>{{ ($record->voucher)?$record->voucher->agent->company_name:''}}</td>
                   <td>{{ $record->voucher->guest_name}}</td>
 					<td>{{ $record->ticket_no}}</td>

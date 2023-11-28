@@ -1,12 +1,34 @@
 @extends('layouts.app')
 @section('content')
-
+<script>
+  function selectAll(all,type)
+		{
+			
+					if(all.checked)
+					{
+						var checkbox = document.getElementsByName('activity_id[]');
+						var inn = checkbox.length	;						
+						for (var i=0;i<inn;i++) {
+							checkbox[i].checked=true;
+						}
+					}
+					else
+					{	
+						var checkbox = document.getElementsByName('activity_id[]');
+						var inn = checkbox.length;							
+						for (var i=0;i<inn;i++) {
+							checkbox[i].checked=false;
+						}
+					}
+				
+		}
+</script>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Select Activities</h1>
+            <h1>Select Activities for {{ $agentCompany }}</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -41,8 +63,9 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                  <th><input type="checkbox" name="selectall" id="selectall" value="all" onClick="selectAll(this);" /></th>
                     <th>Activity Name</th>
-					<th></th>
+				
                   </tr>
                   </thead>
                   <tbody>
@@ -50,9 +73,9 @@
                   @foreach ($records as $record)
 				  
                   <tr>
-					
+                  <td><input type="checkbox"  name="activity_id[]" value="{{ $record->id}}" @if(in_array($record->id,$activity_ids))  checked="checked" @endif /></td>
                     <td>{{ $record->title}}</td>
-					<td><input type="checkbox"  name="activity_id[]" value="{{ $record->id}}" @if(in_array($record->id,$activity_ids))  checked="checked" @endif /></td>
+				
                   </tr>
 				 
                   @endforeach

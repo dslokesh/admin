@@ -24,6 +24,7 @@
 					<th valign="middle">Adult</th>
                     <th valign="middle">Child<br/><small>({{$ap->chield_start_age}}-{{$ap->chield_end_age}} Yrs)</small></th>
                     <th valign="middle">Infant<br/><small>(Below {{$ap->chield_start_age}} Yrs)</small></th>
+					<th valign="middle">Total Selling Price*</th>
 					<th valign="middle">Net Disc</th>
 					<th valign="middle">Total Amount</th>
                   </tr>
@@ -112,6 +113,15 @@
 						<input type="hidden" value="{{$markup['sic_transfer']}}" id="mpst{{$kk}}"  name="mpst[{{$ap->u_code}}]"    />
 					
 						<input type="hidden" value="{{$markup['pvt_transfer']}}" id="mppt{{$kk}}"  name="mppt[{{$ap->u_code}}]"    />
+
+						<input type="hidden" value="{{$markup['ticket_only_m']}}" id="mptt{{$kk}}"  name="mptt[{{$ap->u_code}}]"    />
+
+						<input type="hidden" value="{{$markup['sic_transfer_m']}}" id="mpstt{{$kk}}"  name="mpstt[{{$ap->u_code}}]"    />
+					
+						<input type="hidden" value="{{$markup['pvt_transfer_m']}}" id="mpptt{{$kk}}"  name="mpptt[{{$ap->u_code}}]"    />
+						<td>
+						<input type="text" id="net_price{{$kk}}" style="width: 50px;" value="" required  name="net_price[{{$ap->u_code}}]" @if($kk > '0') disabled="disabled" @endif data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangenp"    />
+						</td>
 						<td>
 						<input type="text" id="discount{{$kk}}" style="width: 50px;" value="0"  name="discount[{{$ap->u_code}}]" @if($kk > '0') disabled="disabled" @endif data-inputnumber="{{$kk}}" class="form-control onlynumbrf priceChangedis"    />
 						</td>

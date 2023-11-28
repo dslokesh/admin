@@ -53,23 +53,41 @@ class SiteHelpers
 		$markup['ticket_only'] = 0;
 		$markup['sic_transfer'] = 0;
 		$markup['pvt_transfer'] = 0;
+		$markup['ticket_only_m'] = 1;
+		$markup['sic_transfer_m'] = 1;
+		$markup['pvt_transfer_m'] = 1;
 		$user = User::where('id',  $agent_id)->first();
 		$m = AgentPriceMarkup::where('agent_id',  $agent_id)->where('activity_id',  $activity_id)->where('variant_code',  $variant_code)->first();
 		
-			if(!empty($m->ticket_only)){
-			$markup['ticket_only'] = $m->ticket_only;
-			}elseif(!empty($user->ticket_only)){
-			$markup['ticket_only'] = $user->ticket_only;	
+			if(!empty($m->ticket_only))
+			{
+				$markup['ticket_only_m'] = 0;
+				$markup['ticket_only'] = $m->ticket_only;
 			}
-			if(!empty($m->sic_transfer)){
-			$markup['sic_transfer'] = $m->sic_transfer;
-			}elseif(!empty($user->ticket_only)){
-			$markup['sic_transfer'] = $user->sic_transfer;	
+			elseif(!empty($user->ticket_only))
+			{
+				$markup['ticket_only_m'] = 1;
+				$markup['ticket_only'] = $user->ticket_only;
 			}
-			if(!empty($m->pvt_transfer)){
-			$markup['pvt_transfer'] = $m->pvt_transfer;
-			}elseif(!empty($user->pvt_transfer)){
-			$markup['pvt_transfer'] = $user->pvt_transfer;	
+			if(!empty($m->sic_transfer))
+			{
+				$markup['sic_transfer_m'] = 0;
+				$markup['sic_transfer'] = $m->sic_transfer;
+			}
+			elseif(!empty($user->ticket_only))
+			{
+				$markup['sic_transfer_m'] = 1;
+				$markup['sic_transfer'] = $user->sic_transfer;
+			}
+			if(!empty($m->pvt_transfer))
+			{
+				$markup['pvt_transfer_m'] = 0;
+				$markup['pvt_transfer'] = $m->pvt_transfer;
+			}
+			elseif(!empty($user->pvt_transfer))
+			{
+				$markup['pvt_transfer_m'] = 1;
+				$markup['pvt_transfer'] = $user->pvt_transfer;
 			}
 		
 		
@@ -324,6 +342,9 @@ class SiteHelpers
 			$markup['ticket_only'] = 0;
 			$markup['sic_transfer'] = 0;
 			$markup['pvt_transfer'] = 0;
+			$markup['ticket_only_m'] = 1;
+			$markup['sic_transfer_m'] = 1;
+			$markup['pvt_transfer_m'] = 1;
 		}
 		
 		
@@ -343,18 +364,31 @@ class SiteHelpers
 					 $transferPrice = $td->price;
 					}
 			}
-			
+			$markupPriceT = 0;
 		if($adult_rate > 0){
-			$markupPriceT  = ($adult_rate * $markup['ticket_only'])/100;
+			if($markup['ticket_only_m'] == '1')
+				$markupPriceT  = ($adult_rate * $markup['ticket_only'])/100;
+			else
+				$markupPriceT  = $markup['ticket_only'];
+			
 			
 			if($activity->entry_type=='Ticket Only'){
 				$minPrice = $adult_rate + $markupPriceT;
 			} else {
 			if($activity->sic_TFRS==1){
-				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				if($markup['sic_transfer_m'] == '1')
+					$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				else
+					$markupPriceS  = ($markup['sic_transfer']);
+			
+			
 				$minPrice =  $adult_rate + $markupPriceS + $markupPriceT + $zonePrice;
 			}elseif($activity->pvt_TFRS==1){
-				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+				if($markup['pvt_transfer_m'] == '1')
+					$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+				else
+					$markupPriceP  = ($markup['pvt_transfer']);
+			
 				  $minPrice = $adult_rate + $markupPriceP + $markupPriceT + $transferPrice;
 			}
 			}
@@ -363,11 +397,18 @@ class SiteHelpers
 			
 			if($activity->sic_TFRS==1){
 				
-				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				if($markup['sic_transfer_m'] == '1')
+					$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				else
+					$markupPriceS  = ($markup['sic_transfer']);
+			
 				$minPrice =  $markupPriceS +  $zonePrice;
 				
 			}elseif($activity->pvt_TFRS==1){
-				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+				if($markup['pvt_transfer_m'] == '1')
+					$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+				else
+					$markupPriceP  = ($markup['pvt_transfer']);
 				$minPrice =   $markupPriceP + $transferPrice;
 			}
 			
@@ -630,6 +671,9 @@ class SiteHelpers
 			$markup['ticket_only'] = 0;
 			$markup['sic_transfer'] = 0;
 			$markup['pvt_transfer'] = 0;
+			$markup['ticket_only_m'] = 1;
+			$markup['sic_transfer_m'] = 1;
+			$markup['pvt_transfer_m'] = 1;
 		}
 		
 		
@@ -650,17 +694,33 @@ class SiteHelpers
 					}
 			}
 			
-			
-			$markupPriceT  = ($adult_total_rate * $markup['ticket_only'])/100;
+			if($markup['ticket_only_m'] == '1')
+				$markupPriceT  = ($adult_total_rate * $markup['ticket_only'])/100;
+			else
+				$markupPriceT  = $markup['ticket_only'];
+				
+				
 			$ticketPrice = $adult_total_rate + $markupPriceT + $infentPriceTotal;
 			if($transfer_option == 'Ticket Only'){
 				$totalPrice = $ticketPrice;
 			} else {
 			if($transfer_option == 'Shared Transfer'){
-				$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				if($markup['sic_transfer_m'] == '1')
+					$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
+				else
+					$markupPriceS  = ($markup['sic_transfer']);
+				
+				
 				$totalPrice =  $ticketPrice + $markupPriceS + $zonePrice;
 			}elseif($transfer_option == 'Pvt Transfer'){
-				$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+
+				if($markup['pvt_transfer_m'] == '1')
+						$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
+				else
+					$markupPriceP  = ($markup['pvt_transfer']);
+	
+
+				
 				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
 				  $totalPrice = $ticketPrice + $markupPriceP +  $transferPrice;
 			}
@@ -681,6 +741,57 @@ class SiteHelpers
 		'activity_vat' =>$avat,
 		'pvt_traf_val_with_markup' =>$pvtTrafValWithMarkup,
 		'zonevalprice_without_markup' =>$zonePrice,
+		'markup_p_ticket_only' =>$markup['ticket_only'],
+		'markup_p_sic_transfer' =>$markup['sic_transfer'],
+		'markup_p_pvt_transfer' =>$markup['pvt_transfer'],
+		];
+		
+		return $data;
+		
+    }
+
+
+	public static function getActivitySupplierCost($activity_id,$agent_id,$voucher,$variant_code,$adult,$child,$infent,$discount)
+    {
+		$totalPrice = 0;
+		$infantPriceTotal = 0;
+		$adultPriceTotal = 0;
+		$childPriceTotal = 0;
+		$adult_total_rate = 0;
+		$adultPrice = 0;
+		$childPrice = 0;
+		$infPrice = 0;
+		$pvtTrafValWithMarkup = 0;
+		$totalmember = $adult + $child;
+		$user = auth()->user();
+
+		if(isset($variant_code)){
+			$markup = self::getAgentMarkup($agent_id,$activity_id, $variant_code);
+			}else{
+				$markup['ticket_only'] = 0;
+				$markup['sic_transfer'] = 0;
+				$markup['pvt_transfer'] = 0;
+				$markup['ticket_only_m'] = 1;
+				$markup['sic_transfer_m'] = 1;
+				$markup['pvt_transfer_m'] = 1;
+			}
+		
+			
+	$adultPriceTotal  = $markup['ticket_only'] * $adult;
+	$childPriceTotal  = $markup['sic_transfer'] * $child;
+	$infantPriceTotal  = $markup['pvt_transfer'] * $infent;
+	
+	$totalPrice = $adultPriceTotal + $childPriceTotal +  $infantPriceTotal;
+		
+	
+		$data = [
+		'adultPrice' =>$adultPriceTotal,
+		'childPrice' =>$childPriceTotal,
+		'infPrice' =>$infantPriceTotal,
+		'totalprice' =>$totalPrice,
+		'activity_vat' =>"0",
+		'pvt_traf_val_with_markup' =>"0",
+		'zonevalprice_without_markup' =>"0",
 		'markup_p_ticket_only' =>$markup['ticket_only'],
 		'markup_p_sic_transfer' =>$markup['sic_transfer'],
 		'markup_p_pvt_transfer' =>$markup['pvt_transfer'],
@@ -713,7 +824,22 @@ class SiteHelpers
 		
 		return $voucherActivity;
     }
-	
+	public function voucherActivityValue($id,$supplier_id)
+    {
+		$voucher_activity = VoucherActivity::where('id',  $id)->first();
+		$records = array();
+		$a = $voucher_activity->adult;
+		$c = $voucher_activity->child;
+		$activity_id = $voucher_activity->activity_id ;
+		$markup = [];
+		$markup['ticket_only'] = 0;
+		$markup['sic_transfer'] = 0;
+		$markup['pvt_transfer'] = 0;
+	  	$markup = self::getAgentMarkup($supplier_id,$activity_id, $voucher_activity->variant_code);
+		$total_amt = 0;
+		$total_amt = $a*$markup['ticket_only']+$c*$markup['sic_transfer'];
+	  	return $total_amt;
+    }
 	public static function getVoucherTotalPrice($voucherId)
     {
 		$user = auth()->user();

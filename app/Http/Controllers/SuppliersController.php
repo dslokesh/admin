@@ -293,16 +293,19 @@ class SuppliersController extends Controller
     {
 		$this->checkPermissionMethod('list.supplier');
 		$supplierId = $id;
-		$perPage = config("constants.ADMIN_PAGE_LIMIT");
-        $records = Activity::where('status', 1)->where('is_price', 1)->orderBy('title', 'ASC')->paginate($perPage);
+		//$perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $perPage = "1000";
+		$records = Activity::where('status', 1)->where('is_price', 1)->orderBy('title', 'ASC')->paginate($perPage);
 		$supplier = User::find($supplierId);
 		$activity_ids = explode(",",$supplier->activity_id);
-        return view('suppliers.priceActivities', compact('records','supplierId','activity_ids'));
+		$agentCompany =$supplier->company_name;
+        return view('suppliers.priceActivities', compact('records','supplierId','activity_ids','agentCompany'));
     }
 	
 	public function priceMarkupActivitySave(Request $request)
     {
-		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		//$perPage = config("constants.ADMIN_PAGE_LIMIT");
+        $perPage = "1000";
         $input = $request->all();
         $supplier = User::find($request->input('supplier_id'));
 		
@@ -337,6 +340,7 @@ class SuppliersController extends Controller
 		$supplierId = $id;
 		$supplier = User::find($supplierId);
 		$activity_ids = explode(",",$supplier->activity_id);
+		$agentCompany = $supplier->company_name;
 		$activities = Activity::whereIn('id', $activity_ids)->where(['status'=> 1,'is_price'=> 1])->get();
 		$variants = [];
 		$markups = [];
@@ -364,7 +368,7 @@ class SuppliersController extends Controller
 		
 		/* print_r($markups);
 		exit; */
-        return view('suppliers.supplierPriceMarkup', compact('supplierId','activities','variants','markups'));
+        return view('suppliers.supplierPriceMarkup', compact('supplierId','activities','variants','markups','agentCompany'));
     }
 	
 	public function markupPriceSave(Request $request)

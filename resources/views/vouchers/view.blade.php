@@ -407,6 +407,7 @@
                                 }
                             
                             "><i class="fas fa-trash"></i></a>
+                            <a class="btn-info btn-sm" href="{{route('voucher.activity.view',[$ap->activity_id,$voucher->id,$ap->tour_date,$ap->adult,$ap->child,$ap->infant,$ap->transfer_option])}}"><i class="fas fa-edit"></i></a>
                     
                   </div>
 				   </div>
