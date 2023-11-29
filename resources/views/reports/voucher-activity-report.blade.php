@@ -98,7 +98,15 @@
 					</select>
                 </div>
               </div>
-			  
+			  <div class="col-auto col-md-3">
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">Agency/Supplier</div>
+                  </div>
+                <input type="text" id="agent_id" name="agent_id" value="{{ request('agent_id') ?: $agetName }}" class="form-control"  placeholder="Agency/Supplier Name" />
+					<input type="hidden" id="agent_id_select" name="agent_id_select" value="{{ request('agent_id_select') ?: $agetid }}"  />
+                </div>
+              </div>
 			  
                
               <div class="col-auto col-md-2">
@@ -262,6 +270,38 @@ $(document).ready(function() {
           });
 	 });
 });
-
+var path = "{{ route('auto.agent.supp') }}";
+  
+    $( "#agent_id" ).autocomplete({
+        source: function( request, response ) {
+          $.ajax({
+            url: path,
+            type: 'GET',
+            dataType: "json",
+            data: {
+               search: request.term,
+            },
+            success: function( data ) {
+               response( data );
+            }
+          });
+        },
+		
+        select: function (event, ui) {
+           $('#agent_id').val(ui.item.label);
+           //console.log(ui.item); 
+		   $('#agent_id_select').val(ui.item.value);
+		    $('#agent_details').html(ui.item.agentDetails);
+           return false;
+        },
+        change: function(event, ui){
+            // Clear the input field if the user doesn't select an option
+            if (ui.item == null){
+                $('#agent_id').val('');
+				 $('#agent_id_select').val('');
+				 $('#agent_details').html('');
+            }
+        }
+      });
   </script> 
   @endsection

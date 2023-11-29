@@ -13,6 +13,7 @@
 					<th>Transaction From</th>
 					<th>Payment</th>
 					<th>Receipt</th>
+					<th>Guest Name</th>
 					<th>Remark</th>
                   </tr>
 				  
@@ -58,6 +59,7 @@
 					{{$record->amount}}
 					@endif</td>
 					<td>{{$record->remark}}</td>
+					<td>{{@$record->voucher->guest_name}}</td>
 					</tr>
                  
                   @endforeach

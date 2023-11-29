@@ -81,6 +81,7 @@
 					<th>Transaction From</th>
 					<th>Payment</th>
 					<th>Receipt</th>
+					<th>Guest Name</th>
 					<th>Remark</th>
                   </tr>
 				  
@@ -127,6 +128,7 @@
 					{{$record->amount}}
 					@endif</td>
 					<td>{{$record->remark}}</td>
+					<td>{{@$record->voucher->guest_name}}</td>
 					</tr>
                   </tbody>
                   @endforeach
@@ -138,12 +140,12 @@
 					
 				</th>
 					<th>{{$totalCredit}}</th>
-					<th colspan="2"></th>
+					<th colspan="3"></th>
 					</tr>
 					<tr>
                     <th colspan="3"></th>
 					<th>Closing</th>
-					<th colspan="3">
+					<th colspan="4">
 					@php
 					$closing = $totalCredit - $totalDebit;
 					@endphp
@@ -156,7 +158,7 @@
 					<tr>
                     <th colspan="3"></th>
 					<th>Opening Balance</th>
-					<th colspan="3">
+					<th colspan="4">
 					{{$openingBalance}}
 					
 				</th>
@@ -166,7 +168,7 @@
 					<tr>
                     <th colspan="3"></th>
 					<th>Closing Balance</th>
-					<th colspan="3">
+					<th colspan="4">
 					@php
 					$closing = (float)str_replace(',', '', $closing);
 					$openingBalance = (float)str_replace(',', '', $openingBalance);
