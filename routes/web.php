@@ -27,6 +27,7 @@ use App\Http\Controllers\AgentAmountController;
 use App\Http\Controllers\AgentVouchersController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\CsvSearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,6 +53,7 @@ Route::get('resetpassword', [AuthController::class, 'showResetForm'])->name('res
 Route::post('password/email', [AuthController::class, 'resetPassword'])->name('password.email');
 Route::get('forgot-password/{token}', [AuthController::class, 'forgotPasswordValidate']);
 Route::put('reset-password', [AuthController::class, 'updatePassword'])->name('reset-password');
+Route::get('/csv-search', [CsvSearchController::class, 'index'])->name('csvlist');
 
 Route::get('phpinfo', function () {
     phpinfo();

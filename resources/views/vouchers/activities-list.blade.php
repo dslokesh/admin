@@ -146,6 +146,9 @@
                  
 				<div class="pagination pull-right mt-3"> {!! $records->appends(request()->query())->links() !!} </div> 
 </div>
+@php
+					$total = 0;
+					@endphp
  @if(!empty($voucherActivity) && $voucher->is_activity == 1)
  <div class="col-md-3  mt-2 " id="div-cart-list" >
 				
@@ -154,6 +157,7 @@
 					  @foreach($voucherActivity as $ap)
 				  @php
 					$activity = SiteHelpers::getActivity($ap->activity_id);
+					$total += $ap->totalprice;
 					@endphp
             <div class="card">
 			
@@ -219,14 +223,20 @@
               </div>
               <!-- /.card-body -->
             </div>
+			
 				 @endforeach
                  @endif
-
+				<div class="input-group  text-right float-right mb-3">
+                            @if($voucherActivityCount > 0)
+                               <h2 class="card-title color-black " style="width:100%"><strong> Total : AED {{$total}}</strong></h2>
+                            @endif
+                        </div>
+						
                  <div class="input-group  text-right float-right">
                             @if($voucherActivityCount > 0)
                                   <a href="{{ route('vouchers.show',$voucher->id) }}" class="btn btn-lg btn-primary pull-right" style="width:100%">
                                 <i class="fas fa-shopping-cart"></i>
-                                Checkout({{$voucherActivityCount}})
+                                Checkout({{$voucherActivityCount}}) {{$total}}
                             </a>
                             @endif
                         </div>
