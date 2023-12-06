@@ -60,6 +60,9 @@ class VouchersController extends Controller
 		if (isset($data['code']) && !empty($data['code'])) {
             $query->where('code', 'like', '%' . $data['code'] . '%');
         }
+		if (isset($data['invcode']) && !empty($data['invcode'])) {
+            $query->where('invoice_number', 'like', '%' . $data['invcode'] . '%');
+        }
 		if (isset($data['guest_name']) && !empty($data['guest_name'])) {
             $query->where('guest_name', 'like', '%' . $data['guest_name'] . '%');
         }
@@ -455,27 +458,27 @@ class VouchersController extends Controller
 			if($agentAmountBalance >= $grandTotal)
 			{
 				
-			$voucherCount = Voucher::where('status_main',5)->count();
-			$voucherCountNumber = $voucherCount +1;
-			if($record->vat_invoice == 1)
-			{
-			$code = 'VIN-100'.$voucherCountNumber;
-			}else{
-			$code = 'WVIN-100'.$voucherCountNumber;
-			}
-			
+			// $voucherCount = Voucher::where('status_main',5)->count();
+			// $voucherCountNumber = $voucherCount +1;
 			// if($record->vat_invoice == 1)
 			// {
-			// 	$voucherCount = Voucher::where('status_main',5)->where('vat_invoice',1)->whereDate('booking_date', '>', '2023-10-31')->count();
-			// 	$voucherCountNumber = $voucherCount +1;
-			// 	$code = 'VIN-1100001'.$voucherCountNumber;
+			// $code = 'VIN-100'.$voucherCountNumber;
+			// }else{
+			// $code = 'WVIN-100'.$voucherCountNumber;
 			// }
-			// else
-			// {
-			// 	$voucherCount = Voucher::where('status_main',5)->where('vat_invoice',0)->whereDate('booking_date', '>', '2023-10-31')->count();
-			// 	$voucherCountNumber = $voucherCount +1;
-			// 	$code = 'WVIN-1100001'.$voucherCountNumber;
-			// }
+			
+			if($record->vat_invoice == 1)
+			{
+				$voucherCount = Voucher::where('status_main',5)->where('vat_invoice',1)->whereDate('booking_date', '>', '2023-11-30')->count();
+				$voucherCountNumber = $voucherCount +1;
+				$code = 'VIN-1100001'.$voucherCountNumber;
+			}
+			else
+			{
+				$voucherCount = Voucher::where('status_main',5)->where('vat_invoice',0)->whereDate('booking_date', '>', '2023-11-30')->count();
+				$voucherCountNumber = $voucherCount +1;
+				$code = 'WVIN-1100001'.$voucherCountNumber;
+			}
 			
 			$record->booking_date = date("Y-m-d");
 			$record->invoice_number = $code;
@@ -1068,7 +1071,8 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
             return abort(404); //record not found
         }
 		$voucherHotel = VoucherHotel::where('voucher_id',$voucher->id)->orderBy("check_in_date","ASC")->get();
-		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->whereIn('status',[0,4])->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
+		//$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->whereIn('status',[0,3,4])->get();
+		$voucherActivity = VoucherActivity::where('voucher_id',$voucher->id)->whereIn('status',[0,3,4])->orderBy("tour_date","ASC")->orderBy("serial_no","ASC")->get();
 		$discountTotal = 0;
 		$subTotal = 0;
 		$dataArray = [

@@ -77,7 +77,7 @@
 						$sic_transfer = (isset($markups[$variant['variant_code']]))?$markups[$variant['variant_code']]['sic_transfer']:'';
 						$pvt_transfer = (isset($markups[$variant['variant_code']]))?$markups[$variant['variant_code']]['pvt_transfer']:'';
 
-             $variant_cost = (isset($markups[$variant['variant_code']]))?$markups[$variant['variant_code']]['variant_cost']:'';
+            $variant_cost = (isset($markups[$variant['variant_code']]))?$markups[$variant['variant_code']]['variant_cost']:'';
 
 						@endphp
 						<tr>

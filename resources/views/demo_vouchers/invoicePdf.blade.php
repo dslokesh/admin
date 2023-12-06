@@ -60,7 +60,6 @@ body
                          
                             <img src="{{asset('images/1.png/')}}" width="100" style="max-width: 100px; display: block !important; width: 136px; height: auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
                             <h3>Abatera Tourism LLC</h3>
-                            <p>TRN No.: 100327054100003</p>
                         </td>
                         <td  align="center" valign="middle" > <h1>
 						@if($voucher->status_main == 5)
@@ -101,8 +100,8 @@ body
                         </td>
                         <td align="right" valign="top">
                           <p>Invoice No.:  {{($voucher->status_main == 5)?$voucher->invoice_number:$voucher->code}}</p>
-                          <p>Invoice Date.: {{date("d-M-Y",strtotime($voucher->booking_date))}}</p>
-                         <p>Guest Name: {{$voucher->guest_name}}</p>
+                          <p>Invoice Date.: {{date("d-M-Y")}}</p>
+                         
                          </td>
                     </tr>
                     <tr>

@@ -51,8 +51,8 @@ class ReporsController extends Controller
 		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
 		
 		$query = VoucherActivity::where('id','!=', null)->whereNotIn('status',[1,2])->where(function ($query)  {
-           $query->where('transfer_option',  "Pvt Transfer")->orWhere('transfer_option',  "Shared Transfer");
-       });
+			$query->where('transfer_option',  "Pvt Transfer")->orWhere('transfer_option',  "Shared Transfer");
+		});
 		
 		if(isset($data['booking_type']) && !empty($data['booking_type'])) {
 			
@@ -87,10 +87,15 @@ class ReporsController extends Controller
 		$query->whereHas('voucher', function($q)  use($data){
 				$q->where('status_main', '=', 5);
 			});
+
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->orderBy('booking_date', 'DESC');
+			});
 			
         //$records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
-		$records = $query->orderBy('created_at', 'DESC')->get();
+		//$records = $query->orderBy('created_at', 'DESC')->get();
 		
+		$records = $query->get();
         return view('reports.index', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
 
     }
@@ -194,9 +199,12 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 				$q->where('status_main', '=', 5);
 			});
 			
+			// $query->whereHas('voucher', function($q)  use($data){
+			// 	$q->orderBy('booking_date', 'DESC');
+			// });
        // $records = $query->orderBy('created_at', 'DESC')->paginate($perPage);
 		$records = $query->orderBy('created_at', 'DESC')->get();
-		
+		//$records = $query->get();
         return view('reports.voucher-ticket-only-report', compact('records','voucherStatus','supplier_ticket','supplier_transfer'));
 
     }
@@ -863,7 +871,8 @@ public function voucherActivtyRefundedReport(Request $request)
     {
 		$this->checkPermissionMethod('list.voucherActivityReport');
 		$data = $request->all();
-		$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		//$perPage = config("constants.ADMIN_PAGE_LIMIT");
+		$perPage = "1000";
 		$voucherStatus = config("constants.voucherStatus");
 		$supplier_ticket = User::where("service_type",'Ticket')->orWhere('service_type','=','Both')->get();
 		$supplier_transfer = User::where("service_type",'Transfer')->orWhere('service_type','=','Both')->get();
@@ -903,6 +912,11 @@ public function voucherActivtyRefundedReport(Request $request)
 			$statuses = is_array($data['booking_status']) ? $data['booking_status'] : [$data['booking_status']];
 				$q->whereIn('status_main', $statuses);
 		});
+		}else
+		{
+			$query->whereHas('voucher', function($q)  use($data){
+				$q->where('status_main','5');
+			});
 		}
 		$agent_id = '';
 		if(isset($data['agent_id_select']) && !empty($data['agent_id_select'])) {
