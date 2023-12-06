@@ -120,31 +120,31 @@ class TicketsController extends Controller
 		
 		$totalTickets =$ticketQuery->get();
 		$totalTicketCount =$totalTickets->count();
+		
 		$tcArray = [];
 		if($totalTicketCount >= $totalTicketNeed)
 		{
 			
 			foreach($totalTickets as $ticket){
-				
 				if(($ticket->ticket_for == 'Adult') && ($adult > 0)){
+					$tcArray[$ticket->id] = $ticket->id;
+					$adult--;
+					$totalTicketNeed--;
+				} elseif(($ticket->ticket_for == 'Child') && ($child > 0)){
+					$tcArray[$ticket->id] = $ticket->id;
+					$child--;
+					$totalTicketNeed--;
+				} elseif(($ticket->ticket_for == 'Both') && ($totalTicketNeed > 0)){
+					// Check if the 'Both' ticket is for an adult or child
+					if ($adult > 0) {
 						$tcArray[$ticket->id] = $ticket->id;
 						$adult--;
-						$totalTicketNeed--;
-						
-				}
-				if(($ticket->ticket_for == 'Child') && ($child > 0)){
-					
+					} elseif ($child > 0) {
 						$tcArray[$ticket->id] = $ticket->id;
 						$child--;
-						$totalTicketNeed--;
-					
-				}if(($ticket->ticket_for == 'Both') && ($totalTicketNeed > 0)){
-					
-						$tcArray[$ticket->id] = $ticket->id;
-						$totalTicketNeed--;
+					}
+					$totalTicketNeed--;
 				}
-				
-				
 			}
 			
 			if(($totalTicketNeed == 0) && (count($tcArray) == $countTotalTicketNeed)){
@@ -215,7 +215,7 @@ class TicketsController extends Controller
 		$ticket->ticket_downloaded = 1;
 		$ticket->save();
 		}
-	//	return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
+		return view('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
         $pdf = SPDF::loadView('tickets.ticketPdf', compact('voucherActivity','tickets','voucher'));
        $pdf->setPaper('A4')->setOrientation('portrait');
         return $pdf->download('Ticket'.$voucher->code.'-'.$voucherActivity->variant_code.'-'.$voucherActivity->id .'.pdf');
