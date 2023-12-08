@@ -123,10 +123,22 @@
               <!-- form start -->
             
                 <div class="card-body">
+				
 					@if(!empty($voucherActivity))
 						 @php
 					$c=0;
 					@endphp
+					<div class="row" style="margin-bottom: 15px;">
+					<div class="form-group col-md-6">
+						 <label>Defaut Dropoff Location</label>
+						<input type="text" class="form-control" id="defaut_dropoff_location" />
+						
+						</div>
+					<div class="form-group col-md-6">
+						 <label>Defaut Pickup Location</label>
+						 <input type="text" class="form-control" id="defaut_pickup_location" />
+						</div>
+					</div>
 					  @foreach($voucherActivity as $ap)
 				  @if(($ap->transfer_option == 'Shared Transfer') || ($ap->transfer_option == 'Pvt Transfer') || ($ap->transfer_option == 'Ticket Only'))
 				  @php
@@ -809,8 +821,122 @@ $('#cusDetails').validate({});
 });
 
 
+	
+    $("#defaut_dropoff_location").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: path,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    search: request.term,
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        select: function(event, ui) {
+            $(this).val(ui.item.label);
+			var selectBox = $('.autodropoff_location'); // Adjust selector as per your HTML structure
+			selectBox.val(ui.item.label);
+			savedropoff_location(ui.item.label);
+            return false;
+        },
+        change: function(event, ui) {
+            if (ui.item == null) {
+               $(this).val('');
+            }
+        }
+    });
+
+ $("#defaut_pickup_location").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: path,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    search: request.term,
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        select: function(event, ui) {
+            $(this).val(ui.item.label);
+			var selectBox = $('.autocom'); // Adjust selector as per your HTML structure
+			selectBox.val(ui.item.label);
+			savepickup_location(ui.item.label);
+            return false;
+        },
+        change: function(event, ui) {
+            if (ui.item == null) {
+               $(this).val('');
+            }
+        }
+    });
+
+
 	});
 	
+	function savepickup_location(v){
+		
+		if(v!=''){
+		$(".autocom.inputsave").each(function() {
+			$("#loader-overlay").show();
+		$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+		$.ajax({
+            url: "{{route('voucherReportSave')}}",
+            type: 'POST',
+            dataType: "json",
+            data: {
+               id: $(this).data('id'),
+			   inputname: $(this).data('name'),
+			   val: $(this).val()
+            },
+            success: function( data ) {
+               //console.log( data );
+			  $("#loader-overlay").hide();
+            }
+          });
+    });
+		}
+	}
+	
+	function savedropoff_location(v){
+		
+		if(v!=''){
+		$(".autodropoff_location.inputsave").each(function() {
+			$("#loader-overlay").show();
+		$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+		$.ajax({
+            url: "{{route('voucherReportSave')}}",
+            type: 'POST',
+            dataType: "json",
+            data: {
+               id: $(this).data('id'),
+			   inputname: $(this).data('name'),
+			   val: $(this).val()
+            },
+            success: function( data ) {
+               //console.log( data );
+			  $("#loader-overlay").hide();
+            }
+          });
+    });
+		}
+	}
+
 
 </script>
 @endsection

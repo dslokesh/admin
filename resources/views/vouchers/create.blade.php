@@ -86,6 +86,27 @@
 					 
                  </select>
               </div>
+			   <div class="form-group col-md-4">
+                <label for="inputName">Default Adults: <span class="red">*</span></label>
+                <input type="text" id="adults" name="adults" value="{{ old('adult')?:1 }}" class="form-control"  placeholder="Adults" />
+				  @if ($errors->has('adults'))
+                    <span class="text-danger">{{ $errors->first('adults') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-4">
+                <label for="inputName">Default Childs:</label>
+                <input type="text" id="childs" name="childs" value="{{ old('childs')?:0 }}" class="form-control"  placeholder="Childs" />
+				  @if ($errors->has('childs'))
+                    <span class="text-danger">{{ $errors->first('childs') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-4">
+                <label for="inputName">Default Infants:</label>
+                <input type="text" id="infants" name="infants" value="{{ old('infants')?:0 }}" class="form-control"  placeholder="Infants" />
+				  @if ($errors->has('infants'))
+                    <span class="text-danger">{{ $errors->first('infants') }}</span>
+                @endif
+              </div>
 			  <div class="form-group col-md-3">
                 <label for="inputName">Travel Date From: <span class="red">*</span></label>
                <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date')?:date('Y-m-d') }}" class="form-control datepickerdiscurdate"  placeholder="Travel Date From" />

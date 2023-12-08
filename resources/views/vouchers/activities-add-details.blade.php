@@ -227,17 +227,17 @@
 					<td><select name="adult[{{ $ap->u_code }}]" id="adult{{$kk}}" class="form-control priceChange" required data-inputnumber="{{$kk}}" disabled="disabled">
 						<option value="">0</option>
 						@for($a=$ap->adult_min_no_allowed; $a<=$ap->adult_max_no_allowed; $a++)
-						<option value="{{$a}}" @php if($prev_vals['a'] == $a) echo "selected='selected'"; @endphp >{{$a}}</option>
+						<option value="{{$a}}" @if($voucher->adults==$a && $voucher->adults > 0) selected="selected" @endif >{{$a}}</option>
 						@endfor
 						</select></td>
                     <td><select name="child[{{ $ap->u_code }}]" id="child{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
 						@for($child=$ap->chield_min_no_allowed; $child<=$ap->chield_max_no_allowed; $child++)
-						<option value="{{$child}}" @php if($prev_vals['c'] == $child) echo "selected='selected'"; @endphp >{{$child}}</option>
+						<option value="{{$child}}" @if($voucher->childs==$child && $voucher->childs > 0) selected="selected" @endif >{{$child}}</option>
 						@endfor
 						</select></td>
                     <td><select name="infant[{{ $ap->u_code }}]" id="infant{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" disabled="disabled">
 						@for($inf=$ap->infant_min_no_allowed; $inf<=$ap->infant_max_no_allowed; $inf++)
-						<option value="{{$inf}}"  @php if($prev_vals['i'] == $inf) echo "selected='selected'"; @endphp  >{{$inf}}</option>
+						<option value="{{$inf}}"  @if($voucher->infants==$inf && $voucher->infants > 0) selected="selected" @endif  >{{$inf}}</option>
 						@endfor
 						</select></td>
 						<td>

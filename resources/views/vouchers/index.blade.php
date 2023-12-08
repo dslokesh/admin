@@ -190,8 +190,7 @@
                                     event.preventDefault();
                                 }
                             
-                            ">  <i class="fas fa-pencil-alt">
-                              </i><i class="fas fa-file">
+                            "> <i class="fas fa-file">
                               </i></a>
 							
 					

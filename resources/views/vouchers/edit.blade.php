@@ -73,6 +73,7 @@
 					  <option value="0" @if($record->is_activity ==0) {{'selected="selected"'}} @endif >No</option>
                  </select>
               </div>
+			  
 			  <div class="form-group col-md-3">
                 <label for="inputName">Travel Date From: <span class="red">*</span></label>
                <input type="text" id="travel_from_date" name="travel_from_date" value="{{ old('travel_from_date') ?: $record->travel_from_date }}" class="form-control datepicker"  placeholder="Travel Date From" />
@@ -109,7 +110,27 @@
                     <span class="text-danger">{{ $errors->first('vat_invoice') }}</span>
                 @endif
               </div>
-			   
+			    <div class="form-group col-md-3">
+                <label for="inputName">Default Adults: <span class="red">*</span></label>
+                <input type="text" id="adults" name="adults" value="{{ old('adults') ?: $record->adults }}" class="form-control"  placeholder="Adults" />
+				  @if ($errors->has('adults'))
+                    <span class="text-danger">{{ $errors->first('adults') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-3">
+                <label for="inputName">Default Childs:</label>
+                <input type="text" id="childs" name="childs" value="{{ old('childs') ?: $record->childs }}" class="form-control"  placeholder="Childs" />
+				  @if ($errors->has('childs'))
+                    <span class="text-danger">{{ $errors->first('childs') }}</span>
+                @endif
+              </div>
+			   <div class="form-group col-md-3">
+                <label for="inputName">Default Infants:</label>
+                <input type="text" id="infants" name="infants" value="{{ old('infants') ?: $record->infants }}" class="form-control"  placeholder="Infants" />
+				  @if ($errors->has('infants'))
+                    <span class="text-danger">{{ $errors->first('infants') }}</span>
+                @endif
+              </div>
 			   <div class="form-group col-md-12 hide">
                 <label for="inputName">Flight: <span class="red">*</span></label>
                 <select name="is_flight" id="is_flight" class="form-control">

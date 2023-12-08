@@ -93,18 +93,18 @@
 						
 						@for($a=$ap->adult_min_no_allowed; $a<=$ap->adult_max_no_allowed; $a++)
 						@if($ap->adult_min_no_allowed > 0)
-						<option value="{{$a}}">{{$a}}</option>
+						<option value="{{$a}}" @if($voucher->adults==$a && $voucher->adults > 0) selected="selected" @endif>{{$a}}</option>
 						@endif
 						@endfor
 						</select></td>
                     <td><select name="child[{{$ap->u_code}}]" id="child{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" @if($kk > '0') disabled="disabled" @endif>
 						@for($child=$ap->chield_min_no_allowed; $child<=$ap->chield_max_no_allowed; $child++)
-						<option value="{{$child}}">{{$child}}</option>
+						<option value="{{$child}}" @if($voucher->childs==$child && $voucher->childs > 0) selected="selected" @endif>{{$child}}</option>
 						@endfor
 						</select></td>
                     <td><select name="infant[{{$ap->u_code}}]" id="infant{{$kk}}" class="form-control priceChange" data-inputnumber="{{$kk}}" @if($kk > '0') disabled="disabled" @endif>
 						@for($inf=$ap->infant_min_no_allowed; $inf<=$ap->infant_max_no_allowed; $inf++)
-						<option value="{{$inf}}">{{$inf}}</option>
+						<option value="{{$inf}}" @if($voucher->infants==$inf && $voucher->infants > 0) selected="selected" @endif>{{$inf}}</option>
 						@endfor
 						</select></td>
 						

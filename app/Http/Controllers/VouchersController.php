@@ -204,6 +204,9 @@ class VouchersController extends Controller
 		$record->arrival_flight_no = $request->input('arrival_flight_no');
 		$record->depature_flight_no = $request->input('depature_flight_no');
 		$record->remark = $request->input('remark');
+		$record->adults = $request->input('adults');
+		$record->childs = $request->input('childs');
+		$record->infants = $request->input('infants');
 		$record->status = 1;
 		$record->created_by = Auth::user()->id;
         $record->save();
@@ -369,6 +372,9 @@ class VouchersController extends Controller
 		$record->arrival_flight_no = $request->input('arrival_flight_no');
 		$record->depature_flight_no = $request->input('depature_flight_no');
 		$record->remark = $request->input('remark');
+		$record->adults = $request->input('adults');
+		$record->childs = $request->input('childs');
+		$record->infants = $request->input('infants');
 		$record->status = 1;
 		$record->updated_by = Auth::user()->id;
         $record->save();
