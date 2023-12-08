@@ -127,8 +127,9 @@
 					
 					{{$record->amount}}
 					@endif</td>
-					<td>{{$record->remark}}</td>
 					<td>{{@$record->voucher->guest_name}}</td>
+					<td>{{$record->remark}}</td>
+					
 					</tr>
                   </tbody>
                   @endforeach

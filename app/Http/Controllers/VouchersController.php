@@ -1110,7 +1110,7 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 
         $pdf = SPDF::loadView('vouchers.ActivityItineraryPdf', compact('voucher','voucherHotel','voucherActivity','dataArray'));
        $pdf->setPaper('A4')->setOrientation('portrait');
-        return $pdf->download('Itinerary'.$vid.'.pdf');
+        return $pdf->download($voucher->code.'-'.$voucher->guest_name.'.pdf');
 		
 	
 	
@@ -1222,7 +1222,7 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 //return view('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','totalAmount','subTotal','vatTotal'));
         $pdf = SPDF::loadView('vouchers.invoicePdf', compact('dataArray','agent','customer','voucher','discountTotal','subTotal','vatTotal','totalAmount'));
        $pdf->setPaper('A4')->setOrientation('portrait');
-        return $pdf->download('Invoice'.$voucher->booking_date.'.pdf');
+        return $pdf->download($voucher->invoice_number.'-'.$voucher->guest_name.'.pdf');
 		
 	
 	
