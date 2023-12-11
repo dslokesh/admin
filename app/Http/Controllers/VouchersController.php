@@ -954,7 +954,7 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 		if($request->markupT == '1')
 			$markup = (($markupPer/100) * $totalPrice);
 		else
-		$markup = $markupPer;
+		$markup = $markupPer+$request->adult;
 		$total = ($markup + $totalPrice);
 		return $total;
     }

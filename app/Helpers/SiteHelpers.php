@@ -697,7 +697,7 @@ class SiteHelpers
 			if($markup['ticket_only_m'] == '1')
 				$markupPriceT  = ($adult_total_rate * $markup['ticket_only'])/100;
 			else
-				$markupPriceT  = $markup['ticket_only'];
+				$markupPriceT  = $markup['ticket_only'] * $totalmember;
 				
 				
 			$ticketPrice = $adult_total_rate + $markupPriceT + $infentPriceTotal;
@@ -708,7 +708,7 @@ class SiteHelpers
 				if($markup['sic_transfer_m'] == '1')
 					$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
 				else
-					$markupPriceS  = ($markup['sic_transfer']);
+					$markupPriceS  = ($markup['sic_transfer']) * $totalmember;
 				
 				
 				$totalPrice =  $ticketPrice + $markupPriceS + $zonePrice;
@@ -717,7 +717,7 @@ class SiteHelpers
 				if($markup['pvt_transfer_m'] == '1')
 						$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
 				else
-					$markupPriceP  = ($markup['pvt_transfer']);
+					$markupPriceP  = ($markup['pvt_transfer']) * $totalmember;
 	
 
 				

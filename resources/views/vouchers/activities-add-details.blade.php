@@ -421,8 +421,8 @@ $(document).on('change', '.priceChange', function(evt) {
 	var ad_price = (adult*adultPrice) ;
 	var chd_price = (child*childPrice) ;
 	var ad_ch_TotalPrice = ad_price + chd_price;
-	var ticket_only_markupamt = ((ad_ch_TotalPrice*mpt)/100);
-	
+	//var ticket_only_markupamt = ((ad_ch_TotalPrice*mpt)/100);
+	var ticket_only_markupamt = mpt;
 	
 	let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
 	//$("body #pickup_location"+inputnumber).val('');
@@ -434,7 +434,7 @@ $(document).on('change', '.priceChange', function(evt) {
 	getPVTtransfer(activity_id,totaladult,mppt,inputnumber);
 	$("#loader-overlay").show();	
 	waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
-		var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
+		var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + (ticket_only_markupamt * totaladult)  + pvt_transfer_markupamt_total);
 		
 		grandTotal = ( (totalPrice - discount));
 		let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
@@ -472,8 +472,9 @@ $(document).on('change', '.priceChange', function(evt) {
 			var totaladult = parseInt(adult + child);
 			let zonevalueTotal = (totaladult * zonevalue);
 			$("#zonevalprice"+inputnumber).val(zonevalueTotal);
-			var sic_transfer_markupamt = ((zonevalueTotal *  mpst)/100);
-			var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
+			//var sic_transfer_markupamt = ((zonevalueTotal *  mpst)/100);
+			var sic_transfer_markupamt = mpst;
+			var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + (sic_transfer_markupamt * totaladult) + sic_transfer_markupamt + zonevalueTotal);
 			
 			grandTotal = ( (totalPrice - discount));
 			 let vatPrice = parseFloat(((activity_vat/100) * grandTotal));

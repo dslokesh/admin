@@ -393,7 +393,7 @@ $(document).on('click', '.loadvari', function(evt) {
    getPVTtransfer(activity_id,totaladult,mppt,inputnumber,mpptt);
    $("body #loader-overlay").show();	
    waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
-     var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt  + pvt_transfer_markupamt_total);
+     var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + (ticket_only_markupamt * totaladult)  + pvt_transfer_markupamt_total);
      
      grandTotal = ( (totalPrice));
      let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
@@ -435,7 +435,7 @@ $(document).on('click', '.loadvari', function(evt) {
         var sic_transfer_markupamt = ((zonevalueTotal *  mpst)/100);
       else
         var sic_transfer_markupamt =  mpst;
-       var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt + sic_transfer_markupamt + zonevalueTotal);
+       var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt + (sic_transfer_markupamt * totaladult) + zonevalueTotal);
        
        grandTotal = ( (totalPrice));
         let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
@@ -443,7 +443,7 @@ $(document).on('click', '.loadvari', function(evt) {
      }
      else
      {
-       var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt);
+       var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + (ticket_only_markupamt * totaladult));
        
         grandTotal = ( (totalPrice));
        let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
