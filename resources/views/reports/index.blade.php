@@ -263,7 +263,9 @@ $(document).ready(function() {
             data: {
                id: $(this).data('id'),
 			   inputname: $(this).data('name'),
-			   val: $(this).val()
+			   val: $(this).val(),
+			   type: "Report",
+			   report_type: "Logistic Report"
             },
             success: function( data ) {
                //console.log( data );
@@ -274,6 +276,20 @@ $(document).ready(function() {
 	 
 	 $(document).on('change', '.inputsaveSp', function(evt) {
 		$("#loader-overlay").show();
+		var id =$(this).find(':selected').data('id');
+		var spInput = $(this).attr('id');
+		
+		if(spInput == 'supplier_transfer'+id){
+			 var cost = parseFloat($('#actual_transfer_cost' + id).val());
+			var cost = $('#actual_transfer_cost' + id).val().trim(); // Get and trim the input value
+
+					if (cost === '' || isNaN(parseFloat(cost)) || parseFloat(cost) < 0) {
+						alert("Please enter a valid TFR Net Cost greater than or equal to 0");
+						$('#' + spInput).val('');  // Reset the value to an empty string or a default value
+						$("#loader-overlay").hide();
+						return false;
+					}
+		}
 		$.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -286,7 +302,9 @@ $(document).ready(function() {
             data: {
                id: $(this).find(':selected').data('id'),
 			   inputname: $(this).find(':selected').data('name'),
-			   val: $(this).val()
+			   val: $(this).val(),
+			   type: "Report",
+			   report_type: "Logistic Report"
             },
             success: function( data ) {
                //console.log( data );

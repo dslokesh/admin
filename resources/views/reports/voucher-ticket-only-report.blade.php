@@ -260,9 +260,11 @@ $(document).ready(function() {
             type: 'POST',
             dataType: "json",
             data: {
-               id: $(this).data('id'),
-			   inputname: $(this).data('name'),
-			   val: $(this).val()
+				id: $(this).data('id'),
+				inputname: $(this).data('name'),
+				val: $(this).val(),
+				type: "Report",
+				report_type: "Ticket Only"
             },
             success: function( data ) {
                //console.log( data );
@@ -288,7 +290,9 @@ $(document).ready(function() {
             data: {
                id: id,
 			   inputname: inputname,
-			   val: $(this).val()
+			   val: $(this).val(),
+			   type: "Report",
+			   report_type: "Ticket Only"
             },
             success: function( data ) {
 			   if(inputname == 'supplier_ticket'){

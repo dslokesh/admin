@@ -16,6 +16,7 @@ use App\Models\Ticket;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
+use App\Models\ReportLog;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use SiteHelpers;
@@ -285,6 +286,15 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 			$response[] = array("status"=>1,'cost'=>"0");
 		}
 		$record->save();
+		if(isset($data['type']) && $data['type'] == 'Report'){
+			ReportLog::create([
+			"input"=>$data['inputname'],
+			"input_vaue"=>$data['val'],
+			"updated_by"=>Auth::user()->id,
+			"report_type"=>isset($data['report_type'])?$data['report_type']:''
+			]);
+		}
+		
 		return response()->json($response);
 	}
 
