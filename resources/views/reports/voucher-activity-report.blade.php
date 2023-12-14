@@ -121,7 +121,7 @@
                   <thead>
                   <tr>
 					<th>Booking Date</th>
-          <th>Booking No</th>
+					<th>Booking No</th>
 					<th>Invoice Number</th>
                     <th>Service Date</th>
 					<th>Ref No.</th>
@@ -131,7 +131,7 @@
                     <th>C</th>
 					<th>Variant Name</th>
 					<th>Total Cost</th>
-          <th>Status</th>
+					<th>Status</th>
 					<th>Booking Status</th>
                   </tr>
 				  

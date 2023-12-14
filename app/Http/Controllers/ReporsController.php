@@ -1003,7 +1003,7 @@ public function voucherActivtyRefundedReport(Request $request)
 			});
 		}
 		$records = $query->orderBy('created_at', 'DESC')->get();
-		return Excel::download(new VoucherActivityVouchredExport($records), 'voucher_activity_report'.date('d-M-Y s').'.csv');
+		return Excel::download(new VoucherActivityVouchredExport($records), 'invoice_report'.date('d-M-Y s').'.csv');
 
     }
 }
