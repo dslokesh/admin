@@ -406,8 +406,10 @@ $(document).on('change', '.priceChange', function(evt) {
 	let discount = parseFloat($("body #discount"+inputnumber).val());
 	//alert(discount);
 	let mpt = parseFloat($("body #mpt"+inputnumber).val());
-	let mpst = parseFloat($("body #mpst"+inputnumber).val());
-	let mppt = parseFloat($("body #mppt"+inputnumber).val());
+	//let mpst = parseFloat($("body #mpst"+inputnumber).val());
+	//let mppt = parseFloat($("body #mppt"+inputnumber).val());
+	let mpst = 0;
+	let mppt = 0;
 	
 	let adultPrice = $("body #adultPrice"+inputnumber).val();
 	let childPrice = $("body #childPrice"+inputnumber).val();

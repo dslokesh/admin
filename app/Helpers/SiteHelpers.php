@@ -74,7 +74,7 @@ class SiteHelpers
 				$markup['sic_transfer_m'] = 0;
 				$markup['sic_transfer'] = $m->sic_transfer;
 			}
-			elseif(!empty($user->ticket_only))
+			elseif(!empty($user->sic_transfer))
 			{
 				$markup['sic_transfer_m'] = 1;
 				$markup['sic_transfer'] = $user->sic_transfer;
@@ -711,7 +711,8 @@ class SiteHelpers
 					$markupPriceS  = ($markup['sic_transfer']) * $totalmember;
 				
 				
-				$totalPrice =  $ticketPrice + $markupPriceS + $zonePrice;
+				//$totalPrice =  $ticketPrice + $markupPriceS + $zonePrice;
+				$totalPrice =  $ticketPrice + $zonePrice;
 			}elseif($transfer_option == 'Pvt Transfer'){
 
 				if($markup['pvt_transfer_m'] == '1')
@@ -722,7 +723,8 @@ class SiteHelpers
 
 				
 				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
-				  $totalPrice = $ticketPrice + $markupPriceP +  $transferPrice;
+				//  $totalPrice = $ticketPrice + $markupPriceP +  $transferPrice;
+				  $totalPrice = $ticketPrice + $transferPrice;
 			}
 			}
 			
@@ -739,7 +741,7 @@ class SiteHelpers
 		'infPrice' =>$infPrice,
 		'totalprice' =>$total,
 		'activity_vat' =>$avat,
-		'pvt_traf_val_with_markup' =>$pvtTrafValWithMarkup,
+		'pvt_traf_val_with_markup' =>$transferPrice,
 		'zonevalprice_without_markup' =>$zonePrice,
 		'markup_p_ticket_only' =>$markup['ticket_only'],
 		'markup_p_sic_transfer' =>$markup['sic_transfer'],

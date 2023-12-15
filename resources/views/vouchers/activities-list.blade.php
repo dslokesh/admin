@@ -364,8 +364,10 @@ $(document).on('click', '.loadvari', function(evt) {
    let discount = parseFloat($("body #discount"+inputnumber).val());
    //alert(discount);
    let mpt = parseFloat($("body #mpt"+inputnumber).val());
-   let mpst = parseFloat($("body #mpst"+inputnumber).val());
-   let mppt = parseFloat($("body #mppt"+inputnumber).val());
+  // let mpst = parseFloat($("body #mpst"+inputnumber).val());
+  // let mppt = parseFloat($("body #mppt"+inputnumber).val());
+   let mpst = 0;
+   let mppt = 0;
 
 
    let mptt = parseFloat($("body #mptt"+inputnumber).val());

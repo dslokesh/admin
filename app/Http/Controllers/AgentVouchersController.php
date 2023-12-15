@@ -513,7 +513,8 @@ class AgentVouchersController extends Controller
 		
 		$totalPrice  = $price*$request->adult;
 		$markup = (($markupPer/100) * $totalPrice);
-		$total = ($markup + $totalPrice);
+		//$total = ($markup + $totalPrice);
+		$total = $totalPrice;
 		return $total;
     }
 	
