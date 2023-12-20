@@ -407,6 +407,25 @@
    
 
         <div class="col-md-4 text-right ">
+		@if((($ap->status == '3') || ($ap->status == '4')) && ($ap->ticket_downloaded == '1') && (auth()->user()->role_id == '1'))
+						
+						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.cancel',$ap->id)}}" style="display:none;">
+						{{csrf_field()}}
+						</form>
+						
+							<a class="btn btn-primary  float-right  btn-sm ml-2" href="javascript:void(0)" onclick="
+							if(confirm('Are you sure, You want to cancel this?'))
+							{
+							event.preventDefault();
+							document.getElementById('cancel-form-{{$ap->id}}').submit();
+							}
+							else
+							{
+							event.preventDefault();
+							}
+
+							"><i class="fas fa-times"></i> Cancel </a>
+						@endif
 				@if((($ap->status == '3') || ($ap->status == '4')) && ($ap->ticket_downloaded == '0'))
 						
 						<form id="cancel-form-{{$ap->id}}" method="post" action="{{route('voucher.activity.cancel',$ap->id)}}" style="display:none;">
