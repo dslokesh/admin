@@ -663,7 +663,7 @@ class SiteHelpers
 	$adultPriceTotal  = $adultPrice * $adult;
 	$childPriceTotal  = $childPrice * $child;
 	$infentPriceTotal  = $infPrice * $infent;
-	$adult_total_rate = $adultPriceTotal + $childPriceTotal;
+	$adult_total_rate = $adultPriceTotal + $childPriceTotal + $infentPriceTotal;
 	$adult_total_rate = ($adult_total_rate > 0)?$adult_total_rate:0;
 		if(isset($ap->variant_code)){
 		$markup = self::getAgentMarkup($agent_id,$activity_id, $ap->variant_code);
@@ -676,7 +676,10 @@ class SiteHelpers
 			$markup['pvt_transfer_m'] = 1;
 		}
 		
-		
+		$adultPriceMarkupTotal = $markup['ticket_only'] * $adult; // ticket_only as adult
+		$childPriceMarkupTotal = $markup['sic_transfer'] * $child; // sic_transfer as child
+		$infentPriceMarkupTotal = $markup['pvt_transfer'] * $infent; // pvt_transfer as infent
+		$markupTotal = $adultPriceMarkupTotal + $childPriceMarkupTotal + $infentPriceMarkupTotal;
 		 
 			if($activity->sic_TFRS==1){
 				
@@ -694,42 +697,21 @@ class SiteHelpers
 					}
 			}
 			
-			if($markup['ticket_only_m'] == '1')
-				$markupPriceT  = ($adult_total_rate * $markup['ticket_only'])/100;
-			else
-				$markupPriceT  = $markup['ticket_only'] * $totalmember;
-				
-				
-			$ticketPrice = $adult_total_rate + $markupPriceT + $infentPriceTotal;
+			
+			$ticketPrice = $adultPriceTotal + $childPriceTotal  + $infentPriceTotal;
 			if($transfer_option == 'Ticket Only'){
 				$totalPrice = $ticketPrice;
 			} else {
 			if($transfer_option == 'Shared Transfer'){
-				if($markup['sic_transfer_m'] == '1')
-					$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
-				else
-					$markupPriceS  = ($markup['sic_transfer']) * $totalmember;
-				
-				
-				//$totalPrice =  $ticketPrice + $markupPriceS + $zonePrice;
 				$totalPrice =  $ticketPrice + $zonePrice;
 			}elseif($transfer_option == 'Pvt Transfer'){
 
-				if($markup['pvt_transfer_m'] == '1')
-						$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
-				else
-					$markupPriceP  = ($markup['pvt_transfer']) * $totalmember;
-	
-
-				
-				$pvtTrafValWithMarkup = $markupPriceP + $transferPrice;
-				//  $totalPrice = $ticketPrice + $markupPriceP +  $transferPrice;
 				  $totalPrice = $ticketPrice + $transferPrice;
 			}
 			}
 			
 		
-		$grandTotal = $totalPrice;
+		$grandTotal = $totalPrice + $markupTotal;
 		if($vat_invoice == 1){
 		$vatPrice = (($avat/100) * $grandTotal);
 		}
