@@ -385,6 +385,9 @@ $(document).on('click', '.loadvari', function(evt) {
    else
     var ticket_only_markupamt = mpt;
    
+   
+   
+	
    let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
    //$("body #pickup_location"+inputnumber).val('');
    let grandTotal = 0;
@@ -445,6 +448,7 @@ $(document).on('click', '.loadvari', function(evt) {
      }
      else
      {
+		var totaladult = parseInt(adult + child);
        var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + (ticket_only_markupamt * totaladult));
        
         grandTotal = ( (totalPrice));
@@ -452,7 +456,7 @@ $(document).on('click', '.loadvari', function(evt) {
         grandTotalAfterDis = parseFloat(vatPrice + grandTotal-discount);
        
      }
-     
+    
      if(isNaN(grandTotalAfterDis))
      {
      $("body #totalprice"+inputnumber).val(0);
@@ -568,6 +572,7 @@ $(document).on('click', '.loadvari', function(evt) {
      var totaladult = parseInt(adult + child);
      //alert(totaladult);
      let mppt = parseFloat($("body #mppt"+inputnumber).val());
+	 let mpptt = parseFloat($("body #mpptt"+inputnumber).val());
      getPVTtransfer(activity_id,totaladult,mppt,inputnumber,mpptt);
      $("body #adult"+inputnumber).trigger("change");
    }
