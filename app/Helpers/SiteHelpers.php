@@ -364,61 +364,43 @@ class SiteHelpers
 					 $transferPrice = $td->price;
 					}
 			}
-			$markupPriceT = 0;
+			
+			$adultPriceMarkupTotal = $markup['ticket_only'] * 1; // ticket_only as adult
+		$childPriceMarkupTotal = $markup['sic_transfer'] * 0; // sic_transfer as child
+		$infentPriceMarkupTotal = $markup['pvt_transfer'] * 0; // pvt_transfer as infent
+		$markupTotal = $adultPriceMarkupTotal + $childPriceMarkupTotal + $infentPriceMarkupTotal;
+		
 		if($adult_rate > 0){
-			if($markup['ticket_only_m'] == '1')
-				$markupPriceT  = ($adult_rate * $markup['ticket_only'])/100;
-			else
-				$markupPriceT  = $markup['ticket_only'];
 			
 			
 			if($activity->entry_type=='Ticket Only'){
-				$minPrice = $adult_rate + $markupPriceT;
+				$minPrice = $adult_rate;
 			} else {
-			if($activity->sic_TFRS==1){
-				if($markup['sic_transfer_m'] == '1')
-					$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
-				else
-					$markupPriceS  = ($markup['sic_transfer']);
-			
-			
-				$minPrice =  $adult_rate + $markupPriceS + $markupPriceT + $zonePrice;
-			}elseif($activity->pvt_TFRS==1){
-				if($markup['pvt_transfer_m'] == '1')
-					$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
-				else
-					$markupPriceP  = ($markup['pvt_transfer']);
-			
-				  $minPrice = $adult_rate + $markupPriceP + $markupPriceT + $transferPrice;
-			}
+				if($activity->sic_TFRS==1){
+					$minPrice =  $adult_rate + $zonePrice;
+				}elseif($activity->pvt_TFRS==1){
+					  $minPrice = $adult_rate + $transferPrice;
+				}
 			}
 			
 		} else {
 			
 			if($activity->sic_TFRS==1){
-				
-				if($markup['sic_transfer_m'] == '1')
-					$markupPriceS  = ($zonePrice * $markup['sic_transfer'])/100;
-				else
-					$markupPriceS  = ($markup['sic_transfer']);
 			
-				$minPrice =  $markupPriceS +  $zonePrice;
+				$minPrice =  $zonePrice;
 				
 			}elseif($activity->pvt_TFRS==1){
-				if($markup['pvt_transfer_m'] == '1')
-					$markupPriceP  = ($transferPrice * $markup['pvt_transfer'])/100;
-				else
-					$markupPriceP  = ($markup['pvt_transfer']);
-				$minPrice =   $markupPriceP + $transferPrice;
+				$minPrice =   $transferPrice;
 			}
 			
 
 		}
+		$minP = $minPrice + $markupTotal;
 		if($vat_invoice == 1){
-		$vatPrice = (($avat/100) * $minPrice);
+		$vatPrice = (($avat/100) * $minP);
 		}
 		
-		$total = $minPrice+$vatPrice;
+		$total = $minP+$vatPrice;
 		return number_format($total, 2, '.', "");
     }
 	

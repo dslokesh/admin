@@ -939,25 +939,20 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 		$activity = Activity::where('id', $request->acvt_id)->where('status', 1)->first();
 		$price = 0;
 		$total = 0;
-		$markupPer = $request->markupPer;
+		$totalPerson = $request->adult+$request->child;
 		//$activityPrices = ActivityPrices::where('activity_id', $aid)->get();
 		if($activity->pvt_TFRS == 1)
 		{
-			$td = TransferData::where('transfer_id', $activity->transfer_plan)->where('qty', $request->adult)->first();
+			$td = TransferData::where('transfer_id', $activity->transfer_plan)->where('qty', $totalPerson)->first();
 			if(!empty($td))
 			{
 				$price = $td->price;
 			}
 		}
 		
-		$totalPrice  = $price*$request->adult;
-		if($request->markupT == '1')
-			$markup = (($markupPer/100) * $totalPrice);
-		else
-		$markup = $markupPer+$request->adult;
-		//$total = ($markup + $totalPrice);
-		$total = $totalPrice;
-		return $total;
+		$totalPrice  = $price*$totalPerson;
+		
+		return $totalPrice;
     }
 	
 	

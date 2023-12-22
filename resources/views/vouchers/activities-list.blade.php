@@ -306,7 +306,7 @@ $(document).on('click', '.loadvari', function(evt) {
 				var disabledDates = data.dates.disabledDates;
 				var availableDates = data.dates.availableDates;
 				 var disabledDay = data.disabledDay;
-				 console.log(disabledDay);
+				// console.log(disabledDay);
 				$(".tour_datepicker").datepicker({
                         beforeShowDay: function(date) {
                             var dateString = $.datepicker.formatDate('yy-mm-dd', date);
@@ -364,11 +364,9 @@ $(document).on('click', '.loadvari', function(evt) {
    let discount = parseFloat($("body #discount"+inputnumber).val());
    //alert(discount);
    let mpt = parseFloat($("body #mpt"+inputnumber).val());
-  // let mpst = parseFloat($("body #mpst"+inputnumber).val());
-  // let mppt = parseFloat($("body #mppt"+inputnumber).val());
-   let mpst = 0;
-   let mppt = 0;
-
+	let mpst = parseFloat($("body #mpst"+inputnumber).val());
+   let mppt = parseFloat($("body #mppt"+inputnumber).val());
+  
 
    let mptt = parseFloat($("body #mptt"+inputnumber).val());
    let mpstt = parseFloat($("body #mpstt"+inputnumber).val());
@@ -379,13 +377,13 @@ $(document).on('click', '.loadvari', function(evt) {
    let infPrice = $("body #infPrice"+inputnumber).val();
    var ad_price = (adult*adultPrice) ;
    var chd_price = (child*childPrice) ;
-   var ad_ch_TotalPrice = ad_price + chd_price;
-   if(mptt == '1')
-    var ticket_only_markupamt = ((ad_ch_TotalPrice*mpt)/100);
-   else
-    var ticket_only_markupamt = mpt;
-   
-   
+   var inf_price = (child*infPrice) ;
+   var ad_ch_TotalPrice = ad_price + chd_price + inf_price;
+  
+   var ticket_only_markupamt = mpt*adult;
+   var sic_transfer_markupamt =  mpst*child;
+   var pvt_transfer_markupamt =  mpst*infant;
+   var totalMarkup =  ticket_only_markupamt+sic_transfer_markupamt+pvt_transfer_markupamt;
    
 	
    let t_option_val = $("body #transfer_option"+inputnumber).find(':selected').data("id");
@@ -395,10 +393,10 @@ $(document).on('click', '.loadvari', function(evt) {
    if(t_option_val == 3)
    {
      var totaladult = parseInt(adult + child);
-   getPVTtransfer(activity_id,totaladult,mppt,inputnumber,mpptt);
+   getPVTtransfer(activity_id,adult,child,inputnumber);
    $("body #loader-overlay").show();	
-   waitForInputValue(inputnumber, function(pvt_transfer_markupamt_total) {
-     var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + (ticket_only_markupamt * totaladult)  + pvt_transfer_markupamt_total);
+   waitForInputValue(inputnumber, function(pvt_transfer_price) {
+     var totalPrice = parseFloat(ad_ch_TotalPrice + totalMarkup  + pvt_transfer_price);
      
      grandTotal = ( (totalPrice));
      let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
@@ -436,11 +434,8 @@ $(document).on('click', '.loadvari', function(evt) {
        var totaladult = parseInt(adult + child);
        let zonevalueTotal = (totaladult * zonevalue);
        $("body #zonevalprice"+inputnumber).val(zonevalueTotal);
-       if(mpstt == '1')
-        var sic_transfer_markupamt = ((zonevalueTotal *  mpst)/100);
-      else
-        var sic_transfer_markupamt =  mpst;
-       var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + ticket_only_markupamt + (sic_transfer_markupamt * totaladult) + zonevalueTotal);
+      
+       var totalPrice = parseFloat(ad_ch_TotalPrice + totalMarkup  + zonevalueTotal);
        
        grandTotal = ( (totalPrice));
         let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
@@ -449,7 +444,7 @@ $(document).on('click', '.loadvari', function(evt) {
      else
      {
 		var totaladult = parseInt(adult + child);
-       var totalPrice = parseFloat(ad_ch_TotalPrice + (infant * infPrice) + (ticket_only_markupamt * totaladult));
+       var totalPrice = parseFloat(ad_ch_TotalPrice + totalMarkup);
        
         grandTotal = ( (totalPrice));
        let vatPrice = parseFloat(((activity_vat/100) * grandTotal));
@@ -573,7 +568,7 @@ $(document).on('click', '.loadvari', function(evt) {
      //alert(totaladult);
      let mppt = parseFloat($("body #mppt"+inputnumber).val());
 	 let mpptt = parseFloat($("body #mpptt"+inputnumber).val());
-     getPVTtransfer(activity_id,totaladult,mppt,inputnumber,mpptt);
+     getPVTtransfer(activity_id,adult,child,inputnumber);
      $("body #adult"+inputnumber).trigger("change");
    }
  });
@@ -590,7 +585,7 @@ $(document).on('click', '.loadvari', function(evt) {
      $("body #adult"+inputnumber).trigger("change");
  });
  
- function getPVTtransfer(acvt_id,adult,markupPer,inputnumber,mpptt)
+ function getPVTtransfer(acvt_id,adult,child,inputnumber)
  {
      $.ajaxSetup({
                  headers: {
@@ -602,10 +597,10 @@ $(document).on('click', '.loadvari', function(evt) {
              type: 'POST',
              dataType: "json",
              data: {
-                acvt_id: acvt_id,
-          adult: adult,
-          markupPer: markupPer,
-          markupT:mpptt
+				acvt_id: acvt_id,
+				adult: adult,
+				child: child,
+				markupPer: 0,
              },
              success: function( data ) {
                 //console.log( data );
@@ -618,12 +613,12 @@ $(document).on('click', '.loadvari', function(evt) {
    var $input = $("body #pvt_traf_val" + inputnumber);
    
    var interval = setInterval(function() {
-     var pvt_transfer_markupamt_total = parseFloat($input.val());
+     var pvt_transfer_price = parseFloat($input.val());
      
-     if (!isNaN(pvt_transfer_markupamt_total)) {
+     if (!isNaN(pvt_transfer_price)) {
        // Value is available, execute the callback function
        clearInterval(interval); // Stop the interval
-       callback(pvt_transfer_markupamt_total);
+       callback(pvt_transfer_price);
      }
    }, 2000); // Check every 100 milliseconds
  }
