@@ -56,18 +56,19 @@
 						<table class="table table-bordered table-striped">
 						<tr>
 							<th>Variant Code</th>
-              <th>Adult Cost With VAT </th>
-							<th>Ticket Only (Markup Value)</th>
+							<th>Adult Cost With VAT </th>
+							<th>Child Cost With VAT </th>
+							<th>Adult Markup Without VAT</th>
 							 @if($record->sic_TFRS==1)
-							<th>SIC Transfer</th>
+							<th>Child Markup Without VAT</th>
 							@else
-							<th style="display:none">SIC Transfer  (Markup Value)</th>
+							<th style="display:none">Child Markup Without VAT</th>
 							@endif
 							
 							 @if($record->pvt_TFRS==1)
-							<th>PVT Transfer  (Markup Value)</th>
+							<th>Infant Markup Without VAT</th>
 							@else
-							<th style="display:none">PVT Transfer</th>
+							<th style="display:none">Infant Markup Without VAT</th>
 							@endif
 					
 						</tr>
@@ -82,7 +83,8 @@
 						@endphp
 						<tr>
 						<td>{{ $variant['variant_code']}}</td>
-            <td>{{ $variant_cost}}</td>
+					<td>{{ $variant['adult_rate_with_vat']}}</td>
+					<td>{{ $variant['chield_rate_with_vat']}}</td>
 						<td>
 						<input type="text"  name="ticket_only[{{ $record->id}}][{{$variant['variant_code']}}]" value="{{$ticket_only}}" min="0" max="100" class="form-control onlynumbr" required  />
 						</td>

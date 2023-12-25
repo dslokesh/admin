@@ -534,7 +534,7 @@ class AgentsController extends Controller
 		$markups = [];
 		foreach($activity_ids as $aid)
 		{
-			$variants[$aid] = ActivityPrices::select('variant_code','adult_rate_with_vat')->distinct()->where('activity_id',  $aid)->get()->toArray();
+			$variants[$aid] = ActivityPrices::select('variant_code','adult_rate_with_vat','chield_rate_with_vat')->distinct()->where('activity_id',  $aid)->get()->toArray();
 			
 			foreach($variants[$aid] as $variant)
 			{

@@ -129,6 +129,7 @@
 					<th>Pax Name</th>
 					<th>A</th>
                     <th>C</th>
+					<th>SIC/PVT</th>
 					<th>Variant Name</th>
 					<th>Total Cost</th>
 					<th>Status</th>
@@ -151,6 +152,20 @@
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
 					 <td>{{$record->adult}}</td>
                     <td>{{$record->child}}</td>
+					<td>
+					@if($record->transfer_option == "Shared Transfer")
+					SIC
+					@php
+					$zone = SiteHelpers::getZoneName($record->transfer_zone);
+					@endphp
+						- <b>{{$zone->name}} </b>
+					
+					@endif
+					@if($record->transfer_option == 'Pvt Transfer')
+					PVT
+					@endif
+					
+				</td>
 					<td>{{$record->variant_name}}</td>
 					<td>{{$record->totalprice}}</td>
           <td>
