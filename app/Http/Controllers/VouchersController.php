@@ -1320,11 +1320,12 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 			$agentAmount->role_user = 3;
 			$agentAmount->created_by = Auth::user()->id;
 			$agentAmount->updated_by = Auth::user()->id;
+			$agentAmount->receipt_no = $record->invoice_number;
 			$agentAmount->save();
-			$receipt_no = 'A-'.date("Y")."-00".$agentAmount->id;
+			/* $receipt_no = 'A-'.date("Y")."-00".$agentAmount->id;
 			$recordUser = AgentAmount::find($agentAmount->id);
 			$recordUser->receipt_no = $receipt_no;
-			$recordUser->save();
+			$recordUser->save(); */
 		
 			foreach($voucherActivity as $vac){
 			SiteHelpers::voucherActivityLog($record->id,$vac->id,$vac->discountPrice,$vac->totalprice,$record->status_main);
@@ -1494,11 +1495,12 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 			$agentAmount->role_user = 3;
 			$agentAmount->created_by = Auth::user()->id;
 			$agentAmount->updated_by = Auth::user()->id;
+			$agentAmount->receipt_no = $record->invoice_number;
 			$agentAmount->save();
-			$receipt_no = 'A-'.date("Y")."-00".$agentAmount->id;
+			/* $receipt_no = 'A-'.date("Y")."-00".$agentAmount->id;
 			$recordUser = AgentAmount::find($agentAmount->id);
 			$recordUser->receipt_no = $receipt_no;
-			$recordUser->save();
+			$recordUser->save(); */
 			
 			foreach($voucherActivity as $vac){
 			SiteHelpers::voucherActivityLog($record->id,$vac->id,$vac->discountPrice,$vac->totalprice,$record->status_main);
