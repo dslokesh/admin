@@ -52,6 +52,7 @@
 					<th>Password</th>
                     <th>Created</th>
                     <th>Updated</th>
+					<th>Currency</th>
 					<th width="17%"></th>
           <th>Name</th>
                     <th>Mobile</th>
@@ -121,7 +122,7 @@
 						    </td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
-					
+					<td>{{ ($record->currency)?$record->currency->name:''}}</td>
                      <td  style="padding:0px">
 					  <a class="btn btn-info btn-sm"  href="{{route('agents.markup.activity',$record->id)}}">
             <i class="fas fa-file-alt">

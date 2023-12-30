@@ -28,6 +28,7 @@ use App\Http\Controllers\AgentVouchersController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\CsvSearchController;
+use App\Http\Controllers\CurrencyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -88,6 +89,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('cities', CityController::class);
         Route::resource('hotelcategories', HotelCategoryController::class);
         Route::resource('hotels', HotelController::class);
+		 Route::resource('currency', CurrencyController::class);
         Route::resource('airlines', AirlinesController::class);
 		Route::get('auto-airline', [AirlinesController::class, 'autocompleteAirline'])->name('auto.airline');
         Route::resource('customers', CustomersController::class);

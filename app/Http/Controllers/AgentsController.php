@@ -21,6 +21,7 @@ use Image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\Currency;
 
 class AgentsController extends Controller
 {
@@ -280,7 +281,8 @@ class AgentsController extends Controller
         $states = State::where('status', 1)->orderBy('name', 'ASC')->get();
         $cities = City::where('status', 1)->orderBy('name', 'ASC')->get();
 		$agentAdditionalUsers = AgentAdditionalUser::where('user_id', $record->id)->get();
-        return view('agents.edit')->with(['record' => $record, 'countries' => $countries, 'states' => $states, 'cities' => $cities,'agentAdditionalUsers' => $agentAdditionalUsers]);
+		$currencies = Currency::where('status', 1)->orderBy('name', 'ASC')->get();
+        return view('agents.edit')->with(['record' => $record, 'countries' => $countries, 'currencies' => $currencies, 'states' => $states, 'cities' => $cities,'agentAdditionalUsers' => $agentAdditionalUsers]);
     }
 
     /**
@@ -303,12 +305,14 @@ class AgentsController extends Controller
             'state_id' => 'required',
             'country_id' => 'required',
             'postcode' => 'required',
+			'currency_id' => 'required',
 			
 			'image' => 'nullable|mimes:jpeg,jpg,png|max:' . ($options['allow_img_size'] * 1024), 
         ], [
             'name.sanitize_scripts' => 'Invalid value entered for Name field.',
             'country_id.required' => 'The country field is required.',
             'state_id.required' => 'The state field is required.',
+			'currency_id.required' => 'The currency field is required.',
         ]);
 		
 		$input = $request->all();
@@ -370,7 +374,8 @@ class AgentsController extends Controller
         $record->postcode = $request->input('postcode');
         $record->country_id = $request->input('country_id');
         $record->state_id = $request->input('state_id');
-        $record->city_id = $request->input('city_id');
+        $record->currency_id = $request->input('currency_id');
+		$record->city_id = $request->input('city_id');
 		$record->is_active = $request->input('status');
 		$record->agent_category = $request->input('agent_category');
 		//$record->agent_credit_limit = (!empty($request->input('agent_credit_limit')))?$request->input('agent_credit_limit'):0;

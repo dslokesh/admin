@@ -292,7 +292,19 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			   
             </ul>
               </li>
-			 
+			   @php
+          $class=''; $active='';
+          if($controller == 'CurrencyController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp    
+                <li class="nav-item">
+                <a href="{{ route('currency.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Currency</p>
+                </a>
+              </li>
 			  
 			
             </ul>

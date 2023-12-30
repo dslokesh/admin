@@ -191,7 +191,19 @@
                     <span class="text-danger">{{ $errors->first('sales_person') }}</span>
                 @endif
               </div>
-              <div class="form-group col-md-6">
+			  	<div class="form-group col-md-3">
+			  <label for="inputName">Currency: <span class="red">*</span></label>
+                <select name="currency_id" id="currency_id" class="form-control">
+				<option value="">--select--</option>
+				@foreach($currencies as $currency)
+                    <option value="{{$currency->id}}" @if($record->currency_id == $currency->id) {{'selected="selected"'}} @endif>{{$currency->name}} ({{$currency->code}})</option>
+				@endforeach
+                 </select>
+				 @if ($errors->has('country_id'))
+                    <span class="text-danger">{{ $errors->first('currency_id') }}</span>
+                @endif
+              </div>
+              <div class="form-group col-md-3">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">
                     <option value="1" @if($record->is_active ==1) {{'selected="selected"'}} @endif>Active</option>
