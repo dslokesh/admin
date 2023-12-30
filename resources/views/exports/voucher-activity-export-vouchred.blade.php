@@ -49,7 +49,9 @@
 					@if($record->transfer_option == 'Pvt Transfer')
 					PVT
 					@endif
-					
+					@if($record->transfer_option == 'Ticket Only')
+					TKT Only
+					@endif
 				</td>
 					<td>{{$record->variant_name}}</td>
 					<td>{{$record->totalprice}}</td>

@@ -141,13 +141,12 @@
 				  @foreach ($records as $record)
                   <tr>
 				  <td>{{(!empty($record->voucher->booking_date))?date("d-m-Y",strtotime($record->voucher->booking_date)):''}} </td>
-          <td>
-            {{$record->voucher->code}}</td>
+				<td><a class="" style="color:#007bff!important" href="{{route('voucherView',$record->voucher->id)}}">{{ ($record->voucher->code)}}</a></td>
 				   <td>{{@$record->voucher->invoice_number}} </td>
                     <td>{{date("d-m-Y",strtotime($record->tour_date))}}
 					</td>
 					<td>
-            {{$record->voucher->agent_ref_no}}</td>
+						{{$record->voucher->agent_ref_no}}</td>
 					<td>{{($record->voucher->agent)?$record->voucher->agent->company_name:''}}</td>
 					<td>{{($record->voucher)?$record->voucher->guest_name:''}}</td>
 					 <td>{{$record->adult}}</td>
@@ -164,7 +163,9 @@
 					@if($record->transfer_option == 'Pvt Transfer')
 					PVT
 					@endif
-					
+					@if($record->transfer_option == 'Ticket Only')
+					TKT Only
+					@endif
 				</td>
 					<td>{{$record->variant_name}}</td>
 					<td>{{$record->totalprice}}</td>
