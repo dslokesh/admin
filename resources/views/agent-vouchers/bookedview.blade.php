@@ -202,7 +202,7 @@
                                         
                                         "><i class="fas fa-download"></i> Ticket</a>
                           
-                          @elseif(($ap->ticket_generated == '1') and ($ap->status == '4))
+                          @elseif(($ap->ticket_generated == '1') and ($ap->status == '4'))
 						  <a class="btn btn-success float-right  btn-sm  d-pdf" href="#" onclick='window.open("{{route('ticket.dwnload',$ap->id)}}");return false;'  ><i class="fas fa-download"></i> Ticket</a>
                          
                           @endif
