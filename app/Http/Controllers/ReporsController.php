@@ -290,6 +290,8 @@ return Excel::download(new VoucherActivityExport($records), 'logistic_records'.d
 			ReportLog::create([
 			"input"=>$data['inputname'],
 			"input_vaue"=>$data['val'],
+			"voucher_id"=>$record->voucher_id,
+			"voucher_activity_id"=>$record->id,
 			"updated_by"=>Auth::user()->id,
 			"report_type"=>isset($data['report_type'])?$data['report_type']:''
 			]);
