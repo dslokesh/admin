@@ -212,7 +212,10 @@
                                 }
                             
                             "><i class="fas fa-trash"></i></a>
-							
+							<a class="btn btn-info btn-sm" href="{{route('voucherLog',$record->id)}}">
+                             <i class="fas fa-info-circle"></i>
+                              
+                          </a>
                          </td>
                   </tr>
 				 

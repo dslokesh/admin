@@ -189,6 +189,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		Route::get('invoice-price-chnage-list', [VouchersController::class, 'invoicePriceStatusList'])->name('invoicePriceStatusList');
 		Route::get('invoice-price-change-view/{voucher}', [VouchersController::class, 'invoicePriceChangeView'])->name('invoicePriceChangeView');
 		Route::post('invoice-price-change-save/{vid}', [VouchersController::class, 'invoicePriceChangeSave'])->name('invoicePriceChangeSave');
+		Route::get('voucher-log/{id}', [VouchersController::class, 'voucherLog'])->name('voucherLog');
     });
 });
 

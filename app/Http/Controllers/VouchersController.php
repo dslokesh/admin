@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VoucheredBookingEmailMailable;
+use App\Models\ReportLog;
 
 class VouchersController extends Controller
 {
@@ -1517,6 +1518,14 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 			}
 		
 		}
+		
+	public function voucherLog($id)
+    {
+		
+		$voucherLogs = ReportLog::where('voucher_id',$id)->get();
+		
+        return view('vouchers.voucher-log', compact('voucherLogs'));
+    }
 	
 }
 
