@@ -490,6 +490,8 @@ class VouchersController extends Controller
 			$record->booking_date = date("Y-m-d");
 			$record->invoice_number = $code;
 			$record->status_main = 5;
+			$record->vouchered_dt = date("Y-m-d H:i:s");
+			$record->vouchered_by = Auth::user()->id;
 			$record->save();
 			$agent->agent_amount_balance -= $grandTotal;
 			$agent->save();

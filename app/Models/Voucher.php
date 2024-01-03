@@ -51,6 +51,11 @@ class Voucher extends Model
 	function voucheractivity() {
 
     return $this->hasMany(VoucherActivity::class);
-}
+	}
+
+	public function voucheredBy()
+    {
+        return $this->belongsTo(User::class, 'vouchered_by', 'id');
+    }
    
 }

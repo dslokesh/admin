@@ -134,6 +134,10 @@
 					<th>Total Cost</th>
 					<th>Status</th>
 					<th>Booking Status</th>
+					<th>Booking D & T</th>
+					<th>Booked By </th>
+					<th>Vouchered D & T</th>
+					<th>Vouchered By</th>
                   </tr>
 				  
                   </thead>
@@ -176,6 +180,15 @@
 					{!! SiteHelpers::voucherStatus($record->voucher->status_main) !!}
 					</td>
 					
+					<td>
+					{{ $record->voucher->created_at ? date("M d Y, H:i:s",strtotime($record->voucher->created_at)) : null }}
+					</td>
+					
+					<td>{{ ($record->voucher->createdBy)?$record->voucher->createdBy->name.' '.$record->voucher->createdBy->lname:''}}</td>
+					<td>
+					{{ $record->voucher->vouchered_dt ? date("M d Y, H:i:s",strtotime($record->voucher->vouchered_dt)) : null }}
+					</td>
+					<td>{{ ($record->voucher->voucheredBy)?$record->voucher->voucheredBy->name.' '.$record->voucher->voucheredBy->lname:''}}</td>
                   </tr>
                   </tbody>
                   @endforeach
