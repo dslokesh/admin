@@ -14,15 +14,25 @@ class Activity extends Model
         return $this->hasMany('App\Models\Files', 'model_id', 'id')->where("model", "Activity");
     }
    
-	public function prices()
+	 public function state()
     {
-        return $this->hasMany('App\Models\ActivityPrices', 'activity_id', 'id');
+        return $this->belongsTo(State::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 	
 	
-	public function transfer()
+	public function currency()
     {
-        return $this->belongsTo('App\Models\Transfer', 'transfer_plan', 'id');
+        return $this->belongsTo(Currency::class);
     }
 	
 	 public function createdBy()

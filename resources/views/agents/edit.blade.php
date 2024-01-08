@@ -199,7 +199,7 @@
                     <option value="{{$currency->id}}" @if($record->currency_id == $currency->id) {{'selected="selected"'}} @endif>{{$currency->name}} ({{$currency->code}})</option>
 				@endforeach
                  </select>
-				 @if ($errors->has('country_id'))
+				 @if ($errors->has('currency_id'))
                     <span class="text-danger">{{ $errors->first('currency_id') }}</span>
                 @endif
               </div>

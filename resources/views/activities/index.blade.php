@@ -42,10 +42,10 @@
                   <thead>
                   <tr>
                     <th>Title</th>
-					<th>Code</th>
-					 <th>Type of Activity</th>
+					<th>Product Type</th>
+					<th>Entry Type</th>
                     <th>Status</th>
-					<th>Is Price</th>
+					<th>Currency</th>
                     <th>Created</th>
                     <th>Updated</th>
                     <th width="17%"></th>
@@ -60,11 +60,7 @@
                     <option value="1" @if(request('status') ==1) {{'selected="selected"'}} @endif>Active</option>
 					          <option value="2" @if(request('status') ==2) {{'selected="selected"'}} @endif >Inactive</option>
                  </select></th>
-				  <th><select name="is_price" id="is_price" class="form-control">
-                    <option value="" @if(request('is_price') =='') {{'selected="selected"'}} @endif>Select</option>
-                    <option value="1" @if(request('is_price') ==1) {{'selected="selected"'}} @endif>Yes</option>
-					          <option value="2" @if(request('is_price') ==2) {{'selected="selected"'}} @endif >No</option>
-                 </select></th>
+				  <th></th>
 					<th></th>
                     <th></th>
                    
@@ -80,24 +76,14 @@
                   <tr>
 					
                     <td>{{ $record->title}}</td>
-					<td>{{ $record->code}}</td>
-					<td>{{ ($record->type_activity)?$typeActivities[$record->type_activity]:''}}</td>
+					<td>{{ $record->product_type}}</td>
+					<td>{{ $record->entry_type}}</td>
                     <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
-					<td>{!! SiteHelpers::statusColorYesNo($record->is_price) !!}</td>
+					<td>{{ @$record->currency->name}}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>
                     <td>{{ $record->updated_at ? date(config('app.date_format'),strtotime($record->updated_at)) : null }}</td>
                      <td>
-					 @if($record->prices->count() > 0)
-					 <a class="btn btn-info btn-sm" href="{{route('activity.prices.edit',$record->id)}}">
-                             Pricing
-                              
-                          </a>
-					@else
-						<a class="btn btn-info btn-sm" href="{{route('activity.prices.create',$record->id)}}">
-                             Pricing
-                              
-                          </a>
-					@endif
+					
 					  <a class="btn btn-info btn-sm" href="{{route('activities.show',$record->id)}}">
                               <i class="fas fa-eye">
                               </i>

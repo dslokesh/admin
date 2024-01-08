@@ -29,6 +29,8 @@ use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\CsvSearchController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\TagsController;
+use App\Http\Controllers\SlotsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,6 +84,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::post('profile/save/{id?}', [AuthController::class, 'saveProfile'])->name('profile.save');
 
         Route::resource('pages', PagesController::class);
+		Route::resource('tags', TagsController::class);
         Route::resource('modules', ModulesController::class);
         Route::resource('roles', RolesController::class);
         Route::resource('countries', CountryController::class);
@@ -94,6 +97,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
 		Route::get('auto-airline', [AirlinesController::class, 'autocompleteAirline'])->name('auto.airline');
         Route::resource('customers', CustomersController::class);
         Route::resource('suppliers', SuppliersController::class);
+		Route::resource('slots', SlotsController::class);
         Route::get('suppliers-markup-activity/{id?}', [SuppliersController::class, 'priceMarkupActivityList'])->name('suppliers.markup.activity');
         Route::post('suppliers-markup-activity-save', [SuppliersController::class, 'priceMarkupActivitySave'])->name('suppliers.markup.activity.save');
         Route::get('suppliers-markup-price/{id?}', [SuppliersController::class, 'markupPriceList'])->name('suppliers.markup.price');

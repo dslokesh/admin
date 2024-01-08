@@ -44,7 +44,8 @@
                     <th>#</th>
                     <th>Name</th>
 					<th>Code</th>
-					<th>Value</th>
+					<th>Currency Value (Default)</th>
+					<th>Markup Value (Default)</th>
 					<th>Default</th>
                     <th>Status</th>
                     <th>Created On</th>
@@ -60,6 +61,7 @@
                     <td>{{ $record->name}}</td>
 					<td>{{ $record->code}}</td>
 					<td>{{ $record->value}}</td>
+					<td>{{ $record->markup_value}}</td>
                     <td>{!! SiteHelpers::statusColor($record->is_default) !!}</td>
 					 <td>{!! SiteHelpers::statusColor($record->status) !!}</td>
                     <td>{{ $record->created_at ? date(config('app.date_format'),strtotime($record->created_at)) : null }}</td>

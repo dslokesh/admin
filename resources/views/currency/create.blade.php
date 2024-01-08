@@ -45,13 +45,19 @@
                 @endif
               </div>
 			   <div class="form-group">
-                <label for="inputName">Value: <span class="red">*</span></label>
+                <label for="inputName">Currency Value (From Default Currency): <span class="red">*</span></label>
                 <input type="text" id="value" name="value" value="{{ old('value') }}" class="form-control"  placeholder="Value" />
                 @if ($errors->has('value'))
                     <span class="text-danger">{{ $errors->first('value') }}</span>
                 @endif
               </div>
-			  
+			   <div class="form-group">
+                <label for="inputName">Markup Value in Default Currency: <span class="red">*</span></label>
+                <input type="text" id="markup_value" name="markup_value" value="{{ old('markup_value') }}" class="form-control"  placeholder="Markup Value in Default Currency" />
+                @if ($errors->has('value'))
+                    <span class="text-danger">{{ $errors->first('value') }}</span>
+                @endif
+              </div>
 			   <div class="form-group">
                 <label for="inputName">Status: <span class="red">*</span></label>
                 <select name="status" id="status" class="form-control">

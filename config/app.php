@@ -181,7 +181,7 @@ return [
 		jeremykenedy\LaravelRoles\RolesServiceProvider::class,
 		Barryvdh\Snappy\ServiceProvider::class,
 		Maatwebsite\Excel\ExcelServiceProvider::class,
-		\sbamtr\LaravelSourceEncrypter\SourceEncryptServiceProvider::class,
+		//\sbamtr\LaravelSourceEncrypter\SourceEncryptServiceProvider::class,
 		
     ],
 

@@ -41,9 +41,9 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
-$app->register(
+/* $app->register(
 \sbamtr\LaravelSourceEncrypter\SourceEncryptServiceProvider::class
-);
+); */
 
 /*
 |--------------------------------------------------------------------------

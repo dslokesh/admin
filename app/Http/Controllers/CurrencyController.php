@@ -42,7 +42,8 @@ class CurrencyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|max:255|unique:currency,name|sanitizeScripts'
+            'name'=>'required|max:255|unique:currency,name|sanitizeScripts',
+			'value'=>'required'
         ], [
 			'name.sanitize_scripts' => 'Invalid value entered for Name field.',
 		]);
@@ -52,6 +53,7 @@ class CurrencyController extends Controller
         $record->name = $request->input('name');
         $record->code = $request->input('code');
         $record->value = $request->input('value');
+		$record->markup_value = $request->input('markup_value');
 		$record->status = $request->input('status');
         $record->save();
         return redirect('currency')->with('success','Currency Created Successfully.');
@@ -92,6 +94,7 @@ class CurrencyController extends Controller
     {
         $request->validate([
             'name'=>'required|max:255|sanitizeScripts|unique:currency,name,' .$id,
+			'markup_value'=>'required',
             'status'=>'required'
         ], [
 			'name.sanitize_scripts' => 'Invalid value entered for Name field.',
@@ -104,6 +107,7 @@ class CurrencyController extends Controller
         $record->name = $request->input('name');
         $record->code = $request->input('code');
         $record->value = $request->input('value');
+		$record->markup_value = $request->input('markup_value');
         $record->is_default = $request->input('is_default');
 		$record->status = $request->input('status');
         $record->save();

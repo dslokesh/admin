@@ -28,6 +28,34 @@
                 }
             }
         });
+		
+		var textarea2 = $('.text-editor2').attr('id');
+        CKEDITOR.replace(textarea2, {
+            filebrowserBrowseUrl: "{{route('media.image.browse')}}",
+            filebrowserUploadUrl: '/browser/upload/type/all',
+            filebrowserImageBrowseUrl: "{{route('media.image.browse')}}",
+            filebrowserImageUploadUrl: "{{route('media.upload',['_token' => csrf_token() ])}}",
+            filebrowserWindowWidth: 800,
+            filebrowserWindowHeight: 500,
+            allowedContent: true,
+            removeFormatAttributes: '',
+            on: {
+                instanceReady: function() {
+                    this.dataProcessor.htmlFilter.addRules( {
+                        elements: {
+                            img: function( el ) {
+                                // Add an attribute.
+                                if ( !el.attributes.alt )
+                                    el.attributes.alt = '';
+
+                                // Add some class.
+                                el.addClass( 'img-fluid' );
+                            }
+                        }
+                    } );            
+                }
+            }
+        });
 
         var short_textarea = $('.short-text-editor').attr('id');
         CKEDITOR.replace(short_textarea, {

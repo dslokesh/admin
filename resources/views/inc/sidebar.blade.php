@@ -309,23 +309,72 @@ $controller = preg_replace('/.*\\\/', '', $controller);
 			
             </ul>
           </li>
-		   @permission('list.activity')
+		  <li class="nav-item has-treeview">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Activities
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            
+			    @permission('list.activity')
 			   @php
           $class=''; $active='';
           if($controller == 'ActivitiesController' and in_array($action,array('index','create','edit','show','editPriceForm','createPriceForm'))){
             $class = 'menu-open';
             $active = 'active';
           }
-          @endphp     
-			  <li class="nav-item">
+          @endphp
+			 <li class="nav-item">
                 <a href="{{ route('activities.index') }}" class="nav-link {{$active}}">
-               <i class="nav-icon fas fa-tasks"></i>
-              <p>
-                Activities
-              </p>
-            </a>
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Activities</p>
+                </a>
+				
+              </li>
+			   @endpermission
+			  
+              @php
+          $class=''; $active='';
+          if($controller == 'TagsController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp          
+        
+              <li class="nav-item">
+                <a href="{{ route('tags.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tags Manager</p>
+                </a>
+				
+              </li>
+			   @php
+          $class=''; $active='';
+          if($controller == 'SlotsController' and in_array($action,array('index','create','edit','show'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+		 
+		  
+          @endphp          
+        
+              <li class="nav-item">
+                <a href="{{ route('slots.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Slot Manager</p>
+                </a>
+				
+              </li>
+		
+            </ul>
           </li>
-		  @endpermission
+		  
+		  
 	 @permission('list.voucher')
 			   @php
           $class=''; $active='';
