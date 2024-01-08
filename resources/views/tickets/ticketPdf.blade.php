@@ -108,8 +108,8 @@ body p
                   </table>
              </div>
              <div style="width: 28%;float: right;text-align: center;margin-top: 15px;">
-<img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&choe=UTF-8&chld=L|0&chl={{$ticket->ticket_no}}" width="120" style="max-width: 120px; display: block !important; width: 120px; height: 120px;margin: 0px auto;" alt="logo-top" border="0" hspace="0" vspace="0" height="auto">
-{{$ticket->ticket_no}} 
+			 {!! QrCode::size(150)->generate($ticket->ticket_no) !!}<br/><br/>
+			{{$ticket->ticket_no}} 
              </div>
           </div>
       </div>
