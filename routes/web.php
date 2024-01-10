@@ -31,6 +31,8 @@ use App\Http\Controllers\CsvSearchController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\SlotsController;
+use App\Http\Controllers\VariantsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -111,6 +113,7 @@ Route::group(['middleware' => 'disable_back_btn'], function () {
         Route::resource('zones', ZonesController::class);
         Route::resource('vehicles', VehiclesController::class);
         Route::resource('activities', ActivitiesController::class);
+		Route::resource('variants', VariantsController::class);
         Route::get('activity-prices-create/{id?}', [ActivitiesController::class, 'createPriceForm'])->name('activity.prices.create');
         Route::get('activity-prices-edit/{id?}', [ActivitiesController::class, 'editPriceForm'])->name('activity.prices.edit');
         Route::post('activity-prices-save', [ActivitiesController::class, 'activityPriceSave'])->name('activity.prices.save');

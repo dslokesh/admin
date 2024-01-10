@@ -336,6 +336,21 @@ $controller = preg_replace('/.*\\\/', '', $controller);
               </li>
 			   @endpermission
 			  
+			   @php
+          $class=''; $active='';
+          if($controller == 'VariantsController' and in_array($action,array('index','create','edit','show','editPriceForm','createPriceForm'))){
+            $class = 'menu-open';
+            $active = 'active';
+          }
+          @endphp
+			 <li class="nav-item">
+                <a href="{{ route('variants.index') }}" class="nav-link {{$active}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Variant</p>
+                </a>
+				
+              </li>
+			  
               @php
           $class=''; $active='';
           if($controller == 'TagsController' and in_array($action,array('index','create','edit','show'))){

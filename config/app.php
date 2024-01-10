@@ -181,6 +181,7 @@ return [
 		jeremykenedy\LaravelRoles\RolesServiceProvider::class,
 		Barryvdh\Snappy\ServiceProvider::class,
 		Maatwebsite\Excel\ExcelServiceProvider::class,
+		SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 		//\sbamtr\LaravelSourceEncrypter\SourceEncryptServiceProvider::class,
 		
     ],
@@ -238,6 +239,7 @@ return [
 		'SiteHelpers' => App\Helpers\SiteHelpers::class,
 		'SPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
 		'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+		'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
 
     ],
 
