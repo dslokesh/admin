@@ -464,28 +464,34 @@ class VouchersController extends Controller
 			$grandTotal = $total_activity_amount + $hotelPriceTotal;
 			if($agentAmountBalance >= $grandTotal)
 			{
-				
-			// $voucherCount = Voucher::where('status_main',5)->count();
-			// $voucherCountNumber = $voucherCount +1;
-			// if($record->vat_invoice == 1)
-			// {
-			// $code = 'VIN-100'.$voucherCountNumber;
-			// }else{
-			// $code = 'WVIN-100'.$voucherCountNumber;
-			// }
 			
-			if($record->vat_invoice == 1)
-			{
-				$voucherCount = Voucher::where('status_main',5)->where('vat_invoice',1)->whereDate('booking_date', '>', '2023-11-30')->count();
-				$voucherCountNumber = $voucherCount +1;
-				$code = 'VIN-1100001'.$voucherCountNumber;
+			
+			if ($record->vat_invoice == 1) {
+				$voucherCount = Voucher::where('status_main', 5)
+					->where('vat_invoice', 1)
+					->whereDate('booking_date', '>', '2023-11-30')
+					->count();
+				$code = 'VIN-1100001' . ($voucherCount + 1);
+			} else {
+				$voucherCount = Voucher::where('status_main', 5)
+					->where('vat_invoice', 0)
+					->whereDate('booking_date', '>', '2023-11-30')
+					->count();
+				$code = 'WVIN-1100001' . ($voucherCount + 1);
 			}
-			else
-			{
-				$voucherCount = Voucher::where('status_main',5)->where('vat_invoice',0)->whereDate('booking_date', '>', '2023-11-30')->count();
-				$voucherCountNumber = $voucherCount +1;
-				$code = 'WVIN-1100001'.$voucherCountNumber;
-			}
+
+			do {
+				$exists = Voucher::where('invoice_number', $code)->exists();
+
+				if ($exists) {
+					$voucherCount++;
+					if ($record->vat_invoice == 1) {
+						$code = 'VIN-1100001' . ($voucherCount + 1);
+					} else {
+						$code = 'WVIN-1100001' . ($voucherCount + 1);
+					}
+				}
+			} while ($exists);
 			
 			$record->booking_date = date("Y-m-d");
 			$record->invoice_number = $code;

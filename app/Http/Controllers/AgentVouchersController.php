@@ -688,10 +688,23 @@ class AgentVouchersController extends Controller
 			$voucherCountNumber = $voucherCount +1;
 			if($record->vat_invoice == 1)
 			{
-			$code = 'VIN-1100001'.$voucherCountNumber;
+			$code = 'VIN-1100001' . ($voucherCount + 1);
 			}else{
-			$code = 'WVIN-1100001'.$voucherCountNumber;
+			$code = 'WVIN-1100001' . ($voucherCount + 1);
 			}
+			
+			do {
+				$exists = Voucher::where('invoice_number', $code)->exists();
+
+				if ($exists) {
+					$voucherCount++;
+					if ($record->vat_invoice == 1) {
+						$code = 'VIN-1100001' . ($voucherCount + 1);
+					} else {
+						$code = 'WVIN-1100001' . ($voucherCount + 1);
+					}
+				}
+			} while ($exists);
 			
 			$record->booking_date = date("Y-m-d");
 			$record->invoice_number = $code;
