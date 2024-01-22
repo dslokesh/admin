@@ -107,8 +107,8 @@ body p
                     </tr>
                   </table>
              </div>
-             <div style="width: 28%;float: right;text-align: center;margin-top: 15px;">
-			 {!! QrCode::size(150)->generate($ticket->ticket_no) !!}<br/><br/>
+             <div style="width: 28%;float: right;text-align: center;">
+			 {!! QrCode::size(100)->generate(trim($ticket->ticket_no)) !!}<br/>
 			{{$ticket->ticket_no}} 
              </div>
           </div>

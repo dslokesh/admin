@@ -781,7 +781,7 @@ class AgentVouchersController extends Controller
 		$tc->save();
 		}
 		
-		$recordCount = VoucherActivity::where("voucher_id",$record->voucher_id)->where("status",'0')->count();
+		$recordCount = VoucherActivity::where("voucher_id",$record->voucher_id)->whereNotIn("status", [1, 2])->count();
 		if($recordCount == '0'){
 			$voucher = Voucher::find($record->voucher_id);
 			$voucher->status_main = 6;

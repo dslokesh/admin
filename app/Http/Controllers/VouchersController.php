@@ -1248,6 +1248,7 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 	public function cancelActivityFromVoucher($id)
 	{
 		$record = VoucherActivity::find($id);
+		
 		//if($record->ticket_downloaded == '0'){
 		$record->status = 1;
 		$record->canceled_date = Carbon::now()->toDateTimeString();
@@ -1263,7 +1264,7 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 		$tc->save();
 		}
 		
-		$recordCount = VoucherActivity::where("voucher_id",$record->voucher_id)->where("status",'3')->count();
+		$recordCount = VoucherActivity::where("voucher_id",$record->voucher_id)->whereNotIn("status", [1, 2])->count();
 		if($recordCount == '0'){
 			$voucher = Voucher::find($record->voucher_id);
 			$voucher->status_main = 6;
