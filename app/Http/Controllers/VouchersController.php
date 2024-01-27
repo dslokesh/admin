@@ -1459,12 +1459,12 @@ public function addActivityView($aid,$vid,$d="",$a="",$c="",$i="",$tt="")
 		$aData = [];
 		if(!empty($agent))
 		{
-			$discountRecord = $data['discount'];
-			
+			$discountRecord = @$data['discount'];
+			;
 			foreach($voucherActivityRecord as $var){
 				$dis = @$discountRecord[$var->id];
-				(!empty($dis))?$dis:0;
-				
+				$dis = (floatval($dis)) ? $dis : 0;
+
 				$tPrice = $var->totalprice + $var->discountPrice;
 				if($dis > $tPrice){
 					 return redirect()->back()->with('error', 'Discount not greater than total amount.');
