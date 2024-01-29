@@ -167,7 +167,7 @@
 					@if($activity->entry_type=='Arrival')
 						<div class="form-group col-md-6">
 						 
-						<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" required data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location*" />
+						<input type="text" class="form-control inputsave autodropoff_location" name="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" required data-zone= id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" required data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location*" />
 						<label for="inputName" style="width: 100%;"> <span class="float-left"><input type="checkbox" data-idinput="dropoff_location{{$ap->id}}" class="chk_other " data-name="dropoff_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
 						</div>
 					
@@ -178,13 +178,13 @@
               </div>
 			 
 			   <div class="form-group col-md-6 ">
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave" required placeholder="Arrival Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave" required placeholder="Arrival Time*" data-id="{{$ap->id}}" name="actual_pickup_time{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
 			 
 			  
 			  <div class="form-group col-md-6 ">
-                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Arrival Flight Details*" required data-id="{{$ap->id}}" data-name="flight_no" />
+                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Arrival Flight Details*" required data-id="{{$ap->id}}" data-name="flight_no" name="flight_no{{$ap->id}}" />
 				
               </div>
                     
@@ -196,7 +196,7 @@
 		  
                     <div class="form-group col-md-6">
 						
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Pickup Location*" required />
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}" data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}"  placeholder="Pickup Location*" required name="pickup_location{{$ap->id}}" />
 										 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
 
                      
@@ -205,12 +205,12 @@
 					
 					 
 					
-					<input type="text" class="form-control inputsave autodropoff_location" id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  required placeholder="Dropoff Location*" />
+					<input type="text" class="form-control inputsave autodropoff_location" name="dropoff_location{{$ap->id}}"  id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  required placeholder="Dropoff Location*" name="dropoff_location{{$ap->id}}" />
 					 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="dropoff_location{{$ap->id}}" class="chk_other " data-name="dropoff_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
                     </div>
 					 <div class="form-group col-md-6 ">
                
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave"  placeholder="Pickup Time*" name="actual_pickup_time{{$ap->id}}" required data-id="{{$ap->id}}" data-name="actual_pickup_time"  />
 				 
               </div>
                     <div class="form-group col-md-6">
@@ -229,12 +229,12 @@
 					
 					 <div class="form-group col-md-6 ">
                 
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave"  placeholder="Pickup Time*" required data-id="{{$ap->id}}" name="actual_pickup_time{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
 			  <div class="form-group col-md-6 ">
                
-                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Departure Flight Details*" required data-id="{{$ap->id}}" data-name="flight_no" />
+                 <input type="text" id="flight_no{{$ap->id}}" value="{{$ap->flight_no}}" class="form-control inputsave"  placeholder="Departure Flight Details*" required data-id="{{$ap->id}}" name="flight_no{{$ap->id}}" data-name="flight_no" />
 				
               </div>
                     <div class="form-group col-md-6">
@@ -246,14 +246,14 @@
 					
 					 
 						
-					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}"  data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" data-zone="{{$ap->transfer_zone}}" required placeholder="Pickup Location*" required />
+					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}"  data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" name="pickup_location{{$ap->id}}" data-zone="{{$ap->transfer_zone}}" required placeholder="Pickup Location*" required />
 					 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"   /> Other<span></label>
 					  </div>
 					
                      @if(($activity->pvt_TFRS=='1') && ($activity->pick_up_required=='1'))
 					<div class="form-group col-md-6 ">
                 
-                 <input type="text" id="actual_pickup_time{{$ap->id}}" value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave" required placeholder="Pickup Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
+                 <input type="text" id="actual_pickup_time{{$ap->id}}" name="actual_pickup_time{{$ap->id}}"  value="{{$ap->actual_pickup_time}}" class="form-control timepicker inputsave" required placeholder="Pickup Time*" data-id="{{$ap->id}}" data-name="actual_pickup_time" />
 				 
               </div>
                     @endif
