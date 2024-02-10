@@ -167,7 +167,8 @@
 					@if($activity->entry_type=='Arrival')
 						<div class="form-group col-md-6">
 						 
-						<input type="text" class="form-control inputsave autodropoff_location" name="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" required data-zone= id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" required data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location*" />
+						<input type="text" class="form-control inputsave autodropoff_location" name="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" required  id="dropoff_location{{$ap->id}}"   data-zone="{{$ap->transfer_zone}}"  placeholder="Dropoff Location*" />
+						
 						<label for="inputName" style="width: 100%;"> <span class="float-left"><input type="checkbox" data-idinput="dropoff_location{{$ap->id}}" class="chk_other " data-name="dropoff_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
 						</div>
 					
@@ -205,7 +206,7 @@
 					
 					 
 					
-					<input type="text" class="form-control inputsave autodropoff_location" name="dropoff_location{{$ap->id}}"  id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  required placeholder="Dropoff Location*" name="dropoff_location{{$ap->id}}" />
+					<input type="text" class="form-control inputsave autodropoff_location" name="dropoff_location{{$ap->id}}"  id="dropoff_location{{$ap->id}}" data-name="dropoff_location"  data-id="{{$ap->id}}" value="{{$ap->dropoff_location}}" data-zone="{{$ap->transfer_zone}}"  required placeholder="Dropoff Location*"  />
 					 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="dropoff_location{{$ap->id}}" class="chk_other " data-name="dropoff_other"  data-id="{{$ap->id}}" value="1"  /> Other<span></label>
                     </div>
 					 <div class="form-group col-md-6 ">
@@ -247,6 +248,7 @@
 					 
 						
 					<input type="text" class="form-control inputsave autocom" id="pickup_location{{$ap->id}}"  data-name="pickup_location"  data-id="{{$ap->id}}" value="{{$ap->pickup_location}}" name="pickup_location{{$ap->id}}" data-zone="{{$ap->transfer_zone}}" required placeholder="Pickup Location*" required />
+					
 					 <label for="inputName" style="width: 100%;"><span class="float-left"><input type="checkbox" data-idinput="pickup_location{{$ap->id}}" class="chk_other " data-name="pickup_other"  data-id="{{$ap->id}}" value="1"   /> Other<span></label>
 					  </div>
 					
@@ -693,19 +695,7 @@
 <script type="text/javascript">
  
   $(function(){
-	 $('.chk_other').each(function() {
-        var inputid = $(this).data('idinput');
-        var isChecked = $(this).is(':checked');
-
-        // Handle checkbox change
-        $(this).on('change', function() {
-            if ($(this).is(':checked')) {
-                $("#" + inputid).autocomplete("option", "disabled", true);
-            } else {
-                $("#" + inputid).autocomplete("option", "disabled", false);
-            }
-        });
-    });
+	
 	 
 
 $('#cusDetails').validate({});
@@ -878,7 +868,19 @@ $('#cusDetails').validate({});
         }
     });
 
+ $('.chk_other').each(function() {
+        var inputid = $(this).data('idinput');
+        var isChecked = $(this).is(':checked');
 
+        // Handle checkbox change
+        $(this).on('change', function() {
+            if ($(this).is(':checked')) {
+                $("body #" + inputid).autocomplete("option", "disabled", true);
+            } else {
+                $("body #" + inputid).autocomplete("option", "disabled", false);
+            }
+        });
+    });
 	});
 	
 	function savepickup_location(v){
